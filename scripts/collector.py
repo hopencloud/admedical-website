@@ -252,9 +252,11 @@ def process_one(session: requests.Session, suffix: int, log: logging.Logger) -> 
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--seed", type=int, default=None,
-                        help="시작 승인번호 (생략하면 metadata.csv 최대값 + 1)")
-    parser.add_argument("--miss-limit", type=int, default=20,
-                        help="연속 결과 없음 종료 한도 (기본 20)")
+                        help="시작 승인번호 (생략하면 metadata.csv/index.sqlite 최대값 + 1)")
+    parser.add_argument("--miss-limit", type=int, default=15,
+                        help="연속 결과 없음 종료 한도 (기본 15)")
+    parser.add_argument("--max-attempts", type=int, default=250,
+                        help="최대 조회 시도 횟수 (기본 250)")
     parser.add_argument("--sleep-min", type=float, default=1.0)
     parser.add_argument("--sleep-max", type=float, default=2.0)
     args = parser.parse_args()
@@ -281,15 +283,18 @@ def main() -> None:
     miss_streak = 0
     saved_count = 0
     error_count = 0
+    attempts = 0  # 실제 HTTP 조회 시도 횟수 (skip은 제외)
 
-    log.info("수집 시작: seed=%d miss_limit=%d", seed, args.miss_limit)
+    log.info("수집 시작: seed=%d miss_limit=%d max_attempts=%d",
+             seed, args.miss_limit, args.max_attempts)
 
-    while miss_streak < args.miss_limit:
+    while miss_streak < args.miss_limit and attempts < args.max_attempts:
         if cursor in known:
             log.info("[%s] skip (이미 수집됨)", cursor)
             cursor += 1
             continue
 
+        attempts += 1
         outcome = process_one(session, cursor, log)
         if outcome == "hit":
             miss_streak = 0
@@ -304,8 +309,15 @@ def main() -> None:
         cursor += 1
         time.sleep(random.uniform(args.sleep_min, args.sleep_max))
 
-    log.info("종료: 신규 저장 %d건, 에러 %d건, 시도 범위 %d~%d",
-             saved_count, error_count, seed, cursor - 1)
+    if miss_streak >= args.miss_limit:
+        reason = f"연속 미스 {args.miss_limit}회 도달"
+    elif attempts >= args.max_attempts:
+        reason = f"최대 시도 {args.max_attempts}회 도달"
+    else:
+        reason = "기타"
+
+    log.info("종료(%s): 신규 저장 %d건, 시도 %d회, 에러 %d건, 시도 범위 %d~%d",
+             reason, saved_count, attempts, error_count, seed, cursor - 1)
 
 
 if __name__ == "__main__":

@@ -254,7 +254,84 @@ launchctl list | grep com.admedical.daily
 
 ---
 
-## 9단계 — 도메인 연결 (선택 — 도메인 사고 나서)
+## 9단계 — Google AdSense 활성화 (정식 오픈 + 트래픽 확보 후)
+
+> ⚠ **신청 시점**: 사이트 정식 오픈 후 **1~3개월** 이상 운영 + 일정 트래픽(월 1,000+) 확보된 후. 그 전에 신청하면 거절됩니다.
+
+### 9-1. AdSense 가입 및 사이트 등록
+1. https://adsense.google.com 접속 (구글 계정으로)
+2. **시작하기** → 사이트 URL `https://www.admedical.co.kr` 입력
+3. 결제 정보·세금 정보 입력
+4. AdSense가 안내하는 한 줄 `<script>`를 복사 (이 코드는 이미 `ads.js`에서 자동 처리되므로 별도 삽입 불필요 — 다음 단계 9-2에서 바로 활성화)
+5. 사이트 검토 신청 → 1~14일 대기
+
+### 9-2. publisher ID 입력 + 코드 활성화
+승인되면 AdSense 콘솔 우측 상단에 `pub-XXXXXXXXXXXXXXXX` 형태의 ID가 보입니다.
+
+**파일 1: `website/assets/js/ads.js`** 수정
+```js
+const ADSENSE_ENABLED = true;                              // false → true
+const ADSENSE_PUBLISHER_ID = "ca-pub-1234567890123456";    // 실제 publisher ID
+```
+
+**파일 2: `website/ads.txt`** 수정 (AdSense 콘솔 → 사이트 → "ads.txt 추가" 안내 그대로 복사)
+```
+google.com, pub-1234567890123456, DIRECT, f08c47fec0942fa0
+```
+
+### 9-3. 광고 단위 만들고 슬롯 ID 입력
+AdSense 콘솔 → **광고 → 광고 단위별** → **새 광고 단위 만들기**:
+
+| 광고 단위 이름 | 광고 형식 | 사이트 위치 |
+|---|---|---|
+| `search-results-bottom` | 디스플레이 (반응형) | 검색 결과 하단 |
+| `top20-top` | 디스플레이 (반응형) | TOP 20 리스트 위 |
+| `article-end` | 인-아티클 또는 디스플레이 | 가이드 본문 끝 |
+
+각 광고 단위 만들 때마다 발급되는 슬롯 ID(예: `1234567890`)를 `ads.js`의 `SLOT_IDS`에 입력:
+```js
+const SLOT_IDS = {
+    "search-results-bottom": "1234567890",
+    "top20-top":             "2345678901",
+    "article-end":           "3456789012",
+};
+```
+
+### 9-4. 배포
+```
+cd ~/Desktop/admedical_website
+git add website/assets/js/ads.js website/ads.txt
+git commit -m "AdSense 활성화"
+git push
+```
+
+1~2분 후 광고 노출 시작. 사이트 새로고침하면 광고가 보임 (AdSense는 페이지 첫 노출까지 약간 시간 소요 — 최대 24시간).
+
+### 9-5. 광고 표시 위치 (사이트에 미리 잡혀 있음)
+| 페이지 | 슬롯 위치 |
+|---|---|
+| 메인 (검색 페이지) | 검색 결과 5개 다음, 통계 카드 위 |
+| TOP 20 | 탭 아래, 1위 위 |
+| 심의 가이드 7개 페이지 | 본문 끝, "관련 페이지" 카드 위 |
+| 서비스 소개·문의·약관·정책 | 광고 X (UX 우선) |
+
+### 9-6. AdSense 정책 점검 (의료광고 사이트 특수성)
+- ❌ 처방의약품 직접 광고 게재 X
+- ❌ 검증되지 않은 치료법 광고 X
+- ✅ 의료광고심의 안내·정보 서비스 = 정책 적합
+- 검색 결과에 부적절 광고가 자동 매칭되면 AdSense 콘솔에서 **광고 차단** 가능
+
+### 9-7. 수익 모니터링
+- AdSense 콘솔 → **보고서** 메뉴
+- 페이지별 RPM(1,000회 노출당 수익), 슬롯별 CTR 비교
+- 잘 안 클릭되는 슬롯은 위치 조정
+
+### 9-8. 비활성화 (다시 끄고 싶을 때)
+`ads.js`의 `ADSENSE_ENABLED`를 다시 `false`로 → push → 광고 즉시 사라짐 (`.ad-slot`이 CSS로 숨겨져 빈 공간 노출 X).
+
+---
+
+## 10단계 — 도메인 연결 (선택 — 도메인 사고 나서)
 
 1. 카페24 또는 가비아에서 도메인 구매
 2. Vercel 프로젝트 → **Settings → Domains** → 도메인 입력 → **Add**

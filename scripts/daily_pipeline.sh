@@ -42,11 +42,12 @@ run_step() {
     fi
 }
 
-# 1. 수집
+# 1. 수집 — admedical.org에서 신규 시안 다운로드 → ~/Desktop/admedical_ads/
 run_step "1/4 collector"  python "$ROOT/scripts/collector.py"
 
-# 2. 인덱싱 (OCR)
-run_step "2/4 indexer"    python "$ROOT/scripts/indexer.py"
+# 2. Vision OCR — ~/Desktop/admedical_ads/ 의 신규 이미지 OCR → index.sqlite
+#    (OpenAI gpt-4o-mini Vision HIGH detail. EasyOCR보다 한국어 정확)
+run_step "2/4 vision ocr" python "$ROOT/scripts/batch_vision_ocr.py" --src "$HOME/Desktop/admedical_ads" --workers 5
 
 # 3. 일일 통계
 run_step "3/4 statistics" python "$ROOT/scripts/compute_statistics.py"
