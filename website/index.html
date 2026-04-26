@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>의료광고 심의 통과 시안 검색</title>
+    <meta name="description" content="대한의사협회 의료광고심의위원회를 통과한 광고 문구를 키워드로 검색하세요. 병의원 마케터를 위한 무료 인사이트 서비스.">
+    <meta name="keywords" content="의료광고 심의, 의료광고 문구, 의료광고 마케팅, 병원 마케팅, 의협 심의">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+</head>
+<body class="bg-gray-50 text-gray-900">
+<header class="bg-white border-b border-gray-200">
+    <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+        <a href="/" class="text-xl font-bold text-blue-700">🏥 의료광고 심의 통과 시안</a>
+        <nav class="flex gap-4 text-sm">
+            <a href="/about.html" class="hover:text-blue-700">서비스 소개</a>
+            <a href="/top20.html" class="hover:text-blue-700">TOP 20</a>
+            <a href="/contact.html" class="hover:text-blue-700">문의</a>
+        </nav>
+    </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-4 py-8">
+    <!-- Hero / 검색 -->
+    <section class="text-center mb-10">
+        <h1 class="text-3xl md:text-4xl font-bold mb-3">의료광고 심의 통과 문구 검색</h1>
+        <p class="text-gray-600 mb-6">대한의사협회 의료광고심의위원회 통과 시안에서 키워드로 검색하세요.</p>
+        <form id="search-form" class="flex max-w-2xl mx-auto">
+            <input id="q" type="search" placeholder="예: 허리디스크, 보톡스, 라식, 검진"
+                   class="flex-1 px-4 py-3 border border-gray-300 rounded-l-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button type="submit"
+                    class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-r-lg hover:bg-blue-700">
+                검색
+            </button>
+        </form>
+        <p class="text-xs text-gray-500 mt-3">⚠ 원본 시안 이미지는 노출하지 않습니다. 광고 문구만 표시됩니다.</p>
+    </section>
+
+    <!-- 통계 (오늘 / 이번주만) -->
+    <section class="grid grid-cols-2 gap-4 mb-8 max-w-md mx-auto">
+        <div class="bg-white rounded-lg p-4 border border-gray-200 text-center">
+            <div class="text-xs text-gray-500 mb-1">오늘</div>
+            <div id="stat-today" class="text-2xl font-bold text-blue-700">-</div>
+            <div class="text-xs text-gray-400">건</div>
+        </div>
+        <div class="bg-white rounded-lg p-4 border border-gray-200 text-center">
+            <div class="text-xs text-gray-500 mb-1">이번주</div>
+            <div id="stat-week" class="text-2xl font-bold text-blue-700">-</div>
+            <div class="text-xs text-gray-400">건</div>
+        </div>
+    </section>
+
+    <!-- 검색 결과 -->
+    <section id="results-section" class="hidden">
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg font-semibold">검색 결과 <span class="text-sm text-gray-500 font-normal">(상위 <span id="result-shown">0</span>/<span id="result-count">0</span>건)</span></h2>
+            <button id="clear-search" class="text-sm text-gray-500 hover:text-blue-700">초기화</button>
+        </div>
+        <div id="results" class="space-y-3"></div>
+        <p id="results-note" class="hidden text-center text-xs text-gray-500 mt-3">검색 결과는 최근 5개만 표시됩니다. 더 자세한 키워드로 검색해보세요.</p>
+    </section>
+
+    <!-- 30일 그래프 (검색 결과 아래) -->
+    <section class="bg-white rounded-lg p-4 border border-gray-200 mt-10">
+        <h2 class="text-sm font-semibold text-gray-700 mb-3">최근 30일 일자별 통과 건수</h2>
+        <div class="relative" style="height: 200px;">
+            <canvas id="chart-30d"></canvas>
+        </div>
+        <p class="text-xs text-gray-400 mt-2 text-right" id="last-update"></p>
+    </section>
+</main>
+
+<footer class="bg-white border-t border-gray-200 mt-16">
+    <div class="max-w-5xl mx-auto px-4 py-6 text-sm text-gray-500">
+        <div class="flex flex-wrap gap-4 mb-2">
+            <a href="/about.html" class="hover:text-blue-700">서비스 소개</a>
+            <a href="/top20.html" class="hover:text-blue-700">TOP 20</a>
+            <a href="/contact.html" class="hover:text-blue-700">문의</a>
+            <a href="/terms.html" class="hover:text-blue-700">이용약관</a>
+            <a href="/privacy.html" class="hover:text-blue-700">개인정보처리방침</a>
+        </div>
+        <p>본 서비스는 대한의사협회 의료광고심의위원회 통과 시안의 광고 문구만 인덱싱하며, 원본 시안 이미지는 제공하지 않습니다.</p>
+        <p class="mt-1">원본 시안 확인: <a href="https://www.admedical.org/application/approval_confirm.do" target="_blank" class="text-blue-700 hover:underline">의료광고심의위원회 →</a></p>
+    </div>
+</footer>
+
+<!-- 오류 제보 모달 -->
+<div id="report-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div data-modal-backdrop="true" class="absolute inset-0 bg-black/50"></div>
+    <div class="relative bg-white rounded-lg shadow-xl w-full max-w-lg p-6">
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg font-bold">🚨 오류 제보</h2>
+            <button id="report-modal-close" class="text-gray-400 hover:text-gray-700 text-2xl leading-none">&times;</button>
+        </div>
+        <div class="space-y-3 text-sm">
+            <div>
+                <span class="text-gray-500">심의번호:</span>
+                <span id="report-display" class="font-mono font-semibold ml-1"></span>
+            </div>
+            <div>
+                <p class="text-gray-500 mb-1">현재 표시되는 광고 문구:</p>
+                <pre id="report-text-preview" class="bg-gray-50 p-3 rounded text-xs whitespace-pre-wrap max-h-32 overflow-y-auto border border-gray-200"></pre>
+            </div>
+            <div>
+                <label class="block text-gray-700 mb-1 font-medium">어떤 오류인가요? <span class="text-red-600">*</span></label>
+                <textarea id="report-reason" rows="4"
+                          placeholder="예: 'OOO병원' 병원명이 노출됨, 의사명이 노출됨, 광고 문구가 잘못 표시됨"
+                          class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500"></textarea>
+            </div>
+            <p id="report-status" class="text-sm"></p>
+        </div>
+        <div class="flex gap-2 mt-5">
+            <button id="report-submit"
+                    class="flex-1 px-4 py-2 bg-red-600 text-white rounded font-semibold hover:bg-red-700">
+                제보 보내기
+            </button>
+            <button id="report-modal-cancel"
+                    class="px-4 py-2 border border-gray-300 rounded hover:bg-gray-50">
+                취소
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="/assets/js/config.js"></script>
+<script src="/assets/js/app.js"></script>
+</body>
+</html>

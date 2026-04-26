@@ -1,0 +1,11 @@
+{
+    "name": "admedical-website",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "description": "의료광고 심의 통과 시안 검색 사이트 (Vercel serverless functions)",
+    "dependencies": {
+        "nodemailer": "^6.9.16",
+        "@supabase/supabase-js": "^2.45.4"
+    }
+}

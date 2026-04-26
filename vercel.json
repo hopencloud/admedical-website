@@ -1,0 +1,21 @@
+{
+    "$schema": "https://openapi.vercel.sh/vercel.json",
+    "buildCommand": null,
+    "outputDirectory": "website",
+    "headers": [
+        {
+            "source": "/assets/data/(.*)\\.json",
+            "headers": [
+                { "key": "Cache-Control", "value": "public, max-age=300, s-maxage=300" }
+            ]
+        },
+        {
+            "source": "/assets/(.*)",
+            "headers": [
+                { "key": "Cache-Control", "value": "public, max-age=86400" }
+            ]
+        }
+    ],
+    "trailingSlash": false,
+    "cleanUrls": true
+}

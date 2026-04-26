@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 — 광고 문구 수정</title>
+    <meta name="robots" content="noindex,nofollow">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-4 md:p-8 text-gray-900">
+
+<div class="max-w-3xl mx-auto">
+    <div class="bg-white rounded-lg shadow p-6">
+        <h1 class="text-2xl font-bold mb-2">🛠 광고 문구 수정 (관리자 전용)</h1>
+        <p class="text-sm text-gray-600 mb-6">오류 제보로 받은 메일의 링크를 통해 들어오셨습니다. 수정 후 [저장]을 누르면 사이트 검색 결과에 즉시 반영됩니다.</p>
+
+        <!-- 로그인 단계 -->
+        <div id="login-step">
+            <label class="block text-sm font-medium mb-1">관리자 비밀번호</label>
+            <input id="password" type="password" autocomplete="current-password"
+                   class="w-full px-3 py-2 border border-gray-300 rounded mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button id="login-btn"
+                    class="w-full px-4 py-2 bg-blue-600 text-white rounded font-semibold hover:bg-blue-700">
+                불러오기
+            </button>
+            <p id="login-error" class="hidden mt-3 text-sm text-red-700"></p>
+        </div>
+
+        <!-- 편집 단계 -->
+        <div id="editor-step" class="hidden">
+            <div class="grid grid-cols-2 gap-3 text-sm mb-4">
+                <div>
+                    <span class="text-gray-500">심의번호</span><br>
+                    <span id="meta-display" class="font-mono font-semibold"></span>
+                </div>
+                <div>
+                    <span class="text-gray-500">심의일</span><br>
+                    <span id="meta-date" class="font-mono"></span>
+                </div>
+            </div>
+
+            <label class="block text-sm font-medium mb-1">광고 문구 (직접 수정)</label>
+            <textarea id="ocr-text" rows="14"
+                      class="w-full px-3 py-2 border border-gray-300 rounded font-mono text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+            <p class="text-xs text-gray-500 mt-1">병원/의사명·연락처가 노출되어 있으면 그 부분만 지우거나 빈칸으로 두세요. 광고 문구는 그대로 유지.</p>
+
+            <div class="flex gap-3 mt-4">
+                <button id="save-btn"
+                        class="flex-1 px-4 py-2 bg-green-600 text-white rounded font-semibold hover:bg-green-700">
+                    저장
+                </button>
+                <a href="/" class="px-4 py-2 border border-gray-300 rounded hover:bg-gray-50 text-center">
+                    취소
+                </a>
+            </div>
+            <p id="save-status" class="hidden mt-3 text-sm"></p>
+        </div>
+    </div>
+</div>
+
+<script>
+const params = new URLSearchParams(location.search);
+const reviewNum = params.get("review_num");
+let adminPwd = "";
+
+if (!reviewNum) {
+    document.body.innerHTML = '<div class="max-w-md mx-auto mt-20 bg-white p-6 rounded-lg shadow"><h1 class="font-bold text-red-700">오류</h1><p class="mt-2 text-sm">URL에 review_num 파라미터가 없습니다. 메일의 링크를 다시 확인해주세요.</p></div>';
+}
+
+document.getElementById("login-btn").addEventListener("click", async () => {
+    adminPwd = document.getElementById("password").value;
+    const errEl = document.getElementById("login-error");
+    errEl.classList.add("hidden");
+
+    if (!adminPwd) {
+        errEl.textContent = "비밀번호를 입력해주세요.";
+        errEl.classList.remove("hidden");
+        return;
+    }
+
+    try {
+        const r = await fetch(`/api/admin-load?review_num=${encodeURIComponent(reviewNum)}`, {
+            headers: { "X-Admin-Password": adminPwd },
+        });
+        const data = await r.json();
+        if (!r.ok) {
+            errEl.textContent = data.error || "오류";
+            errEl.classList.remove("hidden");
+            return;
+        }
+        document.getElementById("meta-display").textContent = data.review_no_display;
+        document.getElementById("meta-date").textContent = data.review_date || "";
+        document.getElementById("ocr-text").value = data.ocr_text || "";
+        document.getElementById("login-step").classList.add("hidden");
+        document.getElementById("editor-step").classList.remove("hidden");
+    } catch (e) {
+        errEl.textContent = "네트워크 오류: " + e.message;
+        errEl.classList.remove("hidden");
+    }
+});
+
+document.getElementById("password").addEventListener("keydown", e => {
+    if (e.key === "Enter") document.getElementById("login-btn").click();
+});
+
+document.getElementById("save-btn").addEventListener("click", async () => {
+    const newText = document.getElementById("ocr-text").value;
+    const status = document.getElementById("save-status");
+    status.className = "mt-3 text-sm text-gray-600";
+    status.textContent = "저장 중...";
+    status.classList.remove("hidden");
+
+    try {
+        const r = await fetch("/api/admin-save", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "X-Admin-Password": adminPwd },
+            body: JSON.stringify({ review_num: parseInt(reviewNum, 10), ocr_text: newText }),
+        });
+        const data = await r.json();
+        if (r.ok) {
+            status.className = "mt-3 text-sm text-green-700 font-semibold";
+            status.textContent = "✓ 저장 완료. 사이트 검색 결과에 즉시 반영됩니다.";
+        } else {
+            status.className = "mt-3 text-sm text-red-700";
+            status.textContent = "저장 실패: " + (data.error || r.status);
+        }
+    } catch (e) {
+        status.className = "mt-3 text-sm text-red-700";
+        status.textContent = "네트워크 오류: " + e.message;
+    }
+});
+</script>
+</body>
+</html>

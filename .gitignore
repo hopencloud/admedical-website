@@ -1,0 +1,28 @@
+# 비밀키 — 절대 GitHub에 올리지 않음
+.env
+
+# Python 캐시 / 가상환경
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.venv/
+
+# 백업 / 로그 (용량 큼, 로컬 전용)
+_backups/
+logs/
+
+# 이전 데이터/코드 폴더 (참고용, GitHub 업로드 X)
+기존데이터/
+
+# 원본 SQLite — 용량 큼, GitHub 업로드 X
+index.sqlite
+
+# OS / 에디터
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+# Vercel
+.vercel/

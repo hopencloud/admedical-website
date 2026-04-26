@@ -1,0 +1,22 @@
+# 의존성 — `pip install -r requirements.txt` 로 한 번에 설치
+
+# 환경변수 관리
+python-dotenv>=1.0.0
+
+# Supabase 클라이언트
+supabase>=2.5.0
+
+# OpenAI API
+openai>=1.40.0
+
+# HTTP (수집기)
+requests>=2.31.0
+
+# OCR (인덱서) — Korean + English. CPU 모드.
+easyocr>=1.7.0
+
+# 이미지 처리
+Pillow>=10.0.0
+
+# 진행률 표시
+tqdm>=4.66.0

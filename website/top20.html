@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOP 20 표현 — 의료광고 심의 통과 시안 검색</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-900">
+<header class="bg-white border-b border-gray-200">
+    <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+        <a href="/" class="text-xl font-bold text-blue-700">🏥 의료광고 심의 통과 시안</a>
+        <nav class="flex gap-4 text-sm">
+            <a href="/about.html" class="hover:text-blue-700">서비스 소개</a>
+            <a href="/top20.html" class="text-blue-700 font-semibold">TOP 20</a>
+            <a href="/contact.html" class="hover:text-blue-700">문의</a>
+        </nav>
+    </div>
+</header>
+
+<main class="max-w-3xl mx-auto px-4 py-10">
+    <h1 class="text-3xl font-bold mb-2">자주 등장한 표현 TOP 20</h1>
+    <p class="text-gray-600 mb-8">통과 시안에서 자주 등장한 마케팅 가치 있는 표현을 AI가 정제해 보여드립니다.</p>
+
+    <!-- 탭 -->
+    <div class="flex border-b border-gray-200 mb-6">
+        <button id="tab-weekly" class="px-4 py-2 font-semibold border-b-2 border-blue-700 text-blue-700">지난주</button>
+        <button id="tab-monthly" class="px-4 py-2 font-semibold text-gray-500 hover:text-blue-700">지난달</button>
+    </div>
+
+    <div id="period-info" class="text-sm text-gray-500 mb-4"></div>
+
+    <ol id="top20-list" class="space-y-2"></ol>
+
+    <p id="loading" class="text-center text-gray-500 py-8">로딩 중...</p>
+</main>
+
+<footer class="bg-white border-t border-gray-200 mt-16">
+    <div class="max-w-5xl mx-auto px-4 py-6 text-sm text-gray-500">
+        <div class="flex flex-wrap gap-4 mb-2">
+            <a href="/about.html" class="hover:text-blue-700">서비스 소개</a>
+            <a href="/top20.html" class="hover:text-blue-700">TOP 20</a>
+            <a href="/contact.html" class="hover:text-blue-700">문의</a>
+            <a href="/terms.html" class="hover:text-blue-700">이용약관</a>
+            <a href="/privacy.html" class="hover:text-blue-700">개인정보처리방침</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+async function loadTop20(period) {
+    const url = period === "monthly" ? "/assets/data/monthly_top20.json" : "/assets/data/weekly_top20.json";
+    const list = document.getElementById("top20-list");
+    const info = document.getElementById("period-info");
+    const loading = document.getElementById("loading");
+    list.innerHTML = "";
+    info.textContent = "";
+    loading.classList.remove("hidden");
+
+    try {
+        const r = await fetch(url, { cache: "no-store" });
+        if (!r.ok) throw new Error(`fetch failed: ${r.status}`);
+        const data = await r.json();
+        loading.classList.add("hidden");
+        info.textContent = `${data.label} • 광고 ${data.ads_analyzed.toLocaleString()}건 분석 • ${data.method === "ai_refined" ? "AI 정제" : "빈도수 기반"}`;
+        data.top20.forEach((item, i) => {
+            const li = document.createElement("li");
+            li.className = "flex items-center gap-3 bg-white p-3 rounded-lg border border-gray-200 hover:border-blue-300";
+            li.innerHTML = `
+                <span class="w-8 text-center font-bold text-blue-700">${i + 1}</span>
+                <span class="flex-1 font-medium">${escapeHtml(item.expression)}</span>
+                <span class="text-xs text-gray-500">${item.count}건 등장</span>
+            `;
+            list.appendChild(li);
+        });
+        if (data.top20.length === 0) {
+            list.innerHTML = `<p class="text-center text-gray-500 py-8">데이터 없음 (해당 기간 광고가 부족하거나 아직 갱신 전).</p>`;
+        }
+    } catch (e) {
+        loading.classList.add("hidden");
+        list.innerHTML = `<p class="text-center text-gray-500 py-8">아직 ${period === "monthly" ? "지난달" : "지난주"} 데이터가 준비되지 않았습니다.</p>`;
+    }
+}
+
+function escapeHtml(s) {
+    return String(s ?? "").replaceAll("&", "&amp;").replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;").replaceAll('"', "&quot;");
+}
+
+document.getElementById("tab-weekly").addEventListener("click", () => {
+    document.getElementById("tab-weekly").className = "px-4 py-2 font-semibold border-b-2 border-blue-700 text-blue-700";
+    document.getElementById("tab-monthly").className = "px-4 py-2 font-semibold text-gray-500 hover:text-blue-700";
+    loadTop20("weekly");
+});
+document.getElementById("tab-monthly").addEventListener("click", () => {
+    document.getElementById("tab-monthly").className = "px-4 py-2 font-semibold border-b-2 border-blue-700 text-blue-700";
+    document.getElementById("tab-weekly").className = "px-4 py-2 font-semibold text-gray-500 hover:text-blue-700";
+    loadTop20("monthly");
+});
+
+loadTop20("weekly");
+</script>
+</body>
+</html>
