@@ -1,53 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-    <!-- 메인 (현재는 코밍순 placeholder, 정식 오픈 시 검색 페이지로 전환) -->
     <url>
         <loc>https://www.admedical.co.kr/</loc>
-        <lastmod>2026-04-26</lastmod>
+        <lastmod>2026-04-27</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
 
-    <!-- 운영 중인 보조 페이지 -->
     <url>
         <loc>https://www.admedical.co.kr/about.html</loc>
-        <lastmod>2026-04-26</lastmod>
+        <lastmod>2026-04-27</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
 
     <url>
+        <loc>https://www.admedical.co.kr/guide/about-review.html</loc>
+        <lastmod>2026-04-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <url>
+        <loc>https://www.admedical.co.kr/guide/application.html</loc>
+        <lastmod>2026-04-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <url>
+        <loc>https://www.admedical.co.kr/guide/target-media.html</loc>
+        <lastmod>2026-04-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <url>
+        <loc>https://www.admedical.co.kr/guide/exempt.html</loc>
+        <lastmod>2026-04-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <url>
+        <loc>https://www.admedical.co.kr/guide/forbidden-expressions.html</loc>
+        <lastmod>2026-04-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <url>
+        <loc>https://www.admedical.co.kr/guide/review-number.html</loc>
+        <lastmod>2026-04-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://www.admedical.co.kr/guide/faq.html</loc>
+        <lastmod>2026-04-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
         <loc>https://www.admedical.co.kr/contact.html</loc>
-        <lastmod>2026-04-26</lastmod>
+        <lastmod>2026-04-27</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
 
     <url>
         <loc>https://www.admedical.co.kr/terms.html</loc>
-        <lastmod>2026-04-26</lastmod>
+        <lastmod>2026-04-27</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>
     </url>
 
     <url>
         <loc>https://www.admedical.co.kr/privacy.html</loc>
-        <lastmod>2026-04-26</lastmod>
+        <lastmod>2026-04-27</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>
     </url>
-
-    <!--
-        TODO: 정식 오픈 시 추가
-        - https://www.admedical.co.kr/top20.html
-        - https://www.admedical.co.kr/guide/about-review.html
-        - https://www.admedical.co.kr/guide/application.html
-        - https://www.admedical.co.kr/guide/target-media.html
-        - https://www.admedical.co.kr/guide/exempt.html
-        - https://www.admedical.co.kr/guide/forbidden-expressions.html
-        - https://www.admedical.co.kr/guide/review-number.html
-        - https://www.admedical.co.kr/guide/faq.html
-    -->
 
 </urlset>
