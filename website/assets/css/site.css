@@ -1,0 +1,174 @@
+/* 공통 사이트 스타일 — Pretendard 폰트 + 정제된 디자인 토큰 */
+
+/* Pretendard 폰트는 <head>의 <link>로 CDN 로드. 이 파일은 그 폰트를 적용. */
+
+:root {
+    --color-bg: #f6f7f9;
+    --color-card: #ffffff;
+    --color-border: #e7e9ed;
+    --color-border-strong: #d4d8de;
+    --color-text: #0f172a;
+    --color-text-muted: #64748b;
+    --color-text-light: #94a3b8;
+    --color-blue: #2563eb;
+    --color-blue-soft: #eff6ff;
+    --color-accent-soft: #f0f9ff;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+}
+
+body {
+    font-family: 'Pretendard Variable', 'Pretendard', -apple-system,
+        BlinkMacSystemFont, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue',
+        Arial, sans-serif;
+    font-feature-settings: 'tnum', 'ss01';
+    letter-spacing: -0.01em;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+}
+
+/* 글꼴 무게: Pretendard Variable 기준 */
+.font-light    { font-weight: 300; }
+.font-normal   { font-weight: 400; }
+.font-medium   { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+.font-bold     { font-weight: 700; }
+
+/* 카드 공통 (Tailwind 위에 살짝 톤만 보강) */
+.card {
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+}
+
+.card-hover:hover {
+    border-color: #93c5fd;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04),
+                0 4px 12px rgba(15, 23, 42, 0.06);
+    transition: all 0.15s ease;
+}
+
+/* 버튼 */
+.btn-primary {
+    background: var(--color-blue);
+    color: #fff;
+    font-weight: 600;
+    border-radius: 12px;
+    transition: background 0.12s ease;
+}
+.btn-primary:hover { background: #1d4ed8; }
+
+.btn-ghost {
+    background: transparent;
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    transition: all 0.12s ease;
+}
+.btn-ghost:hover {
+    background: #f8fafc;
+    color: var(--color-text);
+    border-color: var(--color-border-strong);
+}
+
+/* 검색 결과의 highlight (mark) */
+mark {
+    background: #dbeafe;
+    color: #1e3a8a;
+    padding: 0 2px;
+    border-radius: 3px;
+}
+
+/* 차트 영역 그리드 보강 */
+canvas {
+    font-family: inherit !important;
+}
+
+/* === 헤더 드롭다운 (데스크톱) === */
+.nav-dropdown {
+    position: relative;
+}
+.nav-dropdown__panel {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: visibility 0s linear 0.15s, opacity 0.15s ease, transform 0.15s ease;
+    position: absolute;
+    top: 100%;
+    left: -8px;
+    margin-top: 6px;
+    min-width: 220px;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+    padding: 6px;
+    z-index: 30;
+}
+.nav-dropdown:hover .nav-dropdown__panel,
+.nav-dropdown:focus-within .nav-dropdown__panel {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0s;
+}
+.nav-dropdown__item {
+    display: block;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    transition: background 0.12s ease, color 0.12s ease;
+}
+.nav-dropdown__item:hover {
+    background: var(--color-blue-soft);
+    color: var(--color-blue);
+}
+
+/* 데스크톱 ▾ 아이콘 */
+.nav-caret {
+    display: inline-block;
+    font-size: 0.7em;
+    margin-left: 2px;
+    transform: translateY(-1px);
+}
+
+/* === 모바일 펼침 (details) === */
+.mobile-group > summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 0.5rem 0;
+    color: #334155;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.mobile-group > summary::-webkit-details-marker { display: none; }
+.mobile-group > summary::after {
+    content: "▾";
+    font-size: 0.75em;
+    color: #94a3b8;
+    transition: transform 0.15s ease;
+}
+.mobile-group[open] > summary::after {
+    transform: rotate(180deg);
+}
+.mobile-group > .mobile-group__items {
+    padding-left: 0.75rem;
+    border-left: 2px solid var(--color-border);
+    margin-left: 0.25rem;
+    margin-bottom: 0.5rem;
+}
+.mobile-group > .mobile-group__items > a {
+    display: block;
+    padding: 0.5rem 0.5rem;
+    color: #475569;
+    border-radius: 6px;
+}
+.mobile-group > .mobile-group__items > a:hover {
+    background: var(--color-blue-soft);
+    color: var(--color-blue);
+}

@@ -99,26 +99,26 @@ function renderRow(row, q) {
     const safeDisplay = escapeHtml(display);
     const safeText = escapeHtml(text);
     return `
-    <article class="bg-white rounded-lg p-4 border border-gray-200 hover:border-blue-300 transition">
-        <div class="flex items-center justify-between gap-2 mb-2">
-            <div class="flex items-center gap-2">
-                <span class="text-xs px-2 py-1 bg-gray-100 rounded text-gray-700 font-mono">${safeDisplay}</span>
-                <span class="text-xs text-gray-500">${escapeHtml(row.review_date || "")}</span>
+    <article class="bg-white rounded-2xl p-5 border border-slate-200 hover:border-brand-500 hover:shadow-soft transition">
+        <div class="flex items-start justify-between gap-3 mb-3">
+            <div class="flex items-center gap-2 flex-wrap">
+                <span class="text-xs px-2.5 py-1 bg-brand-50 text-brand-700 rounded-lg font-mono font-medium">${safeDisplay}</span>
+                <span class="text-xs text-slate-500 tabular-nums">${escapeHtml(row.review_date || "")}</span>
             </div>
             <button onclick="reportError('${safeDisplay}', \`${safeText.replace(/`/g, "\\`")}\`, '${escapeHtml(numberOnly)}')"
                     title="내용 오류 및 병원명 노출 시 제보해 주세요"
-                    class="text-xs px-3 py-1.5 bg-red-50 text-red-700 border border-red-200 rounded-lg hover:bg-red-100 hover:border-red-400 font-semibold">
-                🚨 오류제보하기
+                    class="shrink-0 text-xs px-3 py-1.5 bg-rose-50 text-rose-700 border border-rose-200 rounded-lg hover:bg-rose-100 hover:border-rose-400 font-semibold transition">
+                오류 제보
             </button>
         </div>
-        <p class="text-sm leading-relaxed text-gray-800 whitespace-pre-wrap">${highlight(text, q)}</p>
-        <div class="mt-3 pt-3 border-t border-gray-100 flex flex-wrap items-center gap-3 text-xs">
+        <p class="text-[15px] leading-relaxed text-slate-800 whitespace-pre-wrap">${highlight(text, q)}</p>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex flex-wrap items-center gap-3 text-xs">
             <button onclick="copyText('${escapeHtml(numberOnly)}')"
-                    class="px-2 py-1 border border-gray-300 rounded hover:bg-gray-100 hover:border-blue-300 text-gray-700">
-                📋 심의번호 복사
+                    class="px-3 py-1.5 border border-slate-300 rounded-lg hover:bg-slate-50 hover:border-brand-500 text-slate-700 font-medium transition">
+                심의번호 복사
             </button>
-            <a href="${ADMEDICAL_LINK}" target="_blank" class="text-blue-700 hover:underline">
-                → 심의 시안은 의료광고심의위원회에서 확인하세요
+            <a href="${ADMEDICAL_LINK}" target="_blank" class="text-brand-600 hover:text-brand-700 hover:underline font-medium">
+                심의 시안은 의료광고심의위원회에서 확인하세요 →
             </a>
         </div>
     </article>`;

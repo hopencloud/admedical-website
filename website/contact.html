@@ -5,66 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>문의 — 의료광고 심의 통과 시안 검색</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: {
+                fontFamily: { sans: ['"Pretendard Variable"', 'Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'] },
+                colors: { brand: { 50: '#eff6ff', 100: '#dbeafe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 900: '#1e3a8a' } },
+                boxShadow: { soft: '0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 12px rgba(15, 23, 42, 0.04)' },
+            } },
+        };
+    </script>
+    <link rel="stylesheet" href="/assets/css/site.css">
 </head>
-<body class="bg-gray-50 text-gray-900">
-<header class="bg-white border-b border-gray-200">
-    <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between gap-3">
-        <a href="/" class="text-base md:text-xl font-bold text-blue-700 truncate">🏥 의료광고 심의 통과 시안</a>
-        <nav class="hidden md:flex gap-4 text-sm shrink-0">
-            <a href="/about.html" class="hover:text-blue-700">서비스 소개</a>
-            <a href="/top20.html" class="hover:text-blue-700">TOP 20</a>
-            <a href="/contact.html" class="text-blue-700 font-semibold">문의</a>
-        </nav>
-        <button id="mobile-menu-btn" class="md:hidden text-2xl text-gray-700 px-2" aria-label="메뉴 열기">☰</button>
-    </div>
-    <nav id="mobile-menu" class="hidden md:hidden border-t border-gray-100 px-4 py-2 text-sm">
-        <a href="/about.html" class="block py-2 hover:text-blue-700">서비스 소개</a>
-        <a href="/top20.html" class="block py-2 hover:text-blue-700">TOP 20</a>
-        <a href="/contact.html" class="block py-2 text-blue-700 font-semibold">문의</a>
-    </nav>
-</header>
+<body class="bg-slate-50 text-slate-900 antialiased">
 
-<script>
-document.getElementById("mobile-menu-btn")?.addEventListener("click", () => {
-    document.getElementById("mobile-menu")?.classList.toggle("hidden");
-});
-</script>
+<!-- 공통 헤더 (assets/js/site.js로 주입) -->
+<div id="site-header"></div>
 
-<main class="max-w-2xl mx-auto px-4 py-10">
-    <h1 class="text-3xl font-bold mb-6">문의</h1>
-    <p class="mb-4">서비스 관련 문의, 오류 신고, 광고 게재 제휴 등은 아래 이메일로 보내주세요.</p>
-    <div class="bg-white p-6 rounded-lg border border-gray-200">
-        <p class="text-lg font-semibold text-blue-700">gkfla2@gmail.com</p>
+<main class="max-w-2xl mx-auto px-4 py-12">
+    <h1 class="text-3xl md:text-4xl font-bold mb-3 tracking-tight">문의</h1>
+    <p class="text-slate-600 mb-8">서비스 관련 문의, 오류 신고, 광고 게재 제휴 등은 사이트 내 검색 결과의 <strong>오류 제보</strong> 버튼 또는 아래 폼을 이용해주세요.</p>
+
+    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-soft mb-8">
+        <p class="text-sm text-slate-500 mb-2">관리자에게 직접 메일</p>
+        <p class="text-lg font-semibold text-brand-600">검색 결과 카드의 [오류 제보] 버튼 사용 권장</p>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+            메일 주소 노출 방지를 위해 별도의 메일 주소 게시는 하지 않고 있습니다.
+            검색 결과 화면의 [오류 제보] 버튼을 누르면 관리자에게 자동으로 메일이 전달됩니다.
+        </p>
     </div>
 
-    <h2 class="text-xl font-semibold mt-10 mb-3">자주 묻는 질문</h2>
-    <div class="space-y-4">
-        <details class="bg-white p-4 rounded-lg border border-gray-200">
-            <summary class="font-semibold cursor-pointer">원본 시안 이미지를 볼 수 있나요?</summary>
-            <p class="mt-2 text-sm text-gray-700">아니요. 본 사이트는 통과된 광고 문구만 인덱싱하며 이미지는 제공하지 않습니다. 원본은 의료광고심의위원회 사이트에서 심의번호로 직접 조회 가능합니다.</p>
+    <h2 class="text-xl font-bold mb-4 tracking-tight">자주 묻는 질문</h2>
+    <div class="space-y-3">
+        <details class="bg-white p-5 rounded-2xl border border-slate-200 shadow-soft">
+            <summary class="font-semibold cursor-pointer text-slate-900">원본 시안 이미지를 볼 수 있나요?</summary>
+            <p class="mt-3 text-sm text-slate-700 leading-relaxed">아니요. 본 사이트는 통과된 광고 문구만 인덱싱하며 이미지는 제공하지 않습니다. 원본은 의료광고심의위원회 사이트에서 심의번호로 직접 조회 가능합니다.</p>
         </details>
-        <details class="bg-white p-4 rounded-lg border border-gray-200">
-            <summary class="font-semibold cursor-pointer">병원명/의사명이 노출되어있는데요?</summary>
-            <p class="mt-2 text-sm text-gray-700">자동 마스킹이 100% 완벽하지 않을 수 있습니다. 노출된 사례가 있으면 위 이메일로 심의번호와 함께 알려주시면 즉시 처리합니다.</p>
+        <details class="bg-white p-5 rounded-2xl border border-slate-200 shadow-soft">
+            <summary class="font-semibold cursor-pointer text-slate-900">병원명/의사명이 노출되어있는데요?</summary>
+            <p class="mt-3 text-sm text-slate-700 leading-relaxed">자동 마스킹이 100% 완벽하지 않을 수 있습니다. 노출된 사례를 발견하시면 검색 결과 카드의 <strong>오류 제보</strong> 버튼을 눌러 알려주세요. 즉시 처리합니다.</p>
         </details>
-        <details class="bg-white p-4 rounded-lg border border-gray-200">
-            <summary class="font-semibold cursor-pointer">데이터는 얼마나 자주 업데이트되나요?</summary>
-            <p class="mt-2 text-sm text-gray-700">매일 새벽 5시에 자동으로 신규 통과 시안을 수집·인덱싱합니다.</p>
+        <details class="bg-white p-5 rounded-2xl border border-slate-200 shadow-soft">
+            <summary class="font-semibold cursor-pointer text-slate-900">데이터는 얼마나 자주 업데이트되나요?</summary>
+            <p class="mt-3 text-sm text-slate-700 leading-relaxed">매일 새벽 5시에 자동으로 신규 통과 시안을 수집·인덱싱합니다.</p>
         </details>
     </div>
 </main>
 
-<footer class="bg-white border-t border-gray-200 mt-16">
-    <div class="max-w-5xl mx-auto px-4 py-6 text-sm text-gray-500">
-        <div class="flex flex-wrap gap-4 mb-2">
-            <a href="/about.html" class="hover:text-blue-700">서비스 소개</a>
-            <a href="/top20.html" class="hover:text-blue-700">TOP 20</a>
-            <a href="/contact.html" class="hover:text-blue-700">문의</a>
-            <a href="/terms.html" class="hover:text-blue-700">이용약관</a>
-            <a href="/privacy.html" class="hover:text-blue-700">개인정보처리방침</a>
+<footer class="bg-white border-t border-slate-200 mt-20">
+    <div class="max-w-5xl mx-auto px-4 py-8 text-sm text-slate-500">
+        <div class="flex flex-wrap gap-5 mb-3 font-medium">
+            <a href="/about.html" class="hover:text-brand-600">서비스 소개</a>
+            <a href="/top20.html" class="hover:text-brand-600">심의통과 TOP 20 키워드</a>
+            <a href="/contact.html" class="hover:text-brand-600">문의</a>
+            <a href="/terms.html" class="hover:text-brand-600">이용약관</a>
+            <a href="/privacy.html" class="hover:text-brand-600">개인정보처리방침</a>
         </div>
     </div>
 </footer>
+<script src="/assets/js/site.js"></script>
 </body>
 </html>

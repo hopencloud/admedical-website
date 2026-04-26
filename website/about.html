@@ -5,83 +5,89 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>서비스 소개 — 의료광고 심의 통과 시안 검색</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: {
+                fontFamily: { sans: ['"Pretendard Variable"', 'Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'] },
+                colors: { brand: { 50: '#eff6ff', 100: '#dbeafe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 900: '#1e3a8a' } },
+                boxShadow: { soft: '0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 12px rgba(15, 23, 42, 0.04)' },
+            } },
+        };
+    </script>
+    <link rel="stylesheet" href="/assets/css/site.css">
 </head>
-<body class="bg-gray-50 text-gray-900">
-<header class="bg-white border-b border-gray-200">
-    <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between gap-3">
-        <a href="/" class="text-base md:text-xl font-bold text-blue-700 truncate">🏥 의료광고 심의 통과 시안</a>
-        <nav class="hidden md:flex gap-4 text-sm shrink-0">
-            <a href="/about.html" class="text-blue-700 font-semibold">서비스 소개</a>
-            <a href="/top20.html" class="hover:text-blue-700">TOP 20</a>
-            <a href="/contact.html" class="hover:text-blue-700">문의</a>
-        </nav>
-        <button id="mobile-menu-btn" class="md:hidden text-2xl text-gray-700 px-2" aria-label="메뉴 열기">☰</button>
-    </div>
-    <nav id="mobile-menu" class="hidden md:hidden border-t border-gray-100 px-4 py-2 text-sm">
-        <a href="/about.html" class="block py-2 text-blue-700 font-semibold">서비스 소개</a>
-        <a href="/top20.html" class="block py-2 hover:text-blue-700">TOP 20</a>
-        <a href="/contact.html" class="block py-2 hover:text-blue-700">문의</a>
-    </nav>
-</header>
+<body class="bg-slate-50 text-slate-900 antialiased">
 
-<script>
-document.getElementById("mobile-menu-btn")?.addEventListener("click", () => {
-    document.getElementById("mobile-menu")?.classList.toggle("hidden");
-});
-</script>
+<!-- 공통 헤더 (assets/js/site.js로 주입) -->
+<div id="site-header"></div>
 
-<main class="max-w-3xl mx-auto px-4 py-10 prose prose-blue">
-    <h1 class="text-3xl font-bold mb-6">서비스 소개</h1>
+<main class="max-w-3xl mx-auto px-4 py-12">
+    <h1 class="text-3xl md:text-4xl font-bold mb-8 tracking-tight">서비스 소개</h1>
 
-    <h2 class="text-xl font-semibold mt-8 mb-3">무엇을 하는 사이트인가요?</h2>
-    <p>대한의사협회 의료광고심의위원회를 통과한 광고 시안에서, 마케터에게 도움이 될 만한 광고 문구를 키워드로 검색할 수 있는 서비스입니다.</p>
+    <section class="bg-white rounded-2xl p-6 border border-slate-200 shadow-soft mb-6">
+        <h2 class="text-lg font-bold mb-3">무엇을 하는 사이트인가요?</h2>
+        <p class="text-slate-700 leading-relaxed">대한의사협회 의료광고심의위원회를 통과한 광고 시안에서, 마케터에게 도움이 될 만한 광고 문구를 키워드로 검색할 수 있는 서비스입니다.</p>
+    </section>
 
-    <h2 class="text-xl font-semibold mt-8 mb-3">왜 만들었나요?</h2>
-    <p>병의원 마케팅 담당자가 의협 사이트에서 심의번호를 하나씩 입력해 통과 시안을 확인하기는 어렵습니다. 이 사이트는 통과된 시안의 광고 문구만 모아서 검색 가능하게 만들었습니다.</p>
+    <section class="bg-white rounded-2xl p-6 border border-slate-200 shadow-soft mb-6">
+        <h2 class="text-lg font-bold mb-3">왜 만들었나요?</h2>
+        <p class="text-slate-700 leading-relaxed">병의원 마케팅 담당자가 의협 사이트에서 심의번호를 하나씩 입력해 통과 시안을 확인하기는 어렵습니다. 이 사이트는 통과된 시안의 광고 문구만 모아서 검색 가능하게 만들었습니다.</p>
+    </section>
 
-    <h2 class="text-xl font-semibold mt-8 mb-3">개인정보·저작권 보호</h2>
-    <ul class="list-disc pl-5 space-y-2">
-        <li><strong>이미지 노출 금지</strong>: 원본 시안 이미지는 게시하지 않습니다. 텍스트만 인덱싱합니다.</li>
-        <li><strong>식별 정보 마스킹</strong>: 병원/의원/클리닉 이름, 의사 이름, 전화번호, 주소는 모두 자동 제거됩니다.</li>
-        <li>원본 시안은 <a href="https://www.admedical.org/application/approval_confirm.do" target="_blank">의료광고심의위원회 사이트</a>에서 심의번호로 직접 조회하세요.</li>
-    </ul>
+    <section class="bg-white rounded-2xl p-6 border border-slate-200 shadow-soft mb-6">
+        <h2 class="text-lg font-bold mb-3">개인정보·저작권 보호</h2>
+        <ul class="list-disc pl-5 space-y-2 text-slate-700">
+            <li><strong class="font-semibold">이미지 노출 금지</strong>: 원본 시안 이미지는 게시하지 않습니다. 텍스트만 인덱싱합니다.</li>
+            <li><strong class="font-semibold">식별 정보 마스킹</strong>: 병원/의원/클리닉 이름, 의사 이름, 전화번호, 주소는 모두 자동 제거됩니다.</li>
+            <li>원본 시안은 <a href="https://www.admedical.org/application/approval_confirm.do" target="_blank" class="text-brand-600 hover:underline">의료광고심의위원회 사이트</a>에서 심의번호로 직접 조회하세요.</li>
+        </ul>
+    </section>
 
-    <h2 class="text-xl font-semibold mt-8 mb-3">의료광고 심의 절차 (간단 안내)</h2>
-    <ol class="list-decimal pl-5 space-y-2">
-        <li><strong>심의 신청</strong>: 의료광고심의위원회에 광고 시안 + 신청서 제출.</li>
-        <li><strong>심의</strong>: 위원회가 의료법 위반 여부 확인.</li>
-        <li><strong>승인</strong>: 통과 시 심의번호 부여 (예: 260424-중-211923).</li>
-        <li><strong>게재</strong>: 통과한 광고만 게재 가능. 통과 후 3년 유효.</li>
-    </ol>
+    <section class="bg-white rounded-2xl p-6 border border-slate-200 shadow-soft mb-6">
+        <h2 class="text-lg font-bold mb-3">의료광고 심의 절차 (간단 안내)</h2>
+        <ol class="list-decimal pl-5 space-y-2 text-slate-700">
+            <li><strong class="font-semibold">심의 신청</strong>: 의료광고심의위원회에 광고 시안 + 신청서 제출.</li>
+            <li><strong class="font-semibold">심의</strong>: 위원회가 의료법 위반 여부 확인.</li>
+            <li><strong class="font-semibold">승인</strong>: 통과 시 심의번호 부여 (예: 260424-중-211923).</li>
+            <li><strong class="font-semibold">게재</strong>: 통과한 광고만 게재 가능. 통과 후 3년 유효.</li>
+        </ol>
+    </section>
 
-    <h2 class="text-xl font-semibold mt-8 mb-3">심의 대상 광고</h2>
-    <ul class="list-disc pl-5 space-y-1">
-        <li>신문/잡지/방송/인터넷 등 매체에 게재되는 의료광고</li>
-        <li>전단지, 옥외광고물, 교통수단 광고</li>
-        <li>온라인 검색광고, SNS 광고</li>
-    </ul>
+    <section class="bg-white rounded-2xl p-6 border border-slate-200 shadow-soft mb-6">
+        <h2 class="text-lg font-bold mb-3">심의 대상 광고</h2>
+        <ul class="list-disc pl-5 space-y-1 text-slate-700">
+            <li>신문/잡지/방송/인터넷 등 매체에 게재되는 의료광고</li>
+            <li>전단지, 옥외광고물, 교통수단 광고</li>
+            <li>온라인 검색광고, SNS 광고</li>
+        </ul>
+    </section>
 
-    <h2 class="text-xl font-semibold mt-8 mb-3">심의 제외 광고</h2>
-    <ul class="list-disc pl-5 space-y-1">
-        <li>의료기관 안내판/간판</li>
-        <li>의료기관 자체 홈페이지</li>
-        <li>학회/연수강좌 안내 등 교육·학술 목적 광고</li>
-    </ul>
+    <section class="bg-white rounded-2xl p-6 border border-slate-200 shadow-soft">
+        <h2 class="text-lg font-bold mb-3">심의 제외 광고</h2>
+        <ul class="list-disc pl-5 space-y-1 text-slate-700">
+            <li>의료기관 안내판/간판</li>
+            <li>의료기관 자체 홈페이지</li>
+            <li>학회/연수강좌 안내 등 교육·학술 목적 광고</li>
+        </ul>
+    </section>
 
-    <p class="mt-10 text-sm text-gray-500">* 본 안내는 일반 정보 제공 목적이며, 정확한 심의 기준은 의료광고심의위원회에 직접 문의하세요.</p>
+    <p class="mt-8 text-sm text-slate-500">* 본 안내는 일반 정보 제공 목적이며, 정확한 심의 기준은 의료광고심의위원회에 직접 문의하세요.</p>
 </main>
 
-<footer class="bg-white border-t border-gray-200 mt-16">
-    <div class="max-w-5xl mx-auto px-4 py-6 text-sm text-gray-500">
-        <div class="flex flex-wrap gap-4 mb-2">
-            <a href="/about.html" class="hover:text-blue-700">서비스 소개</a>
-            <a href="/top20.html" class="hover:text-blue-700">TOP 20</a>
-            <a href="/contact.html" class="hover:text-blue-700">문의</a>
-            <a href="/terms.html" class="hover:text-blue-700">이용약관</a>
-            <a href="/privacy.html" class="hover:text-blue-700">개인정보처리방침</a>
+<footer class="bg-white border-t border-slate-200 mt-20">
+    <div class="max-w-5xl mx-auto px-4 py-8 text-sm text-slate-500">
+        <div class="flex flex-wrap gap-5 mb-3 font-medium">
+            <a href="/about.html" class="hover:text-brand-600">서비스 소개</a>
+            <a href="/top20.html" class="hover:text-brand-600">심의통과 TOP 20 키워드</a>
+            <a href="/contact.html" class="hover:text-brand-600">문의</a>
+            <a href="/terms.html" class="hover:text-brand-600">이용약관</a>
+            <a href="/privacy.html" class="hover:text-brand-600">개인정보처리방침</a>
         </div>
     </div>
 </footer>
+<script src="/assets/js/site.js"></script>
 </body>
 </html>

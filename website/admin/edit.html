@@ -5,51 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>관리자 — 광고 문구 수정</title>
     <meta name="robots" content="noindex,nofollow">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: {
+                fontFamily: { sans: ['"Pretendard Variable"', 'Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'] },
+                colors: { brand: { 50: '#eff6ff', 600: '#2563eb', 700: '#1d4ed8' } },
+                boxShadow: { soft: '0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 12px rgba(15, 23, 42, 0.04)' },
+            } },
+        };
+    </script>
+    <link rel="stylesheet" href="/assets/css/site.css">
 </head>
-<body class="bg-gray-100 min-h-screen p-4 md:p-8 text-gray-900">
+<body class="bg-slate-50 min-h-screen p-4 md:p-8 text-slate-900 antialiased">
 
 <div class="max-w-3xl mx-auto">
-    <div class="bg-white rounded-lg shadow p-6">
-        <h1 class="text-2xl font-bold mb-2">🛠 광고 문구 수정 (관리자 전용)</h1>
-        <p class="text-sm text-gray-600 mb-6">오류 제보로 받은 메일의 링크를 통해 들어오셨습니다. 수정 후 [저장]을 누르면 사이트 검색 결과에 즉시 반영됩니다.</p>
+    <div class="bg-white rounded-2xl shadow-soft p-7 border border-slate-200">
+        <h1 class="text-2xl font-bold mb-2 tracking-tight">광고 문구 수정 <span class="text-sm font-normal text-slate-500 ml-2">관리자 전용</span></h1>
+        <p class="text-sm text-slate-600 mb-7">오류 제보 메일의 링크로 들어오셨습니다. 수정 후 [저장]을 누르면 사이트 검색 결과에 즉시 반영됩니다.</p>
 
         <!-- 로그인 단계 -->
         <div id="login-step">
-            <label class="block text-sm font-medium mb-1">관리자 비밀번호</label>
+            <label class="block text-sm font-medium mb-2 text-slate-700">관리자 비밀번호</label>
             <input id="password" type="password" autocomplete="current-password"
-                   class="w-full px-3 py-2 border border-gray-300 rounded mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                   class="w-full px-4 py-3 border border-slate-300 rounded-xl mb-4 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
             <button id="login-btn"
-                    class="w-full px-4 py-2 bg-blue-600 text-white rounded font-semibold hover:bg-blue-700">
+                    class="w-full px-4 py-3 bg-brand-600 text-white rounded-xl font-semibold hover:bg-brand-700 transition">
                 불러오기
             </button>
-            <p id="login-error" class="hidden mt-3 text-sm text-red-700"></p>
+            <p id="login-error" class="hidden mt-3 text-sm text-rose-700"></p>
         </div>
 
         <!-- 편집 단계 -->
         <div id="editor-step" class="hidden">
-            <div class="grid grid-cols-2 gap-3 text-sm mb-4">
+            <div class="grid grid-cols-2 gap-3 text-sm mb-5 p-4 bg-slate-50 rounded-xl border border-slate-200">
                 <div>
-                    <span class="text-gray-500">심의번호</span><br>
-                    <span id="meta-display" class="font-mono font-semibold"></span>
+                    <span class="text-slate-500 text-xs">심의번호</span><br>
+                    <span id="meta-display" class="font-mono font-semibold text-slate-900"></span>
                 </div>
                 <div>
-                    <span class="text-gray-500">심의일</span><br>
-                    <span id="meta-date" class="font-mono"></span>
+                    <span class="text-slate-500 text-xs">심의일</span><br>
+                    <span id="meta-date" class="font-mono text-slate-900"></span>
                 </div>
             </div>
 
-            <label class="block text-sm font-medium mb-1">광고 문구 (직접 수정)</label>
+            <label class="block text-sm font-medium mb-2 text-slate-700">광고 문구 (직접 수정)</label>
             <textarea id="ocr-text" rows="14"
-                      class="w-full px-3 py-2 border border-gray-300 rounded font-mono text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-            <p class="text-xs text-gray-500 mt-1">병원/의사명·연락처가 노출되어 있으면 그 부분만 지우거나 빈칸으로 두세요. 광고 문구는 그대로 유지.</p>
+                      class="w-full px-4 py-3 border border-slate-300 rounded-xl font-mono text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500"></textarea>
+            <p class="text-xs text-slate-500 mt-2">병원/의사명·연락처가 노출되어 있으면 그 부분만 지우거나 빈칸으로 두세요. 광고 문구는 그대로 유지.</p>
 
-            <div class="flex gap-3 mt-4">
+            <div class="flex gap-3 mt-5">
                 <button id="save-btn"
-                        class="flex-1 px-4 py-2 bg-green-600 text-white rounded font-semibold hover:bg-green-700">
+                        class="flex-1 px-4 py-3 bg-emerald-600 text-white rounded-xl font-semibold hover:bg-emerald-700 transition">
                     저장
                 </button>
-                <a href="/" class="px-4 py-2 border border-gray-300 rounded hover:bg-gray-50 text-center">
+                <a href="/" class="px-5 py-3 border border-slate-300 rounded-xl hover:bg-slate-50 text-center font-medium transition">
                     취소
                 </a>
             </div>

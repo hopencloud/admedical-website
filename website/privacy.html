@@ -5,84 +5,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>개인정보처리방침 — 의료광고 심의 통과 시안 검색</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: {
+                fontFamily: { sans: ['"Pretendard Variable"', 'Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'] },
+                colors: { brand: { 50: '#eff6ff', 100: '#dbeafe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 900: '#1e3a8a' } },
+                boxShadow: { soft: '0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 12px rgba(15, 23, 42, 0.04)' },
+            } },
+        };
+    </script>
+    <link rel="stylesheet" href="/assets/css/site.css">
 </head>
-<body class="bg-gray-50 text-gray-900">
-<header class="bg-white border-b border-gray-200">
-    <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between gap-3">
-        <a href="/" class="text-base md:text-xl font-bold text-blue-700 truncate">🏥 의료광고 심의 통과 시안</a>
-        <nav class="hidden md:flex gap-4 text-sm shrink-0">
-            <a href="/about.html" class="hover:text-blue-700">서비스 소개</a>
-            <a href="/top20.html" class="hover:text-blue-700">TOP 20</a>
-            <a href="/contact.html" class="hover:text-blue-700">문의</a>
-        </nav>
-        <button id="mobile-menu-btn" class="md:hidden text-2xl text-gray-700 px-2" aria-label="메뉴 열기">☰</button>
+<body class="bg-slate-50 text-slate-900 antialiased">
+
+<!-- 공통 헤더 (assets/js/site.js로 주입) -->
+<div id="site-header"></div>
+
+<main class="max-w-3xl mx-auto px-4 py-12 text-sm leading-relaxed">
+    <h1 class="text-3xl md:text-4xl font-bold mb-3 tracking-tight">개인정보처리방침</h1>
+    <p class="text-slate-500 mb-10">최종 개정일: 2026-04-26</p>
+
+    <div class="bg-white rounded-2xl p-7 border border-slate-200 shadow-soft space-y-6 text-slate-700">
+        <section>
+            <h2 class="text-base font-bold mb-2 text-slate-900">1. 수집하는 개인정보</h2>
+            <p>본 서비스는 회원가입을 받지 않으며, 이용자로부터 개인정보를 직접 수집하지 않습니다.</p>
+        </section>
+
+        <section>
+            <h2 class="text-base font-bold mb-2 text-slate-900">2. 자동 수집 정보</h2>
+            <p class="mb-2">호스팅 제공자(Vercel)와 데이터베이스 제공자(Supabase)는 서비스 운영을 위해 다음 정보를 자동으로 수집할 수 있습니다:</p>
+            <ul class="list-disc pl-5 space-y-1">
+                <li>접속 IP 주소</li>
+                <li>접속 시각, 브라우저 종류, 사용 OS</li>
+                <li>이전 페이지 URL (referrer)</li>
+            </ul>
+            <p class="mt-2">이 정보는 보안 모니터링 및 장애 대응 목적에 한해 사용됩니다.</p>
+        </section>
+
+        <section>
+            <h2 class="text-base font-bold mb-2 text-slate-900">3. 의료기관 정보 마스킹</h2>
+            <p class="mb-2">본 서비스는 의료광고심의위원회 통과 시안의 광고 문구를 인덱싱하면서, 다음 정보를 자동으로 제거(마스킹)합니다:</p>
+            <ul class="list-disc pl-5 space-y-1">
+                <li>의료기관명 (병원/의원/클리닉/한의원/치과 등 고유명사)</li>
+                <li>의료진 이름 (원장/교수/박사/전문의 등)</li>
+                <li>전화번호, 팩스번호, 카카오톡 ID</li>
+                <li>주소, 위치 안내 (역, 건물, 층 등)</li>
+                <li>홈페이지 URL, SNS 계정</li>
+            </ul>
+            <p class="mt-2">자동 마스킹이 100% 완벽하지 않을 수 있으며, 누락된 사례를 발견하시면 즉시 조치합니다.</p>
+        </section>
+
+        <section>
+            <h2 class="text-base font-bold mb-2 text-slate-900">4. 쿠키 사용</h2>
+            <p>본 서비스 자체는 쿠키를 사용하지 않습니다. 다만 호스팅 제공자가 보안 목적으로 쿠키를 사용할 수 있습니다.</p>
+        </section>
+
+        <section>
+            <h2 class="text-base font-bold mb-2 text-slate-900">5. 외부 서비스</h2>
+            <p class="mb-2">본 사이트는 다음 외부 서비스를 사용합니다:</p>
+            <ul class="list-disc pl-5 space-y-1">
+                <li>Vercel (정적 호스팅)</li>
+                <li>Supabase (데이터베이스)</li>
+                <li>tailwindcss CDN, Chart.js CDN, jsdelivr CDN, Pretendard CDN (스타일·폰트·차트)</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="text-base font-bold mb-2 text-slate-900">6. 문의</h2>
+            <p>개인정보 관련 문의는 사이트 내 검색 결과의 [오류 제보] 버튼을 이용해주세요. 관리자에게 자동 전달됩니다.</p>
+        </section>
     </div>
-    <nav id="mobile-menu" class="hidden md:hidden border-t border-gray-100 px-4 py-2 text-sm">
-        <a href="/about.html" class="block py-2 hover:text-blue-700">서비스 소개</a>
-        <a href="/top20.html" class="block py-2 hover:text-blue-700">TOP 20</a>
-        <a href="/contact.html" class="block py-2 hover:text-blue-700">문의</a>
-    </nav>
-</header>
-
-<script>
-document.getElementById("mobile-menu-btn")?.addEventListener("click", () => {
-    document.getElementById("mobile-menu")?.classList.toggle("hidden");
-});
-</script>
-
-<main class="max-w-3xl mx-auto px-4 py-10 text-sm leading-relaxed">
-    <h1 class="text-3xl font-bold mb-6">개인정보처리방침</h1>
-    <p class="text-gray-500 mb-8">최종 개정일: 2026-04-26</p>
-
-    <h2 class="text-lg font-semibold mt-6 mb-2">1. 수집하는 개인정보</h2>
-    <p>본 서비스는 회원가입을 받지 않으며, 이용자로부터 개인정보를 직접 수집하지 않습니다.</p>
-
-    <h2 class="text-lg font-semibold mt-6 mb-2">2. 자동 수집 정보</h2>
-    <p>호스팅 제공자(Vercel)와 데이터베이스 제공자(Supabase)는 서비스 운영을 위해 다음 정보를 자동으로 수집할 수 있습니다:</p>
-    <ul class="list-disc pl-5 mt-2 space-y-1">
-        <li>접속 IP 주소</li>
-        <li>접속 시각, 브라우저 종류, 사용 OS</li>
-        <li>이전 페이지 URL (referrer)</li>
-    </ul>
-    <p class="mt-2">이 정보는 보안 모니터링 및 장애 대응 목적에 한해 사용됩니다.</p>
-
-    <h2 class="text-lg font-semibold mt-6 mb-2">3. 의료기관 정보 마스킹</h2>
-    <p>본 서비스는 의료광고심의위원회 통과 시안의 광고 문구를 인덱싱하면서, 다음 정보를 자동으로 제거(마스킹)합니다:</p>
-    <ul class="list-disc pl-5 mt-2 space-y-1">
-        <li>의료기관명 (병원/의원/클리닉/한의원/치과 등 고유명사)</li>
-        <li>의료진 이름 (원장/교수/박사/전문의 등)</li>
-        <li>전화번호, 팩스번호, 카카오톡 ID</li>
-        <li>주소, 위치 안내 (역, 건물, 층 등)</li>
-        <li>홈페이지 URL, SNS 계정</li>
-    </ul>
-    <p class="mt-2">자동 마스킹이 100% 완벽하지 않을 수 있으며, 누락된 사례를 발견하시면 즉시 조치합니다.</p>
-
-    <h2 class="text-lg font-semibold mt-6 mb-2">4. 쿠키 사용</h2>
-    <p>본 서비스 자체는 쿠키를 사용하지 않습니다. 다만 호스팅 제공자가 보안 목적으로 쿠키를 사용할 수 있습니다.</p>
-
-    <h2 class="text-lg font-semibold mt-6 mb-2">5. 외부 서비스</h2>
-    <p>본 사이트는 다음 외부 서비스를 사용합니다:</p>
-    <ul class="list-disc pl-5 mt-2 space-y-1">
-        <li>Vercel (정적 호스팅)</li>
-        <li>Supabase (데이터베이스)</li>
-        <li>tailwindcss CDN, Chart.js CDN, jsdelivr CDN (스타일·차트)</li>
-    </ul>
-
-    <h2 class="text-lg font-semibold mt-6 mb-2">6. 문의</h2>
-    <p>개인정보 관련 문의: gkfla2@gmail.com</p>
 </main>
 
-<footer class="bg-white border-t border-gray-200 mt-16">
-    <div class="max-w-5xl mx-auto px-4 py-6 text-sm text-gray-500">
-        <div class="flex flex-wrap gap-4 mb-2">
-            <a href="/about.html" class="hover:text-blue-700">서비스 소개</a>
-            <a href="/top20.html" class="hover:text-blue-700">TOP 20</a>
-            <a href="/contact.html" class="hover:text-blue-700">문의</a>
-            <a href="/terms.html" class="hover:text-blue-700">이용약관</a>
-            <a href="/privacy.html" class="hover:text-blue-700">개인정보처리방침</a>
+<footer class="bg-white border-t border-slate-200 mt-20">
+    <div class="max-w-5xl mx-auto px-4 py-8 text-sm text-slate-500">
+        <div class="flex flex-wrap gap-5 mb-3 font-medium">
+            <a href="/about.html" class="hover:text-brand-600">서비스 소개</a>
+            <a href="/top20.html" class="hover:text-brand-600">심의통과 TOP 20 키워드</a>
+            <a href="/contact.html" class="hover:text-brand-600">문의</a>
+            <a href="/terms.html" class="hover:text-brand-600">이용약관</a>
+            <a href="/privacy.html" class="hover:text-brand-600">개인정보처리방침</a>
         </div>
     </div>
 </footer>
+<script src="/assets/js/site.js"></script>
 </body>
 </html>

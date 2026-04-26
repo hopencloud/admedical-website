@@ -3,59 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TOP 20 표현 — 의료광고 심의 통과 시안 검색</title>
+    <title>심의통과 TOP 20 키워드 — 의료광고 심의 통과 시안 검색</title>
+    <meta name="description" content="대한의사협회 의료광고심의위원회 통과 시안에서 자주 등장한 마케팅 가치 있는 표현 TOP 20을 AI가 정제해 보여드립니다. 지난주·지난달 단위로 갱신.">
+    <meta name="keywords" content="의료광고 심의통과, 의료광고 키워드, TOP 20 키워드, 의료광고 문구, 의료광고 마케팅">
+    <link rel="canonical" href="https://www.admedical.co.kr/top20.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="심의통과 TOP 20 키워드 — 의료광고 마케팅 인사이트">
+    <meta property="og:description" content="의료광고심의위원회 통과 시안에서 자주 등장한 마케팅 가치 있는 표현 TOP 20.">
+    <meta property="og:url" content="https://www.admedical.co.kr/top20.html">
+    <meta property="og:image" content="https://www.admedical.co.kr/assets/img/ogimage.png">
+    <meta name="naver:robots" content="all">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: {
+                fontFamily: { sans: ['"Pretendard Variable"', 'Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'] },
+                colors: { brand: { 50: '#eff6ff', 100: '#dbeafe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 900: '#1e3a8a' } },
+                boxShadow: { soft: '0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 12px rgba(15, 23, 42, 0.04)' },
+            } },
+        };
+    </script>
+    <link rel="stylesheet" href="/assets/css/site.css">
 </head>
-<body class="bg-gray-50 text-gray-900">
-<header class="bg-white border-b border-gray-200">
-    <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between gap-3">
-        <a href="/" class="text-base md:text-xl font-bold text-blue-700 truncate">🏥 의료광고 심의 통과 시안</a>
-        <nav class="hidden md:flex gap-4 text-sm shrink-0">
-            <a href="/about.html" class="hover:text-blue-700">서비스 소개</a>
-            <a href="/top20.html" class="text-blue-700 font-semibold">TOP 20</a>
-            <a href="/contact.html" class="hover:text-blue-700">문의</a>
-        </nav>
-        <button id="mobile-menu-btn" class="md:hidden text-2xl text-gray-700 px-2" aria-label="메뉴 열기">☰</button>
-    </div>
-    <nav id="mobile-menu" class="hidden md:hidden border-t border-gray-100 px-4 py-2 text-sm">
-        <a href="/about.html" class="block py-2 hover:text-blue-700">서비스 소개</a>
-        <a href="/top20.html" class="block py-2 text-blue-700 font-semibold">TOP 20</a>
-        <a href="/contact.html" class="block py-2 hover:text-blue-700">문의</a>
-    </nav>
-</header>
+<body class="bg-slate-50 text-slate-900 antialiased">
 
-<script>
-document.getElementById("mobile-menu-btn")?.addEventListener("click", () => {
-    document.getElementById("mobile-menu")?.classList.toggle("hidden");
-});
-</script>
+<!-- 공통 헤더 (assets/js/site.js로 주입) -->
+<div id="site-header"></div>
 
-<main class="max-w-3xl mx-auto px-4 py-10">
-    <h1 class="text-3xl font-bold mb-2">자주 등장한 표현 TOP 20</h1>
-    <p class="text-gray-600 mb-8">통과 시안에서 자주 등장한 마케팅 가치 있는 표현을 AI가 정제해 보여드립니다.</p>
+<main class="max-w-3xl mx-auto px-4 py-12">
+    <h1 class="text-3xl md:text-4xl font-bold mb-3 tracking-tight">심의통과 TOP 20 키워드</h1>
+    <p class="text-slate-600 mb-8">의료광고심의위원회를 통과한 시안에서 자주 등장한 마케팅 가치 있는 표현을 AI가 정제해 보여드립니다.</p>
 
     <!-- 탭 -->
-    <div class="flex border-b border-gray-200 mb-6">
-        <button id="tab-weekly" class="px-4 py-2 font-semibold border-b-2 border-blue-700 text-blue-700">지난주</button>
-        <button id="tab-monthly" class="px-4 py-2 font-semibold text-gray-500 hover:text-blue-700">지난달</button>
+    <div class="flex gap-1 p-1 bg-slate-100 rounded-xl mb-6 max-w-xs">
+        <button id="tab-weekly" class="flex-1 px-4 py-2 font-semibold text-sm rounded-lg bg-white text-brand-600 shadow-sm">지난주</button>
+        <button id="tab-monthly" class="flex-1 px-4 py-2 font-semibold text-sm rounded-lg text-slate-500 hover:text-slate-900">지난달</button>
     </div>
 
-    <div id="period-info" class="text-sm text-gray-500 mb-4"></div>
+    <div id="period-info" class="text-sm text-slate-500 mb-5"></div>
 
     <ol id="top20-list" class="space-y-2"></ol>
 
-    <p id="loading" class="text-center text-gray-500 py-8">로딩 중...</p>
+    <p id="loading" class="text-center text-slate-500 py-12">로딩 중...</p>
 </main>
 
-<footer class="bg-white border-t border-gray-200 mt-16">
-    <div class="max-w-5xl mx-auto px-4 py-6 text-sm text-gray-500">
-        <div class="flex flex-wrap gap-4 mb-2">
-            <a href="/about.html" class="hover:text-blue-700">서비스 소개</a>
-            <a href="/top20.html" class="hover:text-blue-700">TOP 20</a>
-            <a href="/contact.html" class="hover:text-blue-700">문의</a>
-            <a href="/terms.html" class="hover:text-blue-700">이용약관</a>
-            <a href="/privacy.html" class="hover:text-blue-700">개인정보처리방침</a>
+<footer class="bg-white border-t border-slate-200 mt-20">
+    <div class="max-w-5xl mx-auto px-4 py-8 text-sm text-slate-500">
+        <div class="flex flex-wrap gap-5 mb-3 font-medium">
+            <a href="/about.html" class="hover:text-brand-600">서비스 소개</a>
+            <a href="/top20.html" class="hover:text-brand-600">심의통과 TOP 20 키워드</a>
+            <a href="/contact.html" class="hover:text-brand-600">문의</a>
+            <a href="/terms.html" class="hover:text-brand-600">이용약관</a>
+            <a href="/privacy.html" class="hover:text-brand-600">개인정보처리방침</a>
         </div>
     </div>
 </footer>
@@ -78,20 +80,20 @@ async function loadTop20(period) {
         info.textContent = `${data.label} • 광고 ${data.ads_analyzed.toLocaleString()}건 분석 • ${data.method === "ai_refined" ? "AI 정제" : "빈도수 기반"}`;
         data.top20.forEach((item, i) => {
             const li = document.createElement("li");
-            li.className = "flex items-center gap-3 bg-white p-3 rounded-lg border border-gray-200 hover:border-blue-300";
+            li.className = "flex items-center gap-4 bg-white p-4 rounded-2xl border border-slate-200 hover:border-brand-500 hover:shadow-soft transition";
             li.innerHTML = `
-                <span class="w-8 text-center font-bold text-blue-700">${i + 1}</span>
-                <span class="flex-1 font-medium">${escapeHtml(item.expression)}</span>
-                <span class="text-xs text-gray-500">${item.count}건 등장</span>
+                <span class="w-8 text-center font-bold text-brand-600 tabular-nums">${i + 1}</span>
+                <span class="flex-1 font-medium text-slate-900">${escapeHtml(item.expression)}</span>
+                <span class="text-xs text-slate-500 tabular-nums">${item.count}건 등장</span>
             `;
             list.appendChild(li);
         });
         if (data.top20.length === 0) {
-            list.innerHTML = `<p class="text-center text-gray-500 py-8">데이터 없음 (해당 기간 광고가 부족하거나 아직 갱신 전).</p>`;
+            list.innerHTML = `<p class="text-center text-slate-500 py-12">데이터 없음 (해당 기간 광고가 부족하거나 아직 갱신 전).</p>`;
         }
     } catch (e) {
         loading.classList.add("hidden");
-        list.innerHTML = `<p class="text-center text-gray-500 py-8">아직 ${period === "monthly" ? "지난달" : "지난주"} 데이터가 준비되지 않았습니다.</p>`;
+        list.innerHTML = `<p class="text-center text-slate-500 py-12">아직 ${period === "monthly" ? "지난달" : "지난주"} 데이터가 준비되지 않았습니다.</p>`;
     }
 }
 
@@ -100,18 +102,22 @@ function escapeHtml(s) {
         .replaceAll(">", "&gt;").replaceAll('"', "&quot;");
 }
 
+const tabActive = "flex-1 px-4 py-2 font-semibold text-sm rounded-lg bg-white text-brand-600 shadow-sm";
+const tabIdle = "flex-1 px-4 py-2 font-semibold text-sm rounded-lg text-slate-500 hover:text-slate-900";
+
 document.getElementById("tab-weekly").addEventListener("click", () => {
-    document.getElementById("tab-weekly").className = "px-4 py-2 font-semibold border-b-2 border-blue-700 text-blue-700";
-    document.getElementById("tab-monthly").className = "px-4 py-2 font-semibold text-gray-500 hover:text-blue-700";
+    document.getElementById("tab-weekly").className = tabActive;
+    document.getElementById("tab-monthly").className = tabIdle;
     loadTop20("weekly");
 });
 document.getElementById("tab-monthly").addEventListener("click", () => {
-    document.getElementById("tab-monthly").className = "px-4 py-2 font-semibold border-b-2 border-blue-700 text-blue-700";
-    document.getElementById("tab-weekly").className = "px-4 py-2 font-semibold text-gray-500 hover:text-blue-700";
+    document.getElementById("tab-monthly").className = tabActive;
+    document.getElementById("tab-weekly").className = tabIdle;
     loadTop20("monthly");
 });
 
 loadTop20("weekly");
 </script>
+<script src="/assets/js/site.js"></script>
 </body>
 </html>

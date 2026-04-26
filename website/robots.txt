@@ -1,0 +1,32 @@
+# 의료광고 심의 통과 시안 검색
+# https://www.admedical.co.kr/
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+# 네이버 검색 봇 (명시적 허용 — 한국 검색 노출 핵심)
+User-agent: Yeti
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Crawl-delay: 1
+
+# 구글 봇
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+# 다음 봇
+User-agent: Daum
+Allow: /
+Disallow: /admin/
+
+# Bing
+User-agent: bingbot
+Allow: /
+Disallow: /admin/
+
+Sitemap: https://www.admedical.co.kr/sitemap.xml
