@@ -9,15 +9,27 @@
 </head>
 <body class="bg-gray-50 text-gray-900">
 <header class="bg-white border-b border-gray-200">
-    <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
-        <a href="/" class="text-xl font-bold text-blue-700">🏥 의료광고 심의 통과 시안</a>
-        <nav class="flex gap-4 text-sm">
+    <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between gap-3">
+        <a href="/" class="text-base md:text-xl font-bold text-blue-700 truncate">🏥 의료광고 심의 통과 시안</a>
+        <nav class="hidden md:flex gap-4 text-sm shrink-0">
             <a href="/about.html" class="hover:text-blue-700">서비스 소개</a>
             <a href="/top20.html" class="hover:text-blue-700">TOP 20</a>
             <a href="/contact.html" class="hover:text-blue-700">문의</a>
         </nav>
+        <button id="mobile-menu-btn" class="md:hidden text-2xl text-gray-700 px-2" aria-label="메뉴 열기">☰</button>
     </div>
+    <nav id="mobile-menu" class="hidden md:hidden border-t border-gray-100 px-4 py-2 text-sm">
+        <a href="/about.html" class="block py-2 hover:text-blue-700">서비스 소개</a>
+        <a href="/top20.html" class="block py-2 hover:text-blue-700">TOP 20</a>
+        <a href="/contact.html" class="block py-2 hover:text-blue-700">문의</a>
+    </nav>
 </header>
+
+<script>
+document.getElementById("mobile-menu-btn")?.addEventListener("click", () => {
+    document.getElementById("mobile-menu")?.classList.toggle("hidden");
+});
+</script>
 
 <main class="max-w-3xl mx-auto px-4 py-10 text-sm leading-relaxed">
     <h1 class="text-3xl font-bold mb-6">이용약관</h1>
