@@ -38,8 +38,18 @@
         <p class="text-xs text-gray-500 mt-3">⚠ 원본 시안 이미지는 노출하지 않습니다. 광고 문구만 표시됩니다.</p>
     </section>
 
-    <!-- 통계 (오늘 / 이번주만) -->
-    <section class="grid grid-cols-2 gap-4 mb-8 max-w-md mx-auto">
+    <!-- 검색 결과 -->
+    <section id="results-section" class="hidden mb-10">
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg font-semibold">검색 결과 <span class="text-sm text-gray-500 font-normal">(상위 <span id="result-shown">0</span>/<span id="result-count">0</span>건)</span></h2>
+            <button id="clear-search" class="text-sm text-gray-500 hover:text-blue-700">초기화</button>
+        </div>
+        <div id="results" class="space-y-3"></div>
+        <p id="results-note" class="hidden text-center text-xs text-gray-500 mt-3">검색 결과는 최근 5개만 표시됩니다. 더 자세한 키워드로 검색해보세요.</p>
+    </section>
+
+    <!-- 통계 (오늘 / 이번주만) — 검색 결과 아래, 그래프 위 -->
+    <section class="grid grid-cols-2 gap-4 mb-6 max-w-md mx-auto">
         <div class="bg-white rounded-lg p-4 border border-gray-200 text-center">
             <div class="text-xs text-gray-500 mb-1">오늘</div>
             <div id="stat-today" class="text-2xl font-bold text-blue-700">-</div>
@@ -52,18 +62,8 @@
         </div>
     </section>
 
-    <!-- 검색 결과 -->
-    <section id="results-section" class="hidden">
-        <div class="flex items-center justify-between mb-4">
-            <h2 class="text-lg font-semibold">검색 결과 <span class="text-sm text-gray-500 font-normal">(상위 <span id="result-shown">0</span>/<span id="result-count">0</span>건)</span></h2>
-            <button id="clear-search" class="text-sm text-gray-500 hover:text-blue-700">초기화</button>
-        </div>
-        <div id="results" class="space-y-3"></div>
-        <p id="results-note" class="hidden text-center text-xs text-gray-500 mt-3">검색 결과는 최근 5개만 표시됩니다. 더 자세한 키워드로 검색해보세요.</p>
-    </section>
-
-    <!-- 30일 그래프 (검색 결과 아래) -->
-    <section class="bg-white rounded-lg p-4 border border-gray-200 mt-10">
+    <!-- 30일 그래프 -->
+    <section class="bg-white rounded-lg p-4 border border-gray-200">
         <h2 class="text-sm font-semibold text-gray-700 mb-3">최근 30일 일자별 통과 건수</h2>
         <div class="relative" style="height: 200px;">
             <canvas id="chart-30d"></canvas>
