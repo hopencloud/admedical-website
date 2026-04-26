@@ -223,6 +223,14 @@ async function runSearch(q) {
     const { rows, total } = await search(q, 0);
     resultsEl.innerHTML = "";
 
+    // GA4 검색 이벤트 트래킹 (사장님이 어떤 키워드가 인기인지 분석 가능)
+    if (window.gtag) {
+        window.gtag("event", "search", {
+            search_term: q,
+            results_count: total,
+        });
+    }
+
     if (rows.length === 0) {
         resultsEl.innerHTML = `<p class="text-center text-gray-500 py-6">검색 결과가 없습니다. 다른 키워드로 시도해보세요.</p>`;
         countEl.textContent = "0";

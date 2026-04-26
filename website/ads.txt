@@ -1,0 +1,8 @@
+# Google AdSense Authorized Sellers
+# AdSense 승인 후 아래 줄의 pub-XXXXXXXXXXXXXXXX 자리에 사장님 publisher ID 입력
+# 예: google.com, pub-1234567890123456, DIRECT, f08c47fec0942fa0
+#
+# 활성화 전까지는 주석 처리된 placeholder 상태.
+# AdSense 콘솔 → 사이트 → "ads.txt 추가" 안내에서 정확한 줄을 복사해 붙여넣으면 됩니다.
+
+# google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0

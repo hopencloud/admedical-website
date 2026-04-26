@@ -46,6 +46,9 @@
 
     <div id="period-info" class="text-sm text-slate-500 mb-5"></div>
 
+    <!-- 광고 슬롯: TOP 20 리스트 위 -->
+    <div class="ad-slot" data-slot-name="top20-top" data-ad-format="auto"></div>
+
     <ol id="top20-list" class="space-y-2"></ol>
 
     <p id="loading" class="text-center text-slate-500 py-12">로딩 중...</p>
@@ -135,5 +138,6 @@ const initial = new URLSearchParams(location.search).get("period");
 loadTop20(PERIOD_CONFIG[initial] ? initial : "this-week");
 </script>
 <script src="/assets/js/site.js"></script>
+<script src="/assets/js/ads.js" defer></script>
 </body>
 </html>

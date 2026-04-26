@@ -136,6 +136,34 @@ canvas {
     transform: translateY(-1px);
 }
 
+/* === Google AdSense 광고 슬롯 === */
+.ad-slot {
+    /* 활성화 전(ADSENSE_ENABLED=false): 숨김. 사용자에게 빈 공간 노출 X. */
+    display: none;
+    margin: 28px 0;
+    text-align: center;
+}
+.ad-slot--active {
+    /* ads.js가 활성화 시 클래스 추가 */
+    display: block;
+    background: #fafbfc;
+    border-radius: 12px;
+    padding: 8px 8px 12px;
+    border: 1px solid var(--color-border);
+    position: relative;
+}
+.ad-slot--active::before {
+    content: "AD";
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: #94a3b8;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+    text-align: left;
+    padding-left: 4px;
+}
+
 /* === 모바일 펼침 (details) === */
 .mobile-group > summary {
     list-style: none;
