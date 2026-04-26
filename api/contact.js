@@ -44,6 +44,9 @@ export default async function handler(req, res) {
     if (!name || String(name).trim().length < 1) {
         return res.status(400).json({ error: "이름을 입력해주세요." });
     }
+    if (!phone || String(phone).replace(/\D/g, "").length < 8) {
+        return res.status(400).json({ error: "연락처를 정확히 입력해주세요." });
+    }
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email))) {
         return res.status(400).json({ error: "올바른 이메일 주소를 입력해주세요." });
     }
@@ -69,7 +72,7 @@ export default async function handler(req, res) {
     <table style="width:100%;border-collapse:collapse;">
         <tr><td style="padding:6px 0;width:120px;color:#666;">이름</td><td><b>${escapeHtml(name)}</b></td></tr>
         <tr><td style="padding:6px 0;color:#666;">이메일</td><td><a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></td></tr>
-        ${phone ? `<tr><td style="padding:6px 0;color:#666;">연락처</td><td>${escapeHtml(phone)}</td></tr>` : ""}
+        <tr><td style="padding:6px 0;color:#666;">연락처</td><td>${escapeHtml(phone)}</td></tr>
         <tr><td style="padding:6px 0;color:#666;">접수 시각</td><td>${new Date().toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })}</td></tr>
     </table>
 
