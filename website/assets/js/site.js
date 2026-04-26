@@ -21,7 +21,7 @@
     const HEADER_HTML = `
 <header class="bg-white border-b border-slate-200 sticky top-0 z-20">
     <div class="max-w-5xl mx-auto px-4 py-3.5 flex items-center justify-between gap-3">
-        <a href="/" class="text-base md:text-xl font-bold text-brand-600 truncate tracking-tight">의료광고 심의 통과 시안</a>
+        <a href="/" class="text-base md:text-xl font-bold text-brand-600 truncate tracking-tight">의료광고심의 통과 문구</a>
 
         <nav class="hidden md:flex items-center gap-1 text-sm font-medium text-slate-700 shrink-0">
             <a data-nav="/about.html" href="/about.html" class="px-3 py-2 rounded-lg hover:text-brand-600 hover:bg-slate-50 transition">서비스 소개</a>

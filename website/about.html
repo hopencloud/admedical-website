@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>서비스 소개 — 의료광고 심의 통과 시안 검색</title>
+    <title>서비스 소개 — 의료광고심의 통과 문구 검색</title>
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -26,43 +26,45 @@
 <main class="max-w-3xl mx-auto px-4 py-12">
     <h1 class="text-3xl md:text-4xl font-bold mb-8 tracking-tight">서비스 소개</h1>
 
-    <section class="bg-white rounded-2xl p-6 border border-slate-200 shadow-soft mb-6">
-        <h2 class="text-lg font-bold mb-3">무엇을 하는 사이트인가요?</h2>
-        <p class="text-slate-700 leading-relaxed">대한의사협회 의료광고심의위원회를 통과한 광고 시안에서, 마케터에게 도움이 될 만한 광고 문구를 키워드로 검색할 수 있는 서비스입니다.</p>
+    <section class="bg-white rounded-2xl p-7 border border-slate-200 shadow-soft mb-6">
+        <h2 class="text-xl font-bold mb-4 tracking-tight">왜 만들었나요?</h2>
+        <div class="text-slate-700 leading-relaxed space-y-4">
+            <p>의료광고는 <strong>시작 시기가 매출을 좌우</strong>합니다. 하지만 심의 통과까지의 길은 결코 순탄치 않습니다.</p>
+            <p>명시되지 않은 통과 기준, "일단 넣어보라"는 답변, 영업일 15일을 훌쩍 넘는 처리 기간, 그리고 이전에 통과된 표현조차 다시 반려되는 일관성 없는 심사. 이 모든 부담은 결국 <strong>마케터의 몫</strong>이 됩니다.</p>
+            <p>이 사이트는 그 답답함에서 시작됐습니다. 의협 사이트에서 심의번호를 하나하나 입력하며 통과 사례를 찾던 마케터들의 시간을, <strong>키워드 검색 한 번으로</strong> 줄이는 것이 목표입니다.</p>
+            <p>통과된 광고 문구를 키워드로 검색하고, 심의번호로 원본을 확인하세요. 고통받는 병원 마케터분들이 조금이라도 안전하고 빠르게 광고를 진행할 수 있기를 바랍니다.</p>
+        </div>
     </section>
 
-    <section class="bg-white rounded-2xl p-6 border border-slate-200 shadow-soft mb-6">
-        <h2 class="text-lg font-bold mb-3">왜 만들었나요?</h2>
-        <p class="text-slate-700 leading-relaxed">병의원 마케팅 담당자가 의협 사이트에서 심의번호를 하나씩 입력해 통과 시안을 확인하기는 어렵습니다. 이 사이트는 통과된 시안의 광고 문구만 모아서 검색 가능하게 만들었습니다.</p>
+    <section class="bg-white rounded-2xl p-7 border border-slate-200 shadow-soft mb-6">
+        <h2 class="text-xl font-bold mb-4 tracking-tight">어떻게 사용하나요?</h2>
+        <ol class="space-y-3 text-slate-700 leading-relaxed mb-5">
+            <li class="flex items-start gap-3">
+                <span class="inline-flex w-7 h-7 bg-brand-50 text-brand-700 rounded-full font-bold items-center justify-center text-sm flex-shrink-0 mt-0.5">1</span>
+                <div>검색창에 키워드를 입력하세요 (예: <strong>"허리디스크"</strong>, <strong>"당일시술"</strong>)</div>
+            </li>
+            <li class="flex items-start gap-3">
+                <span class="inline-flex w-7 h-7 bg-brand-50 text-brand-700 rounded-full font-bold items-center justify-center text-sm flex-shrink-0 mt-0.5">2</span>
+                <div>통과된 광고 문구 <strong>5개</strong>와 <strong>심의번호</strong>가 표시됩니다</div>
+            </li>
+            <li class="flex items-start gap-3">
+                <span class="inline-flex w-7 h-7 bg-brand-50 text-brand-700 rounded-full font-bold items-center justify-center text-sm flex-shrink-0 mt-0.5">3</span>
+                <div>심의번호를 복사하여 <a href="https://www.admedical.org/application/approval_confirm.do" target="_blank" rel="noopener" class="text-brand-600 hover:underline">의협 사이트</a>에서 원본 시안을 확인하세요</div>
+            </li>
+        </ol>
+        <div class="bg-slate-50 border-l-4 border-slate-300 px-4 py-3 rounded-r-lg text-sm text-slate-700 leading-relaxed space-y-2">
+            <p>📅 <strong>매일 자동으로 신규 통과 사례를 업데이트</strong>합니다.</p>
+            <p>📊 이번주·이번달 통과 건수와 자주 쓰인 <a href="/top20.html" class="text-brand-600 hover:underline">표현 TOP 20</a>도 함께 확인하실 수 있습니다.</p>
+        </div>
     </section>
 
-    <section class="bg-white rounded-2xl p-6 border border-slate-200 shadow-soft mb-6">
+    <section class="bg-white rounded-2xl p-6 border border-slate-200 shadow-soft">
         <h2 class="text-lg font-bold mb-3">개인정보·저작권 보호</h2>
         <ul class="list-disc pl-5 space-y-2 text-slate-700">
             <li><strong class="font-semibold">이미지 노출 금지</strong>: 원본 시안 이미지는 게시하지 않습니다. 텍스트만 인덱싱합니다.</li>
             <li><strong class="font-semibold">식별 정보 마스킹</strong>: 병원/의원/클리닉 이름, 의사 이름, 전화번호, 주소는 모두 자동 제거됩니다.</li>
             <li>원본 시안은 <a href="https://www.admedical.org/application/approval_confirm.do" target="_blank" class="text-brand-600 hover:underline">의료광고심의위원회 사이트</a>에서 심의번호로 직접 조회하세요.</li>
         </ul>
-    </section>
-
-    <section class="bg-white rounded-2xl p-6 border border-slate-200 shadow-soft mb-6">
-        <h2 class="text-lg font-bold mb-3">의료광고 심의 절차 (간단 안내)</h2>
-        <ol class="list-decimal pl-5 space-y-2 text-slate-700">
-            <li><strong class="font-semibold">심의 신청</strong>: 의료광고심의위원회에 광고 시안 + 신청서 제출.</li>
-            <li><strong class="font-semibold">심의</strong>: 위원회가 의료법 위반 여부 확인.</li>
-            <li><strong class="font-semibold">승인</strong>: 통과 시 심의번호 부여 (예: 260424-중-211923).</li>
-            <li><strong class="font-semibold">게재</strong>: 통과한 광고만 게재 가능. 통과 후 3년 유효.</li>
-        </ol>
-    </section>
-
-    <section class="bg-white rounded-2xl p-6 border border-slate-200 shadow-soft">
-        <h2 class="text-lg font-bold mb-3">심의 대상 광고</h2>
-        <ul class="list-disc pl-5 space-y-1 text-slate-700">
-            <li>신문/잡지/방송/인터넷 등 매체에 게재되는 의료광고</li>
-            <li>전단지, 옥외광고물, 교통수단 광고</li>
-            <li>온라인 검색광고, SNS 광고</li>
-        </ul>
-        <p class="mt-3 text-sm text-slate-500">자세한 면제·예외 기준은 <a href="/guide/exempt.html" class="text-brand-600 hover:underline">심의 면제 광고</a> 페이지를 참고하세요.</p>
     </section>
 
     <p class="mt-8 text-sm text-slate-500">* 본 안내는 일반 정보 제공 목적이며, 정확한 심의 기준은 의료광고심의위원회에 직접 문의하세요.</p>

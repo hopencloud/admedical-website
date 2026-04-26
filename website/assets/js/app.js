@@ -196,7 +196,7 @@ document.getElementById("report-submit").addEventListener("click", async () => {
 window.copyText = async function (text) {
     try {
         await navigator.clipboard.writeText(text);
-        // 사장님 요청: 알림창 대신 무음 복사
+        // 토스트로 무음 복사 피드백
         const old = document.activeElement;
         const toast = document.createElement("div");
         toast.textContent = `복사됨: ${text}`;

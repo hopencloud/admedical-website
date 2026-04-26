@@ -1,4 +1,4 @@
-# 의료광고 심의 통과 시안 검색
+# 의료광고심의 통과 문구 검색
 # https://www.admedical.co.kr/
 
 User-agent: *
