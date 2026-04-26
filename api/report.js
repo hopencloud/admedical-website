@@ -72,7 +72,7 @@ export default async function handler(req, res) {
             auth: { user: smtpUser, pass: smtpPass },
         });
         await transporter.sendMail({
-            from: `"의료광고 시안 검색" <${smtpUser}>`,
+            from: `"admedical" <${smtpUser}>`,
             to: toAddr,
             subject,
             html,

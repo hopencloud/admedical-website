@@ -64,7 +64,7 @@ export default async function handler(req, res) {
         return res.status(500).json({ error: "SMTP 환경변수가 설정되지 않았습니다." });
     }
 
-    const subject = `[문의] ${String(name).trim()} 님`;
+    const subject = "admedical 문의 접수";
     const html = `
 <!doctype html>
 <html><body style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:640px;margin:0 auto;padding:20px;color:#222;">
@@ -90,7 +90,7 @@ export default async function handler(req, res) {
             auth: { user: smtpUser, pass: smtpPass },
         });
         await transporter.sendMail({
-            from: `"의료광고 시안 문의" <${smtpUser}>`,
+            from: `"admedical" <${smtpUser}>`,
             to: toAddr,
             replyTo: String(email),
             subject,
