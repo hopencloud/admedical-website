@@ -4,16 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>심의통과 TOP 20 키워드 — 의료광고 심의 통과 시안 검색</title>
-    <meta name="description" content="대한의사협회 의료광고심의위원회 통과 시안에서 자주 등장한 마케팅 가치 있는 표현 TOP 20을 AI가 정제해 보여드립니다. 지난주·지난달 단위로 갱신.">
+    <meta name="description" content="대한의사협회 의료광고심의위원회를 통과한 시안에서 자주 등장한 키워드 TOP 20. 이번주·이번달·지난주·지난달 단위로 확인하세요.">
     <meta name="keywords" content="의료광고 심의통과, 의료광고 키워드, TOP 20 키워드, 의료광고 문구, 의료광고 마케팅">
     <link rel="canonical" href="https://www.admedical.co.kr/top20.html">
     <meta property="og:type" content="article">
     <meta property="og:title" content="심의통과 TOP 20 키워드 — 의료광고 마케팅 인사이트">
-    <meta property="og:description" content="의료광고심의위원회 통과 시안에서 자주 등장한 마케팅 가치 있는 표현 TOP 20.">
+    <meta property="og:description" content="의료광고심의위원회 통과 시안에서 자주 등장한 키워드 TOP 20.">
     <meta property="og:url" content="https://www.admedical.co.kr/top20.html">
     <meta property="og:image" content="https://www.admedical.co.kr/assets/img/ogimage.png">
     <meta name="naver:robots" content="all">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -35,12 +34,14 @@
 
 <main class="max-w-3xl mx-auto px-4 py-12">
     <h1 class="text-3xl md:text-4xl font-bold mb-3 tracking-tight">심의통과 TOP 20 키워드</h1>
-    <p class="text-slate-600 mb-8">의료광고심의위원회를 통과한 시안에서 자주 등장한 마케팅 가치 있는 표현을 AI가 정제해 보여드립니다.</p>
+    <p class="text-slate-600 mb-8">의료광고심의위원회를 통과한 시안에서 자주 등장한 키워드 Top 20을 보여드립니다.</p>
 
-    <!-- 탭 -->
-    <div class="flex gap-1 p-1 bg-slate-100 rounded-xl mb-6 max-w-xs">
-        <button id="tab-weekly" class="flex-1 px-4 py-2 font-semibold text-sm rounded-lg bg-white text-brand-600 shadow-sm">지난주</button>
-        <button id="tab-monthly" class="flex-1 px-4 py-2 font-semibold text-sm rounded-lg text-slate-500 hover:text-slate-900">지난달</button>
+    <!-- 4개 탭: 이번주 / 이번달 / 지난주 / 지난달 -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-1 p-1 bg-slate-100 rounded-xl mb-6">
+        <button data-period="this-week"  class="tab-btn px-3 py-2 font-semibold text-sm rounded-lg text-slate-500 hover:text-slate-900">이번주</button>
+        <button data-period="this-month" class="tab-btn px-3 py-2 font-semibold text-sm rounded-lg text-slate-500 hover:text-slate-900">이번달</button>
+        <button data-period="last-week"  class="tab-btn px-3 py-2 font-semibold text-sm rounded-lg text-slate-500 hover:text-slate-900">지난주</button>
+        <button data-period="last-month" class="tab-btn px-3 py-2 font-semibold text-sm rounded-lg text-slate-500 hover:text-slate-900">지난달</button>
     </div>
 
     <div id="period-info" class="text-sm text-slate-500 mb-5"></div>
@@ -63,8 +64,24 @@
 </footer>
 
 <script>
+// 기간별 데이터 소스 매핑
+const PERIOD_CONFIG = {
+    "this-week":  { label: "이번주",  json: "/assets/data/this_week_top20.json"  },
+    "this-month": { label: "이번달",  json: "/assets/data/this_month_top20.json" },
+    "last-week":  { label: "지난주",  json: "/assets/data/weekly_top20.json"     },
+    "last-month": { label: "지난달",  json: "/assets/data/monthly_top20.json"    },
+};
+
+const TAB_ACTIVE = "tab-btn px-3 py-2 font-semibold text-sm rounded-lg bg-white text-brand-600 shadow-sm";
+const TAB_IDLE   = "tab-btn px-3 py-2 font-semibold text-sm rounded-lg text-slate-500 hover:text-slate-900";
+
+function escapeHtml(s) {
+    return String(s ?? "").replaceAll("&", "&amp;").replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;").replaceAll('"', "&quot;");
+}
+
 async function loadTop20(period) {
-    const url = period === "monthly" ? "/assets/data/monthly_top20.json" : "/assets/data/weekly_top20.json";
+    const cfg = PERIOD_CONFIG[period] || PERIOD_CONFIG["this-week"];
     const list = document.getElementById("top20-list");
     const info = document.getElementById("period-info");
     const loading = document.getElementById("loading");
@@ -72,12 +89,23 @@ async function loadTop20(period) {
     info.textContent = "";
     loading.classList.remove("hidden");
 
+    // 탭 활성화 상태 갱신
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.className = btn.dataset.period === period ? TAB_ACTIVE : TAB_IDLE;
+    });
+
+    // URL 동기화 (뒤로가기로 복원되도록)
+    const url = new URL(location.href);
+    url.searchParams.set("period", period);
+    history.replaceState(null, "", url);
+
     try {
-        const r = await fetch(url, { cache: "no-store" });
+        const r = await fetch(cfg.json, { cache: "no-store" });
         if (!r.ok) throw new Error(`fetch failed: ${r.status}`);
         const data = await r.json();
         loading.classList.add("hidden");
-        info.textContent = `${data.label} • 광고 ${data.ads_analyzed.toLocaleString()}건 분석 • ${data.method === "ai_refined" ? "AI 정제" : "빈도수 기반"}`;
+        const adsCount = (data.ads_analyzed ?? 0).toLocaleString();
+        info.textContent = `${data.label || cfg.label} • 광고 ${adsCount}건 분석`;
         data.top20.forEach((item, i) => {
             const li = document.createElement("li");
             li.className = "flex items-center gap-4 bg-white p-4 rounded-2xl border border-slate-200 hover:border-brand-500 hover:shadow-soft transition";
@@ -89,34 +117,22 @@ async function loadTop20(period) {
             list.appendChild(li);
         });
         if (data.top20.length === 0) {
-            list.innerHTML = `<p class="text-center text-slate-500 py-12">데이터 없음 (해당 기간 광고가 부족하거나 아직 갱신 전).</p>`;
+            list.innerHTML = `<p class="text-center text-slate-500 py-12">${cfg.label} 데이터가 아직 없습니다.</p>`;
         }
     } catch (e) {
         loading.classList.add("hidden");
-        list.innerHTML = `<p class="text-center text-slate-500 py-12">아직 ${period === "monthly" ? "지난달" : "지난주"} 데이터가 준비되지 않았습니다.</p>`;
+        list.innerHTML = `<p class="text-center text-slate-500 py-12">아직 ${cfg.label} 데이터가 준비되지 않았습니다.</p>`;
     }
 }
 
-function escapeHtml(s) {
-    return String(s ?? "").replaceAll("&", "&amp;").replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;").replaceAll('"', "&quot;");
-}
-
-const tabActive = "flex-1 px-4 py-2 font-semibold text-sm rounded-lg bg-white text-brand-600 shadow-sm";
-const tabIdle = "flex-1 px-4 py-2 font-semibold text-sm rounded-lg text-slate-500 hover:text-slate-900";
-
-document.getElementById("tab-weekly").addEventListener("click", () => {
-    document.getElementById("tab-weekly").className = tabActive;
-    document.getElementById("tab-monthly").className = tabIdle;
-    loadTop20("weekly");
-});
-document.getElementById("tab-monthly").addEventListener("click", () => {
-    document.getElementById("tab-monthly").className = tabActive;
-    document.getElementById("tab-weekly").className = tabIdle;
-    loadTop20("monthly");
+// 탭 클릭 핸들러
+document.querySelectorAll(".tab-btn").forEach(btn => {
+    btn.addEventListener("click", () => loadTop20(btn.dataset.period));
 });
 
-loadTop20("weekly");
+// 첫 로드: URL 쿼리 ?period= 또는 기본값 "this-week"
+const initial = new URLSearchParams(location.search).get("period");
+loadTop20(PERIOD_CONFIG[initial] ? initial : "this-week");
 </script>
 <script src="/assets/js/site.js"></script>
 </body>

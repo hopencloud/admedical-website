@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>의료광고 심의번호 읽는 법 — 구조 분해와 표시 의무 | admedical</title>
+    <meta name="description" content="의료광고 심의번호의 구조(YYMMDD-중-일련번호)를 시각적으로 분해. 표시 위치, 유효기간(3년), 의협 사이트 조회 방법까지 한 페이지에 정리.">
+    <meta name="keywords" content="의료광고 심의번호, 의료광고 심의필, 심의번호 읽는 법, 의료광고 표시 의무, 의료광고심의 조회">
+    <meta name="author" content="admedical">
+
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="naver:robots" content="all">
+    <meta name="Yeti" content="index, follow">
+
+    <link rel="canonical" href="https://www.admedical.co.kr/guide/review-number.html">
+
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="admedical 의료광고 가이드">
+    <meta property="og:title" content="의료광고 심의번호 읽는 법 — 구조 분해와 표시 의무">
+    <meta property="og:description" content="의료광고 심의번호의 구조와 표시 의무, 조회 방법을 시각적으로 정리.">
+    <meta property="og:url" content="https://www.admedical.co.kr/guide/review-number.html">
+    <meta property="og:image" content="https://www.admedical.co.kr/assets/img/ogimage.png">
+    <meta property="og:image:width" content="1729">
+    <meta property="og:image:height" content="910">
+    <meta property="og:locale" content="ko_KR">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="의료광고 심의번호 읽는 법">
+    <meta name="twitter:description" content="심의번호 구조와 표시 의무 한 페이지 정리.">
+    <meta name="twitter:image" content="https://www.admedical.co.kr/assets/img/ogimage.png">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: {
+                fontFamily: { sans: ['"Pretendard Variable"', 'Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'] },
+                colors: { brand: { 50: '#eff6ff', 100: '#dbeafe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 900: '#1e3a8a' } },
+                boxShadow: { soft: '0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 12px rgba(15, 23, 42, 0.04)' },
+            } },
+        };
+    </script>
+    <link rel="stylesheet" href="/assets/css/site.css">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "의료광고 심의번호 읽는 법 — 구조 분해와 표시 의무",
+        "description": "의료광고 심의번호의 구조와 표시 의무, 조회 방법을 시각적으로 정리.",
+        "image": "https://www.admedical.co.kr/assets/img/ogimage.png",
+        "datePublished": "2026-04-26",
+        "dateModified": "2026-04-26",
+        "inLanguage": "ko",
+        "author": { "@type": "Organization", "name": "admedical" },
+        "publisher": { "@type": "Organization", "name": "admedical", "logo": { "@type": "ImageObject", "url": "https://www.admedical.co.kr/assets/img/ogimage.png" } },
+        "mainEntityOfPage": "https://www.admedical.co.kr/guide/review-number.html"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "홈", "item": "https://www.admedical.co.kr/" },
+            { "@type": "ListItem", "position": 2, "name": "심의 가이드", "item": "https://www.admedical.co.kr/guide/review-number.html" },
+            { "@type": "ListItem", "position": 3, "name": "심의번호 읽는 법", "item": "https://www.admedical.co.kr/guide/review-number.html" }
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "심의번호는 어떻게 구성되나요?",
+                "acceptedAnswer": { "@type": "Answer", "text": "통상 'YYMMDD-중-NNNNNN' 형식입니다. 앞 6자리는 심의 통과일(YY:연도, MM:월, DD:일), '중'은 자율심의기관 구분 코드, 뒷자리는 해당 일자에 처리된 시안의 일련번호입니다." }
+            },
+            {
+                "@type": "Question",
+                "name": "심의번호는 광고에 어떻게 표시해야 하나요?",
+                "acceptedAnswer": { "@type": "Answer", "text": "통상 '대한의사협회 의료광고심의필 제 (심의번호)호'와 같이 광고 시안 안에 명시합니다. 광고가 게재되는 매체에서 인지 가능한 위치에 표시되어야 합니다." }
+            },
+            {
+                "@type": "Question",
+                "name": "심의번호 유효기간은 얼마나 되나요?",
+                "acceptedAnswer": { "@type": "Answer", "text": "통상 심의 통과일로부터 3년간 유효합니다. 같은 시안으로 동일 매체에 광고를 계속 게재할 수 있으며, 시안을 수정하면 재심의가 필요할 수 있습니다." }
+            },
+            {
+                "@type": "Question",
+                "name": "심의번호는 어디서 조회할 수 있나요?",
+                "acceptedAnswer": { "@type": "Answer", "text": "대한의사협회 의료광고심의위원회 사이트(admedical.org)의 '광고 심의 조회' 메뉴에서 심의번호의 뒷자리(일련번호)를 입력하면 통과 시안 정보를 확인할 수 있습니다." }
+            },
+            {
+                "@type": "Question",
+                "name": "심의번호 없이 광고하면 어떻게 되나요?",
+                "acceptedAnswer": { "@type": "Answer", "text": "사전심의 의무가 있는 매체에 심의받지 않은 광고를 게재하면 의료법 제56조 위반으로 1년 이하 징역 또는 1천만원 이하 벌금이 부과될 수 있습니다." }
+            }
+        ]
+    }
+    </script>
+
+    <style>
+        .toc a { display: block; padding: 6px 10px; border-radius: 6px; color: #475569; font-size: 0.88rem; }
+        .toc a:hover { background: #eff6ff; color: #2563eb; }
+
+        /* 심의번호 분해 인포그래픽 */
+        .num-display {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 30px 16px 20px;
+            text-align: center;
+        }
+        .num-row {
+            display: inline-flex;
+            align-items: baseline;
+            font-family: ui-monospace, "SF Mono", Menlo, monospace;
+            font-weight: 700;
+            font-size: 2rem;
+            letter-spacing: 0.04em;
+        }
+        @media (min-width: 768px) {
+            .num-row { font-size: 2.6rem; }
+        }
+        .num-part {
+            position: relative;
+            padding: 8px 14px;
+            border-radius: 10px;
+            margin: 0 2px;
+        }
+        .num-part-1 { background: #dbeafe; color: #1e40af; }
+        .num-part-2 { background: #fef3c7; color: #92400e; }
+        .num-part-3 { background: #d1fae5; color: #065f46; }
+        .num-sep {
+            color: #94a3b8;
+            font-weight: 400;
+            margin: 0 4px;
+        }
+
+        .num-legend {
+            display: grid;
+            gap: 14px;
+            grid-template-columns: 1fr;
+            margin-top: 28px;
+        }
+        @media (min-width: 768px) {
+            .num-legend { grid-template-columns: repeat(3, 1fr); }
+        }
+        .legend-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 14px;
+            text-align: left;
+        }
+        .legend-tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            font-family: ui-monospace, monospace;
+            margin-bottom: 6px;
+        }
+        .legend-tag.t1 { background: #dbeafe; color: #1e40af; }
+        .legend-tag.t2 { background: #fef3c7; color: #92400e; }
+        .legend-tag.t3 { background: #d1fae5; color: #065f46; }
+        .legend-card h4 {
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+            color: #0f172a;
+        }
+        .legend-card p {
+            font-size: 0.82rem;
+            color: #475569;
+            line-height: 1.55;
+        }
+
+        /* 표시 예시 박스 */
+        .display-example {
+            background: #f8fafc;
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 16px;
+            margin: 12px 0;
+            font-family: ui-monospace, monospace;
+            font-size: 0.88rem;
+            color: #334155;
+        }
+        .display-example .ex-label {
+            display: block;
+            font-family: 'Pretendard Variable', sans-serif;
+            font-size: 0.72rem;
+            color: #64748b;
+            font-weight: 600;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased">
+
+<div id="site-header"></div>
+
+<main class="max-w-3xl mx-auto px-4 py-10">
+
+    <nav class="text-xs text-slate-500 mb-4" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-1.5">
+            <li><a href="/" class="hover:text-brand-600">홈</a></li>
+            <li class="text-slate-400">›</li>
+            <li><span class="text-slate-600">심의 가이드</span></li>
+            <li class="text-slate-400">›</li>
+            <li><span class="text-slate-700 font-semibold">심의번호 읽는 법</span></li>
+        </ol>
+    </nav>
+
+    <h1 class="text-3xl md:text-4xl font-bold mb-4 tracking-tight leading-tight">
+        의료광고 심의번호 읽는 법 — 구조와 표시 의무
+    </h1>
+
+    <p class="text-base md:text-lg text-slate-700 leading-relaxed mb-8 bg-brand-50 border-l-4 border-brand-500 px-4 py-3 rounded-r-lg">
+        <strong class="text-slate-900">의료광고 심의번호는 통상 "YYMMDD-중-일련번호" 형식</strong>으로 발부됩니다. 앞 6자리는 심의 통과일, "중"은 자율심의기관 구분 코드, 뒷자리는 일련번호입니다. 광고에는 "대한의사협회 의료광고심의필 제 (번호) 호" 형식으로 표시해야 합니다.
+    </p>
+
+    <aside class="bg-white rounded-2xl border border-slate-200 p-5 shadow-soft mb-10">
+        <h2 class="text-sm font-bold text-slate-700 mb-2">📑 이 글의 목차</h2>
+        <nav class="toc">
+            <a href="#structure">1. 심의번호 구조 분해</a>
+            <a href="#display">2. 광고 내 표시 방법</a>
+            <a href="#validity">3. 유효기간과 갱신</a>
+            <a href="#lookup">4. 심의번호 조회 방법</a>
+            <a href="#faq">5. 자주 묻는 질문</a>
+            <a href="#sources">6. 출처 및 참고자료</a>
+        </nav>
+    </aside>
+
+    <!-- 1. 구조 분해 -->
+    <section id="structure" class="mb-12 scroll-mt-24">
+        <h2 class="text-2xl font-bold mb-4 tracking-tight">1. 심의번호 구조 분해</h2>
+        <p class="text-slate-700 leading-relaxed mb-6">
+            심의번호는 <strong>3개 영역</strong>으로 구성됩니다. 아래 예시를 통해 각 자리의 의미를 시각적으로 확인하세요.
+        </p>
+
+        <figure class="num-display mb-3">
+            <p class="text-xs text-slate-500 mb-3">예시 심의번호 (대한의사협회 의료광고심의위원회)</p>
+            <div class="num-row">
+                <span class="num-part num-part-1">260424</span>
+                <span class="num-sep">-</span>
+                <span class="num-part num-part-2">중</span>
+                <span class="num-sep">-</span>
+                <span class="num-part num-part-3">211923</span>
+            </div>
+
+            <div class="num-legend">
+                <div class="legend-card">
+                    <span class="legend-tag t1">260424</span>
+                    <h4>심의 통과일 (YYMMDD)</h4>
+                    <p>2026년 4월 24일에 통과된 시안. 연도 2자리 + 월 2자리 + 일 2자리.</p>
+                </div>
+                <div class="legend-card">
+                    <span class="legend-tag t2">중</span>
+                    <h4>자율심의기관 코드</h4>
+                    <p>"중"은 대한의사협회 의료광고심의위원회를 의미하는 구분 문자.</p>
+                </div>
+                <div class="legend-card">
+                    <span class="legend-tag t3">211923</span>
+                    <h4>일련번호</h4>
+                    <p>심의위원회 내부에서 부여하는 시안별 고유 일련번호 (조회·확인용).</p>
+                </div>
+            </div>
+
+            <p class="text-xs text-slate-500 mt-5 text-left">
+                ⓘ 위 형식은 대한의사협회 의료광고심의위원회의 일반적 표기 기준이며, 심의기관에 따라 형식이 다를 수 있습니다 (치과·한방 등은 별도).
+            </p>
+        </figure>
+    </section>
+
+    <!-- 2. 광고 내 표시 -->
+    <section id="display" class="mb-12 scroll-mt-24">
+        <h2 class="text-2xl font-bold mb-4 tracking-tight">2. 광고 내 표시 방법</h2>
+        <p class="text-slate-700 leading-relaxed mb-4">
+            심의번호는 광고 시안 안에 <strong>"대한의사협회 의료광고심의필 제 (번호) 호"</strong> 형식으로 표시합니다. 광고가 게재되는 매체에서 인지할 수 있는 위치에 명시되어야 합니다.
+        </p>
+
+        <figure class="bg-white rounded-2xl border border-slate-200 shadow-soft p-5 mb-3">
+            <figcaption class="text-sm font-bold text-slate-700 mb-3">📋 표시 예시</figcaption>
+
+            <div class="display-example">
+                <span class="ex-label">예시 ① — 일반</span>
+                대한의사협회 의료광고심의필 제 260424-중-211923 호
+            </div>
+            <div class="display-example">
+                <span class="ex-label">예시 ② — 약식 (권장 X)</span>
+                심의필 제 211923 호
+            </div>
+            <div class="display-example">
+                <span class="ex-label">예시 ③ — 면책 문구와 함께</span>
+                대한의사협회 의료광고심의필 제 260424-중-211923 호<br>
+                (본 광고는 의사 진료의 부작용 가능성을 안내합니다)
+            </div>
+
+            <p class="text-xs text-slate-500 mt-4">출처: 대한의사협회 의료광고심의위원회 운영 규정.</p>
+        </figure>
+
+        <div class="bg-amber-50 border-l-4 border-amber-400 px-4 py-3 rounded-r-lg text-sm text-slate-700">
+            💡 <strong>표시 위치 권장</strong>: 인쇄 광고는 하단·여백, 영상 광고는 마지막 5초 이상 또는 자막에 명시. 글자 크기는 일반 사용자가 인지 가능한 수준이어야 합니다.
+        </div>
+    </section>
+
+    <!-- 3. 유효기간 -->
+    <section id="validity" class="mb-12 scroll-mt-24">
+        <h2 class="text-2xl font-bold mb-4 tracking-tight">3. 유효기간과 갱신</h2>
+        <p class="text-slate-700 leading-relaxed mb-5">
+            심의 통과 후 광고는 일정 기간 동안 유효합니다. 유효기간이 지나거나 광고 내용을 수정하면 재심의가 필요합니다.
+        </p>
+
+        <figure class="mb-3 overflow-x-auto">
+            <figcaption class="text-sm font-bold text-slate-700 mb-3">⏱ 심의번호 유효기간 정리</figcaption>
+            <table class="w-full text-sm border-collapse bg-white rounded-xl overflow-hidden border border-slate-200">
+                <thead>
+                    <tr class="bg-brand-600 text-white text-left">
+                        <th class="px-4 py-3 font-semibold">항목</th>
+                        <th class="px-4 py-3 font-semibold">기준</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200">
+                    <tr class="hover:bg-slate-50">
+                        <td class="px-4 py-3 font-medium">표준 유효기간</td>
+                        <td class="px-4 py-3 text-slate-700">심의 통과일로부터 <strong>3년</strong></td>
+                    </tr>
+                    <tr class="bg-slate-50/50 hover:bg-slate-50">
+                        <td class="px-4 py-3 font-medium">시안 그대로 사용</td>
+                        <td class="px-4 py-3 text-slate-700">유효기간 내 동일 시안 무제한 게재 가능</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50">
+                        <td class="px-4 py-3 font-medium">시안 수정 시</td>
+                        <td class="px-4 py-3 text-slate-700">중요 변경은 재심의 필요 (경미 수정은 사후 통보 가능)</td>
+                    </tr>
+                    <tr class="bg-slate-50/50 hover:bg-slate-50">
+                        <td class="px-4 py-3 font-medium">매체 추가</td>
+                        <td class="px-4 py-3 text-slate-700">동일 시안을 다른 매체로 확장 시 매체 적합성 재검토 필요</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50">
+                        <td class="px-4 py-3 font-medium">유효기간 만료 후</td>
+                        <td class="px-4 py-3 text-slate-700">신규 심의 신청 필요</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="text-xs text-slate-500 mt-3">출처: 대한의사협회 의료광고심의위원회 운영 규정.</p>
+        </figure>
+    </section>
+
+    <!-- 4. 조회 -->
+    <section id="lookup" class="mb-12 scroll-mt-24">
+        <h2 class="text-2xl font-bold mb-4 tracking-tight">4. 심의번호 조회 방법</h2>
+        <p class="text-slate-700 leading-relaxed mb-5">
+            심의번호의 <strong>일련번호 부분</strong>(예: 211923)을 입력하면 의협 사이트에서 통과 시안 정보를 확인할 수 있습니다.
+        </p>
+
+        <ol class="list-decimal pl-5 space-y-3 text-slate-700 leading-relaxed mb-5">
+            <li><a href="https://www.admedical.org/application/approval_confirm.do" target="_blank" rel="noopener" class="text-brand-600 hover:underline">대한의사협회 의료광고심의위원회 — 광고 심의 조회 페이지</a> 접속</li>
+            <li>입력란에 심의번호의 <strong>뒷자리(일련번호)만</strong> 입력 (예: <code class="bg-slate-100 px-1.5 py-0.5 rounded font-mono text-xs">211923</code>)</li>
+            <li>"확인" 버튼 클릭</li>
+            <li>해당 시안의 통과 정보(통과일·매체·유효기간 등) 확인</li>
+        </ol>
+
+        <div class="bg-brand-50 border-l-4 border-brand-500 px-4 py-3 rounded-r-lg text-sm text-slate-700">
+            💡 <strong>본 사이트(admedical.co.kr)의 활용</strong>: 사장님이 만든 광고 문구를 검색해 비슷한 통과 시안을 찾아볼 수 있습니다. 검색 결과의 심의번호로 의협 사이트에서 원본 시안을 확인 가능.
+        </div>
+    </section>
+
+    <!-- 5. FAQ -->
+    <section id="faq" class="mb-12 scroll-mt-24">
+        <h2 class="text-2xl font-bold mb-4 tracking-tight">5. 자주 묻는 질문</h2>
+        <div class="space-y-3">
+            <details class="bg-white p-5 rounded-2xl border border-slate-200 shadow-soft">
+                <summary class="font-semibold cursor-pointer text-slate-900">Q. 심의번호는 어떻게 구성되나요?</summary>
+                <p class="mt-3 text-sm text-slate-700 leading-relaxed">
+                    통상 <strong>YYMMDD-중-NNNNNN</strong> 형식입니다. 앞 6자리는 심의 통과일(YY:연도, MM:월, DD:일), "중"은 자율심의기관 구분 코드, 뒷자리는 해당 일자에 처리된 시안의 일련번호입니다.
+                </p>
+            </details>
+            <details class="bg-white p-5 rounded-2xl border border-slate-200 shadow-soft">
+                <summary class="font-semibold cursor-pointer text-slate-900">Q. 심의번호는 광고에 어떻게 표시해야 하나요?</summary>
+                <p class="mt-3 text-sm text-slate-700 leading-relaxed">
+                    통상 <strong>"대한의사협회 의료광고심의필 제 (심의번호) 호"</strong>와 같이 광고 시안 안에 명시합니다. 광고가 게재되는 매체에서 인지 가능한 위치에 표시되어야 합니다.
+                </p>
+            </details>
+            <details class="bg-white p-5 rounded-2xl border border-slate-200 shadow-soft">
+                <summary class="font-semibold cursor-pointer text-slate-900">Q. 심의번호 유효기간은 얼마나 되나요?</summary>
+                <p class="mt-3 text-sm text-slate-700 leading-relaxed">
+                    통상 <strong>심의 통과일로부터 3년</strong>간 유효합니다. 같은 시안으로 동일 매체에 광고를 계속 게재할 수 있으며, 시안을 수정하면 재심의가 필요할 수 있습니다.
+                </p>
+            </details>
+            <details class="bg-white p-5 rounded-2xl border border-slate-200 shadow-soft">
+                <summary class="font-semibold cursor-pointer text-slate-900">Q. 심의번호는 어디서 조회할 수 있나요?</summary>
+                <p class="mt-3 text-sm text-slate-700 leading-relaxed">
+                    대한의사협회 의료광고심의위원회 사이트(<a href="https://www.admedical.org/application/approval_confirm.do" target="_blank" rel="noopener" class="text-brand-600 hover:underline">admedical.org</a>)의 "광고 심의 조회" 메뉴에서 심의번호의 뒷자리(일련번호)를 입력하면 통과 시안 정보를 확인할 수 있습니다.
+                </p>
+            </details>
+            <details class="bg-white p-5 rounded-2xl border border-slate-200 shadow-soft">
+                <summary class="font-semibold cursor-pointer text-slate-900">Q. 심의번호 없이 광고하면 어떻게 되나요?</summary>
+                <p class="mt-3 text-sm text-slate-700 leading-relaxed">
+                    사전심의 의무가 있는 매체에 심의받지 않은 광고를 게재하면 의료법 제56조 위반으로 <strong>1년 이하 징역 또는 1천만원 이하 벌금</strong>이 부과될 수 있습니다.
+                </p>
+            </details>
+        </div>
+    </section>
+
+    <!-- 6. 출처 -->
+    <section id="sources" class="mb-12 scroll-mt-24">
+        <h2 class="text-2xl font-bold mb-4 tracking-tight">6. 출처 및 참고자료</h2>
+        <ol class="list-decimal pl-5 space-y-2 text-sm text-slate-700 leading-relaxed">
+            <li>
+                대한의사협회 의료광고심의위원회 운영 규정 및 심의번호 표기 기준.
+                <a href="https://www.admedical.org/" target="_blank" rel="noopener" class="text-brand-600 hover:underline">admedical.org</a> (인용일: 2026.04.26)
+            </li>
+            <li>
+                「의료법」 제56조(의료광고의 금지 등), 제57조(의료광고의 심의), 제89조(벌칙). 국가법령정보센터.
+                <a href="https://www.law.go.kr/법령/의료법" target="_blank" rel="noopener" class="text-brand-600 hover:underline">law.go.kr</a> (인용일: 2026.04.26)
+            </li>
+        </ol>
+
+        <p class="text-xs text-slate-500 mt-6 pt-4 border-t border-slate-200 leading-relaxed">
+            ⓘ 본 콘텐츠는 정보 제공 목적이며 법적 자문이 아닙니다. 정확한 사항은 대한의사협회 의료광고심의위원회 또는 관계 당국에 문의하시기 바랍니다.
+        </p>
+    </section>
+
+    <aside class="bg-white rounded-2xl border border-slate-200 p-6 shadow-soft">
+        <h2 class="text-sm font-bold text-slate-700 mb-4">📎 관련 페이지</h2>
+        <ul class="space-y-2.5 text-sm">
+            <li>
+                <a href="/guide/application.html" class="text-brand-600 hover:underline font-medium">→ 심의 신청 방법</a>
+                <span class="text-slate-500 ml-1">— 신청 절차·서류·수수료</span>
+            </li>
+            <li>
+                <a href="/guide/about-review.html" class="text-brand-600 hover:underline font-medium">→ 의료광고심의란?</a>
+                <span class="text-slate-500 ml-1">— 제도 정의와 법적 근거</span>
+            </li>
+            <li>
+                <a href="/top20.html" class="text-brand-600 hover:underline font-medium">→ 심의통과 TOP 20 키워드</a>
+                <span class="text-slate-500 ml-1">— 통과한 표현 사례 검색</span>
+            </li>
+        </ul>
+    </aside>
+</main>
+
+<footer class="bg-white border-t border-slate-200 mt-20">
+    <div class="max-w-5xl mx-auto px-4 py-8 text-sm text-slate-500">
+        <div class="flex flex-wrap gap-5 mb-3 font-medium">
+            <a href="/about.html" class="hover:text-brand-600">서비스 소개</a>
+            <a href="/top20.html" class="hover:text-brand-600">심의통과 TOP 20 키워드</a>
+            <a href="/contact.html" class="hover:text-brand-600">문의</a>
+            <a href="/terms.html" class="hover:text-brand-600">이용약관</a>
+            <a href="/privacy.html" class="hover:text-brand-600">개인정보처리방침</a>
+        </div>
+    </div>
+</footer>
+
+<script src="/assets/js/site.js"></script>
+</body>
+</html>
