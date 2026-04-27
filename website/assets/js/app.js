@@ -13,7 +13,14 @@ async function loadStatistics() {
         const r = await fetch("/assets/data/statistics.json", { cache: "no-store" });
         if (!r.ok) return;
         const data = await r.json();
-        document.getElementById("stat-today").textContent = data.today.count.toLocaleString();
+        if (data.yesterday) {
+            document.getElementById("stat-yesterday").textContent = data.yesterday.count.toLocaleString();
+            // 날짜 한국식 (M월 D일, 요일) 표시
+            const d = new Date(data.yesterday.date + "T00:00:00+09:00");
+            const dow = ["일","월","화","수","목","금","토"][d.getDay()];
+            const dateLabel = `${d.getMonth() + 1}월 ${d.getDate()}일 (${dow})`;
+            document.getElementById("stat-yesterday-date").textContent = dateLabel;
+        }
         document.getElementById("stat-week").textContent = data.this_week.count.toLocaleString();
 
         if (data.last_week) {

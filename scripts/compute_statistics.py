@@ -31,6 +31,12 @@ def main() -> None:
 
     today = datetime.now(KST).date()
 
+    # 어제 통과 건수 — 가장 최근 영업일 (토·일은 심의 미운영이라 건너뜀).
+    # 예) 월요일이면 금요일, 일요일이면 금요일.
+    yesterday = today - timedelta(days=1)
+    while yesterday.weekday() >= 5:  # Sat=5, Sun=6
+        yesterday -= timedelta(days=1)
+
     # 이번주 = 월요일 시작
     week_start = today - timedelta(days=today.weekday())
     # 지난주 = 직전 월~일
@@ -71,7 +77,7 @@ def main() -> None:
         "SELECT COUNT(DISTINCT review_num) FROM files WHERE is_notice = 0"
     ).fetchone()[0]
 
-    today_count = count_unique_reviews(today, today)
+    yesterday_count = count_unique_reviews(yesterday, yesterday)
     week_count = count_unique_reviews(week_start, today)
     month_count = count_unique_reviews(month_start, today)
     last_week_count = count_unique_reviews(last_week_start, last_week_end)
@@ -106,9 +112,9 @@ def main() -> None:
 
     payload = {
         "generated_at": datetime.now(KST).isoformat(),
-        "today": {
-            "date": today.isoformat(),
-            "count": today_count,
+        "yesterday": {
+            "date": yesterday.isoformat(),
+            "count": yesterday_count,
         },
         "this_week": {
             "start": week_start.isoformat(),
@@ -147,7 +153,7 @@ def main() -> None:
 
     print(f"[저장됨] {OUTPUT_PATH.relative_to(ROOT)}")
     print(f"  총 누적: {total_count:,}건  ({first_date} ~ {last_date})")
-    print(f"  오늘({today}): {today_count}건")
+    print(f"  어제({yesterday}, 최근 영업일): {yesterday_count}건")
     print(f"  이번주({week_start} ~ {today}): {week_count}건")
     print(f"  이번달({month_start} ~ {today}): {month_count}건")
     print(f"  지난주({last_week_start} ~ {last_week_end}): {last_week_count}건 (지지난주 대비 {last_week_count - prev_last_week_count:+d})")
