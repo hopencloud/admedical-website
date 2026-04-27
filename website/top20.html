@@ -40,12 +40,12 @@
     <h1 class="text-3xl md:text-4xl font-bold mb-3 tracking-tight">심의통과 TOP 20 키워드</h1>
     <p class="text-slate-600 mb-8">의료광고심의위원회를 통과한 광고에서 자주 등장한 키워드 Top 20을 보여드립니다.</p>
 
-    <!-- 4개 탭: 이번주 / 이번달 / 지난주 / 지난달 -->
+    <!-- 4개 탭: 지난주 / 지난달 / 이번주 / 이번달 -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-1 p-1 bg-slate-100 rounded-xl mb-6">
-        <button data-period="this-week"  class="tab-btn px-3 py-2 font-semibold text-sm rounded-lg text-slate-500 hover:text-slate-900">이번주</button>
-        <button data-period="this-month" class="tab-btn px-3 py-2 font-semibold text-sm rounded-lg text-slate-500 hover:text-slate-900">이번달</button>
         <button data-period="last-week"  class="tab-btn px-3 py-2 font-semibold text-sm rounded-lg text-slate-500 hover:text-slate-900">지난주</button>
         <button data-period="last-month" class="tab-btn px-3 py-2 font-semibold text-sm rounded-lg text-slate-500 hover:text-slate-900">지난달</button>
+        <button data-period="this-week"  class="tab-btn px-3 py-2 font-semibold text-sm rounded-lg text-slate-500 hover:text-slate-900">이번주</button>
+        <button data-period="this-month" class="tab-btn px-3 py-2 font-semibold text-sm rounded-lg text-slate-500 hover:text-slate-900">이번달</button>
     </div>
 
     <div id="period-info" class="text-sm text-slate-500 mb-5"></div>
@@ -137,9 +137,9 @@ document.querySelectorAll(".tab-btn").forEach(btn => {
     btn.addEventListener("click", () => loadTop20(btn.dataset.period));
 });
 
-// 첫 로드: URL 쿼리 ?period= 또는 기본값 "this-week"
+// 첫 로드: URL 쿼리 ?period= 또는 기본값 "last-week"
 const initial = new URLSearchParams(location.search).get("period");
-loadTop20(PERIOD_CONFIG[initial] ? initial : "this-week");
+loadTop20(PERIOD_CONFIG[initial] ? initial : "last-week");
 </script>
 <script src="/assets/js/site.js"></script>
 <script src="/assets/js/ads.js" defer></script>

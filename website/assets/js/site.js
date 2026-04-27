@@ -42,10 +42,10 @@
             <div class="nav-dropdown" data-nav-group="/top20">
                 <button type="button" class="nav-trigger px-3 py-2 rounded-lg hover:text-brand-600 hover:bg-slate-50 transition inline-flex items-center" aria-haspopup="true">심의통과 TOP 20 키워드<span class="nav-caret">▾</span></button>
                 <div class="nav-dropdown__panel" role="menu">
-                    <a href="/top20.html?period=this-week" class="nav-dropdown__item">이번주</a>
-                    <a href="/top20.html?period=this-month" class="nav-dropdown__item">이번달</a>
                     <a href="/top20.html?period=last-week" class="nav-dropdown__item">지난주</a>
                     <a href="/top20.html?period=last-month" class="nav-dropdown__item">지난달</a>
+                    <a href="/top20.html?period=this-week" class="nav-dropdown__item">이번주</a>
+                    <a href="/top20.html?period=this-month" class="nav-dropdown__item">이번달</a>
                 </div>
             </div>
 
@@ -72,10 +72,10 @@
         <details class="mobile-group" data-nav-group="/top20">
             <summary>심의통과 TOP 20 키워드</summary>
             <div class="mobile-group__items">
-                <a href="/top20.html?period=this-week">이번주</a>
-                <a href="/top20.html?period=this-month">이번달</a>
                 <a href="/top20.html?period=last-week">지난주</a>
                 <a href="/top20.html?period=last-month">지난달</a>
+                <a href="/top20.html?period=this-week">이번주</a>
+                <a href="/top20.html?period=this-month">이번달</a>
             </div>
         </details>
         <a data-nav="/contact.html" href="/contact.html" class="block py-2 text-slate-700 hover:text-brand-600">문의</a>
