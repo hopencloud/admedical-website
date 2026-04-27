@@ -17,6 +17,14 @@ logs/
 
 # 원본 SQLite — 용량 큼, GitHub 업로드 X
 index.sqlite
+index.sqlite-shm
+index.sqlite-wal
+
+# 루트의 og 이미지 사본 (실제 사용본은 website/assets/img/ogimage.png)
+/ogimage.png
+
+# Claude Code 로컬 설정
+.claude/
 
 # OS / 에디터
 .DS_Store
