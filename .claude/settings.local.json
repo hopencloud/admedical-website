@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sqlite3 /Users/halim/Desktop/admedical_website/index.sqlite \".tables\")",
+      "Bash(sqlite3 /Users/halim/Desktop/admedical_website/index.sqlite \".schema files\")",
+      "Bash(sqlite3 /Users/halim/Desktop/admedical_website/index.sqlite \"SELECT COUNT\\(*\\) AS total, COUNT\\(DISTINCT review_num\\) AS unique_reviews, MIN\\(review_date\\) AS first_date, MAX\\(review_date\\) AS last_date, SUM\\(CASE WHEN ocr_done=1 THEN 1 ELSE 0 END\\) AS ocr_done_cnt FROM files;\")",
+      "Bash(sqlite3 /Users/halim/Desktop/admedical_website/index.sqlite \"SELECT filename, review_date, review_num, page, is_notice, length\\(ocr_text\\) AS text_len FROM files ORDER BY review_num DESC LIMIT 5;\")",
+      "Bash(python -m json.tool)",
+      "Bash(curl -s -o /dev/null -w '%{http_code}' http://localhost:8765/__TRACKED_VAR__)",
+      "Bash(curl -s -o /dev/null -w \"top20.html %{http_code}\\\\n\" http://localhost:8765/top20.html)",
+      "Bash(cp /Users/halim/Downloads/naver536ba2b5323508822dfc8329784571b2.html /Users/halim/Desktop/admedical_website/website/)",
+      "Bash(curl -s -o /dev/null -w \"로컬 HTTP %{http_code}\\\\n\" http://localhost:8765/naver536ba2b5323508822dfc8329784571b2.html)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8765/naver48bf0a622da5771affd07f27cfa1ad53.html)",
+      "Bash(curl -sL https://www.admedical.co.kr/)",
+      "Bash(curl -s http://localhost:8765/)",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost:8765/top20.html)",
+      "Bash(curl -s -o /dev/null -w \"/contact.html %{http_code}\\\\n\" http://localhost:8765/contact.html)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8765/guide/about-review.html)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8765/guide/application.html)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8765/guide/target-media.html)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8765/guide/exempt.html)"
+    ]
+  }
+}
