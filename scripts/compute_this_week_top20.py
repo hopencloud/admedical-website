@@ -1,0 +1,44 @@
+"""
+이번주 TOP 20 표현 계산.
+
+이번주 = 이번주 월요일 ~ 오늘 (KST 기준).
+매일 새벽 자동 실행되며, 진행 중인 주의 데이터로 갱신된다.
+주가 끝나기 전까지는 계속 누적되는 데이터.
+
+결과: website/assets/data/this_week_top20.json
+"""
+
+import json
+import sys
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+
+from dotenv import load_dotenv
+
+sys.path.insert(0, str(Path(__file__).parent))
+from top_expressions import compute_top20  # noqa: E402
+
+ROOT = Path(__file__).parent.parent
+KST = timezone(timedelta(hours=9))
+OUTPUT_PATH = ROOT / "website" / "assets" / "data" / "this_week_top20.json"
+
+
+def main() -> None:
+    load_dotenv(ROOT / ".env")
+
+    today = datetime.now(KST).date()
+    # 이번주 월요일
+    this_monday = today - timedelta(days=today.weekday())
+
+    label = f"이번주 ({this_monday.isoformat()} ~ {today.isoformat()})"
+    result = compute_top20(this_monday.isoformat(), today.isoformat(), label)
+
+    OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    OUTPUT_PATH.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"\n[저장됨] {OUTPUT_PATH.relative_to(ROOT)}")
+    print(f"  표현 수: {len(result['top20'])}개")
+    print(f"  방식: {result['method']}")
+
+
+if __name__ == "__main__":
+    main()

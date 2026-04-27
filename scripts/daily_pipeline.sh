@@ -2,12 +2,14 @@
 # 매일 새벽 5시(KST) 자동 실행되는 전체 파이프라인.
 #
 # 실행 순서:
-#   1. collector.py        — 신규 시안 다운로드
-#   2. indexer.py          — 새 이미지 OCR → index.sqlite
-#   3. compute_statistics.py — 일일 통계 갱신
-#   4. sync_to_supabase.py — 신규 분 Supabase 업로드 (마스킹 포함)
-#   5. (월요일만) compute_weekly_top20.py
-#   6. (매월 1일만) compute_monthly_top20.py
+#   1. collector.py             — 신규 시안 다운로드
+#   2. batch_vision_ocr.py      — 새 이미지 OCR → index.sqlite (OpenAI Vision)
+#   3. compute_statistics.py    — 일일 통계 갱신
+#   4. sync_to_supabase.py      — 신규 분 Supabase 업로드 (마스킹 포함)
+#   5. compute_this_week_top20  — 이번주 TOP 20 (매일 갱신, 누적)
+#   6. compute_this_month_top20 — 이번달 TOP 20 (매일 갱신, 누적)
+#   7. (월요일만) compute_weekly_top20  — 지난주 TOP 20 (확정)
+#   8. (매월 1일만) compute_monthly_top20 — 지난달 TOP 20 (확정)
 #
 # 로그: logs/daily_YYYYMMDD.log
 
@@ -55,16 +57,22 @@ run_step "3/4 statistics" python "$ROOT/scripts/compute_statistics.py"
 # 4. Supabase 동기화 (마스킹 포함)
 run_step "4/4 sync"       python "$ROOT/scripts/sync_to_supabase.py"
 
-# 5. 주간 TOP 20 (월요일만)
+# 5. 이번주 TOP 20 — 매일 갱신 (월요일~오늘 누적)
+run_step "이번주 TOP20" python "$ROOT/scripts/compute_this_week_top20.py"
+
+# 6. 이번달 TOP 20 — 매일 갱신 (1일~오늘 누적)
+run_step "이번달 TOP20" python "$ROOT/scripts/compute_this_month_top20.py"
+
+# 7. 지난주 TOP 20 (월요일만 — 새 주 시작 시 직전 주 확정)
 DOW=$(date +%u)  # 1=월요일, 7=일요일
 if [ "$DOW" = "1" ]; then
-    run_step "주간 TOP20" python "$ROOT/scripts/compute_weekly_top20.py"
+    run_step "지난주 TOP20" python "$ROOT/scripts/compute_weekly_top20.py"
 fi
 
-# 6. 월간 TOP 20 (매월 1일만)
+# 8. 지난달 TOP 20 (매월 1일만 — 새 달 시작 시 직전 달 확정)
 DOM=$(date +%d)
 if [ "$DOM" = "01" ]; then
-    run_step "월간 TOP20" python "$ROOT/scripts/compute_monthly_top20.py"
+    run_step "지난달 TOP20" python "$ROOT/scripts/compute_monthly_top20.py"
 fi
 
 # 7. SQLite 백업 (매일 1부, 7일치 보관)
