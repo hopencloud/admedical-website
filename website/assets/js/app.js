@@ -137,7 +137,7 @@ function renderRow(row, q) {
                 심의번호 복사
             </button>
             <a href="${ADMEDICAL_LINK}" target="_blank" class="text-brand-600 hover:text-brand-700 hover:underline font-medium">
-                심의 시안은 의료광고심의위원회에서 확인하세요 →
+                원본 시안은 의료광고심의위원회에서 확인하세요 →
             </a>
         </div>
     </article>`;
