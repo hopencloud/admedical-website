@@ -54,7 +54,11 @@ function formatDelta(delta, refLabel) {
 function renderChart(rows) {
     const ctx = document.getElementById("chart-30d");
     if (!ctx || !rows) return;
-    const labels = rows.map(r => r.date.slice(5));  // MM-DD
+    const DOW = ["일","월","화","수","목","금","토"];
+    const labels = rows.map(r => {
+        const d = new Date(r.date + "T00:00:00+09:00");
+        return `${r.date.slice(5)}(${DOW[d.getDay()]})`;  // MM-DD(요일)
+    });
     const counts = rows.map(r => r.count);
     new Chart(ctx, {
         type: "bar",
