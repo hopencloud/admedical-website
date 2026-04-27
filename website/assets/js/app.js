@@ -128,20 +128,30 @@ function renderRow(row, q) {
     const numberOnly = String(row.review_num ?? display.split("-중-").pop() ?? "");
     const safeDisplay = escapeHtml(display);
     const safeText = escapeHtml(text);
+    const adminBtn = isAdmin() ? `
+            <button onclick="editAd('${escapeHtml(numberOnly)}')"
+                    title="이 광고 문구를 수정합니다 (관리자 전용)"
+                    class="shrink-0 text-xs px-3 py-1.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-lg hover:bg-emerald-100 hover:border-emerald-400 font-semibold transition">
+                ✎ 수정
+            </button>` : '';
     return `
-    <article class="bg-white rounded-2xl p-5 border border-slate-200 hover:border-brand-500 hover:shadow-soft transition">
+    <article data-review-num="${escapeHtml(numberOnly)}" data-original-text="${safeText}"
+             class="bg-white rounded-2xl p-5 border border-slate-200 hover:border-brand-500 hover:shadow-soft transition">
         <div class="flex items-start justify-between gap-3 mb-3">
             <div class="flex items-center gap-2 flex-wrap">
                 <span class="text-xs px-2.5 py-1 bg-brand-50 text-brand-700 rounded-lg font-mono font-medium">${safeDisplay}</span>
                 <span class="text-xs text-slate-500 tabular-nums">${escapeHtml(row.review_date || "")}</span>
             </div>
-            <button onclick="reportError('${safeDisplay}', \`${safeText.replace(/`/g, "\\`")}\`, '${escapeHtml(numberOnly)}')"
-                    title="내용 오류 및 병원명 노출 시 제보해 주세요"
-                    class="shrink-0 text-xs px-3 py-1.5 bg-rose-50 text-rose-700 border border-rose-200 rounded-lg hover:bg-rose-100 hover:border-rose-400 font-semibold transition">
-                오류 제보
-            </button>
+            <div class="flex gap-2 shrink-0">
+                ${adminBtn}
+                <button onclick="reportError('${safeDisplay}', \`${safeText.replace(/`/g, "\\`")}\`, '${escapeHtml(numberOnly)}')"
+                        title="내용 오류 및 병원명 노출 시 제보해 주세요"
+                        class="text-xs px-3 py-1.5 bg-rose-50 text-rose-700 border border-rose-200 rounded-lg hover:bg-rose-100 hover:border-rose-400 font-semibold transition">
+                    오류 제보
+                </button>
+            </div>
         </div>
-        <p class="text-[15px] leading-relaxed text-slate-800 whitespace-pre-wrap">${highlight(text, q)}</p>
+        <div data-ad-body class="text-[15px] leading-relaxed text-slate-800 whitespace-pre-wrap">${highlight(text, q)}</div>
         <div class="mt-4 pt-3 border-t border-slate-100 flex flex-wrap items-center gap-3 text-xs">
             <button onclick="copyText('${escapeHtml(numberOnly)}')"
                     class="px-3 py-1.5 border border-slate-300 rounded-lg hover:bg-slate-50 hover:border-brand-500 text-slate-700 font-medium transition">
@@ -152,6 +162,136 @@ function renderRow(row, q) {
             </a>
         </div>
     </article>`;
+}
+
+// ---------- 관리자 인라인 편집 ----------
+const ADMIN_PWD_KEY = "adminPwd";
+function getAdminPwd() { return sessionStorage.getItem(ADMIN_PWD_KEY); }
+function isAdmin() { return !!getAdminPwd(); }
+
+async function verifyAdminPwd(pwd) {
+    try {
+        // 존재하지 않을 review_num=0 으로 호출 → 401이면 비번 틀림, 404면 비번 통과
+        const r = await fetch("/api/admin-load?review_num=0", {
+            headers: { "X-Admin-Password": pwd },
+        });
+        return r.status !== 401;
+    } catch {
+        return false;
+    }
+}
+
+window.adminLogin = async function () {
+    const pwd = prompt("관리자 비밀번호");
+    if (!pwd) return;
+    const ok = await verifyAdminPwd(pwd);
+    if (!ok) { alert("비밀번호가 틀렸습니다."); return; }
+    sessionStorage.setItem(ADMIN_PWD_KEY, pwd);
+    showAdminBanner();
+    if (currentQuery) runSearch(currentQuery);  // 결과 카드에 수정 버튼 표시되도록 재렌더
+};
+
+window.adminLogout = function () {
+    sessionStorage.removeItem(ADMIN_PWD_KEY);
+    hideAdminBanner();
+    if (currentQuery) runSearch(currentQuery);
+};
+
+function showAdminBanner() {
+    let bar = document.getElementById("admin-bar");
+    if (!bar) {
+        bar = document.createElement("div");
+        bar.id = "admin-bar";
+        bar.className = "fixed top-0 left-0 right-0 z-50 bg-emerald-600 text-white text-xs py-1.5 px-4 text-center";
+        bar.innerHTML = `🔓 관리자 모드 — 검색 결과 카드의 <strong>✎ 수정</strong> 버튼으로 직접 편집 가능 · <button onclick="adminLogout()" class="underline font-semibold ml-2">종료</button>`;
+        document.body.appendChild(bar);
+    }
+    bar.style.display = "block";
+    document.body.style.paddingTop = "30px";
+}
+function hideAdminBanner() {
+    const bar = document.getElementById("admin-bar");
+    if (bar) bar.style.display = "none";
+    document.body.style.paddingTop = "";
+}
+
+window.editAd = function (reviewNum) {
+    const article = document.querySelector(`article[data-review-num="${reviewNum}"]`);
+    if (!article) return;
+    const body = article.querySelector("[data-ad-body]");
+    const original = article.dataset.originalText || body.textContent;
+    body.outerHTML = `
+        <div data-ad-edit-block>
+            <textarea id="edit-${reviewNum}" rows="6"
+                class="w-full p-3 border border-emerald-400 rounded-lg text-[15px] leading-relaxed focus:outline-none focus:ring-2 focus:ring-emerald-500 font-sans bg-white"></textarea>
+            <div class="mt-2 flex flex-wrap gap-2 items-center">
+                <button onclick="saveAd('${reviewNum}')"
+                    class="px-3 py-1.5 bg-emerald-600 text-white text-xs font-semibold rounded-lg hover:bg-emerald-700">
+                    💾 저장
+                </button>
+                <button onclick="cancelEdit('${reviewNum}')"
+                    class="px-3 py-1.5 border border-slate-300 text-xs rounded-lg hover:bg-slate-50">
+                    취소
+                </button>
+                <span data-edit-status class="text-xs"></span>
+            </div>
+        </div>`;
+    const ta = document.getElementById(`edit-${reviewNum}`);
+    ta.value = original;
+    ta.focus();
+};
+
+window.saveAd = async function (reviewNum) {
+    const pwd = getAdminPwd();
+    if (!pwd) { alert("관리자 로그인이 필요합니다."); return; }
+    const article = document.querySelector(`article[data-review-num="${reviewNum}"]`);
+    const ta = document.getElementById(`edit-${reviewNum}`);
+    const status = article.querySelector("[data-edit-status]");
+    const newText = ta.value;
+    status.textContent = "저장 중...";
+    status.className = "text-xs text-slate-500";
+    try {
+        const r = await fetch("/api/admin-save", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "X-Admin-Password": pwd },
+            body: JSON.stringify({ review_num: parseInt(reviewNum, 10), ocr_text: newText }),
+        });
+        if (r.status === 401) {
+            sessionStorage.removeItem(ADMIN_PWD_KEY);
+            status.textContent = "비밀번호 만료. 다시 로그인하세요.";
+            status.className = "text-xs text-rose-600 font-semibold";
+            return;
+        }
+        if (!r.ok) {
+            const data = await r.json().catch(() => ({}));
+            status.textContent = "저장 실패: " + (data.error || r.status);
+            status.className = "text-xs text-rose-600 font-semibold";
+            return;
+        }
+        const editBlock = article.querySelector("[data-ad-edit-block]");
+        editBlock.outerHTML = `<div data-ad-body class="text-[15px] leading-relaxed text-slate-800 whitespace-pre-wrap">${highlight(newText, currentQuery)}</div>`;
+        article.dataset.originalText = escapeHtml(newText);
+        flashSaved(article);
+    } catch (e) {
+        status.textContent = "오류: " + e.message;
+        status.className = "text-xs text-rose-600 font-semibold";
+    }
+};
+
+window.cancelEdit = function (reviewNum) {
+    const article = document.querySelector(`article[data-review-num="${reviewNum}"]`);
+    const editBlock = article.querySelector("[data-ad-edit-block]");
+    // data-original-text 는 이미 escapeHtml 처리된 형태라 디코드 필요
+    const tmp = document.createElement("textarea");
+    tmp.innerHTML = article.dataset.originalText || "";
+    const original = tmp.value;
+    editBlock.outerHTML = `<div data-ad-body class="text-[15px] leading-relaxed text-slate-800 whitespace-pre-wrap">${highlight(original, currentQuery)}</div>`;
+};
+
+function flashSaved(article) {
+    article.style.transition = "background-color 0.6s ease";
+    article.style.backgroundColor = "#dcfce7";
+    setTimeout(() => { article.style.backgroundColor = ""; }, 1200);
 }
 
 window.reportError = function (display, text, reviewNum) {
@@ -292,3 +432,4 @@ document.getElementById("clear-search").addEventListener("click", () => {
 
 // ---------- 시작 ----------
 loadStatistics();
+if (isAdmin()) showAdminBanner();  // 같은 탭에서 새로고침해도 관리자 모드 유지
