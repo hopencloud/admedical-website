@@ -36,8 +36,23 @@
     // 이하 자동 처리 (수정 불필요)
     // ============================================================
 
-    if (!ADSENSE_ENABLED) {
-        // 미활성 상태: .ad-slot은 CSS에서 display:none 이므로 그냥 종료
+    // URL에 ?ads=preview 가 있으면 미리보기 모드 (회색 박스로 자리 표시)
+    const PREVIEW_MODE = new URLSearchParams(location.search).get("ads") === "preview";
+
+    if (!ADSENSE_ENABLED && !PREVIEW_MODE) {
+        // 미활성 + 미리보기 아님: .ad-slot은 CSS에서 display:none 이므로 그냥 종료
+        return;
+    }
+
+    if (PREVIEW_MODE) {
+        document.querySelectorAll(".ad-slot").forEach(el => {
+            const name = el.dataset.slotName || "(slot)";
+            el.classList.add("ad-slot--preview");
+            el.innerHTML = `
+                <div class="ad-slot__preview-label">AD · ${name}</div>
+                <div class="ad-slot__preview-body">광고 자리 (실제 노출은 AdSense 승인 후)</div>
+            `;
+        });
         return;
     }
 
