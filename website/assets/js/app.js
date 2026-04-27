@@ -16,6 +16,15 @@ async function loadStatistics() {
         document.getElementById("stat-today").textContent = data.today.count.toLocaleString();
         document.getElementById("stat-week").textContent = data.this_week.count.toLocaleString();
 
+        if (data.last_week) {
+            document.getElementById("stat-last-week").textContent = data.last_week.count.toLocaleString();
+            document.getElementById("stat-last-week-delta").innerHTML = formatDelta(data.last_week.delta, "지지난주");
+        }
+        if (data.last_month) {
+            document.getElementById("stat-last-month").textContent = data.last_month.count.toLocaleString();
+            document.getElementById("stat-last-month-delta").innerHTML = formatDelta(data.last_month.delta, "지지난달");
+        }
+
         const ts = new Date(data.generated_at).toLocaleString("ko-KR");
         document.getElementById("last-update").textContent = `마지막 업데이트: ${ts} • 총 누적 ${data.total.count.toLocaleString()}건`;
 
@@ -23,6 +32,16 @@ async function loadStatistics() {
     } catch (e) {
         console.warn("statistics.json 로드 실패:", e);
     }
+}
+
+function formatDelta(delta, refLabel) {
+    if (delta === 0) {
+        return `<span class="text-slate-400">${refLabel} 대비 동일</span>`;
+    }
+    const sign = delta > 0 ? "▲" : "▼";
+    const color = delta > 0 ? "text-rose-500" : "text-blue-500";
+    const abs = Math.abs(delta).toLocaleString();
+    return `<span class="${color} font-semibold">${sign} ${abs}</span> <span class="text-slate-400">vs ${refLabel}</span>`;
 }
 
 function renderChart(rows) {

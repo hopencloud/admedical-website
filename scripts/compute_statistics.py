@@ -33,8 +33,22 @@ def main() -> None:
 
     # 이번주 = 월요일 시작
     week_start = today - timedelta(days=today.weekday())
+    # 지난주 = 직전 월~일
+    last_week_end = week_start - timedelta(days=1)
+    last_week_start = last_week_end - timedelta(days=6)
+    # 지지난주 = 그 직전 월~일 (지난주와 비교용)
+    prev_last_week_end = last_week_start - timedelta(days=1)
+    prev_last_week_start = prev_last_week_end - timedelta(days=6)
+
     # 이번달 = 1일 시작
     month_start = today.replace(day=1)
+    # 지난달 = 직전 달 1일 ~ 말일
+    last_month_end = month_start - timedelta(days=1)
+    last_month_start = last_month_end.replace(day=1)
+    # 지지난달 = 그 직전 달 1일 ~ 말일 (지난달과 비교용)
+    prev_last_month_end = last_month_start - timedelta(days=1)
+    prev_last_month_start = prev_last_month_end.replace(day=1)
+
     # 지난 30일 그래프 시작점
     chart_start = today - timedelta(days=29)
 
@@ -60,6 +74,10 @@ def main() -> None:
     today_count = count_unique_reviews(today, today)
     week_count = count_unique_reviews(week_start, today)
     month_count = count_unique_reviews(month_start, today)
+    last_week_count = count_unique_reviews(last_week_start, last_week_end)
+    prev_last_week_count = count_unique_reviews(prev_last_week_start, prev_last_week_end)
+    last_month_count = count_unique_reviews(last_month_start, last_month_end)
+    prev_last_month_count = count_unique_reviews(prev_last_month_start, prev_last_month_end)
 
     # 2. 30일 일자별 그래프 데이터
     rows = conn.execute(
@@ -102,6 +120,20 @@ def main() -> None:
             "end": today.isoformat(),
             "count": month_count,
         },
+        "last_week": {
+            "start": last_week_start.isoformat(),
+            "end": last_week_end.isoformat(),
+            "count": last_week_count,
+            "delta": last_week_count - prev_last_week_count,
+            "prev_count": prev_last_week_count,
+        },
+        "last_month": {
+            "start": last_month_start.isoformat(),
+            "end": last_month_end.isoformat(),
+            "count": last_month_count,
+            "delta": last_month_count - prev_last_month_count,
+            "prev_count": prev_last_month_count,
+        },
         "total": {
             "count": total_count,
             "first_date": first_date,
@@ -118,6 +150,8 @@ def main() -> None:
     print(f"  오늘({today}): {today_count}건")
     print(f"  이번주({week_start} ~ {today}): {week_count}건")
     print(f"  이번달({month_start} ~ {today}): {month_count}건")
+    print(f"  지난주({last_week_start} ~ {last_week_end}): {last_week_count}건 (지지난주 대비 {last_week_count - prev_last_week_count:+d})")
+    print(f"  지난달({last_month_start} ~ {last_month_end}): {last_month_count}건 (지지난달 대비 {last_month_count - prev_last_month_count:+d})")
     print(f"  30일 그래프: {len(chart)}일치 데이터")
 
 
