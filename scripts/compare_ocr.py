@@ -8,6 +8,7 @@
 
 세 가지를 나란히 보여준다.
 """
+from __future__ import annotations
 import sqlite3
 import sys
 from pathlib import Path

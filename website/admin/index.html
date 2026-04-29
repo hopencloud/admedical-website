@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicon-180x180.png">
+    <title>관리자 대시보드</title>
+    <meta name="robots" content="noindex,nofollow">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: {
+                fontFamily: { sans: ['"Pretendard Variable"', 'Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'] },
+                colors: { brand: { 50: '#eff6ff', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8' } },
+                boxShadow: { soft: '0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 12px rgba(15, 23, 42, 0.04)' },
+            } },
+        };
+    </script>
+    <link rel="stylesheet" href="/assets/css/site.css?v=20260427e">
+    <style>
+        @keyframes pulse-bar {
+            0%, 100% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
+        }
+        .indeterminate-bar::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.45), transparent);
+            animation: pulse-bar 1.6s ease-in-out infinite;
+        }
+        .log-area {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen p-4 md:p-8 text-slate-900 antialiased">
+
+<div class="max-w-3xl mx-auto">
+    <!-- 로그인 단계 -->
+    <div id="login-step" class="bg-white rounded-2xl shadow-soft p-7 border border-slate-200">
+        <h1 class="text-2xl font-bold mb-2 tracking-tight">관리자 대시보드</h1>
+        <p class="text-sm text-slate-600 mb-6">수동으로 다운로드·인덱싱을 실행하고 진행 상태를 확인합니다.</p>
+        <label class="block text-sm font-medium mb-2 text-slate-700">관리자 비밀번호</label>
+        <input id="password" type="password" autocomplete="current-password"
+               class="w-full px-4 py-3 border border-slate-300 rounded-xl mb-4 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+        <button id="login-btn"
+                class="w-full px-4 py-3 bg-brand-600 text-white rounded-xl font-semibold hover:bg-brand-700 transition">
+            들어가기
+        </button>
+        <p id="login-error" class="hidden mt-3 text-sm text-rose-700"></p>
+    </div>
+
+    <!-- 대시보드 -->
+    <div id="dashboard" class="hidden space-y-6">
+        <div class="bg-white rounded-2xl shadow-soft p-7 border border-slate-200">
+            <div class="flex items-center justify-between mb-2">
+                <h1 class="text-2xl font-bold tracking-tight">관리자 대시보드</h1>
+                <button id="logout-btn" class="text-sm text-slate-500 hover:text-slate-800">로그아웃</button>
+            </div>
+            <p class="text-sm text-slate-600">버튼을 누르면 맥북에 켜져 있는 agent가 작업을 받아 실행합니다. 맥북이 꺼져 있으면 켜진 직후 자동 시작됩니다.</p>
+        </div>
+
+        <!-- 작업 실행 버튼 -->
+        <div class="bg-white rounded-2xl shadow-soft p-7 border border-slate-200">
+            <h2 class="font-semibold mb-4 text-slate-800">작업 실행</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <button class="job-btn px-4 py-4 bg-brand-600 text-white rounded-xl font-semibold hover:bg-brand-700 transition disabled:bg-slate-300"
+                        data-type="collector">
+                    <div class="text-base">다운로드 시작</div>
+                    <div class="text-xs font-normal opacity-80 mt-1">신규 시안 수집</div>
+                </button>
+                <button class="job-btn px-4 py-4 bg-emerald-600 text-white rounded-xl font-semibold hover:bg-emerald-700 transition disabled:bg-slate-300"
+                        data-type="indexer">
+                    <div class="text-base">인덱싱 시작</div>
+                    <div class="text-xs font-normal opacity-80 mt-1">OCR + Supabase 동기화</div>
+                </button>
+                <button class="job-btn px-4 py-4 bg-slate-700 text-white rounded-xl font-semibold hover:bg-slate-800 transition disabled:bg-slate-300"
+                        data-type="pipeline">
+                    <div class="text-base">전체 파이프라인</div>
+                    <div class="text-xs font-normal opacity-80 mt-1">다운로드+OCR+통계+동기화</div>
+                </button>
+            </div>
+            <p id="trigger-status" class="hidden mt-4 text-sm"></p>
+        </div>
+
+        <!-- 현재 진행 -->
+        <div class="bg-white rounded-2xl shadow-soft p-7 border border-slate-200">
+            <div class="flex items-center justify-between mb-3">
+                <h2 class="font-semibold text-slate-800">현재 진행</h2>
+                <span id="current-job-id" class="text-xs font-mono text-slate-400"></span>
+            </div>
+            <div id="current-empty" class="text-sm text-slate-500 py-3">진행 중인 작업이 없습니다.</div>
+            <div id="current-detail" class="hidden">
+                <div class="flex items-center justify-between mb-2">
+                    <span id="current-job-type" class="text-base font-semibold"></span>
+                    <span id="current-status" class="text-xs px-2 py-1 rounded-full"></span>
+                </div>
+                <div class="relative h-2 bg-slate-100 rounded-full overflow-hidden mb-2" id="progress-bar-wrap">
+                    <div id="progress-fill" class="absolute inset-y-0 left-0 bg-brand-600 rounded-full transition-all" style="width:0%"></div>
+                </div>
+                <div class="flex justify-between text-xs text-slate-500 mb-3">
+                    <span id="current-message">대기 중...</span>
+                    <span id="current-counter"></span>
+                </div>
+                <details class="text-xs">
+                    <summary class="cursor-pointer text-slate-500 hover:text-slate-800 select-none">로그 보기</summary>
+                    <div id="current-log" class="log-area mt-2 p-3 bg-slate-900 text-slate-100 rounded-lg max-h-72 overflow-y-auto text-xs"></div>
+                </details>
+            </div>
+        </div>
+
+        <!-- 최근 작업 -->
+        <div class="bg-white rounded-2xl shadow-soft p-7 border border-slate-200">
+            <h2 class="font-semibold mb-3 text-slate-800">최근 작업 (최대 10개)</h2>
+            <div id="recent-list" class="text-sm divide-y divide-slate-100"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+const STORAGE_KEY = "admedical_admin_pwd";
+let adminPwd = sessionStorage.getItem(STORAGE_KEY) || "";
+let pollTimer = null;
+
+function api(path, init = {}) {
+    return fetch(path, {
+        ...init,
+        headers: {
+            ...(init.headers || {}),
+            "X-Admin-Password": adminPwd,
+            ...(init.body ? { "Content-Type": "application/json" } : {}),
+        },
+    });
+}
+
+function showDashboard() {
+    document.getElementById("login-step").classList.add("hidden");
+    document.getElementById("dashboard").classList.remove("hidden");
+    refreshJobs();
+    pollTimer = setInterval(refreshJobs, 2000);
+}
+
+function showLogin(err) {
+    if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+    document.getElementById("dashboard").classList.add("hidden");
+    document.getElementById("login-step").classList.remove("hidden");
+    if (err) {
+        const el = document.getElementById("login-error");
+        el.textContent = err;
+        el.classList.remove("hidden");
+    }
+}
+
+document.getElementById("login-btn").addEventListener("click", async () => {
+    adminPwd = document.getElementById("password").value;
+    const errEl = document.getElementById("login-error");
+    errEl.classList.add("hidden");
+
+    if (!adminPwd) {
+        errEl.textContent = "비밀번호를 입력해주세요.";
+        errEl.classList.remove("hidden");
+        return;
+    }
+
+    try {
+        const r = await api("/api/admin-jobs?limit=1");
+        if (r.status === 401) {
+            errEl.textContent = "비밀번호가 틀렸습니다.";
+            errEl.classList.remove("hidden");
+            return;
+        }
+        if (!r.ok) {
+            const data = await r.json().catch(() => ({}));
+            errEl.textContent = data.error || `오류 ${r.status}`;
+            errEl.classList.remove("hidden");
+            return;
+        }
+        sessionStorage.setItem(STORAGE_KEY, adminPwd);
+        showDashboard();
+    } catch (e) {
+        errEl.textContent = "네트워크 오류: " + e.message;
+        errEl.classList.remove("hidden");
+    }
+});
+
+document.getElementById("password").addEventListener("keydown", e => {
+    if (e.key === "Enter") document.getElementById("login-btn").click();
+});
+
+document.getElementById("logout-btn").addEventListener("click", () => {
+    sessionStorage.removeItem(STORAGE_KEY);
+    adminPwd = "";
+    document.getElementById("password").value = "";
+    showLogin();
+});
+
+document.querySelectorAll(".job-btn").forEach(btn => {
+    btn.addEventListener("click", async () => {
+        const jobType = btn.dataset.type;
+        const status = document.getElementById("trigger-status");
+        status.className = "mt-4 text-sm text-slate-600";
+        status.textContent = "작업 등록 중...";
+        status.classList.remove("hidden");
+        try {
+            const r = await api("/api/admin-job", {
+                method: "POST",
+                body: JSON.stringify({ job_type: jobType }),
+            });
+            const data = await r.json();
+            if (r.ok) {
+                status.className = "mt-4 text-sm text-emerald-700 font-semibold";
+                status.textContent = `✓ 작업 등록됨 (id=${data.job.id}). 맥북 agent가 곧 시작합니다.`;
+                refreshJobs();
+            } else {
+                status.className = "mt-4 text-sm text-rose-700";
+                status.textContent = (data.error || `오류 ${r.status}`);
+            }
+        } catch (e) {
+            status.className = "mt-4 text-sm text-rose-700";
+            status.textContent = "네트워크 오류: " + e.message;
+        }
+    });
+});
+
+const JOB_TYPE_LABEL = {
+    collector: "신규 시안 다운로드",
+    indexer: "OCR 인덱싱",
+    pipeline: "전체 파이프라인",
+};
+
+const STATUS_BADGE = {
+    pending: ["대기", "bg-slate-200 text-slate-700"],
+    running: ["실행 중", "bg-blue-100 text-blue-700"],
+    done: ["완료", "bg-emerald-100 text-emerald-700"],
+    failed: ["실패", "bg-rose-100 text-rose-700"],
+    cancelled: ["취소", "bg-amber-100 text-amber-700"],
+};
+
+function fmtTime(iso) {
+    if (!iso) return "—";
+    const d = new Date(iso);
+    return d.toLocaleString("ko-KR", { month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false });
+}
+
+function fmtDuration(start, end) {
+    if (!start) return "";
+    const s = new Date(start).getTime();
+    const e = end ? new Date(end).getTime() : Date.now();
+    const sec = Math.max(0, Math.round((e - s) / 1000));
+    if (sec < 60) return `${sec}s`;
+    const m = Math.floor(sec / 60), ss = sec % 60;
+    if (m < 60) return `${m}m ${ss}s`;
+    const h = Math.floor(m / 60), mm = m % 60;
+    return `${h}h ${mm}m`;
+}
+
+async function refreshJobs() {
+    let r;
+    try {
+        r = await api("/api/admin-jobs?limit=10");
+    } catch (_) {
+        return;  // 일시적 네트워크 오류는 무시
+    }
+    if (r.status === 401) { showLogin("세션 만료. 다시 로그인 해주세요."); return; }
+    if (!r.ok) return;
+    const { jobs } = await r.json();
+
+    // 현재 진행 (running > pending > 가장 최근)
+    const active = jobs.find(j => j.status === "running") || jobs.find(j => j.status === "pending") || jobs[0];
+    renderCurrent(active);
+    renderRecent(jobs);
+}
+
+function renderCurrent(job) {
+    const empty = document.getElementById("current-empty");
+    const detail = document.getElementById("current-detail");
+    if (!job) {
+        empty.classList.remove("hidden");
+        detail.classList.add("hidden");
+        return;
+    }
+    empty.classList.add("hidden");
+    detail.classList.remove("hidden");
+
+    document.getElementById("current-job-id").textContent = `#${job.id}`;
+    document.getElementById("current-job-type").textContent = JOB_TYPE_LABEL[job.job_type] || job.job_type;
+
+    const [label, cls] = STATUS_BADGE[job.status] || [job.status, "bg-slate-200"];
+    const badge = document.getElementById("current-status");
+    badge.textContent = label;
+    badge.className = `text-xs px-2 py-1 rounded-full ${cls}`;
+
+    const wrap = document.getElementById("progress-bar-wrap");
+    const fill = document.getElementById("progress-fill");
+    if (job.status === "running" && (job.progress == null || job.progress === 0)) {
+        // 진행률 미정 → 인디케이터
+        wrap.classList.add("indeterminate-bar");
+        fill.style.width = "100%";
+        fill.style.opacity = "0.15";
+    } else {
+        wrap.classList.remove("indeterminate-bar");
+        fill.style.opacity = "1";
+        const pct = job.status === "done" ? 100 : (job.progress || 0);
+        fill.style.width = `${pct}%`;
+        if (job.status === "failed") fill.classList.add("bg-rose-600"), fill.classList.remove("bg-brand-600", "bg-emerald-600");
+        else if (job.status === "done") fill.classList.add("bg-emerald-600"), fill.classList.remove("bg-brand-600", "bg-rose-600");
+        else fill.classList.add("bg-brand-600"), fill.classList.remove("bg-emerald-600", "bg-rose-600");
+    }
+
+    const msg = document.getElementById("current-message");
+    msg.textContent = job.error_text || job.message || (job.status === "pending" ? "맥북 agent 대기 중..." : "");
+
+    const counter = document.getElementById("current-counter");
+    const elapsed = fmtDuration(job.started_at, job.finished_at);
+    counter.textContent = [
+        job.counter ? `처리 ${job.counter}건` : "",
+        elapsed ? `경과 ${elapsed}` : "",
+    ].filter(Boolean).join(" · ");
+
+    document.getElementById("current-log").textContent = job.log_tail || "(로그 없음)";
+}
+
+function renderRecent(jobs) {
+    const list = document.getElementById("recent-list");
+    if (!jobs.length) { list.innerHTML = '<div class="py-3 text-slate-500">기록 없음</div>'; return; }
+    list.innerHTML = jobs.map(j => {
+        const [label, cls] = STATUS_BADGE[j.status] || [j.status, "bg-slate-200"];
+        const dur = fmtDuration(j.started_at, j.finished_at);
+        return `
+            <div class="py-2 flex items-center gap-3">
+                <span class="text-xs font-mono text-slate-400 w-12">#${j.id}</span>
+                <span class="flex-1 truncate">${JOB_TYPE_LABEL[j.job_type] || j.job_type}</span>
+                <span class="text-xs text-slate-500 hidden md:inline">${j.counter ? j.counter + '건 · ' : ''}${dur || ''}</span>
+                <span class="text-xs text-slate-500 hidden md:inline">${fmtTime(j.created_at)}</span>
+                <span class="text-xs px-2 py-0.5 rounded-full ${cls}">${label}</span>
+            </div>
+        `;
+    }).join("");
+}
+
+// 자동 로그인 시도
+if (adminPwd) {
+    api("/api/admin-jobs?limit=1").then(r => {
+        if (r.ok) showDashboard();
+        else { sessionStorage.removeItem(STORAGE_KEY); adminPwd = ""; }
+    }).catch(() => {});
+}
+</script>
+</body>
+</html>

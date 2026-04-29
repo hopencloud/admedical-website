@@ -12,6 +12,7 @@ migrate_to_supabase.py와 차이:
     source venv/bin/activate
     python scripts/sync_to_supabase.py
 """
+from __future__ import annotations
 import os
 import sqlite3
 import sys

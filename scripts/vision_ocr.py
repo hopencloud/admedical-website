@@ -8,6 +8,7 @@ EasyOCR/PaddleOCR보다 한국어 OCR 정확도가 훨씬 높음.
     from vision_ocr import vision_ocr
     text = vision_ocr("/path/to/image.png", detail="high")
 """
+from __future__ import annotations
 import base64
 import os
 import time

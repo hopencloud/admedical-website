@@ -14,6 +14,7 @@ TOP 20 표현 추출 공유 모듈.
     result = compute_top20(start_date="2026-04-13", end_date="2026-04-19", label="지난주")
 """
 
+from __future__ import annotations
 import json
 import os
 import re

@@ -4,6 +4,7 @@
   매일 새벽 5시(KST) admedical 파이프라인 자동 실행.
 
   설치 방법 (사장님 1번만 실행):
+    launchctl unload ~/Library/LaunchAgents/com.admedical.daily.plist 2>/dev/null
     cp scripts/com.admedical.daily.plist ~/Library/LaunchAgents/
     launchctl load ~/Library/LaunchAgents/com.admedical.daily.plist
 
@@ -14,7 +15,7 @@
     launchctl list | grep com.admedical.daily
 
   로그 확인:
-    cat /Users/halim/Desktop/admedical_website/logs/daily_*.log
+    cat "/Users/halim/Downloads/아카이브/admedical_website/logs/daily_*.log"
 
   주의:
     - 맥북이 켜져 있어야 동작 (sleep 모드면 깨우진 않음).
@@ -28,7 +29,7 @@
     <key>ProgramArguments</key>
     <array>
         <string>/bin/bash</string>
-        <string>/Users/halim/Desktop/admedical_website/scripts/daily_pipeline.sh</string>
+        <string>/Users/halim/Downloads/아카이브/admedical_website/scripts/daily_pipeline.sh</string>
     </array>
 
     <key>StartCalendarInterval</key>
@@ -40,13 +41,13 @@
     </dict>
 
     <key>WorkingDirectory</key>
-    <string>/Users/halim/Desktop/admedical_website</string>
+    <string>/Users/halim/Downloads/아카이브/admedical_website</string>
 
     <key>StandardOutPath</key>
-    <string>/Users/halim/Desktop/admedical_website/logs/launchd_stdout.log</string>
+    <string>/Users/halim/Downloads/아카이브/admedical_website/logs/launchd_stdout.log</string>
 
     <key>StandardErrorPath</key>
-    <string>/Users/halim/Desktop/admedical_website/logs/launchd_stderr.log</string>
+    <string>/Users/halim/Downloads/아카이브/admedical_website/logs/launchd_stderr.log</string>
 
     <key>RunAtLoad</key>
     <false/>

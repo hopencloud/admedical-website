@@ -8,6 +8,7 @@
 결과: website/assets/data/this_month_top20.json
 """
 
+from __future__ import annotations
 import json
 import sys
 from datetime import datetime, timedelta, timezone

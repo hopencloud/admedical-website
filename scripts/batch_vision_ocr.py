@@ -18,6 +18,7 @@
     python scripts/batch_vision_ocr.py --limit 5       # 5장만 (테스트)
     python scripts/batch_vision_ocr.py --workers 3     # 동시 처리 워커 수
 """
+from __future__ import annotations
 import argparse
 import logging
 import os

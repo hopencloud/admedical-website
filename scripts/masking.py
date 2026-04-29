@@ -14,6 +14,7 @@ OpenAI gpt-4o-mini를 사용해 OCR 텍스트에서 다음을 제거하고
     cleaned = clean_ocr_text(raw_ocr_text)
 """
 
+from __future__ import annotations
 import os
 import re
 import time

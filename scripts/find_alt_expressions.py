@@ -9,6 +9,7 @@ Supabase에서 카테고리별로 "안전한 통과 표현"을 검색해 대안 
 
 각 후보마다 review_no_display 표시 → 사용자가 admedical.org에서 검증 가능.
 """
+from __future__ import annotations
 import os
 import re
 import sys

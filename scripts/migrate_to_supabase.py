@@ -15,6 +15,7 @@ index.sqlite의 광고 데이터를 심의번호 단위로 합쳐
     python scripts/migrate_to_supabase.py --dry-run    # 마스킹만, Supabase 업로드 X
 """
 
+from __future__ import annotations
 import argparse
 import os
 import sqlite3

@@ -7,6 +7,7 @@
 결과: website/assets/data/monthly_top20.json
 """
 
+from __future__ import annotations
 import calendar
 import json
 import sys
