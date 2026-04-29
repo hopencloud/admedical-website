@@ -49,10 +49,9 @@ admedical_website/
 
 ---
 
-## 자동화 (단계 7부터 활성화 예정)
-- 매일 새벽 5시 자동 실행: 신규 시안 다운로드 → OCR → Supabase 동기화
-- 매주 월요일: 지난주 TOP 20 표현 갱신
-- 매월 1일: 지난달 TOP 20 표현 갱신
+## 실행 방식 — 관리자 대시보드 /admin
+- 사장님이 /admin 페이지에서 버튼으로 수동 트리거 (다운로드 / 인덱싱 / 전체 파이프라인).
+- 자세한 셋업은 [ADMIN_DASHBOARD.md](ADMIN_DASHBOARD.md) 참고.
 
 ---
 
@@ -63,10 +62,10 @@ admedical_website/
 - [x] 단계 4: 일괄 마이그레이션 (진행 중 — 백그라운드)
 - [x] 단계 5: 일일 통계 (statistics.json)
 - [x] 단계 6: 주/월 TOP 20 + AI 정제
-- [x] 단계 7: 신규 수집/인덱싱 + launchd 자동화
+- [x] 단계 7: 신규 수집/인덱싱 (수동 트리거 — 관리자 대시보드)
 - [x] 단계 8: 정적 사이트 (website/) — 사장님이 [DEPLOY.md](DEPLOY.md) 따라 배포
 
 ## 다음 사장님이 할 일
-1. [DEPLOY.md](DEPLOY.md) A: launchd 자동화 활성화 (3줄 명령)
+1. [ADMIN_DASHBOARD.md](ADMIN_DASHBOARD.md): 관리자 대시보드 셋업 (SQL 1번 + agent 등록)
 2. [DEPLOY.md](DEPLOY.md) B: GitHub + Vercel 배포 (15분)
 3. (선택) [DEPLOY.md](DEPLOY.md) C: 도메인 연결

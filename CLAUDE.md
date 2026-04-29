@@ -36,13 +36,11 @@
 4. AI가 마케팅 가치 있는 20개 선별
 5. AI 호출 실패 시 빈도수 기반 결과로 fallback
 
-## 자동화 (매일 새벽 5시, macOS launchd)
-1. collector.py: 신규 시안 다운로드
-2. indexer.py: 새 파일 OCR → index.sqlite 추가
-3. compute_statistics.py: 일일 통계 계산
-4. sync_to_supabase.py: 마스킹된 데이터 Supabase 업로드
-5. 매주 월요일: compute_weekly_top20.py 추가 실행 (AI 정제)
-6. 매월 1일: compute_monthly_top20.py 추가 실행 (AI 정제)
+## 실행 (수동, 관리자 대시보드 /admin)
+- 일일 자동(launchd)은 폐기. 사장님이 /admin 에서 버튼으로 트리거.
+- 맥북의 admin_agent.py 가 Supabase admin_jobs 큐를 5초마다 polling 하여 subprocess 로 실행.
+- 작업 종류: collector / indexer (OCR+sync) / pipeline(전체 = daily_pipeline.sh)
+- 매주 월요일·매월 1일에는 pipeline 작업이 weekly/monthly TOP20 도 함께 갱신 (스크립트 내부 로직).
 
 ## 웹사이트 페이지 구조
 - 메인: 통계 대시보드 + 검색

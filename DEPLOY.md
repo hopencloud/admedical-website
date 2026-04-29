@@ -223,21 +223,11 @@ git push -u origin main
 
 ---
 
-## 8단계 — 매일 자동 갱신 활성화 (3분, 맥북에서)
+## 8단계 — 관리자 대시보드 셋업
 
-이건 **사이트 배포와 별개**입니다. 매일 새벽 5시 신규 시안 자동 수집/인덱싱이 활성화됩니다.
+매일 자동 갱신은 폐기되었습니다. 사장님이 `/admin` 페이지에서 버튼으로 직접 다운로드·OCR·전체 파이프라인을 트리거합니다.
 
-터미널에서:
-
-```bash
-cp ~/Desktop/admedical_website/scripts/com.admedical.daily.plist ~/Library/LaunchAgents/
-launchctl load ~/Library/LaunchAgents/com.admedical.daily.plist
-launchctl list | grep com.admedical.daily
-```
-
-마지막 명령에 `com.admedical.daily` 가 보이면 OK. 다음 새벽 5시부터 자동 실행됩니다.
-
-> 💡 OCR 재처리(Vision OCR) 결정하시면 이 자동화에 합쳐드립니다.
+셋업 가이드: [ADMIN_DASHBOARD.md](ADMIN_DASHBOARD.md) 참고.
 
 ---
 
@@ -250,7 +240,7 @@ launchctl list | grep com.admedical.daily
 - [ ] 5단계: Gmail App Password 발급 + Vercel에 SMTP_PASS 추가
 - [ ] 6단계: 재배포
 - [ ] 7단계: 일반 검색 + 오류제보 + 관리자 수정 모두 테스트 통과
-- [ ] 8단계: launchd 자동화 활성화
+- [ ] 8단계: 관리자 대시보드 셋업 (ADMIN_DASHBOARD.md)
 
 ---
 

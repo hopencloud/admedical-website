@@ -63,18 +63,7 @@ tail -f logs/admin_agent.log
 
 `logs/admin_agent.log` 에 `[agent] 시작. polling 주기=5s` 가 보이면 OK.
 
-## 4. 일일 자동 파이프라인 plist도 다시 등록 (경로 수정됨)
-
-기존 plist는 `/Users/halim/Desktop/...` 잘못된 경로를 가리키고 있어서 **매일 새벽 자동 실행이 작동 안 했습니다**. 수정된 새 plist로 다시 등록하세요.
-
-```bash
-launchctl unload ~/Library/LaunchAgents/com.admedical.daily.plist 2>/dev/null
-cp scripts/com.admedical.daily.plist ~/Library/LaunchAgents/
-launchctl load ~/Library/LaunchAgents/com.admedical.daily.plist
-launchctl list | grep com.admedical.daily
-```
-
-## 5. 사용
+## 4. 사용
 
 브라우저에서 `/admin` 접속 → 비밀번호 입력 → 버튼 클릭.
 
@@ -102,5 +91,5 @@ launchctl load ~/Library/LaunchAgents/com.admedical.admin_agent.plist
 **Q. 비밀번호 변경하고 싶다**  
 Vercel `ADMIN_PASSWORD` 환경변수 갱신 → Redeploy. 맥북 agent에는 비밀번호 정보가 없으므로 영향 없음.
 
-**Q. 맥북 슬립 모드에서도 5시에 깨어나서 자동 실행되게 하려면?**  
-시스템 설정 → 배터리/전원 어댑터 → "연결되어 있을 때 디스플레이 끄기 시 컴퓨터를 자동으로 잠자게 두지 않기" 활성화하거나, Amphetamine 같은 앱 사용. 또는 매일 새벽 5시 직전에 `pmset schedule wake` 로 wake 일정 등록.
+**Q. 매일 자동 실행은 왜 없앴나?**  
+launchd 자동 실행은 폐기했습니다. 사장님이 admin 대시보드에서 원할 때 **전체 파이프라인** 버튼 한 번 누르는 방식이 더 단순하고 통제 가능. 휴대폰에서도 트리거 가능합니다 — 맥북만 켜져 있으면 됨.
