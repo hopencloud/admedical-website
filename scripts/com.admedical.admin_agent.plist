@@ -21,10 +21,15 @@
     <key>Label</key>
     <string>com.admedical.admin_agent</string>
 
+    <!--
+      bash 를 통해 실행. 이렇게 해야 macOS TCC 가 bash 의 Full Disk Access 권한을
+      상속하여 ~/Downloads 와 ~/Desktop 등 보호 폴더 안에 있는 venv·SQLite·이미지에 접근 가능.
+    -->
     <key>ProgramArguments</key>
     <array>
-        <string>/Users/halim/Downloads/아카이브/admedical_website/venv/bin/python</string>
-        <string>/Users/halim/Downloads/아카이브/admedical_website/scripts/admin_agent.py</string>
+        <string>/bin/bash</string>
+        <string>-lc</string>
+        <string>exec /Users/halim/Downloads/아카이브/admedical_website/venv/bin/python /Users/halim/Downloads/아카이브/admedical_website/scripts/admin_agent.py</string>
     </array>
 
     <key>WorkingDirectory</key>
