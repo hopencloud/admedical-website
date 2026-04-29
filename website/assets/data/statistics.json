@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-04-29T17:47:44.695042+09:00",
+  "generated_at": "2026-04-29T18:06:23.150658+09:00",
   "yesterday": {
     "date": "2026-04-28",
-    "count": 0
+    "count": 62
   },
   "this_week": {
     "start": "2026-04-27",
     "end": "2026-04-29",
-    "count": 78
+    "count": 240
   },
   "this_month": {
     "start": "2026-04-01",
     "end": "2026-04-29",
-    "count": 1610
+    "count": 1772
   },
   "last_week": {
     "start": "2026-04-20",
@@ -29,9 +29,9 @@
     "prev_count": 1505
   },
   "total": {
-    "count": 8137,
+    "count": 8299,
     "first_date": "2025-12-12",
-    "last_date": "2026-04-27"
+    "last_date": "2026-04-29"
   },
   "chart_30d": [
     {
@@ -148,11 +148,11 @@
     },
     {
       "date": "2026-04-28",
-      "count": 0
+      "count": 62
     },
     {
       "date": "2026-04-29",
-      "count": 0
+      "count": 100
     }
   ]
 }
