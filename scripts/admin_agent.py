@@ -263,6 +263,10 @@ def main() -> None:
     print(f"[agent] 시작. polling 주기={POLL_INTERVAL_SEC}s. ROOT={ROOT}", flush=True)
     client = db()
     stop = {"flag": False}
+    consecutive_fails = 0
+    # 슬립 → 깨어남 사이에 supabase client 가 죽은 connection / DNS 캐시를 들고
+    # 무한 재시도하는 문제 회피용. N번 연속 실패 시 client 재생성.
+    RECONNECT_AFTER_FAILS = 3
 
     def _sig(_signum, _frame):
         stop["flag"] = True
@@ -274,8 +278,17 @@ def main() -> None:
     while not stop["flag"]:
         try:
             job = claim_next_job(client)
+            consecutive_fails = 0
         except Exception as e:
-            print(f"[warn] claim 실패: {e}", flush=True)
+            consecutive_fails += 1
+            print(f"[warn] claim 실패 ({consecutive_fails}회): {e}", flush=True)
+            if consecutive_fails >= RECONNECT_AFTER_FAILS:
+                print(f"[agent] {RECONNECT_AFTER_FAILS}회 연속 실패 → client 재생성", flush=True)
+                try:
+                    client = db()
+                    consecutive_fails = 0
+                except Exception as e2:
+                    print(f"[warn] client 재생성 실패: {e2}", flush=True)
             time.sleep(POLL_INTERVAL_SEC)
             continue
 
