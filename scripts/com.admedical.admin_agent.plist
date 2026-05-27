@@ -14,7 +14,10 @@
     launchctl list | grep com.admedical.admin_agent
 
   로그:
-    tail -f /Users/halim/Downloads/아카이브/admedical_website/logs/admin_agent.log
+    tail -f ~/Library/Logs/admedical_admin_agent.log
+
+    (또한 프로젝트 logs/admin_agent.log 에는 main 루프 자체의 추가 라인을 따로 안 남기지만,
+     subprocess 가 daily_pipeline.sh 안에서 logs/daily_YYYYMMDD.log 를 작성한다.)
 -->
 <plist version="1.0">
 <dict>
@@ -44,10 +47,16 @@
     <key>ThrottleInterval</key>
     <integer>10</integer>
 
+    <!--
+      stdout/stderr 는 Downloads 폴더 밖에 둠. launchd 의 xpcproxy 가 spawn 직전
+      이 파일을 열어야 하는데, xpcproxy 는 Full Disk Access 가 없어서
+      ~/Downloads 안에 두면 TCC 가 차단해 spawn 자체가 실패(exit 78).
+      ~/Library/Logs/ 는 TCC 비제한.
+    -->
     <key>StandardOutPath</key>
-    <string>/Users/halim/Downloads/아카이브/admedical_website/logs/admin_agent.log</string>
+    <string>/Users/halim/Library/Logs/admedical_admin_agent.log</string>
 
     <key>StandardErrorPath</key>
-    <string>/Users/halim/Downloads/아카이브/admedical_website/logs/admin_agent.log</string>
+    <string>/Users/halim/Library/Logs/admedical_admin_agent.log</string>
 </dict>
 </plist>

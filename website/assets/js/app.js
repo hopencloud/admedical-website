@@ -8,19 +8,42 @@ const headers = {
 };
 
 // ---------- 통계 대시보드 ----------
+// KST(UTC+9) 기준 'YYYY-MM-DD' 반환
+function kstDateStr(offsetDays = 0) {
+    const now = new Date(Date.now() + 9 * 3600 * 1000 + offsetDays * 86400 * 1000);
+    return now.toISOString().slice(0, 10);
+}
+
 async function loadStatistics() {
     try {
         const r = await fetch("/assets/data/statistics.json", { cache: "no-store" });
         if (!r.ok) return;
         const data = await r.json();
-        if (data.yesterday) {
-            document.getElementById("stat-yesterday").textContent = data.yesterday.count.toLocaleString();
-            // 날짜 한국식 (M월 D일, 요일) 표시
-            const d = new Date(data.yesterday.date + "T00:00:00+09:00");
-            const dow = ["일","월","화","수","목","금","토"][d.getDay()];
-            const dateLabel = `${d.getMonth() + 1}월 ${d.getDate()}일 (${dow})`;
-            document.getElementById("stat-yesterday-date").textContent = dateLabel;
+
+        // "어제 통과" = 브라우저 기준 실제 어제 (KST). statistics.json 의 yesterday 필드는
+        // 파이프라인 실행 시점에 고정 박혀 있어서 며칠 묵으면 날짜가 안 넘어감 — chart_30d 에서
+        // 실제 어제 날짜를 lookup 해서 그 값을 보여주면 자동으로 매일 갱신됨.
+        const todayKst = kstDateStr(0);
+        const yesterdayKst = kstDateStr(-1);
+        const chartByDate = new Map((data.chart_30d || []).map(r => [r.date, r.count]));
+
+        // 실제 어제가 chart 에 있으면 우선 사용. 없으면 (수집 누락) saved yesterday 로 폴백.
+        let ydDate, ydCount;
+        if (chartByDate.has(yesterdayKst)) {
+            ydDate = yesterdayKst;
+            ydCount = chartByDate.get(yesterdayKst);
+        } else if (data.yesterday) {
+            ydDate = data.yesterday.date;
+            ydCount = data.yesterday.count;
         }
+
+        if (ydDate != null) {
+            document.getElementById("stat-yesterday").textContent = ydCount.toLocaleString();
+            const d = new Date(ydDate + "T00:00:00+09:00");
+            const dow = ["일","월","화","수","목","금","토"][d.getDay()];
+            document.getElementById("stat-yesterday-date").textContent = `${d.getMonth() + 1}월 ${d.getDate()}일 (${dow})`;
+        }
+
         document.getElementById("stat-week").textContent = data.this_week.count.toLocaleString();
 
         if (data.last_week) {
@@ -33,7 +56,18 @@ async function loadStatistics() {
         }
 
         const ts = new Date(data.generated_at).toLocaleString("ko-KR");
-        document.getElementById("last-update").textContent = `마지막 업데이트: ${ts} • 총 누적 ${data.total.count.toLocaleString()}건`;
+        const lastDate = data.total.last_date || ydDate;
+        // 데이터 신선도 표시: 마지막 데이터 날짜가 오늘 또는 어제 이전이면 "N일 전" 배지
+        let staleLine = "";
+        if (lastDate) {
+            const lastTs = new Date(lastDate + "T00:00:00+09:00").getTime();
+            const todayTs = new Date(todayKst + "T00:00:00+09:00").getTime();
+            const daysBehind = Math.round((todayTs - lastTs) / 86400000);
+            if (daysBehind >= 2) {
+                staleLine = ` · <span class="text-amber-600 font-semibold">⚠ 데이터 ${daysBehind}일 전까지 (자동 트리거 대기 중)</span>`;
+            }
+        }
+        document.getElementById("last-update").innerHTML = `마지막 업데이트: ${ts} • 총 누적 ${data.total.count.toLocaleString()}건${staleLine}`;
 
         renderChart(data.chart_30d);
     } catch (e) {
