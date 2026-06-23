@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-06-23T05:57:35.234137+09:00",
+  "generated_at": "2026-06-23T10:45:06.582067+09:00",
   "yesterday": {
     "date": "2026-06-22",
-    "count": 0
+    "count": 107
   },
   "this_week": {
     "start": "2026-06-22",
     "end": "2026-06-23",
-    "count": 0
+    "count": 120
   },
   "this_month": {
     "start": "2026-06-01",
     "end": "2026-06-23",
-    "count": 1214
+    "count": 1334
   },
   "last_week": {
     "start": "2026-06-15",
@@ -29,9 +29,9 @@
     "prev_count": 1854
   },
   "total": {
-    "count": 11088,
+    "count": 11208,
     "first_date": "2025-12-12",
-    "last_date": "2026-06-19"
+    "last_date": "2026-06-23"
   },
   "chart_30d": [
     {
@@ -148,11 +148,11 @@
     },
     {
       "date": "2026-06-22",
-      "count": 0
+      "count": 107
     },
     {
       "date": "2026-06-23",
-      "count": 0
+      "count": 13
     }
   ]
 }
