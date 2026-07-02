@@ -2,131 +2,123 @@
 일일 통계 계산: 오늘/이번주/이번달 건수 + 30일 일자별 그래프.
 결과를 website/assets/data/statistics.json 으로 저장.
 
-웹사이트가 이 JSON을 fetch해서 메인 대시보드에 표시한다.
-
-데이터 출처: index.sqlite (페이지 수가 아니라 심의번호 단위 카운트)
+데이터 출처: Supabase `ads` 테이블 (심의번호 단위)
 
 실행:
-    source venv/bin/activate
     python scripts/compute_statistics.py
 """
 
 from __future__ import annotations
 import json
-import sqlite3
+import os
 import sys
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
-ROOT = Path(__file__).parent.parent
-DB_PATH = ROOT / "index.sqlite"
-OUTPUT_PATH = ROOT / "website" / "assets" / "data" / "statistics.json"
+from dotenv import load_dotenv
+from supabase import Client, create_client
 
+ROOT = Path(__file__).parent.parent
+OUTPUT_PATH = ROOT / "website" / "assets" / "data" / "statistics.json"
 KST = timezone(timedelta(hours=9))
+
+load_dotenv(ROOT / ".env")
+
+
+def db() -> Client:
+    url = os.environ["SUPABASE_URL"]
+    key = os.environ.get("SUPABASE_SERVICE_KEY") or os.environ["SUPABASE_ANON_KEY"]
+    return create_client(url, key)
+
+
+def count_between(sb: Client, start: date, end: date) -> int:
+    r = (
+        sb.table("ads")
+        .select("review_num", count="exact")
+        .gte("review_date", start.isoformat())
+        .lte("review_date", end.isoformat())
+        .limit(1)
+        .execute()
+    )
+    return r.count or 0
+
+
+def fetch_daily_counts(sb: Client, start: date, end: date) -> dict[str, int]:
+    """지정 기간의 날짜별 건수. Supabase 페이지네이션(1000개 상한)을 넘어가면 여러 번 fetch."""
+    out: dict[str, int] = {}
+    page_size = 1000
+    offset = 0
+    while True:
+        r = (
+            sb.table("ads")
+            .select("review_date")
+            .gte("review_date", start.isoformat())
+            .lte("review_date", end.isoformat())
+            .range(offset, offset + page_size - 1)
+            .execute()
+        )
+        rows = r.data or []
+        for row in rows:
+            d = row["review_date"]
+            out[d] = out.get(d, 0) + 1
+        if len(rows) < page_size:
+            break
+        offset += page_size
+    return out
 
 
 def main() -> None:
-    if not DB_PATH.exists():
-        print(f"[오류] index.sqlite를 찾을 수 없음: {DB_PATH}")
-        sys.exit(1)
-
+    sb = db()
     today = datetime.now(KST).date()
 
-    # 어제 통과 건수 — 가장 최근 영업일 (토·일은 심의 미운영이라 건너뜀).
-    # 예) 월요일이면 금요일, 일요일이면 금요일.
+    # 어제 = 가장 최근 영업일 (Sat/Sun skip)
     yesterday = today - timedelta(days=1)
-    while yesterday.weekday() >= 5:  # Sat=5, Sun=6
+    while yesterday.weekday() >= 5:
         yesterday -= timedelta(days=1)
 
-    # 이번주 = 월요일 시작
     week_start = today - timedelta(days=today.weekday())
-    # 지난주 = 직전 월~일
     last_week_end = week_start - timedelta(days=1)
     last_week_start = last_week_end - timedelta(days=6)
-    # 지지난주 = 그 직전 월~일 (지난주와 비교용)
     prev_last_week_end = last_week_start - timedelta(days=1)
     prev_last_week_start = prev_last_week_end - timedelta(days=6)
 
-    # 이번달 = 1일 시작
     month_start = today.replace(day=1)
-    # 지난달 = 직전 달 1일 ~ 말일
     last_month_end = month_start - timedelta(days=1)
     last_month_start = last_month_end.replace(day=1)
-    # 지지난달 = 그 직전 달 1일 ~ 말일 (지난달과 비교용)
     prev_last_month_end = last_month_start - timedelta(days=1)
     prev_last_month_start = prev_last_month_end.replace(day=1)
 
-    # 지난 30일 그래프 시작점
     chart_start = today - timedelta(days=29)
 
-    conn = sqlite3.connect(DB_PATH)
+    # 카운트
+    total_count = sb.table("ads").select("review_num", count="exact").limit(1).execute().count or 0
+    yesterday_count = count_between(sb, yesterday, yesterday)
+    week_count = count_between(sb, week_start, today)
+    month_count = count_between(sb, month_start, today)
+    last_week_count = count_between(sb, last_week_start, last_week_end)
+    prev_last_week_count = count_between(sb, prev_last_week_start, prev_last_week_end)
+    last_month_count = count_between(sb, last_month_start, last_month_end)
+    prev_last_month_count = count_between(sb, prev_last_month_start, prev_last_month_end)
 
-    # 1. 카운트 (심의번호 unique 기준)
-    def count_unique_reviews(start: date, end: date) -> int:
-        row = conn.execute(
-            """
-            SELECT COUNT(DISTINCT review_num)
-            FROM files
-            WHERE is_notice = 0
-              AND review_date BETWEEN ? AND ?
-            """,
-            (start.isoformat(), end.isoformat()),
-        ).fetchone()
-        return row[0] if row else 0
-
-    total_count = conn.execute(
-        "SELECT COUNT(DISTINCT review_num) FROM files WHERE is_notice = 0"
-    ).fetchone()[0]
-
-    yesterday_count = count_unique_reviews(yesterday, yesterday)
-    week_count = count_unique_reviews(week_start, today)
-    month_count = count_unique_reviews(month_start, today)
-    last_week_count = count_unique_reviews(last_week_start, last_week_end)
-    prev_last_week_count = count_unique_reviews(prev_last_week_start, prev_last_week_end)
-    last_month_count = count_unique_reviews(last_month_start, last_month_end)
-    prev_last_month_count = count_unique_reviews(prev_last_month_start, prev_last_month_end)
-
-    # 2. 30일 일자별 그래프 데이터
-    rows = conn.execute(
-        """
-        SELECT review_date, COUNT(DISTINCT review_num) AS cnt
-        FROM files
-        WHERE is_notice = 0
-          AND review_date BETWEEN ? AND ?
-        GROUP BY review_date
-        """,
-        (chart_start.isoformat(), today.isoformat()),
-    ).fetchall()
-    by_date: dict[str, int] = {d: c for d, c in rows}
-
+    # 30일 그래프
+    by_date = fetch_daily_counts(sb, chart_start, today)
     chart: list[dict[str, object]] = []
     cursor = chart_start
     while cursor <= today:
         chart.append({"date": cursor.isoformat(), "count": by_date.get(cursor.isoformat(), 0)})
         cursor += timedelta(days=1)
 
-    # 3. 데이터 범위 (참고용)
-    first_date, last_date = conn.execute(
-        "SELECT MIN(review_date), MAX(review_date) FROM files WHERE is_notice = 0"
-    ).fetchone()
-    conn.close()
+    # 데이터 범위
+    r_min = sb.table("ads").select("review_date").order("review_date", desc=False).limit(1).execute()
+    r_max = sb.table("ads").select("review_date").order("review_date", desc=True).limit(1).execute()
+    first_date = r_min.data[0]["review_date"] if r_min.data else None
+    last_date = r_max.data[0]["review_date"] if r_max.data else None
 
     payload = {
         "generated_at": datetime.now(KST).isoformat(),
-        "yesterday": {
-            "date": yesterday.isoformat(),
-            "count": yesterday_count,
-        },
-        "this_week": {
-            "start": week_start.isoformat(),
-            "end": today.isoformat(),
-            "count": week_count,
-        },
-        "this_month": {
-            "start": month_start.isoformat(),
-            "end": today.isoformat(),
-            "count": month_count,
-        },
+        "yesterday": {"date": yesterday.isoformat(), "count": yesterday_count},
+        "this_week": {"start": week_start.isoformat(), "end": today.isoformat(), "count": week_count},
+        "this_month": {"start": month_start.isoformat(), "end": today.isoformat(), "count": month_count},
         "last_week": {
             "start": last_week_start.isoformat(),
             "end": last_week_end.isoformat(),
@@ -141,11 +133,7 @@ def main() -> None:
             "delta": last_month_count - prev_last_month_count,
             "prev_count": prev_last_month_count,
         },
-        "total": {
-            "count": total_count,
-            "first_date": first_date,
-            "last_date": last_date,
-        },
+        "total": {"count": total_count, "first_date": first_date, "last_date": last_date},
         "chart_30d": chart,
     }
 
@@ -159,7 +147,7 @@ def main() -> None:
     print(f"  이번달({month_start} ~ {today}): {month_count}건")
     print(f"  지난주({last_week_start} ~ {last_week_end}): {last_week_count}건 (지지난주 대비 {last_week_count - prev_last_week_count:+d})")
     print(f"  지난달({last_month_start} ~ {last_month_end}): {last_month_count}건 (지지난달 대비 {last_month_count - prev_last_month_count:+d})")
-    print(f"  30일 그래프: {len(chart)}일치 데이터")
+    print(f"  30일 그래프: {len(chart)}일치")
 
 
 if __name__ == "__main__":

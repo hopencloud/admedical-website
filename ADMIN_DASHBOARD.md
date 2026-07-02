@@ -1,95 +1,103 @@
-# 관리자 대시보드 설정 가이드
+# 관리자 대시보드 · 클라우드 파이프라인 셋업
 
-브라우저(폰/PC 어디서든) → `https://<도메인>/admin` → 비밀번호 입력 →
-**다운로드 / 인덱싱 / 전체 파이프라인** 버튼으로 맥북 작업을 원격 트리거.
-
-## 동작 구조
+## 지금의 구조 (맥북 의존성 0)
 
 ```
-[브라우저 admin 페이지]   ←─ 폴링 2초 ─→  Vercel API
-                                              │
-                                              ▼
-                                      [Supabase admin_jobs]
-                                              ▲
-                                              │ 폴링 5초
-                                              │
-                                      [맥북 admin_agent.py]
-                                              │ subprocess
-                                              ▼
-                                  collector / OCR / pipeline
+[매일 새벽 5시 KST]        [수동 실행: /admin 페이지 버튼]
+        │                            │
+        ▼                            ▼
+    GitHub Actions "Daily Pipeline" (Ubuntu 러너)
+                    │
+        ┌───────────┼───────────────┐
+        ▼           ▼               ▼
+  admedical.org   OpenAI Vision   Supabase
+   (신규 시안)      (OCR)          (ads 테이블 upsert)
+                                   │
+                                   ▼
+                        website/assets/data/*.json 자동 git push
+                                   │
+                                   ▼
+                            Vercel 자동 재배포
 ```
 
-맥북이 꺼져 있으면 작업은 `pending` 상태로 큐에 쌓여 있다가, 켜지면 자동 실행됩니다.
+맥북, launchd, admin_agent, Vercel cron 모두 **불필요**. 사장님이 컴퓨터 끄고 여행 가도 매일 정시에 자동 갱신.
 
 ---
 
-## 1. Supabase 테이블 생성 (1번만)
+## 최초 셋업 (1회, 약 5분)
 
-1. Supabase 대시보드 → SQL Editor → New query
-2. [scripts/supabase_admin_jobs.sql](scripts/supabase_admin_jobs.sql) 내용 전체 복사·붙여넣기
-3. Run
+### 1. GitHub Secrets 등록
 
-## 2. Vercel 환경변수 추가 (1번만)
+브라우저에서:  
+`https://github.com/hopencloud/admedical-website/settings/secrets/actions`
 
-이미 등록되어 있으면 건너뛰기.
+**New repository secret** 4개 추가:
 
-Vercel 프로젝트 → Settings → Environment Variables 에서:
+| Name | Value |
+|------|-------|
+| `SUPABASE_URL` | `.env` 의 SUPABASE_URL 값 그대로 |
+| `SUPABASE_SERVICE_KEY` | `.env` 의 SUPABASE_SERVICE_KEY |
+| `SUPABASE_ANON_KEY` | `.env` 의 SUPABASE_ANON_KEY |
+| `OPENAI_API_KEY` | `.env` 의 OPENAI_API_KEY |
 
-| 키 | 값 |
-|----|----|
-| `ADMIN_PASSWORD` | 사장님이 정한 비밀번호 (강력하게) |
-| `SUPABASE_URL` | (이미 등록됨) |
-| `SUPABASE_SERVICE_KEY` | (이미 등록됨) |
-
-추가/변경 후 **Redeploy** 해야 반영됩니다.
-
-## 3. 맥북 agent 등록 (1번만)
-
+터미널에서 `.env` 값 확인:  
 ```bash
-cd /Users/halim/Downloads/아카이브/admedical_website
-
-# 기존 등록되어 있을 수 있으니 먼저 unload
-launchctl unload ~/Library/LaunchAgents/com.admedical.admin_agent.plist 2>/dev/null
-
-cp scripts/com.admedical.admin_agent.plist ~/Library/LaunchAgents/
-launchctl load ~/Library/LaunchAgents/com.admedical.admin_agent.plist
-
-# 잘 떴는지 확인
-launchctl list | grep com.admedical.admin_agent
-
-# 로그 살펴보기 (Ctrl+C 로 빠져나오기)
-tail -f logs/admin_agent.log
+cat /Users/halim/Downloads/아카이브/admedical_website/.env
 ```
 
-`logs/admin_agent.log` 에 `[agent] 시작. polling 주기=5s` 가 보이면 OK.
+### 2. Vercel Secrets 등록 (관리자 대시보드용)
 
-## 4. 사용
+Vercel 프로젝트 → Settings → Environment Variables → **Add New**
 
-브라우저에서 `/admin` 접속 → 비밀번호 입력 → 버튼 클릭.
+| Name | Value |
+|------|-------|
+| `GITHUB_TOKEN` | 새로 발급받은 GitHub PAT (아래 방법) |
 
-- **다운로드 시작**: `collector.py` (신규 시안만 받음, 약 1~2분)
-- **인덱싱 시작**: `batch_vision_ocr.py` + 통계 + Supabase 동기화 (시안 수에 따라 2~5분)
-- **전체 파이프라인**: 위 둘 + TOP20 갱신 + git push (5~15분)
+**PAT 발급 방법**:
+1. https://github.com/settings/personal-access-tokens/new  (Fine-grained)
+2. Token name: `admedical-workflow-dispatch`
+3. Repository access: **Only select repositories** → `hopencloud/admedical-website`
+4. Repository permissions:  
+   - **Actions**: Read and write
+   - **Contents**: Read
+5. Generate → `github_pat_...` 복사
+6. Vercel 에 `GITHUB_TOKEN` 이름으로 저장 → **Redeploy**
 
-진행 중인 작업은 화면 가운데 진행바·상태 메시지·로그 꼬리로 확인. 완료/실패 시 자동 갱신됩니다.
+### 3. 첫 실행 테스트
+
+브라우저: `https://admedical.co.kr/admin`  
+비밀번호 로그인 → **지금 실행** 버튼 클릭 → 1~2분 뒤 목록에 새 실행 등장 → 상태 배지가 `실행 중` → `완료`로 변화 → 사이트 갱신 확인.
+
+---
+
+## 이제 폐기해도 되는 것들 (선택)
+
+첫 실행이 성공하면 **맥북에서 아래 정리 가능**:
+
+```bash
+# admin_agent (로컬 폴러) 중지·제거
+launchctl unload ~/Library/LaunchAgents/com.admedical.admin_agent.plist
+rm ~/Library/LaunchAgents/com.admedical.admin_agent.plist
+
+# 필요 시 로그도 삭제
+rm -f ~/Library/Logs/admedical_admin_agent.log
+```
+
+Vercel 환경변수 중 `CRON_SECRET` 도 이제 안 씀 — 지워도 됨.  
+`~/Desktop/admedical_ads/` 이미지 폴더 · `index.sqlite` 도 클라우드 파이프라인엔 불필요. 로컬 개발이나 백업 목적으로 남겨두는 건 자유.
 
 ---
 
 ## 트러블슈팅
 
-**Q. 버튼 누르면 "이미 실행 중인 작업이 있습니다" 오류**  
-A. 먼저 끝나기 기다리거나, Supabase 대시보드 → admin_jobs 테이블에서 해당 row의 status를 `cancelled` 로 직접 바꿔주세요.
+**GitHub Actions 실행이 실패로 뜬다**  
+→ GitHub Actions 탭에서 실패한 실행 클릭 → 어느 스텝이 죽었는지 확인. 대부분 secret 누락 (SUPABASE_URL 등).
 
-**Q. agent가 안 돌고 있는 것 같다**  
-```bash
-launchctl list | grep com.admedical.admin_agent      # PID 보여야 정상
-tail -50 logs/admin_agent.log                          # 마지막 로그
-launchctl unload ~/Library/LaunchAgents/com.admedical.admin_agent.plist
-launchctl load ~/Library/LaunchAgents/com.admedical.admin_agent.plist
-```
+**"지금 실행" 버튼이 401 오류**  
+→ Vercel `GITHUB_TOKEN` 미설정 또는 만료. 새 PAT 발급 후 갱신 + Redeploy.
 
-**Q. 비밀번호 변경하고 싶다**  
-Vercel `ADMIN_PASSWORD` 환경변수 갱신 → Redeploy. 맥북 agent에는 비밀번호 정보가 없으므로 영향 없음.
+**cron 이 안 도는 것 같다**  
+→ GitHub Actions 는 5시 정각에 정확히 안 돌 수 있음 (러너 큐 상황에 따라 몇 분 지연). 최대 15분 정도 지연 정상.
 
-**Q. 매일 자동 실행은 왜 없앴나?**  
-launchd 자동 실행은 폐기했습니다. 사장님이 admin 대시보드에서 원할 때 **전체 파이프라인** 버튼 한 번 누르는 방식이 더 단순하고 통제 가능. 휴대폰에서도 트리거 가능합니다 — 맥북만 켜져 있으면 됨.
+**사이트가 며칠 안 갱신됐다**  
+→ 메인 화면 우측 "데이터 N일 전까지" 노란 배지가 뜸 → `/admin` 에서 최근 실행 상태 확인 → 실패했으면 로그 보고 조치.

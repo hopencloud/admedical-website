@@ -38,11 +38,5 @@
         }
     ],
     "trailingSlash": false,
-    "cleanUrls": true,
-    "crons": [
-        {
-            "path": "/api/cron-daily-pipeline",
-            "schedule": "0 20 * * *"
-        }
-    ]
+    "cleanUrls": true
 }

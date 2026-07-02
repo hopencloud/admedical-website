@@ -44,7 +44,8 @@ USER_AGENT = (
 )
 
 CERT_PATH = str(Path(__file__).parent / "certs" / "admedical_chain.pem")
-SAVE_DIR = Path.home() / "Desktop" / "admedical_ads"
+# 저장 위치는 ADMEDICAL_SAVE_DIR 로 오버라이드 가능 (클라우드 파이프라인에서 /tmp 로 지정).
+SAVE_DIR = Path(os.environ.get("ADMEDICAL_SAVE_DIR", str(Path.home() / "Desktop" / "admedical_ads")))
 METADATA_PATH = SAVE_DIR / "metadata.csv"
 METADATA_COLUMNS = [
     "approval_suffix", "full_approval_no", "valid_until",
@@ -86,16 +87,34 @@ def load_known_suffixes() -> set[int]:
 
 
 def auto_seed() -> int | None:
-    """metadata.csv 최대 + index.sqlite 최대 review_num 중 더 큰 값.
-
-    index.sqlite에 데이터가 있으나 metadata.csv가 비어있는 경우(이전 시스템에서
-    수집된 경우)에도 올바른 시작점을 잡는다.
+    """가장 큰 review_num 반환. 우선순위:
+       1. Supabase `ads` 테이블 (원격, 신뢰) — 클라우드 파이프라인 진실의 근원
+       2. metadata.csv (로컬)
+       3. index.sqlite (레거시, 있으면)
     """
     candidates: list[int] = []
+
+    # 1. Supabase
+    try:
+        from dotenv import load_dotenv  # 지연 임포트: 로컬 개발 환경 없어도 CLI 는 뜨게
+        load_dotenv(ROOT / ".env")
+        from supabase import create_client
+        url = os.environ.get("SUPABASE_URL")
+        key = os.environ.get("SUPABASE_SERVICE_KEY") or os.environ.get("SUPABASE_ANON_KEY")
+        if url and key:
+            sb = create_client(url, key)
+            r = sb.table("ads").select("review_num").order("review_num", desc=True).limit(1).execute()
+            if r.data:
+                candidates.append(int(r.data[0]["review_num"]))
+    except Exception:
+        pass
+
+    # 2. metadata.csv
     suffixes = load_known_suffixes()
     if suffixes:
         candidates.append(max(suffixes))
 
+    # 3. sqlite (레거시)
     db_path = ROOT / "index.sqlite"
     if db_path.exists():
         try:
