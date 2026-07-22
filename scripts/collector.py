@@ -135,9 +135,20 @@ def make_session() -> requests.Session:
         "User-Agent": USER_AGENT,
         "Accept-Language": "ko-KR,ko;q=0.9,en;q=0.8",
     })
-    # 사전 세션 쿠키 확보
-    s.get(FORM_URL, timeout=15, verify=CERT_PATH, headers={"Referer": FORM_URL})
-    return s
+    # 사전 세션 쿠키 확보. admedical.org 가 해외 IP(GitHub Actions Azure)에서 종종 timeout —
+    # 최대 5회, 지수 백오프.
+    last_err: Exception | None = None
+    for i in range(5):
+        try:
+            s.get(FORM_URL, timeout=30, verify=CERT_PATH, headers={"Referer": FORM_URL})
+            return s
+        except (requests.exceptions.ConnectTimeout, requests.exceptions.ReadTimeout,
+                requests.exceptions.ConnectionError) as e:
+            last_err = e
+            wait = min(30, 5 * (2 ** i))
+            print(f"[make_session] admedical.org timeout ({i+1}/5), {wait}s 후 재시도: {e}", flush=True)
+            time.sleep(wait)
+    raise RuntimeError(f"admedical.org 접속 5회 모두 실패: {last_err}")
 
 
 def query(session: requests.Session, suffix: int, log: logging.Logger) -> dict | None:
