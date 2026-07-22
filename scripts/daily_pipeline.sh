@@ -60,10 +60,11 @@ run_step "1/4 collector"  python "$ROOT/scripts/collector.py" --max-attempts 200
 run_step "2/4 vision ocr" python "$ROOT/scripts/batch_vision_ocr.py" --src "$HOME/Desktop/admedical_ads" --workers 5
 
 # 3. 일일 통계
-run_step "3/4 statistics" python "$ROOT/scripts/compute_statistics.py"
-
-# 4. Supabase 동기화 (마스킹 포함)
-run_step "4/4 sync"       python "$ROOT/scripts/sync_to_supabase.py"
+# 3·4 순서 주의: compute_statistics 는 Supabase 를 조회하므로, sync 가 먼저 끝나야
+# 신규분이 통계에 반영됨. 예전엔 stats 가 로컬 sqlite 를 봐서 순서 무관했지만,
+# 클라우드 이전 이후로 stats 도 Supabase 를 소스로 씀.
+run_step "3/4 sync"       python "$ROOT/scripts/sync_to_supabase.py"
+run_step "4/4 statistics" python "$ROOT/scripts/compute_statistics.py"
 
 # 5. 이번주 TOP 20 — 매일 갱신 (월요일~오늘 누적)
 run_step "이번주 TOP20" python "$ROOT/scripts/compute_this_week_top20.py"
