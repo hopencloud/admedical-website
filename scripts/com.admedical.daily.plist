@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  매일 새벽 5시 (KST) 로컬 자동 실행.
+
+  로컬 실행 이유: admedical.org 가 해외 IP (GitHub Actions Azure) 를 종종 차단.
+  한국 IP 인 사장님 노트북에서 실행하면 100% 통과.
+
+  노트북이 꺼져 있거나 잠자기이면 5시에 실행 안 됨 — 대신 다음 번 켜지는 순간
+  launchd 가 자동으로 catch-up 실행 (StartCalendarInterval 기본 동작).
+
+  설치 (사장님 1회):
+    launchctl unload ~/Library/LaunchAgents/com.admedical.daily.plist 2>/dev/null
+    cp scripts/com.admedical.daily.plist ~/Library/LaunchAgents/
+    launchctl load ~/Library/LaunchAgents/com.admedical.daily.plist
+
+  중지:
+    launchctl unload ~/Library/LaunchAgents/com.admedical.daily.plist
+
+  상태:
+    launchctl list | grep com.admedical.daily
+
+  로그:
+    tail -f ~/Library/Logs/admedical_daily.log
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.admedical.daily</string>
+
+    <!--
+      bash 를 통해 실행 — macOS TCC 상 bash 에 부여된 Full Disk Access 를
+      자식 python 이 상속받아야 ~/Downloads 안의 venv 접근 가능.
+    -->
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>-lc</string>
+        <string>/bin/bash /Users/halim/Downloads/아카이브/admedical_website/scripts/daily_pipeline.sh</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/halim/Downloads/아카이브/admedical_website</string>
+
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>5</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+
+    <!--
+      stdout/stderr 는 Downloads 밖에 둠. launchd 의 xpcproxy 가 spawn 직전
+      이 파일을 열어야 하는데 TCC 차단으로 exit 78 되기 때문.
+    -->
+    <key>StandardOutPath</key>
+    <string>/Users/halim/Library/Logs/admedical_daily.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/halim/Library/Logs/admedical_daily.log</string>
+
+    <key>RunAtLoad</key>
+    <false/>
+</dict>
+</plist>

@@ -1,10 +1,11 @@
-name: Daily Pipeline
+name: Daily Pipeline (fallback / manual)
 
-# 매일 새벽 5시 KST = 20:00 UTC 전날
-# 수동 실행: Actions 탭 → Daily Pipeline → Run workflow
+# 매일 자동 실행은 로컬 노트북(launchd)이 담당 — admedical.org 가 미국 IP 를 자주 차단해서.
+# 이 워크플로우는:
+#  - /admin 대시보드의 "지금 실행" 버튼으로 수동 트리거될 때
+#  - 노트북이 며칠 꺼져있을 때 백업용
+# 만 사용. 자동 cron 은 비활성.
 on:
-  schedule:
-    - cron: "0 20 * * *"
   workflow_dispatch: {}
 
 concurrency:
