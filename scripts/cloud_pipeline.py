@@ -57,10 +57,20 @@ def db():
 
 # ---------- 1. Collector ----------
 
+def supabase_max_review_num(sb) -> int | None:
+    """Supabase `ads` 테이블에서 가장 큰 review_num. GitHub Actions 러너는 로컬 SQLite/metadata.csv 가
+    없으므로 collector.auto_seed() 대신 Supabase 를 seed 소스로 사용."""
+    r = sb.table("ads").select("review_num").order("review_num", desc=True).limit(1).execute()
+    return r.data[0]["review_num"] if r.data else None
+
+
 def run_collector(seed_hint: int | None) -> None:
     """collector.main 을 직접 호출하는 대신 필요한 부분만 인라인 실행."""
     log = collector.setup_logging()
-    seed = seed_hint if seed_hint is not None else collector.auto_seed()
+    if seed_hint is not None:
+        seed = seed_hint
+    else:
+        seed = supabase_max_review_num(db())
     if seed is None:
         log.warning("seed 미확인 — collector 스킵")
         return
