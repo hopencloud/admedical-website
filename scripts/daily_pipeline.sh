@@ -51,7 +51,9 @@ run_step() {
 }
 
 # 1. 수집 — admedical.org에서 신규 시안 다운로드 → ~/Desktop/admedical_ads/
-run_step "1/4 collector"  python "$ROOT/scripts/collector.py"
+# max-attempts 를 크게 잡아 놓아 백로그(며칠 밀린 것) 도 한 번에 따라잡음.
+# miss_limit=15 안전장치는 그대로 → admedical 이 실제 발행한 만큼만 받음.
+run_step "1/4 collector"  python "$ROOT/scripts/collector.py" --max-attempts 2000
 
 # 2. Vision OCR — ~/Desktop/admedical_ads/ 의 신규 이미지 OCR → index.sqlite
 #    (OpenAI gpt-4o-mini Vision HIGH detail. EasyOCR보다 한국어 정확)
