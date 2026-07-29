@@ -1,24 +1,24 @@
 {
-  "generated_at": "2026-07-29T16:41:39.657687+09:00",
+  "generated_at": "2026-07-29T17:03:31.705980+09:00",
   "yesterday": {
     "date": "2026-07-28",
-    "count": 0
+    "count": 55
   },
   "this_week": {
     "start": "2026-07-27",
     "end": "2026-07-29",
-    "count": 79
+    "count": 156
   },
   "this_month": {
     "start": "2026-07-01",
     "end": "2026-07-29",
-    "count": 1602
+    "count": 1735
   },
   "last_week": {
     "start": "2026-07-20",
     "end": "2026-07-26",
-    "count": 311,
-    "delta": -58,
+    "count": 367,
+    "delta": -2,
     "prev_count": 369
   },
   "last_month": {
@@ -29,7 +29,7 @@
     "prev_count": 1493
   },
   "total": {
-    "count": 13282,
+    "count": 13415,
     "first_date": "2025-12-12",
     "last_date": "2026-07-29"
   },
@@ -132,7 +132,7 @@
     },
     {
       "date": "2026-07-24",
-      "count": 0
+      "count": 56
     },
     {
       "date": "2026-07-25",
@@ -144,11 +144,11 @@
     },
     {
       "date": "2026-07-27",
-      "count": 0
+      "count": 22
     },
     {
       "date": "2026-07-28",
-      "count": 0
+      "count": 55
     },
     {
       "date": "2026-07-29",
