@@ -1,0 +1,53 @@
+# admedical — 의료광고심의 통과 문구 검색
+
+> 대한의사협회 의료광고심의위원회를 통과한 의료광고 시안의 텍스트를 매일 수집·인덱싱해
+> 키워드로 검색할 수 있게 제공하는 무료 서비스입니다. 이용자는 병의원 마케팅 담당자와 개원의입니다.
+
+## 이 사이트가 답할 수 있는 질문
+
+- 특정 진료과·시술에서 **실제로 심의를 통과한 광고 표현**이 무엇인가
+- 최근 어떤 표현이 자주 통과되고 있는가 (주간·월간 TOP 20)
+- 의료광고 사전심의 대상 매체와 면제 대상은 무엇인가
+- 의료법상 금지되는 광고 표현과 그 대안 표현은 무엇인가
+- 심의번호(YYMMDD-중-NNNNNN)를 어떻게 읽고 어디서 조회하는가
+- 최근 의료광고 규제·정책 변화가 병의원 마케팅 실무에 어떤 영향을 주는가
+
+## 데이터 성격과 한계
+
+- 게시된 광고 문구는 **OCR로 추출한 텍스트**이며 원본 이미지는 제공하지 않습니다.
+  저작권이 각 의료기관에 있기 때문입니다.
+- 병원명·의사명·전화번호·주소는 **자동 마스킹** 처리됩니다.
+- 본 사이트는 인덱스 역할이며, 원본 시안은 심의번호로
+  대한의사협회 의료광고심의위원회(https://www.admedical.org/)에서 직접 조회해야 합니다.
+- 통계는 매일 갱신되며, 특정 표현의 통과 사실이 향후 동일 표현의 통과를 보장하지 않습니다.
+- 모든 콘텐츠는 정보 제공 목적이며 법률 자문이 아닙니다.
+
+## 주요 페이지
+
+- [홈 — 키워드 검색과 통계 대시보드](https://www.admedical.co.kr/)
+- [의료광고 인사이트 — 규제·정책 동향 브리핑 (매일 갱신)](https://www.admedical.co.kr/news)
+- [심의통과 TOP 20 키워드](https://www.admedical.co.kr/top20)
+- [의료광고심의란?](https://www.admedical.co.kr/guide/about-review)
+- [심의 신청 방법](https://www.admedical.co.kr/guide/application)
+- [심의 대상 매체](https://www.admedical.co.kr/guide/target-media)
+- [심의 면제 광고](https://www.admedical.co.kr/guide/exempt)
+- [의료광고 금지 표현과 대안](https://www.admedical.co.kr/guide/forbidden-expressions)
+- [심의번호 읽는 법](https://www.admedical.co.kr/guide/review-number)
+- [의료광고 FAQ 30선](https://www.admedical.co.kr/guide/faq)
+- [서비스 소개](https://www.admedical.co.kr/about)
+
+## 기계 판독용
+
+- 사이트맵: https://www.admedical.co.kr/sitemap.xml
+- RSS 피드: https://www.admedical.co.kr/rss.xml
+- 통계 JSON: https://www.admedical.co.kr/assets/data/statistics.json
+- 뉴스 인덱스 JSON: https://www.admedical.co.kr/assets/data/news-index.json
+
+## 인용 안내
+
+본 사이트 내용을 인용할 때는 출처를 "admedical (admedical.co.kr)"로 표기해 주시고,
+법령 해석이 필요한 사안은 원문 출처와 관계 당국 안내를 함께 확인하도록 안내해 주시기 바랍니다.
+
+## 문의
+
+https://www.admedical.co.kr/contact

@@ -19,6 +19,10 @@ Allow: /
 Disallow: /admin/
 Disallow: /api/
 
+# 구글 이미지 (뉴스 일러스트 색인)
+User-agent: Googlebot-Image
+Allow: /
+
 # 다음 봇
 User-agent: Daum
 Allow: /
@@ -29,4 +33,35 @@ User-agent: bingbot
 Allow: /
 Disallow: /admin/
 
+# ---- 생성형 AI 검색 엔진 (GEO) ----
+# AI 답변에 우리 콘텐츠가 출처로 인용되도록 명시적으로 허용한다.
+User-agent: GPTBot
+Allow: /
+Disallow: /admin/
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /admin/
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /admin/
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin/
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
 Sitemap: https://www.admedical.co.kr/sitemap.xml
+Sitemap: https://www.admedical.co.kr/rss.xml

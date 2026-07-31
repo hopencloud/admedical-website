@@ -1,0 +1,90 @@
+name: News Daily (자동 발행)
+
+# 매일 아침 의료계 뉴스를 수집해 기사 1편을 생성하고 커밋한다.
+# 맥북과 무관하게 GitHub 클라우드에서 돌기 때문에 노트북이 꺼져 있어도 발행된다.
+#
+# 중단 방법 3가지:
+#   1) Supabase news_settings.auto_publish = false   ← /admin 킬스위치 (즉시)
+#   2) GitHub → Actions → 이 워크플로우 → Disable
+#   3) 이 파일의 schedule 블록 주석 처리
+
+on:
+  schedule:
+    # 매일 07:20 KST (UTC 22:20). GitHub cron 은 UTC 기준이며
+    # 정각은 혼잡해 밀리는 일이 잦아 20분에 둔다.
+    - cron: "20 22 * * *"
+  workflow_dispatch:
+    inputs:
+      count:
+        description: "발행할 글 수"
+        required: false
+        default: "1"
+      force:
+        description: "오늘 이미 발행했어도 실행 (true/false)"
+        required: false
+        default: "false"
+
+concurrency:
+  group: news-daily
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        # OCR 계열(easyocr 등)은 이 작업에 불필요하고 무거워서 최소 의존성만 설치한다.
+        run: |
+          python -m pip install --upgrade pip
+          pip install "openai>=1.40.0" "supabase>=2.5.0" "python-dotenv>=1.0.0" \
+                      "requests>=2.31.0" "Pillow>=10.0.0"
+
+      - name: Run news pipeline
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          NEWS_MODEL: ${{ vars.NEWS_MODEL || 'gpt-4o' }}
+          NEWS_IMAGE_MODEL: ${{ vars.NEWS_IMAGE_MODEL || 'gpt-image-2' }}
+        run: |
+          ARGS=""
+          if [ "${{ github.event.inputs.force }}" = "true" ]; then ARGS="$ARGS --force"; fi
+          if [ -n "${{ github.event.inputs.count }}" ]; then ARGS="$ARGS --count ${{ github.event.inputs.count }}"; fi
+          python scripts/news_pipeline.py $ARGS
+
+      - name: Commit & push
+        run: |
+          git config user.name  "admedical-bot"
+          git config user.email "bot@admedical.co.kr"
+          git add website/news website/assets/news website/assets/data/news-index.json \
+                  website/sitemap.xml website/rss.xml 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "변경 사항 없음 — 오늘은 발행하지 않았습니다."
+            exit 0
+          fi
+          git commit -m "뉴스 자동 발행 ($(TZ=Asia/Seoul date '+%Y-%m-%d %a'))"
+          git pull --rebase origin main || true
+          git push origin HEAD:main
+
+      - name: 검색엔진에 사이트맵 알리기
+        # 발행에 성공했을 때만. 실패해도 워크플로우는 통과시킨다.
+        if: success()
+        continue-on-error: true
+        run: |
+          curl -sS -o /dev/null -w "빙 핑 응답: %{http_code}\n" \
+            "https://www.bing.com/ping?sitemap=https%3A%2F%2Fwww.admedical.co.kr%2Fsitemap.xml" || true

@@ -42,10 +42,33 @@
 - 작업 종류: collector / indexer (OCR+sync) / pipeline(전체 = daily_pipeline.sh)
 - 매주 월요일·매월 1일에는 pipeline 작업이 weekly/monthly TOP20 도 함께 갱신 (스크립트 내부 로직).
 
+## 뉴스 게시판 (/news) — 매일 자동 발행
+- GitHub Actions `news-daily.yml` 이 매일 07:20 KST 실행. 맥북과 무관하게 클라우드에서 동작.
+- 파이프라인: `scripts/news_pipeline.py`
+  1. `news_sources.py` — 의료 전문지 RSS 5곳 + 복지부 보도자료 (+OpenAI 웹검색) 수집
+  2. `news_writer.py` — 주제 선정 → 초고 → 분량 보강 → 자체 검수 → **수치 검증**
+  3. `news_images.py` — AI 일러스트 2장(gpt-image-2, jpg/webp 압축) + 실데이터 도표 SVG
+  4. `news_render.py` — 정적 HTML 생성, 목록·사이트맵 갱신
+  5. `news_feed.py` — RSS 2.0 피드(`/rss.xml`) 생성
+- **원칙**: 기사 본문은 크롤링하지 않는다. RSS 제목/요약만 재료로 쓰고 출처를 명시한다.
+- **수치 검증**: 본문의 모든 숫자가 근거 자료나 자체 통계에 실제로 있는지 파이썬이 대조.
+  없으면 정정 패스를 돌리고, 그래도 남으면 발행을 포기한다 (`unsupported_numbers`).
+- **도표 데이터는 AI가 만들지 않는다**. `statistics.json` 실측값만 사용하며 0건인 날은 제외.
+- 킬스위치: Supabase `news_settings.auto_publish` → /admin 에서 토글.
+
+## SEO/AEO/GEO 규칙
+- URL은 **확장자 없이** (`/guide/faq`). vercel.json `cleanUrls: true` 라 `.html` 링크는 308 리다이렉트된다.
+  내부 링크·canonical·og:url·JSON-LD·사이트맵 모두 확장자 없이 유지할 것.
+- 모든 `<img>`에 의미 있는 `alt` 필수. 뉴스 이미지는 AI가 기사 맥락에 맞춰 alt를 작성한다.
+- 기사 페이지는 NewsArticle + BreadcrumbList + FAQPage 스키마 3종을 넣는다.
+- `robots.txt` 는 생성형 AI 크롤러(GPTBot/ClaudeBot/PerplexityBot 등)를 명시적으로 허용한다.
+- `/llms.txt` 로 AI 검색엔진에 사이트 성격·한계·주요 URL을 제공한다.
+
 ## 웹사이트 페이지 구조
-- 메인: 통계 대시보드 + 검색
+- 메인: 통계 대시보드 + 검색 + 최신 인사이트 3건
 - 검색 결과: 텍스트 + 심의번호 + admedical.org 링크
 - 콘텐츠: 심의 신청 절차 / 심의 대상 / 심의 제외 광고 / 지난주·지난달 TOP 20
+- 의료광고 인사이트: /news (매일 자동 발행)
 - 필수: 이용약관 / 개인정보처리방침 / 문의(이메일)
 
 ## 기술 스택

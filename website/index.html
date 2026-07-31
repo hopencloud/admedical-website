@@ -189,16 +189,26 @@
         </div>
         <p class="text-xs text-slate-400 mt-3 text-right" id="last-update"></p>
     </section>
+
+    <!-- 최신 인사이트 (news-index.json 에서 채움 — 글이 없으면 섹션 자체가 숨겨짐) -->
+    <section id="latest-news" class="hidden mt-6">
+        <div class="flex items-baseline justify-between mb-4">
+            <h2 class="text-sm font-semibold text-slate-700">최신 의료광고 인사이트</h2>
+            <a href="/news" class="text-xs text-brand-600 hover:underline font-medium">전체 보기 →</a>
+        </div>
+        <div id="latest-news-list" class="grid gap-4 md:grid-cols-3"></div>
+    </section>
 </main>
 
 <footer class="bg-white border-t border-slate-200 mt-20">
     <div class="max-w-5xl mx-auto px-4 py-8 text-sm text-slate-500">
         <div class="flex flex-wrap gap-5 mb-3 font-medium">
-            <a href="/about.html" class="hover:text-brand-600 transition">서비스 소개</a>
-            <a href="/top20.html" class="hover:text-brand-600 transition">심의통과 TOP 20 키워드</a>
-            <a href="/contact.html" class="hover:text-brand-600 transition">문의</a>
-            <a href="/terms.html" class="hover:text-brand-600 transition">이용약관</a>
-            <a href="/privacy.html" class="hover:text-brand-600 transition">개인정보처리방침</a>
+            <a href="/about" class="hover:text-brand-600 transition">서비스 소개</a>
+            <a href="/news" class="hover:text-brand-600 transition">의료광고 인사이트</a>
+            <a href="/top20" class="hover:text-brand-600 transition">심의통과 TOP 20 키워드</a>
+            <a href="/contact" class="hover:text-brand-600 transition">문의</a>
+            <a href="/terms" class="hover:text-brand-600 transition">이용약관</a>
+            <a href="/privacy" class="hover:text-brand-600 transition">개인정보처리방침</a>
         </div>
         <p class="leading-relaxed">본 서비스는 대한의사협회 의료광고심의위원회 통과 광고의 광고 문구만 인덱싱하며, 원본 시안 이미지는 제공하지 않습니다.</p>
         <p class="mt-1">원본 시안 확인: <a href="https://www.admedical.org/application/approval_confirm.do" target="_blank" class="text-brand-600 hover:underline">의료광고심의위원회 →</a></p>
@@ -248,5 +258,42 @@
 <script src="/assets/js/app.js?v=20260427e"></script>
 <script src="/assets/js/site.js?v=20260427e"></script>
 <script src="/assets/js/ads.js?v=20260427e" defer></script>
+
+<!-- 최신 인사이트 3건 -->
+<script>
+(function () {
+    "use strict";
+    fetch("/assets/data/news-index.json", { cache: "no-cache" })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (data) {
+            var posts = (data && data.posts) || [];
+            if (!posts.length) return;
+
+            var section = document.getElementById("latest-news");
+            var list = document.getElementById("latest-news-list");
+            if (!section || !list) return;
+
+            posts.slice(0, 3).forEach(function (p) {
+                var a = document.createElement("a");
+                a.href = "/news/" + p.slug;
+                a.className = "block bg-white rounded-2xl border border-slate-200 p-4 " +
+                              "shadow-soft hover:border-brand-500 transition";
+                var date = document.createElement("div");
+                date.className = "text-xs text-slate-400";
+                date.textContent = (p.date || "").replace(/-/g, ".");
+                var h3 = document.createElement("h3");
+                h3.className = "text-sm font-bold text-slate-900 mt-1 mb-1.5 leading-snug";
+                h3.textContent = p.title || "";
+                var desc = document.createElement("p");
+                desc.className = "text-xs text-slate-600 leading-relaxed line-clamp-2";
+                desc.textContent = p.summary || "";
+                a.appendChild(date); a.appendChild(h3); a.appendChild(desc);
+                list.appendChild(a);
+            });
+            section.classList.remove("hidden");
+        })
+        .catch(function () { /* 글이 아직 없으면 조용히 통과 */ });
+})();
+</script>
 </body>
 </html>

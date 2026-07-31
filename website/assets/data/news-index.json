@@ -1,0 +1,36 @@
+{
+  "generated_at": "2026-08-01T00:43:46.991061+09:00",
+  "count": 1,
+  "posts": [
+    {
+      "slug": "2026-08-01-patient-experience-rating-expansion",
+      "title": "환자경험평가 등급제 도입과 마케팅 전략",
+      "summary": "환자경험평가에 등급제가 도입되고 병원급까지 확대될 계획입니다. 병원 마케팅 전략은 환자 경험 개선에 중점을 두어야 합니다.",
+      "date": "2026-08-01",
+      "cover": "/assets/news/2026-08-01-patient-experience-rating-expansion-cover.jpg",
+      "tags": [
+        "환자경험평가",
+        "병원마케팅",
+        "의료서비스"
+      ],
+      "topic_key": "도입과 등급제 마케팅 전략 환자경험평가",
+      "sources": [
+        {
+          "title": "환자경험평가 첫 등급제 도입…내년부터 병원급까지 확대",
+          "source": "히트뉴스",
+          "link": "https://www.hitnews.co.kr/news/articleView.html?idxno=78102"
+        },
+        {
+          "title": "'담당 의사가 예의를 갖춰 대했나요?'…환자경험평가 확대된다",
+          "source": "의협신문",
+          "link": "http://www.doctorsnews.co.kr/news/articleView.html?idxno=165680"
+        },
+        {
+          "title": "환자경험평가, 종병 중 여의도·은평·부천·의정부성모·강동성심 등 1등급",
+          "source": "의학신문",
+          "link": "https://www.bosa.co.kr/news/articleView.html?idxno=3009465"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>admedical 의료광고 인사이트</title>
+        <link>https://www.admedical.co.kr/news</link>
+        <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
+        <language>ko</language>
+        <generator>admedical news pipeline</generator>
+        <lastBuildDate>Sat, 01 Aug 2026 00:43:46 +0900</lastBuildDate>
+        <pubDate>Sat, 01 Aug 2026 00:43:46 +0900</pubDate>
+        <ttl>60</ttl>
+        <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
+        <image>
+            <url>https://www.admedical.co.kr/assets/img/ogimage.png</url>
+            <title>admedical 의료광고 인사이트</title>
+            <link>https://www.admedical.co.kr/news</link>
+        </image>
+        <item>
+            <title>환자경험평가 등급제 도입과 마케팅 전략</title>
+            <link>https://www.admedical.co.kr/news/2026-08-01-patient-experience-rating-expansion</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-01-patient-experience-rating-expansion</guid>
+            <description>환자경험평가에 등급제가 도입되고 병원급까지 확대될 계획입니다. 병원 마케팅 전략은 환자 경험 개선에 중점을 두어야 합니다.</description>
+            <author>admedical</author>
+            <pubDate>Sat, 01 Aug 2026 09:00:00 +0900</pubDate>
+            <category>환자경험평가</category>
+            <category>병원마케팅</category>
+            <category>의료서비스</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-01-patient-experience-rating-expansion-cover.jpg" type="image/jpeg" length="0"/>
+        </item>
+    </channel>
+</rss>

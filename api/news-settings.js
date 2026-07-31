@@ -1,0 +1,72 @@
+// 뉴스 자동 발행 설정 조회/변경 (킬스위치).
+// 환경변수: ADMIN_PASSWORD, SUPABASE_URL, SUPABASE_SERVICE_KEY
+// 호출:
+//   GET  /api/news-settings                      (헤더: X-Admin-Password)
+//   POST /api/news-settings  { auto_publish, daily_count, note }
+//
+// auto_publish=false 로 바꾸면 다음 GitHub Actions 실행부터 발행이 중단된다.
+
+import { createClient } from "@supabase/supabase-js";
+
+export default async function handler(req, res) {
+    const adminPwd = req.headers["x-admin-password"];
+    if (!adminPwd || adminPwd !== process.env.ADMIN_PASSWORD) {
+        return res.status(401).json({ error: "비밀번호가 틀렸습니다." });
+    }
+
+    const url = process.env.SUPABASE_URL;
+    const key = process.env.SUPABASE_SERVICE_KEY;
+    if (!url || !key) {
+        return res.status(500).json({ error: "Supabase 환경변수가 설정되지 않았습니다." });
+    }
+
+    const supabase = createClient(url, key);
+
+    try {
+        if (req.method === "GET") {
+            const { data, error } = await supabase
+                .from("news_settings")
+                .select("*")
+                .eq("id", 1)
+                .maybeSingle();
+            if (error) throw error;
+
+            const { data: recent } = await supabase
+                .from("news_posts")
+                .select("slug, title, published_date, status")
+                .order("published_date", { ascending: false })
+                .limit(10);
+
+            return res.status(200).json({
+                settings: data || { auto_publish: true, daily_count: 1 },
+                recent: recent || [],
+            });
+        }
+
+        if (req.method === "POST") {
+            const { auto_publish, daily_count, note } = req.body || {};
+            const patch = { id: 1, updated_at: new Date().toISOString() };
+
+            if (typeof auto_publish === "boolean") patch.auto_publish = auto_publish;
+            if (Number.isInteger(daily_count)) {
+                patch.daily_count = Math.min(Math.max(daily_count, 1), 5);
+            }
+            if (typeof note === "string") patch.note = note.slice(0, 500);
+
+            const { data, error } = await supabase
+                .from("news_settings")
+                .upsert(patch)
+                .select()
+                .maybeSingle();
+            if (error) throw error;
+
+            return res.status(200).json({ ok: true, settings: data });
+        }
+
+        res.setHeader("Allow", "GET, POST");
+        return res.status(405).json({ error: "GET 또는 POST만 허용" });
+    } catch (err) {
+        console.error("[news-settings] error:", err);
+        return res.status(500).json({ error: err.message || "failed" });
+    }
+}
