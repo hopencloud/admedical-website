@@ -16,6 +16,10 @@ import re
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
+import sys
+sys.path.insert(0, str(Path(__file__).parent))
+from build_header import build_block, extract_header_html   # noqa: E402
+
 KST = timezone(timedelta(hours=9))
 ROOT = Path(__file__).parent.parent
 WEB = ROOT / "website"
@@ -29,6 +33,10 @@ ASSET_VER = "20260427e"
 
 SITEMAP_BEGIN = "    <!-- news:begin (자동 생성 — 직접 수정하지 마세요) -->"
 SITEMAP_END = "    <!-- news:end -->"
+
+
+# 헤더는 정적으로 심는다 — 네이버 Yeti 는 JS 주입 헤더의 링크를 못 읽는다.
+STATIC_HEADER = build_block(extract_header_html())
 
 
 def esc(text) -> str:
@@ -317,7 +325,7 @@ def render_post(article: dict, meta: dict, chart_svg: str = "",
 {head}
 <body class="bg-slate-50 text-slate-900 antialiased">
 
-<div id="site-header"></div>
+{STATIC_HEADER}
 
 <main class="max-w-3xl mx-auto px-4 py-10">
 
@@ -379,7 +387,7 @@ def render_list(posts: list[dict]) -> str:
 {head}
 <body class="bg-slate-50 text-slate-900 antialiased">
 
-<div id="site-header"></div>
+{STATIC_HEADER}
 
 <main class="max-w-5xl mx-auto px-4 py-10">
 

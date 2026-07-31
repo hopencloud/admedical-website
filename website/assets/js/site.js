@@ -87,10 +87,14 @@
 `;
 
     // ---------- 2. 헤더 주입 + active 표시 ----------
+    //
+    // 헤더는 각 페이지에 정적 HTML로 심어져 있다(build_header.py 로 동기화).
+    // 네이버 Yeti 는 자바스크립트 실행이 제한적이라, 헤더를 JS로만 주입하면
+    // 가이드 페이지로 가는 내부 링크를 아예 발견하지 못한다.
+    // 이 함수는 정적 헤더가 없을 때만 주입하고, active 표시·모바일 토글은 항상 수행한다.
     function mountHeader() {
         const slot = document.getElementById("site-header");
-        if (!slot) return;
-        slot.outerHTML = HEADER_HTML;
+        if (slot) slot.outerHTML = HEADER_HTML;
 
         const path = location.pathname.replace(/\/index\.html$/, "/");
 

@@ -20,8 +20,6 @@
     <meta name="googlebot" content="index, follow">
     <meta name="naver:robots" content="all">
     <meta name="Yeti" content="index, follow">
-    <meta name="naver-site-verification" content="">
-    <meta name="google-site-verification" content="">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://www.admedical.co.kr/">
@@ -116,7 +114,73 @@
 <body class="bg-slate-50 text-slate-900 antialiased">
 
 <!-- 공통 헤더 (assets/js/site.js로 주입) -->
-<div id="site-header"></div>
+<!-- site-header:begin (scripts/build_header.py 가 생성 — 직접 수정하지 마세요) -->
+<header class="bg-white border-b border-slate-200 sticky top-0 z-20">
+    <div class="max-w-5xl mx-auto px-4 py-3.5 flex items-center justify-between gap-3">
+        <a href="/" class="text-base md:text-xl font-bold text-brand-600 truncate tracking-tight">의료광고심의 통과 문구</a>
+
+        <nav class="hidden md:flex items-center gap-1 text-sm font-medium text-slate-700 shrink-0">
+            <a data-nav="/about" href="/about" class="px-3 py-2 rounded-lg hover:text-brand-600 hover:bg-slate-50 transition">서비스 소개</a>
+
+            <div class="nav-dropdown" data-nav-group="/guide/">
+                <button type="button" class="nav-trigger px-3 py-2 rounded-lg hover:text-brand-600 hover:bg-slate-50 transition inline-flex items-center" aria-haspopup="true">심의 가이드<span class="nav-caret">▾</span></button>
+                <div class="nav-dropdown__panel" role="menu">
+                    <a href="/guide/about-review" class="nav-dropdown__item">의료광고심의란?</a>
+                    <a href="/guide/application" class="nav-dropdown__item">심의 신청 방법</a>
+                    <a href="/guide/target-media" class="nav-dropdown__item">심의 대상 매체</a>
+                    <a href="/guide/exempt" class="nav-dropdown__item">심의 면제 광고</a>
+                    <a href="/guide/forbidden-expressions" class="nav-dropdown__item">의료광고 금지 표현</a>
+                    <a href="/guide/review-number" class="nav-dropdown__item">심의번호 읽는 법</a>
+                    <a href="/guide/faq" class="nav-dropdown__item">자주 묻는 질문</a>
+                </div>
+            </div>
+
+            <div class="nav-dropdown" data-nav-group="/top20">
+                <button type="button" class="nav-trigger px-3 py-2 rounded-lg hover:text-brand-600 hover:bg-slate-50 transition inline-flex items-center" aria-haspopup="true">심의통과 TOP 20 키워드<span class="nav-caret">▾</span></button>
+                <div class="nav-dropdown__panel" role="menu">
+                    <a href="/top20?period=last-week" class="nav-dropdown__item">지난주</a>
+                    <a href="/top20?period=last-month" class="nav-dropdown__item">지난달</a>
+                    <a href="/top20?period=this-week" class="nav-dropdown__item">이번주</a>
+                    <a href="/top20?period=this-month" class="nav-dropdown__item">이번달</a>
+                </div>
+            </div>
+
+            <a data-nav="/news" href="/news" class="px-3 py-2 rounded-lg hover:text-brand-600 hover:bg-slate-50 transition">의료광고 인사이트</a>
+
+            <a data-nav="/contact" href="/contact" class="px-3 py-2 rounded-lg hover:text-brand-600 hover:bg-slate-50 transition">문의</a>
+        </nav>
+
+        <button id="mobile-menu-btn" class="md:hidden text-2xl text-slate-700 px-2" aria-label="메뉴 열기" aria-expanded="false">☰</button>
+    </div>
+
+    <nav id="mobile-menu" class="hidden md:hidden border-t border-slate-100 px-4 py-2 text-sm">
+        <a data-nav="/about" href="/about" class="block py-2 text-slate-700 hover:text-brand-600">서비스 소개</a>
+        <details class="mobile-group" data-nav-group="/guide/">
+            <summary>심의 가이드</summary>
+            <div class="mobile-group__items">
+                <a href="/guide/about-review">의료광고심의란?</a>
+                <a href="/guide/application">심의 신청 방법</a>
+                <a href="/guide/target-media">심의 대상 매체</a>
+                <a href="/guide/exempt">심의 면제 광고</a>
+                <a href="/guide/forbidden-expressions">의료광고 금지 표현</a>
+                <a href="/guide/review-number">심의번호 읽는 법</a>
+                <a href="/guide/faq">자주 묻는 질문</a>
+            </div>
+        </details>
+        <details class="mobile-group" data-nav-group="/top20">
+            <summary>심의통과 TOP 20 키워드</summary>
+            <div class="mobile-group__items">
+                <a href="/top20?period=last-week">지난주</a>
+                <a href="/top20?period=last-month">지난달</a>
+                <a href="/top20?period=this-week">이번주</a>
+                <a href="/top20?period=this-month">이번달</a>
+            </div>
+        </details>
+        <a data-nav="/news" href="/news" class="block py-2 text-slate-700 hover:text-brand-600">의료광고 인사이트</a>
+        <a data-nav="/contact" href="/contact" class="block py-2 text-slate-700 hover:text-brand-600">문의</a>
+    </nav>
+</header>
+<!-- site-header:end -->
 
 <main class="max-w-5xl mx-auto px-4 py-10 md:py-14">
     <!-- Hero / 검색 -->
@@ -197,6 +261,59 @@
             <a href="/news" class="text-xs text-brand-600 hover:underline font-medium">전체 보기 →</a>
         </div>
         <div id="latest-news-list" class="grid gap-4 md:grid-cols-3"></div>
+    </section>
+
+    <!-- 심의 가이드 (정적 HTML — 검색엔진이 자바스크립트 없이 읽는 본문) -->
+    <section class="mt-10">
+        <h2 class="text-sm font-semibold text-slate-700 mb-4">의료광고 심의 가이드</h2>
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-soft">
+            <p class="text-sm text-slate-700 leading-relaxed mb-5">
+                의료법 제57조에 따라 신문·잡지·방송·인터넷 매체에 게재하는 의료광고는
+                <strong class="text-slate-900">사전심의를 받아야 합니다.</strong>
+                심의를 받지 않고 광고를 게재하면 의료법 제89조에 따라 1년 이하 징역 또는
+                1천만원 이하 벌금이 부과될 수 있고, 의료기관 업무정지 등 행정처분도 함께 받을 수 있습니다.
+                아래 문서에서 절차·대상 매체·금지 표현을 정리했습니다.
+            </p>
+            <ul class="grid gap-x-6 gap-y-3 md:grid-cols-2 text-sm">
+                <li>
+                    <a href="/guide/about-review" class="font-semibold text-brand-600 hover:underline">의료광고심의란?</a>
+                    <span class="text-slate-600"> — 제도의 근거 법령과 자율심의기구 구조</span>
+                </li>
+                <li>
+                    <a href="/guide/application" class="font-semibold text-brand-600 hover:underline">심의 신청 방법</a>
+                    <span class="text-slate-600"> — 필요 서류, 수수료, 소요 기간(통상 7~14일)</span>
+                </li>
+                <li>
+                    <a href="/guide/target-media" class="font-semibold text-brand-600 hover:underline">심의 대상 매체</a>
+                    <span class="text-slate-600"> — 일일 이용자 10만 명 이상 매체·SNS 기준</span>
+                </li>
+                <li>
+                    <a href="/guide/exempt" class="font-semibold text-brand-600 hover:underline">심의 면제 광고</a>
+                    <span class="text-slate-600"> — 자체 홈페이지·간판 등 면제 범위</span>
+                </li>
+                <li>
+                    <a href="/guide/forbidden-expressions" class="font-semibold text-brand-600 hover:underline">의료광고 금지 표현</a>
+                    <span class="text-slate-600"> — '국내 1위', '100% 완치' 등과 대안 표현</span>
+                </li>
+                <li>
+                    <a href="/guide/review-number" class="font-semibold text-brand-600 hover:underline">심의번호 읽는 법</a>
+                    <span class="text-slate-600"> — YYMMDD-중-NNNNNN 구조와 유효기간</span>
+                </li>
+                <li>
+                    <a href="/guide/faq" class="font-semibold text-brand-600 hover:underline">의료광고 FAQ 30선</a>
+                    <span class="text-slate-600"> — 절차·표현·매체·심의번호 질문 모음</span>
+                </li>
+                <li>
+                    <a href="/top20" class="font-semibold text-brand-600 hover:underline">심의통과 TOP 20 키워드</a>
+                    <span class="text-slate-600"> — 주간·월간 실제 통과 표현 순위</span>
+                </li>
+            </ul>
+            <p class="text-xs text-slate-500 mt-5 pt-4 border-t border-slate-200 leading-relaxed">
+                본 사이트는 통과된 광고 문구의 키워드 인덱스이며, 원본 시안은
+                <a href="https://www.admedical.org/" target="_blank" rel="noopener" class="text-brand-600 hover:underline">대한의사협회 의료광고심의위원회</a>에서
+                심의번호로 조회하시기 바랍니다. 게재 내용은 정보 제공 목적이며 법적 자문이 아닙니다.
+            </p>
+        </div>
     </section>
 </main>
 
