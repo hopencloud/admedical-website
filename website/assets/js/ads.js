@@ -18,7 +18,7 @@
     // ⚙ AdSense 설정 (승인 후 사장님이 수정할 부분)
     // ============================================================
     const ADSENSE_ENABLED = false;  // 승인 후 true로 변경
-    const ADSENSE_PUBLISHER_ID = "ca-pub-XXXXXXXXXXXXXXXX";  // AdSense 콘솔에서 받은 ca-pub-... 값
+    const ADSENSE_PUBLISHER_ID = "ca-pub-7650355816152791";  // AdSense 콘솔에서 받은 ca-pub-... 값
 
     // 페이지별 광고 슬롯 ID. AdSense 콘솔에서 광고 단위 만들 때마다 발급받아 입력.
     const SLOT_IDS = {
