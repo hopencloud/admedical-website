@@ -36,11 +36,11 @@
     <array>
         <string>/bin/bash</string>
         <string>-lc</string>
-        <string>/bin/bash /Users/halim/Downloads/아카이브/admedical_website/scripts/daily_pipeline.sh</string>
+        <string>/bin/bash /Users/halim/Desktop/불꽃연금/admedical_website/scripts/daily_pipeline.sh</string>
     </array>
 
     <key>WorkingDirectory</key>
-    <string>/Users/halim/Downloads/아카이브/admedical_website</string>
+    <string>/Users/halim/Desktop/불꽃연금/admedical_website</string>
 
     <key>StartCalendarInterval</key>
     <dict>

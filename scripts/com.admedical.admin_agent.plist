@@ -32,11 +32,11 @@
     <array>
         <string>/bin/bash</string>
         <string>-lc</string>
-        <string>exec /Users/halim/Downloads/아카이브/admedical_website/venv/bin/python /Users/halim/Downloads/아카이브/admedical_website/scripts/admin_agent.py</string>
+        <string>exec /Users/halim/Desktop/불꽃연금/admedical_website/venv/bin/python /Users/halim/Desktop/불꽃연금/admedical_website/scripts/admin_agent.py</string>
     </array>
 
     <key>WorkingDirectory</key>
-    <string>/Users/halim/Downloads/아카이브/admedical_website</string>
+    <string>/Users/halim/Desktop/불꽃연금/admedical_website</string>
 
     <key>RunAtLoad</key>
     <true/>
