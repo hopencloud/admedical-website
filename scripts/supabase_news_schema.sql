@@ -106,10 +106,3 @@ COMMENT ON TABLE  newsletter_subscribers IS '뉴스레터 구독자. service_rol
 COMMENT ON COLUMN newsletter_subscribers.token IS '메일 하단 수신 해지 링크에 쓰는 난수 토큰';
 
 SELECT 'newsletter_subscribers 생성 완료' AS status;
-
-
--- 구독 환영 메일 발송 시각 (재발송 방지)
-ALTER TABLE newsletter_subscribers
-    ADD COLUMN IF NOT EXISTS welcomed_at TIMESTAMPTZ;
-
-SELECT 'welcomed_at 컬럼 확인 완료' AS status;

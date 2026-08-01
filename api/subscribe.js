@@ -146,21 +146,11 @@ export default async function handler(req, res) {
 
         const { data: existing } = await supabase
             .from("newsletter_subscribers")
-            .select("email, status, token, welcomed_at")
+            .select("email, status, token")
             .eq("email", addr)
             .maybeSingle();
 
-        // 이미 구독 중이어도 환영 메일을 못 받았으면 한 번 보내준다.
         if (existing && existing.status === "active") {
-            if (!existing.welcomed_at) {
-                try {
-                    await sendWelcome(addr, existing.token);
-                    await supabase.from("newsletter_subscribers")
-                        .update({ welcomed_at: new Date().toISOString() }).eq("email", addr);
-                } catch (e) {
-                    console.error("[subscribe] 환영 메일 실패:", e.message);
-                }
-            }
             return res.status(200).json({ message: "이미 구독 중인 주소입니다." });
         }
 
@@ -178,8 +168,6 @@ export default async function handler(req, res) {
         // 환영 메일. 실패해도 구독 자체는 유효하므로 신청은 성공으로 응답한다.
         try {
             await sendWelcome(addr, token);
-            await supabase.from("newsletter_subscribers")
-                .update({ welcomed_at: new Date().toISOString() }).eq("email", addr);
         } catch (e) {
             console.error("[subscribe] 환영 메일 실패:", e.message);
         }
