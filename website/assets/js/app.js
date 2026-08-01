@@ -27,21 +27,33 @@ async function loadStatistics() {
         const yesterdayKst = kstDateStr(-1);
         const chartByDate = new Map((data.chart_30d || []).map(r => [r.date, r.count]));
 
-        // 실제 어제가 chart 에 있으면 우선 사용. 없으면 (수집 누락) saved yesterday 로 폴백.
+        // 실제 어제 값이 0이면 "심의 0건"이 아니라 **아직 게시 전**인 경우가 대부분이다.
+        // (의협 사이트가 결과를 하루 이상 늦게 올린다) 그래서 0은 집계 전으로 보고,
+        // chart 에서 실측이 있는 가장 최근 날짜로 내려간다.
         let ydDate, ydCount;
-        if (chartByDate.has(yesterdayKst)) {
+        const ydChart = chartByDate.get(yesterdayKst);
+        if (ydChart > 0) {
             ydDate = yesterdayKst;
-            ydCount = chartByDate.get(yesterdayKst);
-        } else if (data.yesterday) {
-            ydDate = data.yesterday.date;
-            ydCount = data.yesterday.count;
+            ydCount = ydChart;
+        } else {
+            const withData = (data.chart_30d || []).filter(r => r.count > 0);
+            const latest = withData[withData.length - 1];
+            if (latest) {
+                ydDate = latest.date;
+                ydCount = latest.count;
+            } else if (data.yesterday) {
+                ydDate = data.yesterday.date;
+                ydCount = data.yesterday.count;
+            }
         }
 
         if (ydDate != null) {
             document.getElementById("stat-yesterday").textContent = ydCount.toLocaleString();
             const d = new Date(ydDate + "T00:00:00+09:00");
             const dow = ["일","월","화","수","목","금","토"][d.getDay()];
-            document.getElementById("stat-yesterday-date").textContent = `${d.getMonth() + 1}월 ${d.getDate()}일 (${dow})`;
+            const label = `${d.getMonth() + 1}월 ${d.getDate()}일 (${dow})`;
+            document.getElementById("stat-yesterday-date").textContent =
+                ydDate === yesterdayKst ? label : `${label} 기준`;
         }
 
         document.getElementById("stat-week").textContent = data.this_week.count.toLocaleString();

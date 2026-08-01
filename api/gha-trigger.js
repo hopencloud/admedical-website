@@ -1,13 +1,20 @@
-// 관리자 대시보드에서 GitHub Actions "Daily Pipeline" workflow 를 수동 트리거.
+// 관리자 대시보드에서 GitHub Actions workflow 를 수동 트리거.
 // 환경변수:
 //   ADMIN_PASSWORD  — 대시보드 비밀번호
 //   GITHUB_TOKEN    — PAT with actions:write (또는 fine-grained)
 //   GITHUB_REPO     — 예: "hopencloud/admedical-website" (선택; 미설정 시 아래 기본값)
 //
 // 호출: POST /api/gha-trigger  (헤더: X-Admin-Password)
+//       Body: { workflow?: "pipeline" | "news", inputs?: {...} }
 
 const DEFAULT_REPO = "hopencloud/admedical-website";
-const WORKFLOW_FILE = "daily-pipeline.yml";
+
+// 트리거 가능한 워크플로우 화이트리스트. 임의 문자열을 그대로 URL 에 넣지 않는다.
+const WORKFLOWS = {
+    pipeline: "daily-pipeline.yml",   // 수집 → OCR → 통계 → 배포
+    news:     "news-daily.yml",       // 뉴스 기사 자동 발행
+};
+const DEFAULT_WORKFLOW = "pipeline";
 
 export default async function handler(req, res) {
     if (req.method !== "POST") {
@@ -26,7 +33,13 @@ export default async function handler(req, res) {
     }
     const repo = process.env.GITHUB_REPO || DEFAULT_REPO;
 
-    const url = `https://api.github.com/repos/${repo}/actions/workflows/${WORKFLOW_FILE}/dispatches`;
+    const { workflow = DEFAULT_WORKFLOW, inputs } = req.body || {};
+    const file = WORKFLOWS[workflow];
+    if (!file) {
+        return res.status(400).json({ error: `workflow 는 ${Object.keys(WORKFLOWS).join("|")} 중 하나` });
+    }
+
+    const url = `https://api.github.com/repos/${repo}/actions/workflows/${file}/dispatches`;
     try {
         const r = await fetch(url, {
             method: "POST",
@@ -36,11 +49,11 @@ export default async function handler(req, res) {
                 "X-GitHub-Api-Version": "2022-11-28",
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ ref: "main" }),
+            body: JSON.stringify(inputs ? { ref: "main", inputs } : { ref: "main" }),
         });
         if (r.status === 204) {
             // GitHub 은 성공 시 204 No Content 반환.
-            return res.status(200).json({ ok: true, message: "workflow dispatched" });
+            return res.status(200).json({ ok: true, message: `${file} dispatched` });
         }
         const text = await r.text();
         return res.status(r.status).json({ error: `GitHub ${r.status}: ${text.slice(0, 200)}` });

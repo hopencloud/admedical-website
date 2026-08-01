@@ -1,8 +1,9 @@
 {
-  "generated_at": "2026-08-01T05:03:07.593702+09:00",
+  "generated_at": "2026-08-01T13:59:25.161098+09:00",
   "yesterday": {
-    "date": "2026-07-31",
-    "count": 0
+    "date": "2026-07-30",
+    "count": 80,
+    "pending": true
   },
   "this_week": {
     "start": "2026-07-27",

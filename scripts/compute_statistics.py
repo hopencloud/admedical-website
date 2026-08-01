@@ -71,7 +71,12 @@ def main() -> None:
     sb = db()
     today = datetime.now(KST).date()
 
-    # 어제 = 가장 최근 영업일 (Sat/Sun skip)
+    # "어제" = 달력상 어제가 아니라 **실제 데이터가 있는 가장 최근 날**.
+    #
+    # 의협 사이트는 심의 결과를 당일에 올리지 않는 경우가 있다. 달력상 어제를 그대로
+    # 쓰면 아직 게시되지 않은 날이 '0건'으로 표시되어, 실제로 심의가 0건이었던 것처럼
+    # 잘못 읽힌다. (2026-07-31 금요일이 0건으로 표시된 사례)
+    # 주말은 원래 심의가 없으므로 건너뛰고, 최대 10일까지 거슬러 올라간다.
     yesterday = today - timedelta(days=1)
     while yesterday.weekday() >= 5:
         yesterday -= timedelta(days=1)
@@ -92,7 +97,20 @@ def main() -> None:
 
     # 카운트
     total_count = sb.table("ads").select("review_num", count="exact").limit(1).execute().count or 0
+
     yesterday_count = count_between(sb, yesterday, yesterday)
+    yesterday_pending = False          # 달력상 어제 데이터가 아직 안 올라온 상태인가
+    if yesterday_count == 0:
+        probe = yesterday
+        for _ in range(10):
+            probe -= timedelta(days=1)
+            if probe.weekday() >= 5:
+                continue
+            c = count_between(sb, probe, probe)
+            if c > 0:
+                yesterday_pending = True
+                yesterday, yesterday_count = probe, c
+                break
     week_count = count_between(sb, week_start, today)
     month_count = count_between(sb, month_start, today)
     last_week_count = count_between(sb, last_week_start, last_week_end)
@@ -116,7 +134,12 @@ def main() -> None:
 
     payload = {
         "generated_at": datetime.now(KST).isoformat(),
-        "yesterday": {"date": yesterday.isoformat(), "count": yesterday_count},
+        "yesterday": {
+            "date": yesterday.isoformat(),
+            "count": yesterday_count,
+            # true 면 달력상 어제 데이터가 아직 게시 전이라 그 이전 집계일로 대체한 것
+            "pending": yesterday_pending,
+        },
         "this_week": {"start": week_start.isoformat(), "end": today.isoformat(), "count": week_count},
         "this_month": {"start": month_start.isoformat(), "end": today.isoformat(), "count": month_count},
         "last_week": {
@@ -142,7 +165,8 @@ def main() -> None:
 
     print(f"[저장됨] {OUTPUT_PATH.relative_to(ROOT)}")
     print(f"  총 누적: {total_count:,}건  ({first_date} ~ {last_date})")
-    print(f"  어제({yesterday}, 최근 영업일): {yesterday_count}건")
+    note = " ← 달력상 어제는 아직 게시 전이라 대체" if yesterday_pending else ""
+    print(f"  최근 집계일({yesterday}): {yesterday_count}건{note}")
     print(f"  이번주({week_start} ~ {today}): {week_count}건")
     print(f"  이번달({month_start} ~ {today}): {month_count}건")
     print(f"  지난주({last_week_start} ~ {last_week_end}): {last_week_count}건 (지지난주 대비 {last_week_count - prev_last_week_count:+d})")

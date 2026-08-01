@@ -88,10 +88,14 @@
                 문제가 생기면 아래 스위치를 꺼두세요. 다음 실행부터 즉시 중단됩니다.
             </p>
 
-            <div class="flex items-center gap-3 mb-4">
+            <div class="flex flex-wrap items-center gap-3 mb-4">
                 <button id="news-toggle"
                         class="px-5 py-2.5 rounded-xl font-semibold transition bg-slate-200 text-slate-500">
                     불러오는 중…
+                </button>
+                <button id="news-run"
+                        class="px-5 py-2.5 rounded-xl font-semibold bg-brand-600 text-white hover:bg-brand-700 transition disabled:bg-slate-300">
+                    지금 발행
                 </button>
                 <label class="text-xs text-slate-500">
                     하루 발행 수
@@ -356,6 +360,30 @@ document.getElementById("news-toggle").addEventListener("click", async () => {
         newsStatus(next ? "자동 발행을 켰습니다." : "자동 발행을 중단했습니다.");
     } catch (err) {
         newsStatus("네트워크 오류: " + err.message, false);
+    }
+});
+
+document.getElementById("news-run").addEventListener("click", async () => {
+    const btn = document.getElementById("news-run");
+    if (!confirm("지금 기사를 생성해 발행할까요?\n3~5분 걸리고, 완료되면 사이트에 자동 반영됩니다.")) return;
+
+    btn.disabled = true;
+    btn.textContent = "요청 중…";
+    try {
+        const res = await api("/api/gha-trigger", {
+            method: "POST",
+            body: JSON.stringify({ workflow: "news", inputs: { force: "true", count: "1" } }),
+        });
+        if (res.ok) {
+            newsStatus("발행 작업을 시작했습니다. 3~5분 뒤 게시판을 확인하세요.");
+        } else {
+            newsStatus((await res.json()).error || "트리거 실패", false);
+        }
+    } catch (err) {
+        newsStatus("네트워크 오류: " + err.message, false);
+    } finally {
+        btn.disabled = false;
+        btn.textContent = "지금 발행";
     }
 });
 
