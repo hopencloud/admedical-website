@@ -65,10 +65,16 @@ jobs:
           ip addr show tun0 >/dev/null 2>&1 || {
             echo "::error::VPN 연결 실패"; tail -30 openvpn.log; exit 1; }
 
-      - name: 우회 후 IP 확인
+      - name: 우회 전후 IP 비교
         run: |
-          echo "현재 나가는 IP:"
-          curl -s --max-time 15 https://ipinfo.io/json || echo "(조회 실패)"
+          echo "=== VPN 적용 후 나가는 IP ==="
+          curl -s --max-time 15 https://ipinfo.io/json | tee ip_after.json || echo "{}" > ip_after.json
+          echo
+          echo "=== 라우팅 테이블 (기본 경로) ==="
+          ip route | head -5
+          echo
+          echo "=== DNS 확인 ==="
+          getent hosts www.admedical.org || echo "  DNS 해석 실패"
 
       - name: admedical.org 접속 테스트
         run: |
@@ -79,7 +85,29 @@ jobs:
           API  = "https://www.admedical.org/application/approval_confirm_proc.do"
           UA   = {"User-Agent": "Mozilla/5.0"}
 
-          print("=== 페이지 접속 6회 ===")
+          # VPN 이 실제로 적용됐는지부터 확인
+          country = ip = "?"
+          try:
+              with open("ip_after.json", encoding="utf-8") as f:
+                  d = json.load(f)
+              ip, country = d.get("ip", "?"), d.get("country", "?")
+          except Exception:
+              pass
+          print(f"=== 나가는 IP: {ip} ({country}) ===\n")
+
+          # 대조군 — 한국 사이트가 열리는지. 이게 되면 VPN 은 정상, 안 되면 VPN 문제.
+          print("=== 대조군: naver.com 접속 ===")
+          ctrl = 0
+          for i in range(2):
+              try:
+                  r = urllib.request.urlopen(
+                      urllib.request.Request("https://www.naver.com", headers=UA), timeout=15)
+                  print(f"  {i+1}회: HTTP {r.status}"); ctrl += 1
+              except Exception as e:
+                  print(f"  {i+1}회: 실패 {type(e).__name__}")
+              time.sleep(1)
+
+          print("\n=== 페이지 접속 6회 ===")
           ok = 0
           for i in range(6):
               t = time.time()
@@ -108,8 +136,12 @@ jobs:
               verdict = "✅ VPN 경유로 수집 가능 — 맥북 없이 클라우드로 옮길 수 있습니다."
           elif ok >= 4:
               verdict = "⚠️ 페이지는 열리는데 조회 API 가 막힙니다 — 추가 확인 필요."
+          elif country != "KR":
+              verdict = f"❌ VPN 이 적용되지 않았습니다 (나가는 IP 가 {country}) — 연결 설정 문제."
+          elif ctrl == 0:
+              verdict = "❌ VPN 터널로 아무 사이트도 안 열립니다 — 연결 설정 문제."
           else:
-              verdict = "❌ VPN 을 거쳐도 안 됩니다 — 다른 방법이 필요합니다."
+              verdict = "❌ 한국 IP 인데도 admedical.org 만 막힙니다 — VPN 대역 차단으로 보입니다."
 
           print("\n" + "=" * 52)
           print("판정:", verdict)
@@ -119,8 +151,10 @@ jobs:
           if path:
               with open(path, "a", encoding="utf-8") as f:
                   f.write(f"## NordVPN 경유 진단\n\n### {verdict}\n\n")
-                  f.write(f"- 페이지 접속: **{ok}/6** 성공\n")
-                  f.write(f"- 조회 API: **{api_ok}/3** 성공\n")
+                  f.write(f"- 나가는 IP: **{ip}** (국가 **{country}**)\n")
+                  f.write(f"- 대조군 naver.com: **{ctrl}/2** 성공\n")
+                  f.write(f"- admedical 페이지: **{ok}/6** 성공\n")
+                  f.write(f"- admedical 조회 API: **{api_ok}/3** 성공\n")
           PY
 
       - name: VPN 종료
