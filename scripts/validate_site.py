@@ -280,13 +280,22 @@ def check_statistics() -> None:
     if not any(r.get("count", 0) > 0 for r in chart):
         fail("통계", "30일 그래프에 실측값이 하나도 없음")
 
-    # 데이터가 며칠째 안 들어오면 수집이 멈춘 것 — 경고
+    # 데이터가 며칠째 안 들어오면 수집이 멈춘 것.
+    #
+    # 수집은 사장님 맥북에서만 돌아간다 (admedical.org 가 데이터센터 IP 를 차단해
+    # 클라우드·VPN 경유가 전부 막힘 — probe-admedical / probe-nordvpn 참고).
+    # 맥북이 꺼져 있거나 파이프라인이 실패하면 조용히 멈추므로 여기서 잡아 알린다.
+    #
+    # 금요일 데이터가 마지막이면 월요일 아침에 3일 전이 된다. 그래서 기준은 4일.
     try:
         last = max((r["date"] for r in chart if r.get("count", 0) > 0), default=None)
         if last:
             behind = (datetime.now(KST).date() - date.fromisoformat(last)).days
             if behind >= 4:
-                warn("통계", f"최신 데이터가 {behind}일 전({last}) — 수집이 멈췄을 수 있음")
+                fail("통계", f"최신 데이터가 {behind}일 전({last}) — 수집이 멈춘 것으로 보입니다. "
+                             f"맥북 전원과 daily_pipeline 로그를 확인하세요.")
+            elif behind >= 3:
+                warn("통계", f"최신 데이터가 {behind}일 전({last})")
     except Exception:
         pass
 

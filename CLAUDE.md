@@ -77,6 +77,22 @@
   기존 문의 메일과 같은 SMTP(Gmail) 재사용. GitHub Secrets 에 `SMTP_USER`/`SMTP_PASS` 필요.
 - Gmail SMTP 는 하루 발송량 제한(대략 500건)이 있다. 구독자가 늘면 전용 발송 서비스로 옮길 것.
 
+## 수집은 왜 맥북에서만 도는가 (2026-08-02 확인)
+`admedical.org` 는 **데이터센터 IP 대역을 통째로 차단**한다. 국가 차단이 아니다.
+직접 측정한 결과:
+
+| 경로 | 나가는 IP | 결과 |
+|---|---|---|
+| 맥북 (KT 가정용) | 119.192.246.160 (KR) | 6/6 성공 |
+| GitHub Actions (Azure) | 미국 | 0/6 차단 |
+| NordVPN 한국 서버 | 187.15.97.43 (KR) | 0/6 차단 (같은 터널로 naver.com 은 2/2) |
+
+→ **클라우드 VM·VPS·VPN 은 전부 같은 이유로 막힌다.** 오라클/국내 VPS 도 마찬가지다.
+가정용 회선에 물린 상시 기기(맥북, 라즈베리파이 등)만 가능하다.
+재확인이 필요하면 `.github/workflows/probe-admedical.yml`, `probe-nordvpn.yml` 을 수동 실행할 것.
+
+수집이 멈추면 `validate_site.py` 가 4일 기준으로 잡아 Actions 를 실패시킨다.
+
 ## 자동 검증 (회귀 방지)
 - `scripts/validate_site.py` 가 사이트 불변조건을 검사한다. **규칙을 바꾸면 검사도 같이 고칠 것.**
   - 로컬: `python scripts/validate_site.py` / 라이브: `--live-only`
