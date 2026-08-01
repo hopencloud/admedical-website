@@ -67,6 +67,11 @@ jobs:
           if [ -n "${{ github.event.inputs.count }}" ]; then ARGS="$ARGS --count ${{ github.event.inputs.count }}"; fi
           python scripts/news_pipeline.py $ARGS
 
+      - name: 발행 전 검증
+        # 생성된 기사가 규칙을 깨면 커밋하지 않는다.
+        # (alt 누락, 사이트맵 확장자, 통계 0건 표시, JSON-LD 깨짐 등)
+        run: python scripts/validate_site.py
+
       - name: Commit & push
         run: |
           git config user.name  "admedical-bot"

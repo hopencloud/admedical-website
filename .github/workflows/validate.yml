@@ -1,0 +1,44 @@
+name: Validate Site (자동 점검)
+
+# 사이트 불변조건을 자동으로 검사한다.
+# 사람이 눈으로 확인해야만 발견되던 회귀(사이트맵 확장자, 통계 0건 표시,
+# JS 주입 헤더, alt 누락)를 여기서 막는다.
+#
+#   push     → 로컬 파일 검사 (배포 직전 상태)
+#   schedule → 배포된 사이트까지 검사 (매일 08:10 KST, 뉴스 발행 뒤)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "website/**"
+      - "scripts/**"
+      - "vercel.json"
+      - ".github/workflows/validate.yml"
+  schedule:
+    - cron: "10 23 * * *"      # 08:10 KST
+  workflow_dispatch: {}
+
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 로컬 파일 검사
+        run: python scripts/validate_site.py
+
+      - name: 배포 사이트 검사
+        # push 직후에는 Vercel 배포가 끝나지 않았을 수 있어 예약 실행에서만 본다.
+        if: github.event_name != 'push'
+        run: python scripts/validate_site.py --live-only

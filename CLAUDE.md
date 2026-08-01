@@ -56,6 +56,21 @@
 - **도표 데이터는 AI가 만들지 않는다**. `statistics.json` 실측값만 사용하며 0건인 날은 제외.
 - 킬스위치: Supabase `news_settings.auto_publish` → /admin 에서 토글.
 
+## 자동 검증 (회귀 방지)
+- `scripts/validate_site.py` 가 사이트 불변조건을 검사한다. **규칙을 바꾸면 검사도 같이 고칠 것.**
+  - 로컬: `python scripts/validate_site.py` / 라이브: `--live-only`
+  - GitHub Actions `validate.yml` 이 push 마다(로컬) + 매일 08:10 KST(라이브) 실행
+  - `news-daily.yml` 은 커밋 **직전**에 검사 — 규칙을 깨는 기사는 배포되지 않는다
+- 검사 항목은 전부 **실제로 났던 버그**다. 새 버그를 고칠 때는 검사 항목을 먼저 추가할 것.
+  - 내부 링크·canonical·사이트맵·RSS 에 `.html` 확장자 (308 리다이렉트 → 네이버 수집 실패)
+  - JS 주입 헤더 잔존 (Yeti 가 내부 링크를 못 읽음)
+  - `<img>` alt 누락/빈 값
+  - JSON-LD 파싱 실패
+  - **통계 '어제 0건'** — 게시 전 데이터를 0건으로 노출 금지
+  - 뉴스 인덱스와 실제 HTML/이미지 파일 불일치
+  - 애드센스 스니펫 누락, ads.txt/robots.txt 누락
+  - 라이브: 사이트맵 전 URL 200(리다이렉트 없음), 메인 정적 본문 1,000자·내부링크 10개 이상
+
 ## SEO/AEO/GEO 규칙
 - URL은 **확장자 없이** (`/guide/faq`). vercel.json `cleanUrls: true` 라 `.html` 링크는 308 리다이렉트된다.
   내부 링크·canonical·og:url·JSON-LD·사이트맵 모두 확장자 없이 유지할 것.
