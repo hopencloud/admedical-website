@@ -63,7 +63,19 @@
   목록·메인·OG 이미지에 모두 이 썸네일을 쓴다. GitHub Actions 는 `fonts-nanum` 설치 필요.
 - **정렬은 `published_at`(시각) 기준**. 같은 날 여러 편이면 날짜만으로 순서가 뒤집힌다.
 - 진행상황: `news_runs` 테이블에 단계별로 기록 → /admin 이 5초 간격 폴링해 표시.
+- **시각자료 3종이 기본**: 사진(photo, 실사) 1 + 일러스트(illustration, 플랫벡터) 1 + 도식 SVG 1.
+  셋 중 하나라도 없으면 발행하지 않는다.
+- **중복 주제 차단은 파이썬이 한다**. 최근 10편이 근거로 쓴 기사 링크를 후보에서 제외하고,
+  제목 바이그램 유사도 0.28 이상이면 주제를 다시 고른다 (AI 지시만으로는 같은 주제가 반복됐다).
+- 검수·수치 정정으로 분량이 줄면 한 번 더 보강한 뒤 재검증한다.
 - 킬스위치: Supabase `news_settings.auto_publish` → /admin 에서 토글.
+
+## 뉴스레터
+- 구독: `/api/subscribe` → Supabase `newsletter_subscribers` (이메일만 받음, 허니팟으로 봇 차단)
+- 해지: 메일 하단 `/api/unsubscribe?token=` 원클릭. `List-Unsubscribe` 헤더도 넣는다.
+- 발송: `scripts/news_mailer.py` — 커밋·푸시 **이후**에 실행 (링크가 살아있어야 함).
+  기존 문의 메일과 같은 SMTP(Gmail) 재사용. GitHub Secrets 에 `SMTP_USER`/`SMTP_PASS` 필요.
+- Gmail SMTP 는 하루 발송량 제한(대략 500건)이 있다. 구독자가 늘면 전용 발송 서비스로 옮길 것.
 
 ## 자동 검증 (회귀 방지)
 - `scripts/validate_site.py` 가 사이트 불변조건을 검사한다. **규칙을 바꾸면 검사도 같이 고칠 것.**

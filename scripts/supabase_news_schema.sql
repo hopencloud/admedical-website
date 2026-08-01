@@ -85,3 +85,24 @@ ALTER TABLE news_runs ENABLE ROW LEVEL SECURITY;
 COMMENT ON TABLE news_runs IS '뉴스 자동 발행 실행별 진행상황 (관리자 대시보드 표시용)';
 
 SELECT 'news_runs 생성 완료' AS status;
+
+
+-- ---------- 4. 뉴스레터 구독자 ----------
+CREATE TABLE IF NOT EXISTS newsletter_subscribers (
+    email           TEXT         PRIMARY KEY,
+    token           TEXT         NOT NULL UNIQUE,      -- 수신 해지 링크용 (추측 불가한 난수)
+    status          TEXT         NOT NULL DEFAULT 'active',  -- active | unsubscribed | bounced
+    subscribed_at   TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
+    unsubscribed_at TIMESTAMPTZ,
+    last_sent_at    TIMESTAMPTZ,
+    send_count      INTEGER      NOT NULL DEFAULT 0
+);
+
+CREATE INDEX IF NOT EXISTS idx_newsletter_status ON newsletter_subscribers (status);
+
+ALTER TABLE newsletter_subscribers ENABLE ROW LEVEL SECURITY;
+
+COMMENT ON TABLE  newsletter_subscribers IS '뉴스레터 구독자. service_role 키로만 접근.';
+COMMENT ON COLUMN newsletter_subscribers.token IS '메일 하단 수신 해지 링크에 쓰는 난수 토큰';
+
+SELECT 'newsletter_subscribers 생성 완료' AS status;

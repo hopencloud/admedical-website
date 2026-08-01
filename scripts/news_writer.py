@@ -185,7 +185,9 @@ admedical은 대한의사협회 의료광고심의위원회 통과 시안을 매
 - 각 섹션은 문단 2~3개, 각 문단 3~4문장·150자 이상
 
 [도식(infographic) 선택 — 기사에 가장 맞는 것 하나]
-매번 같은 그래프를 붙이지 마세요. 아래 다섯 중 기사 내용에 실제로 어울리는 것을 고르세요.
+최근 발행분이 쓴 유형: {recent_types}
+가능하면 위와 다른 유형을 고르세요. 내용상 도저히 안 맞으면 같은 유형을 써도 됩니다.
+아래 다섯 중 기사 내용에 실제로 어울리는 것을 고르세요.
   · comparison  — 대비가 핵심일 때 (반려 표현 vs 대안, 개정 전 vs 후)
   · timeline    — 시행 일정·단계별 진행이 핵심일 때
   · process     — 절차·신청 순서가 핵심일 때
@@ -193,12 +195,20 @@ admedical은 대한의사협회 의료광고심의위원회 통과 시안을 매
   · stat_trend  — 우리 심의 통과 건수 추이가 기사와 **직접** 관련될 때만
 도식 안의 문구도 근거 자료 범위를 벗어나면 안 됩니다.
 
-[이미지 — 기사마다 다른 그림이 나와야 합니다]
-표지와 본문 각 1장. concept 은 이 기사에서만 나올 수 있는 **구체적인 장면**을 영어로 묘사하세요.
-"medical marketing concept" 같은 뻔한 표현 금지. 무엇이 화면 어디에 어떻게 배치되는지 쓰세요.
-예) "An oversized magnifying glass hovering over a stack of layered paper documents, one sheet
-lifted and glowing, small floating checkmark and cross badges orbiting around it, isometric angle"
-글자·숫자·사람 얼굴은 이미지에 넣지 마세요 (모델이 한글을 깨뜨립니다). alt 는 한국어로.
+[이미지 — 사진 1장 + 일러스트 1장, 성격이 완전히 달라야 합니다]
+
+1) photo (표지) — **실사 사진**입니다.
+   실제로 카메라로 찍을 수 있는 장면만 쓰세요. 병원 접수 데스크의 태블릿, 책상 위 서류와 도장,
+   진료실 창가, 스마트폰 화면을 보는 손 같은 구체적 사물·공간.
+   추상 개념(화살표, 떠 있는 아이콘, 그래프 도형)은 사진에 쓸 수 없습니다.
+
+2) illustration (본문) — **플랫 벡터 일러스트**입니다.
+   사진으로 찍을 수 없는 개념을 도식적으로 표현하세요. 관계·흐름·대비 같은 것.
+
+두 장 모두 concept 은 이 기사에서만 나올 수 있는 장면을 영어 25단어 이상으로 묘사하세요.
+"medical marketing concept" 같은 뻔한 표현 금지. 무엇이 어디에 어떻게 놓이는지 쓰세요.
+글자·숫자는 이미지에 넣지 마세요 (모델이 한글을 깨뜨립니다).
+사람은 뒷모습·손·실루엣까지만. 얼굴이 보이면 안 됩니다. alt 는 한국어로.
 
 JSON으로만 답하세요:
 {{
@@ -226,10 +236,10 @@ JSON으로만 답하세요:
     "items": ["checklist 일 때"]
   }},
   "images": [
-    {{"role": "cover", "concept": "구체적 장면 묘사 (영어, 25단어 이상)",
-      "detail": "구도·시점·강조점 보충 (영어)", "alt": "한국어 대체 텍스트 (80자 이내)"}},
-    {{"role": "inline", "concept": "표지와 완전히 다른 장면 (영어)",
-      "detail": "...", "alt": "한국어 대체 텍스트"}}
+    {{"role": "photo", "concept": "실제로 촬영 가능한 구체적 장면 (영어, 25단어 이상)",
+      "detail": "렌즈·앵글·빛·전경/배경 배치 보충 (영어)", "alt": "한국어 대체 텍스트 (80자 이내)"}},
+    {{"role": "illustration", "concept": "사진으로 못 찍는 개념의 도식적 표현 (영어, 25단어 이상)",
+      "detail": "구성·배치·강조점 보충 (영어)", "alt": "한국어 대체 텍스트 (80자 이내)"}}
   ],
   "tags": ["태그 3~5개"]
 }}"""
@@ -245,8 +255,10 @@ def _fmt_sources(sources: list[NewsItem]) -> str:
     )
 
 
-def write_article(topic: dict, stats: dict, top_expressions: list[str]) -> dict:
+def write_article(topic: dict, stats: dict, top_expressions: list[str],
+                  recent_types: list[str] | None = None) -> dict:
     prompt = WRITER_PROMPT.format(
+        recent_types=", ".join(recent_types or []) or "(없음)",
         topic=topic["topic"],
         angle=topic.get("angle", ""),
         sources=_fmt_sources(topic["sources"]),

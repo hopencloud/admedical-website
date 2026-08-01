@@ -1,22 +1,140 @@
 {
-  "generated_at": "2026-08-01T19:41:10.396842+09:00",
-  "count": 3,
+  "generated_at": "2026-08-01T20:20:12.626393+09:00",
+  "count": 5,
   "posts": [
     {
-      "slug": "2026-08-01-patient-experience-evaluation-hospital-expansion",
-      "title": "환자경험평가 등급제 도입, 병원급 확대 논의 중",
-      "summary": "환자경험평가에 등급제가 도입되었습니다. 병원급까지 확대가 논의 중이며, 의료서비스 개선이 요구됩니다.",
+      "slug": "2026-08-01-medical-marketing-impact-regulation",
+      "title": "비급여 관리 특별법 논의, 병원 마케팅에 미칠 영향",
+      "summary": "비급여 관리 특별법 논의가 병원 마케팅에 영향을 미칠 수 있습니다. 마케터들은 이에 대한 대응 방안을 마련해야 합니다.",
       "date": "2026-08-01",
-      "published_at": "2026-08-01T19:36:00.098805+09:00",
-      "cover": "/assets/news/2026-08-01-patient-experience-evaluation-hospital-expansion-cover.jpg",
-      "thumb": "/assets/news/2026-08-01-patient-experience-evaluation-hospital-expansion-thumb.jpg",
+      "published_at": "2026-08-01T20:15:38.118987+09:00",
+      "cover": "/assets/news/2026-08-01-medical-marketing-impact-regulation-photo.jpg",
+      "thumb": "/assets/news/2026-08-01-medical-marketing-impact-regulation-thumb.jpg",
+      "tags": [
+        "비급여 관리",
+        "병원 마케팅",
+        "의료 규제"
+      ],
+      "topic_key": "관리 논의 마케팅에 미칠 병원 비급여",
+      "sources": [
+        {
+          "title": "대개협 \"비급여 의료기관 징벌적 페널티 법안 검토 강력 반대\"",
+          "source": "의협신문",
+          "link": "http://www.doctorsnews.co.kr/news/articleView.html?idxno=165690"
+        },
+        {
+          "title": "개원의들 “비급여 특별법 의료기관 겨냥 징벌적 규제”",
+          "source": "의학신문",
+          "link": "https://www.bosa.co.kr/news/articleView.html?idxno=3009470"
+        },
+        {
+          "title": "'비급여 관리법' 선 그은 정부…개원가는 \"의료기관 옥죄기\" 우려",
+          "source": "청년의사",
+          "link": "http://www.docdocdoc.co.kr/news/articleView.html?idxno=3041401"
+        }
+      ]
+    },
+    {
+      "slug": "2026-08-01-dementia-management-pilot-expansion-response",
+      "title": "치매관리주치의 시범사업 확대, 병의원 대응 방안 필요",
+      "summary": "치매관리주치의 시범사업이 8월 3일부터 확대됩니다. 병의원은 이에 맞춰 새로운 서비스와 대응 방안을 수립해야 합니다.",
+      "date": "2026-08-01",
+      "published_at": "2026-08-01T20:10:19.549597+09:00",
+      "cover": "/assets/news/2026-08-01-dementia-management-pilot-expansion-response-photo.jpg",
+      "thumb": "/assets/news/2026-08-01-dementia-management-pilot-expansion-response-thumb.jpg",
+      "tags": [
+        "치매관리주치의",
+        "병원 대응",
+        "의료광고",
+        "보건복지부",
+        "의료서비스"
+      ],
+      "topic_key": "대응 방안 병의원 시범사업 치매관리주치의 필요",
+      "sources": [
+        {
+          "title": "치매관리주치의 시범사업 커진다, 의사 315→417명 확대",
+          "source": "의협신문",
+          "link": "http://www.doctorsnews.co.kr/news/articleView.html?idxno=165688"
+        },
+        {
+          "title": "치매관리주치의 시범사업, 다음달 3일부터 확대 시행",
+          "source": "메디칼업저버",
+          "link": "https://www.monews.co.kr/news/articleView.html?idxno=412981"
+        }
+      ]
+    },
+    {
+      "slug": "2026-08-01-nurse-patient-ratio-legislation-marketing",
+      "title": "간호사 1인당 환자 수 법제화, 병원 마케팅 변화 가능성",
+      "summary": "간호사 1인당 환자 수 법제화가 논의되면서 병원은 인력과 마케팅 전략을 재조정할 필요가 있습니다. 이는 환자 관리와 서비스 품질에 영향을 미칠 수 있습니다.",
+      "date": "2026-08-01",
+      "published_at": "2026-08-01T20:03:43.475648+09:00",
+      "cover": "/assets/news/2026-08-01-nurse-patient-ratio-legislation-marketing-photo.jpg",
+      "thumb": "/assets/news/2026-08-01-nurse-patient-ratio-legislation-marketing-thumb.jpg",
+      "tags": [
+        "간호사 인력",
+        "병원 운영",
+        "의료 마케팅",
+        "환자 관리",
+        "간호법"
+      ],
+      "topic_key": "1인당 가능성 간호사 마케팅 법제화 변화",
+      "sources": [
+        {
+          "title": "간호사 1인당 환자 수 법제화 눈앞…간호계 “강제 수단 필요”",
+          "source": "청년의사",
+          "link": "http://www.docdocdoc.co.kr/news/articleView.html?idxno=3041413"
+        }
+      ]
+    },
+    {
+      "slug": "2026-08-01-drug-pricing-reform-healthcare-marketing",
+      "title": "약가제도 개편과 약제선별급여부 신설의 영향",
+      "summary": "약가제도 개편이 8월 1일부터 시행되며, 약제선별급여부가 신설됩니다. 병의원은 이에 따른 마케팅 전략 조정이 필요합니다.",
+      "date": "2026-08-01",
+      "published_at": "2026-08-01T19:58:16.454655+09:00",
+      "cover": "/assets/news/2026-08-01-drug-pricing-reform-healthcare-marketing-photo.jpg",
+      "thumb": "/assets/news/2026-08-01-drug-pricing-reform-healthcare-marketing-thumb.jpg",
+      "tags": [
+        "약가제도",
+        "병원마케팅",
+        "약제선별급여부"
+      ],
+      "topic_key": "개편과 신설의 약가제도 약제선별급여부 영향",
+      "sources": [
+        {
+          "title": "\"7월 급여신청부터 새 약가… 계열사 생산은 직접생산 아냐\"",
+          "source": "히트뉴스",
+          "link": "https://www.hitnews.co.kr/news/articleView.html?idxno=78112"
+        },
+        {
+          "title": "심평원 약제실에 선별급여부 신설... 가짜진료조사단도 구성",
+          "source": "히트뉴스",
+          "link": "https://www.hitnews.co.kr/news/articleView.html?idxno=78111"
+        },
+        {
+          "title": "약가 우대 수급안정 선도기업 18곳… 녹십자·명인제약 등 포함",
+          "source": "히트뉴스",
+          "link": "https://www.hitnews.co.kr/news/articleView.html?idxno=78110"
+        }
+      ]
+    },
+    {
+      "slug": "2026-08-01-patient-experience-rating-hospital-marketing",
+      "title": "환자경험평가 등급제 도입과 병원 마케팅 전략 변화",
+      "summary": "환자경험평가에 등급제가 도입되면서 병원 마케팅 전략도 환자 경험 중심으로 변화가 필요합니다. 내년부터는 병원급까지 확대될 예정입니다.",
+      "date": "2026-08-01",
+      "published_at": "2026-08-01T19:53:02.164172+09:00",
+      "cover": "/assets/news/2026-08-01-patient-experience-rating-hospital-marketing-photo.jpg",
+      "thumb": "/assets/news/2026-08-01-patient-experience-rating-hospital-marketing-thumb.jpg",
       "tags": [
         "환자경험평가",
         "병원 마케팅",
         "의료서비스",
+        "환자 만족도",
         "등급제"
       ],
-      "topic_key": "논의 도입 등급제 병원급 확대 환자경험평가",
+      "topic_key": "도입과 등급제 마케팅 변화 병원 전략",
       "sources": [
         {
           "title": "'빅5' 흔든 환자경험평가…지방 상급종합병원 상위권 비결은?",
@@ -29,65 +147,11 @@
           "link": "https://www.hitnews.co.kr/news/articleView.html?idxno=78102"
         },
         {
-          "title": "환자경험평가, 종병 중 여의도·은평·부천·의정부성모·강동성심 등 1등급",
+          "title": "강동성심병원, 환자경험평가 최고등급 획득",
           "source": "의학신문",
-          "link": "https://www.bosa.co.kr/news/articleView.html?idxno=3009465"
+          "link": "https://www.bosa.co.kr/news/articleView.html?idxno=3009455"
         }
       ]
-    },
-    {
-      "slug": "2026-08-01-medical-ad-review-2026",
-      "title": "2026년 의료 광고 심의 강화, SNS·블로그 주의",
-      "summary": "2026년부터 SNS·블로그 의료광고에 대한 사전심의가 강화될 예정입니다. 병원 마케터는 이에 맞춰 전략을 재조정해야 합니다.",
-      "date": "2026-08-01",
-      "cover": "/assets/news/2026-08-01-medical-ad-review-2026-cover.jpg",
-      "tags": [
-        "의료광고",
-        "심의규정",
-        "SNS마케팅"
-      ],
-      "topic_key": "2026년 sns 강화 광고 블로그 심의",
-      "sources": [
-        {
-          "title": "2026년 의료 광고 심의: 병원 블로그·SNS, 지금 당장 알아야 할 모든 것",
-          "source": "인블로그 블로그",
-          "link": "https://inblog.ai/ko/blog/medical-ad-review"
-        }
-      ],
-      "published_at": "2026-08-01T14:40:00+09:00",
-      "thumb": "/assets/news/2026-08-01-medical-ad-review-2026-thumb.jpg"
-    },
-    {
-      "slug": "2026-08-01-patient-experience-rating-expansion",
-      "title": "환자 경험 평가 등급제, 병원 서비스 개선의 기회",
-      "summary": "환자 경험 평가에 등급제가 도입되어 병원 서비스 개선 및 마케팅 전략 수립에 중요한 기준이 될 전망이다.",
-      "date": "2026-08-01",
-      "cover": "/assets/news/2026-08-01-patient-experience-rating-expansion-cover.jpg",
-      "tags": [
-        "환자경험평가",
-        "병원서비스",
-        "의료마케팅"
-      ],
-      "topic_key": "개선의 경험 기회 등급제 병원 서비스",
-      "sources": [
-        {
-          "title": "환자경험평가 첫 등급제 도입…내년부터 병원급까지 확대",
-          "source": "히트뉴스",
-          "link": "https://www.hitnews.co.kr/news/articleView.html?idxno=78102"
-        },
-        {
-          "title": "'담당 의사가 예의를 갖춰 대했나요?'…환자경험평가 확대된다",
-          "source": "의협신문",
-          "link": "http://www.doctorsnews.co.kr/news/articleView.html?idxno=165680"
-        },
-        {
-          "title": "환자경험평가, 종병 중 여의도·은평·부천·의정부성모·강동성심 등 1등급",
-          "source": "의학신문",
-          "link": "https://www.bosa.co.kr/news/articleView.html?idxno=3009465"
-        }
-      ],
-      "published_at": "2026-08-01T04:30:00+09:00",
-      "thumb": "/assets/news/2026-08-01-patient-experience-rating-expansion-thumb.jpg"
     }
   ]
 }

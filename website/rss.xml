@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Sat, 01 Aug 2026 19:41:10 +0900</lastBuildDate>
-        <pubDate>Sat, 01 Aug 2026 19:41:10 +0900</pubDate>
+        <lastBuildDate>Sat, 01 Aug 2026 20:20:12 +0900</lastBuildDate>
+        <pubDate>Sat, 01 Aug 2026 20:20:12 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -16,41 +16,70 @@
             <link>https://www.admedical.co.kr/news</link>
         </image>
         <item>
-            <title>환자경험평가 등급제 도입, 병원급 확대 논의 중</title>
-            <link>https://www.admedical.co.kr/news/2026-08-01-patient-experience-evaluation-hospital-expansion</link>
-            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-01-patient-experience-evaluation-hospital-expansion</guid>
-            <description>환자경험평가에 등급제가 도입되었습니다. 병원급까지 확대가 논의 중이며, 의료서비스 개선이 요구됩니다.</description>
+            <title>비급여 관리 특별법 논의, 병원 마케팅에 미칠 영향</title>
+            <link>https://www.admedical.co.kr/news/2026-08-01-medical-marketing-impact-regulation</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-01-medical-marketing-impact-regulation</guid>
+            <description>비급여 관리 특별법 논의가 병원 마케팅에 영향을 미칠 수 있습니다. 마케터들은 이에 대한 대응 방안을 마련해야 합니다.</description>
             <author>admedical</author>
-            <pubDate>Sat, 01 Aug 2026 19:36:00 +0900</pubDate>
+            <pubDate>Sat, 01 Aug 2026 20:15:38 +0900</pubDate>
+            <category>비급여 관리</category>
+            <category>병원 마케팅</category>
+            <category>의료 규제</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-01-medical-marketing-impact-regulation-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
+        <item>
+            <title>치매관리주치의 시범사업 확대, 병의원 대응 방안 필요</title>
+            <link>https://www.admedical.co.kr/news/2026-08-01-dementia-management-pilot-expansion-response</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-01-dementia-management-pilot-expansion-response</guid>
+            <description>치매관리주치의 시범사업이 8월 3일부터 확대됩니다. 병의원은 이에 맞춰 새로운 서비스와 대응 방안을 수립해야 합니다.</description>
+            <author>admedical</author>
+            <pubDate>Sat, 01 Aug 2026 20:10:19 +0900</pubDate>
+            <category>치매관리주치의</category>
+            <category>병원 대응</category>
+            <category>의료광고</category>
+            <category>보건복지부</category>
+            <category>의료서비스</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-01-dementia-management-pilot-expansion-response-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
+        <item>
+            <title>간호사 1인당 환자 수 법제화, 병원 마케팅 변화 가능성</title>
+            <link>https://www.admedical.co.kr/news/2026-08-01-nurse-patient-ratio-legislation-marketing</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-01-nurse-patient-ratio-legislation-marketing</guid>
+            <description>간호사 1인당 환자 수 법제화가 논의되면서 병원은 인력과 마케팅 전략을 재조정할 필요가 있습니다. 이는 환자 관리와 서비스 품질에 영향을 미칠 수 있습니다.</description>
+            <author>admedical</author>
+            <pubDate>Sat, 01 Aug 2026 20:03:43 +0900</pubDate>
+            <category>간호사 인력</category>
+            <category>병원 운영</category>
+            <category>의료 마케팅</category>
+            <category>환자 관리</category>
+            <category>간호법</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-01-nurse-patient-ratio-legislation-marketing-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
+        <item>
+            <title>약가제도 개편과 약제선별급여부 신설의 영향</title>
+            <link>https://www.admedical.co.kr/news/2026-08-01-drug-pricing-reform-healthcare-marketing</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-01-drug-pricing-reform-healthcare-marketing</guid>
+            <description>약가제도 개편이 8월 1일부터 시행되며, 약제선별급여부가 신설됩니다. 병의원은 이에 따른 마케팅 전략 조정이 필요합니다.</description>
+            <author>admedical</author>
+            <pubDate>Sat, 01 Aug 2026 19:58:16 +0900</pubDate>
+            <category>약가제도</category>
+            <category>병원마케팅</category>
+            <category>약제선별급여부</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-01-drug-pricing-reform-healthcare-marketing-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
+        <item>
+            <title>환자경험평가 등급제 도입과 병원 마케팅 전략 변화</title>
+            <link>https://www.admedical.co.kr/news/2026-08-01-patient-experience-rating-hospital-marketing</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-01-patient-experience-rating-hospital-marketing</guid>
+            <description>환자경험평가에 등급제가 도입되면서 병원 마케팅 전략도 환자 경험 중심으로 변화가 필요합니다. 내년부터는 병원급까지 확대될 예정입니다.</description>
+            <author>admedical</author>
+            <pubDate>Sat, 01 Aug 2026 19:53:02 +0900</pubDate>
             <category>환자경험평가</category>
             <category>병원 마케팅</category>
             <category>의료서비스</category>
+            <category>환자 만족도</category>
             <category>등급제</category>
-            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-01-patient-experience-evaluation-hospital-expansion-cover.jpg" type="image/jpeg" length="0"/>
-        </item>
-        <item>
-            <title>2026년 의료 광고 심의 강화, SNS·블로그 주의</title>
-            <link>https://www.admedical.co.kr/news/2026-08-01-medical-ad-review-2026</link>
-            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-01-medical-ad-review-2026</guid>
-            <description>2026년부터 SNS·블로그 의료광고에 대한 사전심의가 강화될 예정입니다. 병원 마케터는 이에 맞춰 전략을 재조정해야 합니다.</description>
-            <author>admedical</author>
-            <pubDate>Sat, 01 Aug 2026 14:40:00 +0900</pubDate>
-            <category>의료광고</category>
-            <category>심의규정</category>
-            <category>SNS마케팅</category>
-            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-01-medical-ad-review-2026-cover.jpg" type="image/jpeg" length="0"/>
-        </item>
-        <item>
-            <title>환자 경험 평가 등급제, 병원 서비스 개선의 기회</title>
-            <link>https://www.admedical.co.kr/news/2026-08-01-patient-experience-rating-expansion</link>
-            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-01-patient-experience-rating-expansion</guid>
-            <description>환자 경험 평가에 등급제가 도입되어 병원 서비스 개선 및 마케팅 전략 수립에 중요한 기준이 될 전망이다.</description>
-            <author>admedical</author>
-            <pubDate>Sat, 01 Aug 2026 04:30:00 +0900</pubDate>
-            <category>환자경험평가</category>
-            <category>병원서비스</category>
-            <category>의료마케팅</category>
-            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-01-patient-experience-rating-expansion-cover.jpg" type="image/jpeg" length="0"/>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-01-patient-experience-rating-hospital-marketing-photo.jpg" type="image/jpeg" length="0"/>
         </item>
     </channel>
 </rss>

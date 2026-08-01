@@ -101,33 +101,53 @@
         <priority>0.9</priority>
     </url>
     <url>
-        <loc>https://www.admedical.co.kr/news/2026-08-01-patient-experience-evaluation-hospital-expansion</loc>
+        <loc>https://www.admedical.co.kr/news/2026-08-01-medical-marketing-impact-regulation</loc>
         <lastmod>2026-08-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
-            <image:loc>https://www.admedical.co.kr/assets/news/2026-08-01-patient-experience-evaluation-hospital-expansion-thumb.jpg</image:loc>
-            <image:title>환자경험평가 등급제 도입, 병원급 확대 논의 중</image:title>
+            <image:loc>https://www.admedical.co.kr/assets/news/2026-08-01-medical-marketing-impact-regulation-thumb.jpg</image:loc>
+            <image:title>비급여 관리 특별법 논의, 병원 마케팅에 미칠 영향</image:title>
         </image:image>
     </url>
     <url>
-        <loc>https://www.admedical.co.kr/news/2026-08-01-medical-ad-review-2026</loc>
+        <loc>https://www.admedical.co.kr/news/2026-08-01-dementia-management-pilot-expansion-response</loc>
         <lastmod>2026-08-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
-            <image:loc>https://www.admedical.co.kr/assets/news/2026-08-01-medical-ad-review-2026-thumb.jpg</image:loc>
-            <image:title>2026년 의료 광고 심의 강화, SNS·블로그 주의</image:title>
+            <image:loc>https://www.admedical.co.kr/assets/news/2026-08-01-dementia-management-pilot-expansion-response-thumb.jpg</image:loc>
+            <image:title>치매관리주치의 시범사업 확대, 병의원 대응 방안 필요</image:title>
         </image:image>
     </url>
     <url>
-        <loc>https://www.admedical.co.kr/news/2026-08-01-patient-experience-rating-expansion</loc>
+        <loc>https://www.admedical.co.kr/news/2026-08-01-nurse-patient-ratio-legislation-marketing</loc>
         <lastmod>2026-08-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
-            <image:loc>https://www.admedical.co.kr/assets/news/2026-08-01-patient-experience-rating-expansion-thumb.jpg</image:loc>
-            <image:title>환자 경험 평가 등급제, 병원 서비스 개선의 기회</image:title>
+            <image:loc>https://www.admedical.co.kr/assets/news/2026-08-01-nurse-patient-ratio-legislation-marketing-thumb.jpg</image:loc>
+            <image:title>간호사 1인당 환자 수 법제화, 병원 마케팅 변화 가능성</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://www.admedical.co.kr/news/2026-08-01-drug-pricing-reform-healthcare-marketing</loc>
+        <lastmod>2026-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://www.admedical.co.kr/assets/news/2026-08-01-drug-pricing-reform-healthcare-marketing-thumb.jpg</image:loc>
+            <image:title>약가제도 개편과 약제선별급여부 신설의 영향</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://www.admedical.co.kr/news/2026-08-01-patient-experience-rating-hospital-marketing</loc>
+        <lastmod>2026-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://www.admedical.co.kr/assets/news/2026-08-01-patient-experience-rating-hospital-marketing-thumb.jpg</image:loc>
+            <image:title>환자경험평가 등급제 도입과 병원 마케팅 전략 변화</image:title>
         </image:image>
     </url>
     <!-- news:end -->

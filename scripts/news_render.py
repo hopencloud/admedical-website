@@ -162,6 +162,7 @@ FOOTER = f"""<footer class="bg-white border-t border-slate-200 mt-20">
 
 <script src="/assets/js/site.js?v={ASSET_VER}"></script>
 <script src="/assets/js/ads.js?v={ASSET_VER}" defer></script>
+<script src="/assets/js/newsletter.js?v={ASSET_VER}" defer></script>
 </body>
 </html>
 """
@@ -170,10 +171,40 @@ FOOTER = f"""<footer class="bg-white border-t border-slate-200 mt-20">
 AI_IMAGE_NOTE = "이해를 돕기 위해 AI로 제작한 일러스트입니다."
 
 
-def _img_caption(alt: str) -> str:
+def _img_caption(alt: str, kind: str = "일러스트") -> str:
+    note = f"이해를 돕기 위해 AI로 제작한 {kind}입니다."
     return (f'<figcaption class="text-xs text-slate-500 mt-3 leading-relaxed">'
-            f'{esc(alt)}<span class="text-slate-400"> · {AI_IMAGE_NOTE}</span></figcaption>')
+            f'{esc(alt)}<span class="text-slate-400"> · {note}</span></figcaption>')
 
+
+SUBSCRIBE_FORM = """
+    <section class="my-10 bg-brand-50 border border-brand-100 rounded-2xl p-6">
+        <h2 class="text-lg font-bold text-slate-900 mb-1.5">의료광고 인사이트 뉴스레터</h2>
+        <p class="text-sm text-slate-600 leading-relaxed mb-4">
+            병의원 마케터가 알아야 할 규제·정책 변화를 매일 아침 메일로 보내드립니다.
+            이메일 주소만 남기시면 됩니다. 언제든 메일 하단 링크로 수신을 해지하실 수 있습니다.
+        </p>
+        <form class="newsletter-form flex flex-col sm:flex-row gap-2" novalidate>
+            <label class="sr-only" for="nl-email-{uid}">이메일 주소</label>
+            <input id="nl-email-{uid}" type="email" name="email" required
+                   autocomplete="email" placeholder="name@example.com"
+                   class="flex-1 px-4 py-3 rounded-xl border border-slate-300 bg-white
+                          focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+            <input type="text" name="website" tabindex="-1" autocomplete="off"
+                   class="hidden" aria-hidden="true">
+            <button type="submit"
+                    class="px-6 py-3 rounded-xl bg-brand-600 text-white font-semibold
+                           hover:bg-brand-700 transition disabled:bg-slate-300">
+                구독하기
+            </button>
+        </form>
+        <p class="newsletter-msg hidden mt-3 text-sm"></p>
+        <p class="text-xs text-slate-500 mt-3">
+            입력하신 이메일은 뉴스레터 발송 목적으로만 사용하며,
+            <a href="/privacy" class="text-brand-600 hover:underline">개인정보처리방침</a>에 따라 관리됩니다.
+        </p>
+    </section>
+"""
 
 AI_DISCLOSURE = """
     <aside class="mt-10 bg-slate-100 border border-slate-200 rounded-2xl px-5 py-4">
@@ -210,9 +241,14 @@ def render_post(article: dict, meta: dict, infographic_svg: str = "",
     faqs = [f for f in (article.get("faq") or []) if f.get("q") and f.get("a")][:5]
     sections = article.get("sections") or []
 
-    cover_meta = next((i for i in (article.get("images") or []) if i.get("role") == "cover"), {})
-    inline_meta = next((i for i in (article.get("images") or []) if i.get("role") == "inline"), {})
-    cover_alt = cover_meta.get("alt") or f"{title} 내용을 표현한 일러스트"
+    imgs = article.get("images") or []
+
+    def _by_role(*roles):
+        return next((i for i in imgs if i.get("role") in roles), {})
+
+    cover_meta = _by_role("photo", "cover")
+    inline_meta = _by_role("illustration", "inline")
+    cover_alt = cover_meta.get("alt") or f"{title} 관련 사진"
     inline_alt = inline_meta.get("alt") or f"{title} 관련 설명 일러스트"
 
     body_text = " ".join(
@@ -306,7 +342,7 @@ def render_post(article: dict, meta: dict, infographic_svg: str = "",
             f'<img src="{esc(cover)}" alt="{esc(cover_alt)}" '
             f'class="w-full sm:rounded-2xl border border-slate-200" '
             f'loading="eager" fetchpriority="high" width="1400" height="933">'
-            f'{_img_caption(cover_alt)}'
+            f'{_img_caption(cover_alt, "이미지")}'
             f'</figure>'
         )
 
@@ -469,6 +505,8 @@ def render_post(article: dict, meta: dict, infographic_svg: str = "",
 {"".join(body)}
 {tag_html}
     </article>
+
+{SUBSCRIBE_FORM.replace("{uid}", "post")}
 {AI_DISCLOSURE}
 
     <aside class="mt-10 bg-white rounded-2xl border border-slate-200 p-6 shadow-soft">
@@ -518,10 +556,12 @@ def render_list(posts: list[dict]) -> str:
     )
 
     if not posts:
-        cards = ('<p class="text-slate-500 text-sm bg-white rounded-2xl border border-slate-200 '
-                 'p-8 text-center">첫 번째 글을 준비하고 있습니다.</p>')
+        rows = ('<div class="p-8 text-center">'
+                '<h2 class="text-base font-bold text-slate-700 mb-2">준비 중입니다</h2>'
+                '<p class="text-slate-500 text-sm">첫 번째 글을 작성하고 있습니다. 곧 올라옵니다.</p>'
+                '</div>')
     else:
-        cards = "".join(_card(p, featured=(i == 0)) for i, p in enumerate(posts))
+        rows = "".join(_row(p) for p in posts)
 
     return f"""<!DOCTYPE html>
 <html lang="ko">
@@ -530,7 +570,7 @@ def render_list(posts: list[dict]) -> str:
 
 {STATIC_HEADER}
 
-<main class="max-w-5xl mx-auto px-4 py-10">
+<main class="max-w-4xl mx-auto px-4 py-10">
 
     <nav class="text-xs text-slate-500 mb-4" aria-label="Breadcrumb">
         <ol class="flex flex-wrap items-center gap-1.5">
@@ -548,26 +588,28 @@ def render_list(posts: list[dict]) -> str:
 
     <div class="ad-slot" data-slot-name="article-section" data-ad-format="auto"></div>
 
-    <div class="grid gap-5 md:grid-cols-2">
-{cards}
+    <div class="divide-y divide-slate-200 bg-white rounded-2xl border border-slate-200 shadow-soft overflow-hidden">
+{rows}
     </div>
+
+{SUBSCRIBE_FORM.replace("{uid}", "list")}
 </main>
 
 {FOOTER}"""
 
 
-def _card(post: dict, featured: bool = False) -> str:
+def _row(post: dict) -> str:
+    """게시판형 목록 한 줄 — 좌측 썸네일, 우측 제목·요약. 모든 글이 같은 크기."""
     dt = datetime.strptime(post["date"], "%Y-%m-%d")
-    span = " md:col-span-2" if featured else ""
     thumb = post.get("thumb") or post.get("cover")
 
-    thumb_html = ""
-    if thumb:
-        h = "h-64" if featured else "h-44"
-        thumb_html = (
-            f'<img src="{esc(thumb)}" alt="{esc(post["title"])}" loading="lazy" '
-            f'width="1200" height="630" '
-            f'class="w-full {h} object-cover rounded-xl mb-4 border border-slate-200">')
+    thumb_html = (
+        f'<img src="{esc(thumb)}" alt="{esc(post["title"])}" loading="lazy" '
+        f'width="1200" height="630" '
+        f'class="w-28 h-20 sm:w-40 sm:h-[90px] object-cover rounded-lg border border-slate-200 shrink-0">'
+        if thumb else
+        '<div class="w-28 h-20 sm:w-40 sm:h-[90px] rounded-lg bg-slate-100 shrink-0"></div>'
+    )
 
     tags = "".join(
         f'<span class="inline-block bg-slate-100 text-slate-500 text-[11px] font-medium '
@@ -575,14 +617,16 @@ def _card(post: dict, featured: bool = False) -> str:
         for t in (post.get("tags") or [])[:3]
     )
 
-    return f"""        <article class="bg-white rounded-2xl border border-slate-200 p-5 shadow-soft hover:border-brand-500 transition{span}">
-            <a href="/news/{esc(post['slug'])}" class="block">
+    return f"""        <article>
+            <a href="/news/{esc(post['slug'])}" class="flex gap-4 p-4 sm:p-5 hover:bg-slate-50 transition">
                 {thumb_html}
-                <time class="text-xs text-slate-400" datetime="{esc(post['date'])}">{dt:%Y.%m.%d}</time>
-                <h2 class="text-lg font-bold text-slate-900 mt-1.5 mb-2 leading-snug">{esc(post['title'])}</h2>
-                <p class="text-sm text-slate-600 leading-relaxed line-clamp-3">{esc(post.get('summary', ''))}</p>
+                <div class="min-w-0 flex-1">
+                    <time class="text-xs text-slate-400" datetime="{esc(post['date'])}">{dt:%Y.%m.%d}</time>
+                    <h2 class="text-base sm:text-lg font-bold text-slate-900 mt-0.5 mb-1 leading-snug line-clamp-2">{esc(post['title'])}</h2>
+                    <p class="text-sm text-slate-600 leading-relaxed line-clamp-2">{esc(post.get('summary', ''))}</p>
+                    <div class="mt-2 hidden sm:block">{tags}</div>
+                </div>
             </a>
-            <div class="mt-3">{tags}</div>
         </article>
 """
 

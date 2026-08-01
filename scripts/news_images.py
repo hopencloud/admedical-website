@@ -49,12 +49,22 @@ HOUSE_STYLE = (
     "Professional, calm, trustworthy — not playful, not corporate-stocky."
 )
 
+# 사진 스타일 — 기사마다 '사진 1장'을 담당한다.
+# 사람 얼굴이 식별되면 초상권 문제가 생기므로 인물은 뒷모습·손·실루엣까지만 허용한다.
+PHOTO_STYLE = (
+    "Photorealistic editorial photograph, shot on a full-frame camera with a 35mm lens at f/2.8. "
+    "Natural window light, soft shadows, shallow depth of field, true-to-life colors with a cool "
+    "clean tone. Realistic textures on paper, glass, fabric and metal. "
+    "Clean modern Korean clinic or office environment, uncluttered composition, documentary feel."
+)
+
 # 이미지 모델이 한글을 자주 깨뜨린다. 글자는 전부 SVG·썸네일 쪽에서 넣는다.
 HARD_CONSTRAINTS = (
     "Absolutely no text, no letters, no words, no numbers, no charts with axis labels, "
     "no logos, no watermarks, no signatures. "
-    "No human faces, no identifiable people, no medical procedures, no blood, no injuries, "
-    "no real brand marks, no national flags."
+    "No visible or identifiable human faces — people may appear only from behind, "
+    "cropped at the shoulders, as hands, or as soft silhouettes. "
+    "No medical procedures, no blood, no injuries, no real brand marks, no national flags."
 )
 
 
@@ -110,19 +120,19 @@ def load_font(size: int, bold: bool = False):
 # AI 일러스트
 # ==========================================================
 
-def build_prompt(concept: str, detail: str = "") -> str:
-    """기사에서 뽑은 구체 묘사 + 하우스 스타일 + 금지사항."""
+def build_prompt(concept: str, detail: str = "", style: str = "illustration") -> str:
+    """기사에서 뽑은 구체 묘사 + 스타일 프리셋 + 금지사항."""
     parts = [concept.strip().rstrip(".") + "."]
     if detail.strip():
         parts.append(detail.strip().rstrip(".") + ".")
-    parts.append(HOUSE_STYLE)
+    parts.append(PHOTO_STYLE if style == "photo" else HOUSE_STYLE)
     parts.append(HARD_CONSTRAINTS)
     return " ".join(parts)
 
 
-def generate_illustration(concept: str, out_path: Path, detail: str = "",
-                          landscape: bool = True) -> bool:
-    """일러스트 1장 생성. 성공하면 True."""
+def generate_image(concept: str, out_path: Path, detail: str = "",
+                   landscape: bool = True, style: str = "illustration") -> bool:
+    """이미지 1장 생성. style 은 'photo' 또는 'illustration'. 성공하면 True."""
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
         print("  [경고] OPENAI_API_KEY 없음 — 일러스트 건너뜀")
@@ -133,7 +143,7 @@ def generate_illustration(concept: str, out_path: Path, detail: str = "",
     from openai import OpenAI
     client = OpenAI(api_key=api_key)
 
-    prompt = build_prompt(concept, detail)
+    prompt = build_prompt(concept, detail, style)
     primary = "1536x1024" if landscape else "1024x1024"
 
     attempts = [{"model": IMAGE_MODEL, "size": primary, "quality": "high"},
@@ -154,7 +164,7 @@ def generate_illustration(concept: str, out_path: Path, detail: str = "",
 
             out_path.parent.mkdir(parents=True, exist_ok=True)
             saved = _compress(raw, out_path)
-            print(f"  일러스트: {out_path.name} "
+            print(f"  {'사진' if style == 'photo' else '일러스트'}: {out_path.name} "
                   f"({opts['model']}/{opts['size']}{'/high' if 'quality' in opts else ''}, "
                   f"{len(raw) // 1024}KB → {saved // 1024}KB)")
             return True
@@ -535,3 +545,9 @@ def render_thumbnail(title: str, date_label: str, out_path: Path,
 def safe_filename(slug: str, suffix: str, ext: str = "webp") -> str:
     base = re.sub(r"[^a-z0-9\-]", "", slug.lower())
     return f"{base}-{suffix}.{ext}"
+
+
+# 이전 이름 호환 — 외부에서 generate_illustration 을 부르던 코드가 있으면 그대로 동작한다.
+def generate_illustration(concept: str, out_path: Path, detail: str = "",
+                          landscape: bool = True) -> bool:
+    return generate_image(concept, out_path, detail, landscape, style="illustration")

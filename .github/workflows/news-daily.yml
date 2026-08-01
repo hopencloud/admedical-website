@@ -89,6 +89,17 @@ jobs:
           git pull --rebase origin main || true
           git push origin HEAD:main
 
+      - name: 뉴스레터 발송
+        # 커밋·푸시 뒤에 보낸다. 링크가 살아있는 상태로 메일이 나가야 한다.
+        if: success()
+        continue-on-error: true
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+        run: python scripts/news_mailer.py
+
       - name: 검색엔진에 사이트맵 알리기
         # 발행에 성공했을 때만. 실패해도 워크플로우는 통과시킨다.
         if: success()

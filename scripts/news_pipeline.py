@@ -19,6 +19,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import sys
 import traceback
 from datetime import datetime, timedelta, timezone
@@ -160,6 +161,40 @@ def now_iso() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+# 최근 몇 편과 주제가 겹치면 안 되는가. /admin 에서 바꿀 일이 없어 상수로 둔다.
+DEDUP_WINDOW = int(os.getenv("NEWS_DEDUP_WINDOW", "10"))
+SIMILARITY_LIMIT = float(os.getenv("NEWS_SIMILARITY_LIMIT", "0.28"))
+
+
+def _bigrams(text: str) -> set[str]:
+    t = re.sub(r"[^0-9a-zA-Z가-힣]", "", text)
+    return {t[i:i + 2] for i in range(len(t) - 1)} or {t}
+
+
+def similarity(a: str, b: str) -> float:
+    """제목 두 개의 글자 바이그램 자카드 유사도."""
+    x, y = _bigrams(a), _bigrams(b)
+    return len(x & y) / len(x | y) if x | y else 0.0
+
+
+def used_source_links(posts: list[dict]) -> set[str]:
+    """최근 발행분이 근거로 쓴 기사 링크. 같은 기사를 두 번 우려먹지 않기 위함."""
+    links: set[str] = set()
+    for post in posts[:DEDUP_WINDOW]:
+        for src in post.get("sources") or []:
+            if src.get("link"):
+                links.add(src["link"])
+    return links
+
+
+def duplicate_of(title: str, posts: list[dict]) -> str | None:
+    """최근 발행분 중 주제가 겹치는 글의 제목. 없으면 None."""
+    for post in posts[:DEDUP_WINDOW]:
+        if similarity(title, post.get("title", "")) >= SIMILARITY_LIMIT:
+            return post.get("title", "")
+    return None
+
+
 def sort_key(post: dict) -> str:
     """최신 글이 먼저. 발행 시각이 없는 옛 글은 날짜 자정으로 본다."""
     return post.get("published_at") or f'{post["date"]}T00:00:00+09:00'
@@ -188,16 +223,37 @@ def publish_one(client, posts: list[dict], candidates: list, stats: dict,
     published_keys = {p.get("topic_key", "") for p in posts}
 
     progress(client, "주제 선정", "수집된 기사에서 오늘 다룰 주제 고르는 중", done=index)
-    topic = news_writer.select_topic(candidates, published_titles)
+
+    # 최근 발행분이 이미 근거로 쓴 기사는 후보에서 아예 뺀다.
+    # AI 에게 "겹치지 마라"고 부탁하는 것만으로는 같은 주제가 반복해서 나왔다.
+    used = used_source_links(posts)
+    pool = [c for c in candidates if c.link not in used]
+    if len(pool) < len(candidates):
+        log(f"이미 다룬 기사 {len(candidates) - len(pool)}건을 후보에서 제외")
+
+    topic = None
+    for attempt in range(3):
+        picked = news_writer.select_topic(pool, published_titles)
+        if not picked:
+            break
+        dup = duplicate_of(picked["topic"], posts)
+        if not dup:
+            topic = picked
+            break
+        log(f"주제 중복 — '{dup}' 와 유사. 다시 고릅니다 ({attempt + 1}/3)")
+        drop = {s.link for s in picked["sources"]}
+        pool = [c for c in pool if c.link not in drop]
+
     if not topic:
-        log("오늘 다룰 만한 주제가 없습니다. 발행하지 않고 종료합니다.")
+        log("최근 발행분과 겹치지 않는 주제가 없습니다. 발행하지 않습니다.")
         return None
 
     log(f"주제: {topic['topic']}")
     log(f"관점: {topic.get('angle', '')}")
 
     progress(client, "원고 작성", topic["topic"][:120], title=topic["topic"])
-    draft = news_writer.write_article(topic, stats, top_expressions())
+    recent_types = [x for x in (q.get("infographic_type") for q in posts[:5]) if x]
+    draft = news_writer.write_article(topic, stats, top_expressions(), recent_types)
     log(f"초고 작성 완료: {draft.get('title', '')} ({news_writer.word_count(draft)}자)")
 
     progress(client, "분량 보강", f'{draft.get("title", "")}', title=draft.get("title", ""))
@@ -227,7 +283,20 @@ def publish_one(client, posts: list[dict], candidates: list, stats: dict,
             return None
         log("수치 정정 완료")
 
+    # 검수·수치 정정을 거치며 문장이 잘려 분량이 줄어드는 경우가 있다.
+    # 짧다고 바로 버리지 말고 근거 범위 안에서 한 번 더 늘려본다.
     final_chars = news_writer.word_count(article)
+    if final_chars < 1000:
+        progress(client, "분량 재보강", f"{final_chars}자 → 보강 중")
+        article = news_writer.expand_article(article, topic)
+        # 늘리는 과정에서 새 숫자가 들어갔을 수 있으니 다시 대조한다
+        article, still_bad = news_writer.strip_unsupported_numbers(article, topic, stats)
+        if still_bad:
+            log(f"재보강 후 미확인 수치 잔존: {', '.join(still_bad[:6])} — 발행하지 않습니다.")
+            return None
+        log(f"분량 재보강: {final_chars}자 → {news_writer.word_count(article)}자")
+        final_chars = news_writer.word_count(article)
+
     if final_chars < 800:
         log(f"본문이 너무 짧습니다({final_chars}자). 발행하지 않습니다.")
         return None
@@ -236,6 +305,11 @@ def publish_one(client, posts: list[dict], candidates: list, stats: dict,
     topic_key = news_writer.article_topic_key(article)
     if topic_key and topic_key in published_keys:
         log("이미 같은 주제를 발행했습니다. 건너뜁니다.")
+        return None
+
+    dup = duplicate_of(article.get("title", ""), posts)
+    if dup:
+        log(f"최종 제목이 기존 글과 겹칩니다 ('{dup}'). 발행하지 않습니다.")
         return None
 
     now = datetime.now(KST)
@@ -249,36 +323,46 @@ def publish_one(client, posts: list[dict], candidates: list, stats: dict,
 
     # ----- 시각자료 -----
     IMG_DIR.mkdir(parents=True, exist_ok=True)
+    # 기사 1편당 시각자료 3종을 기본으로 한다: 사진 1 + 일러스트 1 + 도식 1
     images = article.get("images") or []
-    cover_spec = next((i for i in images if i.get("role") == "cover"), {})
-    inline_spec = next((i for i in images if i.get("role") == "inline"), {})
 
-    progress(client, stage="이미지 제작", detail="표지 일러스트 생성 중")
+    def _spec(*roles):
+        return next((i for i in images if i.get("role") in roles), {})
+
+    photo_spec = _spec("photo", "cover")
+    illust_spec = _spec("illustration", "inline")
+
+    progress(client, stage="이미지 제작", detail="① 사진 생성 중")
     cover_rel = inline_rel = thumb_rel = None
 
-    cover_file = IMG_DIR / news_images.safe_filename(slug, "cover", "jpg")
-    if news_images.generate_illustration(
-            cover_spec.get("concept") or topic["topic"], cover_file,
-            detail=cover_spec.get("detail", ""), landscape=True):
+    cover_file = IMG_DIR / news_images.safe_filename(slug, "photo", "jpg")
+    if news_images.generate_image(
+            photo_spec.get("concept") or topic["topic"], cover_file,
+            detail=photo_spec.get("detail", ""), landscape=True, style="photo"):
         cover_rel = f"/assets/news/{cover_file.name}"
 
-    progress(client, stage="이미지 제작", detail="본문 일러스트 생성 중")
-    inline_file = IMG_DIR / news_images.safe_filename(slug, "inline")
-    if news_images.generate_illustration(
-            inline_spec.get("concept") or topic["topic"], inline_file,
-            detail=inline_spec.get("detail", ""), landscape=False):
+    progress(client, stage="이미지 제작", detail="② 일러스트 생성 중")
+    inline_file = IMG_DIR / news_images.safe_filename(slug, "illust")
+    if news_images.generate_image(
+            illust_spec.get("concept") or topic["topic"], inline_file,
+            detail=illust_spec.get("detail", ""), landscape=False, style="illustration"):
         inline_rel = f"/assets/news/{inline_file.name}"
 
-    # 도식은 기사 성격에 맞는 유형으로. 실데이터 추이는 stat_trend 일 때만 쓰인다.
+    # ③ 도식 — 기사 성격에 맞는 유형으로. 실데이터 추이는 stat_trend 일 때만.
     progress(client, stage="도표 생성", detail=(article.get("infographic") or {}).get("type", ""))
     infographic_svg = news_images.render_infographic(
         article.get("infographic") or {}, stats.get("chart_30d", []))
 
-    extra_svg = ""
     if not infographic_svg:
-        # 도식이 비면 체크리스트 카드로 대체 — 시각자료가 최소 2개는 되게 한다.
-        extra_svg = news_images.render_checklist(
-            {"title": "오늘의 마케터 체크리스트", "items": article.get("checklist", [])})
+        # AI 도식 스펙이 부실하면 체크리스트 카드로 대체한다. 도식은 반드시 하나 있어야 한다.
+        infographic_svg = news_images.render_checklist(
+            {"title": "실무 체크리스트", "items": article.get("checklist", [])})
+    extra_svg = ""
+
+    if not (cover_rel and inline_rel and infographic_svg):
+        log(f"시각자료 부족 (사진={bool(cover_rel)} 일러스트={bool(inline_rel)} "
+            f"도식={bool(infographic_svg)}) — 발행하지 않습니다.")
+        return None
 
     # 썸네일 — 목록·메인·SNS 공유에 쓰는 일관 디자인 카드
     progress(client, stage="썸네일 생성", detail=slug)
@@ -317,6 +401,7 @@ def publish_one(client, posts: list[dict], candidates: list, stats: dict,
         "published_at": now.isoformat(),
         "cover": cover_rel,
         "thumb": thumb_rel,
+        "infographic_type": (article.get("infographic") or {}).get("type", ""),
         "tags": article.get("tags", [])[:6],
         "topic_key": topic_key,
         "sources": [{"title": s["title"], "source": s["source"], "link": s["link"]}
