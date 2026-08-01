@@ -1,0 +1,128 @@
+name: Probe NordVPN (한국 IP 우회 진단)
+
+# GitHub 서버에서 NordVPN 한국 서버를 거쳐 admedical.org 에 닿는지 확인한다.
+#
+# 앞선 probe-admedical 결과: GitHub 러너 IP 로는 0/6 완전 차단.
+# 남은 방법이 한국 IP 확보인데, 수집 전체를 옮기기 전에 이 경로가 실제로
+# 뚫리는지부터 확인한다. (되는 줄 알고 다 만들었다가 막히면 헛수고)
+#
+# 필요한 GitHub Secrets — NordVPN '수동 설정용' 인증정보 (계정 비밀번호 아님):
+#   NORDVPN_USER, NORDVPN_PASS
+#   발급: nordaccount.com → NordVPN → 수동 설정(Manual setup) → 서비스 인증정보
+#
+# 조회만 하며 사이트에 아무 것도 쓰지 않는다.
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+
+    steps:
+      - name: OpenVPN 설치
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq openvpn
+
+      - name: 한국 서버 설정 내려받기
+        run: |
+          set -e
+          # NordVPN 이 추천하는 한국(country_id=114) 서버 하나를 고른다
+          HOST=$(curl -s --max-time 20 \
+            "https://api.nordvpn.com/v1/servers/recommendations?filters\[country_id\]=114&limit=1" \
+            | python3 -c "import sys,json; print(json.load(sys.stdin)[0]['hostname'])")
+          echo "선택된 서버: $HOST"
+          echo "NORD_HOST=$HOST" >> $GITHUB_ENV
+
+          curl -s --max-time 30 -o kr.ovpn \
+            "https://downloads.nordcdn.com/configs/files/ovpn_udp/servers/${HOST}.udp.ovpn"
+          test -s kr.ovpn || { echo "설정 파일 내려받기 실패"; exit 1; }
+          echo "설정 파일 $(wc -l < kr.ovpn) 줄"
+
+      - name: VPN 접속
+        env:
+          NORDVPN_USER: ${{ secrets.NORDVPN_USER }}
+          NORDVPN_PASS: ${{ secrets.NORDVPN_PASS }}
+        run: |
+          set -e
+          if [ -z "$NORDVPN_USER" ] || [ -z "$NORDVPN_PASS" ]; then
+            echo "::error::NORDVPN_USER / NORDVPN_PASS 시크릿이 없습니다."
+            exit 1
+          fi
+          printf '%s\n%s\n' "$NORDVPN_USER" "$NORDVPN_PASS" > auth.txt
+          chmod 600 auth.txt
+
+          sudo openvpn --config kr.ovpn --auth-user-pass auth.txt \
+               --daemon --log openvpn.log --auth-nocache
+
+          # 터널이 올라올 때까지 최대 60초 대기
+          for i in $(seq 1 30); do
+            if ip addr show tun0 >/dev/null 2>&1; then
+              echo "터널 연결됨 (${i}회차)"; break
+            fi
+            sleep 2
+          done
+          ip addr show tun0 >/dev/null 2>&1 || {
+            echo "::error::VPN 연결 실패"; tail -30 openvpn.log; exit 1; }
+
+      - name: 우회 후 IP 확인
+        run: |
+          echo "현재 나가는 IP:"
+          curl -s --max-time 15 https://ipinfo.io/json || echo "(조회 실패)"
+
+      - name: admedical.org 접속 테스트
+        run: |
+          python3 - <<'PY'
+          import json, os, time, urllib.parse, urllib.request
+
+          FORM = "https://www.admedical.org/application/approval_confirm.do"
+          API  = "https://www.admedical.org/application/approval_confirm_proc.do"
+          UA   = {"User-Agent": "Mozilla/5.0"}
+
+          print("=== 페이지 접속 6회 ===")
+          ok = 0
+          for i in range(6):
+              t = time.time()
+              try:
+                  r = urllib.request.urlopen(urllib.request.Request(FORM, headers=UA), timeout=20)
+                  print(f"  {i+1}회: HTTP {r.status}  {time.time()-t:.1f}s"); ok += 1
+              except Exception as e:
+                  print(f"  {i+1}회: 실패 {type(e).__name__}  {time.time()-t:.1f}s")
+              time.sleep(1)
+
+          print("\n=== 조회 API 3회 ===")
+          api_ok = 0
+          for suffix in (217800, 217801, 217802):
+              t = time.time()
+              try:
+                  data = urllib.parse.urlencode({"approval_num": str(suffix)}).encode()
+                  req = urllib.request.Request(API, data=data, headers={
+                      **UA, "Referer": FORM, "X-Requested-With": "XMLHttpRequest"})
+                  body = urllib.request.urlopen(req, timeout=25).read().decode("utf-8", "replace")
+                  print(f"  {suffix}: {time.time()-t:.1f}s  {body[:90]}"); api_ok += 1
+              except Exception as e:
+                  print(f"  {suffix}: 실패 {type(e).__name__}  {time.time()-t:.1f}s")
+              time.sleep(2)
+
+          if ok >= 4 and api_ok >= 2:
+              verdict = "✅ VPN 경유로 수집 가능 — 맥북 없이 클라우드로 옮길 수 있습니다."
+          elif ok >= 4:
+              verdict = "⚠️ 페이지는 열리는데 조회 API 가 막힙니다 — 추가 확인 필요."
+          else:
+              verdict = "❌ VPN 을 거쳐도 안 됩니다 — 다른 방법이 필요합니다."
+
+          print("\n" + "=" * 52)
+          print("판정:", verdict)
+          print("=" * 52)
+
+          path = os.environ.get("GITHUB_STEP_SUMMARY")
+          if path:
+              with open(path, "a", encoding="utf-8") as f:
+                  f.write(f"## NordVPN 경유 진단\n\n### {verdict}\n\n")
+                  f.write(f"- 페이지 접속: **{ok}/6** 성공\n")
+                  f.write(f"- 조회 API: **{api_ok}/3** 성공\n")
+          PY
+
+      - name: VPN 종료
+        if: always()
+        run: sudo pkill openvpn || true
