@@ -69,12 +69,23 @@ jobs:
               time.sleep(2)
           print(f"  → 성공 {api_ok}/3")
 
-          print("\n" + "=" * 52)
           if ok >= 4 and api_ok >= 2:
-              print("판정: 클라우드에서 수집 가능. 맥북 없이 돌릴 수 있습니다.")
+              verdict = "✅ 클라우드에서 수집 가능 — 맥북 없이 돌릴 수 있습니다."
           elif ok >= 4:
-              print("판정: 페이지는 열리는데 조회 API 가 막힙니다. 추가 확인 필요.")
+              verdict = "⚠️ 페이지는 열리는데 조회 API 가 막힙니다 — 추가 확인 필요."
           else:
-              print("판정: 차단/불통. 한국 IP 가 필요합니다.")
+              verdict = "❌ 차단/불통 — 한국 IP 가 필요합니다."
+
+          print("\n" + "=" * 52)
+          print("판정:", verdict)
           print("=" * 52)
+
+          # Actions 요약 화면에 그대로 띄운다
+          import os
+          path = os.environ.get("GITHUB_STEP_SUMMARY")
+          if path:
+              with open(path, "a", encoding="utf-8") as f:
+                  f.write(f"## 진단 결과\n\n### {verdict}\n\n")
+                  f.write(f"- 페이지 접속: **{ok}/6** 성공\n")
+                  f.write(f"- 조회 API: **{api_ok}/3** 성공\n")
           PY
