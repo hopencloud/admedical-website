@@ -121,6 +121,18 @@
             <p id="news-status" class="hidden mt-3 text-sm"></p>
         </div>
 
+        <!-- 뉴스레터 구독자 -->
+        <div class="bg-white rounded-2xl shadow-soft p-7 border border-slate-200">
+            <div class="flex items-center justify-between mb-3">
+                <h2 class="font-semibold text-slate-800">뉴스레터 구독자</h2>
+                <span id="sub-count" class="text-sm font-semibold text-brand-600">–</span>
+            </div>
+            <p class="text-xs text-slate-500 mb-4">
+                매일 새벽 4시 기사 발행 직후 자동 발송됩니다. 구독 즉시 환영 메일이 1통 나갑니다.
+            </p>
+            <div id="sub-list" class="text-sm divide-y divide-slate-100 border-t border-slate-100 max-h-80 overflow-y-auto"></div>
+        </div>
+
         <div class="text-xs text-slate-400 text-center pt-2">
             상태 자동 갱신 (10초 간격) · 지금 실행 눌러도 GitHub 큐 사정으로 1~2분 뒤 시작될 수 있음
         </div>
@@ -375,6 +387,30 @@ function paintNewsProgress(run) {
     }
 }
 
+function paintSubscribers(s) {
+    if (!s) return;
+    document.getElementById("sub-count").textContent =
+        `구독 ${s.active}명` + (s.unsubscribed ? ` · 해지 ${s.unsubscribed}명` : "");
+
+    const box = document.getElementById("sub-list");
+    const rows = s.list || [];
+    box.innerHTML = rows.length ? rows.map(r => {
+        const active = r.status === "active";
+        const badge = active
+            ? '<span class="text-[11px] px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700">구독</span>'
+            : '<span class="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-500">해지</span>';
+        return `
+            <div class="flex items-center justify-between gap-3 py-2.5">
+                <span class="truncate ${active ? "text-slate-700" : "text-slate-400 line-through"}">${r.email}</span>
+                <span class="flex items-center gap-2 shrink-0">
+                    <span class="text-xs text-slate-400">${(r.subscribed_at || "").slice(0, 10)}</span>
+                    <span class="text-xs text-slate-400">${r.send_count || 0}회</span>
+                    ${badge}
+                </span>
+            </div>`;
+    }).join("") : '<div class="py-3 text-slate-500 text-sm">아직 구독자가 없습니다.</div>';
+}
+
 async function loadNewsSettings() {
     try {
         const res = await api("/api/news-settings");
@@ -386,6 +422,7 @@ async function loadNewsSettings() {
         paintNewsToggle();
 
         paintNewsProgress(data.run);
+        paintSubscribers(data.subscribers);
 
         const list = document.getElementById("news-recent");
         const posts = data.recent || [];
