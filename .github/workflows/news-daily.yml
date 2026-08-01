@@ -10,8 +10,10 @@ name: News Daily (자동 발행)
 
 on:
   schedule:
-    # 매일 04:00 KST = 전날 19:00 UTC. GitHub cron 은 UTC 기준.
-    - cron: "0 19 * * *"
+    # 매일 05:30 KST = 전날 20:30 UTC. GitHub cron 은 UTC 기준.
+    # 맥북의 심의 데이터 수집·통계 갱신(05:00)이 끝난 뒤에 기사를 써야
+    # 기사에 인용되는 통과 건수가 당일 최신값이 된다.
+    - cron: "30 20 * * *"
   workflow_dispatch:
     inputs:
       count:

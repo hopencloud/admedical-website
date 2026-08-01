@@ -44,7 +44,7 @@ function welcomeHtml(token, recent) {
       <p style="color:#0f172a;font-size:15px;line-height:1.8;margin:0 0 16px">
         의료광고 인사이트 뉴스레터 구독이 완료되었습니다.</p>
       <p style="color:#475569;font-size:14px;line-height:1.8;margin:0 0 16px">
-        내일 아침부터 <b style="color:#0f172a">매일 새벽 4시</b>에 병의원 마케터가 알아야 할
+        내일 아침부터 <b style="color:#0f172a">매일 새벽 5시 30분</b>에 병의원 마케터가 알아야 할
         의료광고 규제·정책·시장 변화를 정리해 보내드립니다.
         대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 읽으실 수 있습니다.</p>
       <p style="color:#475569;font-size:14px;line-height:1.8;margin:0">
@@ -88,7 +88,7 @@ async function sendWelcome(email, token) {
     const text = [
         "admedical 의료광고 인사이트 뉴스레터 구독이 완료되었습니다.",
         "",
-        "내일 아침부터 매일 새벽 4시에 병의원 마케터가 알아야 할",
+        "내일 아침부터 매일 새벽 5시 30분에 병의원 마케터가 알아야 할",
         "의료광고 규제·정책·시장 변화를 정리해 보내드립니다.",
         "",
         `지난 인사이트 보기: ${SITE}/news`,

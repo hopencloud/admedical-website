@@ -5,7 +5,7 @@ name: Validate Site (자동 점검)
 # JS 주입 헤더, alt 누락)를 여기서 막는다.
 #
 #   push     → 로컬 파일 검사 (배포 직전 상태)
-#   schedule → 배포된 사이트까지 검사 (매일 05:00 KST, 뉴스 발행 1시간 뒤)
+#   schedule → 배포된 사이트까지 검사 (매일 07:00 KST, 뉴스 발행 뒤)
 
 on:
   push:
@@ -16,7 +16,7 @@ on:
       - "vercel.json"
       - ".github/workflows/validate.yml"
   schedule:
-    - cron: "0 20 * * *"       # 05:00 KST (뉴스 발행 1시간 뒤)
+    - cron: "0 22 * * *"       # 07:00 KST (뉴스 발행 뒤)
   workflow_dispatch: {}
 
 concurrency:
