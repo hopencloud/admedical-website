@@ -43,7 +43,7 @@
 - 매주 월요일·매월 1일에는 pipeline 작업이 weekly/monthly TOP20 도 함께 갱신 (스크립트 내부 로직).
 
 ## 뉴스 게시판 (/news) — 매일 자동 발행
-- GitHub Actions `news-daily.yml` 이 매일 07:20 KST 실행. 맥북과 무관하게 클라우드에서 동작.
+- GitHub Actions `news-daily.yml` 이 매일 04:00 KST 실행. 맥북과 무관하게 클라우드에서 동작.
 - 파이프라인: `scripts/news_pipeline.py`
   1. `news_sources.py` — 의료 전문지 RSS 5곳 + 복지부 보도자료 (+OpenAI 웹검색) 수집
   2. `news_writer.py` — 주제 선정 → 초고 → 분량 보강 → 자체 검수 → **수치 검증**
@@ -59,7 +59,7 @@
 ## 자동 검증 (회귀 방지)
 - `scripts/validate_site.py` 가 사이트 불변조건을 검사한다. **규칙을 바꾸면 검사도 같이 고칠 것.**
   - 로컬: `python scripts/validate_site.py` / 라이브: `--live-only`
-  - GitHub Actions `validate.yml` 이 push 마다(로컬) + 매일 08:10 KST(라이브) 실행
+  - GitHub Actions `validate.yml` 이 push 마다(로컬) + 매일 05:00 KST(라이브) 실행
   - `news-daily.yml` 은 커밋 **직전**에 검사 — 규칙을 깨는 기사는 배포되지 않는다
 - 검사 항목은 전부 **실제로 났던 버그**다. 새 버그를 고칠 때는 검사 항목을 먼저 추가할 것.
   - 내부 링크·canonical·사이트맵·RSS 에 `.html` 확장자 (308 리다이렉트 → 네이버 수집 실패)

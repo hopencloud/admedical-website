@@ -1,6 +1,6 @@
 name: News Daily (자동 발행)
 
-# 매일 아침 의료계 뉴스를 수집해 기사 1편을 생성하고 커밋한다.
+# 매일 새벽 의료계 뉴스를 수집해 기사 1편을 생성하고 커밋한다.
 # 맥북과 무관하게 GitHub 클라우드에서 돌기 때문에 노트북이 꺼져 있어도 발행된다.
 #
 # 중단 방법 3가지:
@@ -10,9 +10,8 @@ name: News Daily (자동 발행)
 
 on:
   schedule:
-    # 매일 07:20 KST (UTC 22:20). GitHub cron 은 UTC 기준이며
-    # 정각은 혼잡해 밀리는 일이 잦아 20분에 둔다.
-    - cron: "20 22 * * *"
+    # 매일 04:00 KST = 전날 19:00 UTC. GitHub cron 은 UTC 기준.
+    - cron: "0 19 * * *"
   workflow_dispatch:
     inputs:
       count:
