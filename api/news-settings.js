@@ -37,9 +37,23 @@ export default async function handler(req, res) {
                 .order("published_date", { ascending: false })
                 .limit(10);
 
+            // 가장 최근 실행의 진행상황 (테이블이 없으면 조용히 생략)
+            let run = null;
+            try {
+                const { data: runs } = await supabase
+                    .from("news_runs")
+                    .select("*")
+                    .order("started_at", { ascending: false })
+                    .limit(1);
+                run = (runs && runs[0]) || null;
+            } catch (e) {
+                console.warn("[news-settings] news_runs 조회 생략:", e.message);
+            }
+
             return res.status(200).json({
                 settings: data || { auto_publish: true, daily_count: 1 },
                 recent: recent || [],
+                run,
             });
         }
 

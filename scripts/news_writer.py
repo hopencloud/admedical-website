@@ -130,21 +130,29 @@ def select_topic(items: list[NewsItem], published_topics: list[str]) -> dict | N
 # 2단계 — 초고 작성
 # ==========================================================
 
-WRITER_SYSTEM = """당신은 의료광고 심의 데이터를 다루는 전문 매체 'admedical'의 기자입니다.
+WRITER_SYSTEM = """당신은 의료광고 심의 데이터를 다루는 전문 매체 'admedical'의 기자이자 SEO 편집자입니다.
 독자는 병원·의원 마케팅 담당자입니다.
 
-[절대 규칙]
+[절대 규칙 — 어기면 발행되지 않습니다]
 - 원문 기사의 문장을 그대로 옮기지 마세요. 사실만 취하고 문장은 100% 새로 쓰세요.
 - 제공된 자료에 없는 수치·날짜·통계·인용문을 절대 만들어내지 마세요.
+  (본문의 모든 숫자는 기계가 근거 자료와 대조합니다)
 - 의학적 효능이나 치료 결과를 단정하지 마세요. 진단·치료 조언을 하지 마세요.
 - 법령 조항은 확실히 아는 것만 쓰세요. 애매하면 조항 번호를 빼고 서술하세요.
 - 특정 병원·의료인을 홍보하거나 비방하지 마세요.
 - 확정되지 않은 사안은 "논의 중", "예정", "검토 단계" 처럼 상태를 정확히 표기하세요.
 
+[검색 노출 원칙 — 이 매체의 최우선 목표]
+- 독자가 실제로 검색창에 칠 법한 표현을 제목과 소제목에 넣으세요.
+  ("의료광고 심의", "병원 마케팅", "의료법 제56조", "비급여 광고" 같은 구체적 명사)
+- 소제목(H2)은 **질문형이나 결론형**으로 쓰세요. 검색 결과 스니펫과 AI 답변에 그대로 인용됩니다.
+- 각 문단은 첫 문장에 결론을 두고 뒤에 근거를 붙이세요 (역피라미드).
+- 핵심 요약은 그 자체로 완결된 문장이어야 합니다. 앞뒤 문맥 없이 읽어도 뜻이 통해야 합니다.
+
 [문체]
 - 한국어. 실무자에게 말하듯 담백하고 구체적으로.
 - 과장·감탄사·클릭베이트 금지. "충격", "대박", "필수" 같은 표현 금지.
-- 한 문단 3~4문장. 소제목으로 끊어 읽기 쉽게."""
+- 한 문단 3~4문장."""
 
 WRITER_PROMPT = """아래 자료로 기사 한 편을 작성하세요.
 
@@ -157,48 +165,73 @@ WRITER_PROMPT = """아래 자료로 기사 한 편을 작성하세요.
 [근거 자료 — 이 안의 사실만 사용]
 {sources}
 
-[우리 사이트 자체 데이터 — 반드시 기사에 녹여 쓰세요]
+[우리 사이트 자체 데이터 — 기사와 관련이 있을 때만 인용하세요]
 admedical은 대한의사협회 의료광고심의위원회 통과 시안을 매일 수집해 텍스트로 인덱싱합니다.
-- 어제({yesterday_date}) 심의 통과: {yesterday_count}건
+- 최근 집계일({yesterday_date}) 심의 통과: {yesterday_count}건
 - 이번 주 누적: {this_week_count}건
 - 지난달 전체: {last_month_count}건
 - 누적 인덱싱: {total_count}건
 - 최근 자주 통과된 표현: {top_expressions}
+※ 주제와 무관한데 억지로 끼워 넣지 마세요. 관련 없으면 언급하지 않아도 됩니다.
 
 [기사 구성]
 - 도입(lead): 무슨 일이 있었는지 3~4문장
-- 본문 4개 섹션: 배경 → 실무 영향 → 우리 데이터로 본 시사점 → 대응 방향
+- 본문 4개 섹션. 소제목은 검색어를 포함한 질문형/결론형으로.
 - 마지막: 마케터가 당장 확인할 체크리스트 3~5개
-- FAQ 정확히 3개: 실무자가 이 사안을 두고 실제로 검색할 법한 질문과 답변.
-  질문은 검색어처럼 구체적으로 쓰고, 답변은 그 자체로 완결되게 쓰세요.
-  (AI 검색·음성 검색이 그대로 인용할 수 있도록)
+- FAQ 정확히 3개
 
 [분량 — 반드시 지킬 것]
-- 전체 본문 1,200자 이상 (공백 제외). 짧으면 기사로서 가치가 없습니다.
-- 각 섹션은 문단 2~3개.
-- 각 문단은 3~4문장, 150자 이상.
-- 근거가 부족하다고 문단을 줄이지 마세요. 대신 실무자가 무엇을 어떻게 판단해야 하는지를
-  구체적으로 풀어 쓰세요 (적용 대상, 예상 쟁점, 준비 순서, 흔한 오해 등).
+- 전체 본문 1,200자 이상 (공백 제외)
+- 각 섹션은 문단 2~3개, 각 문단 3~4문장·150자 이상
+
+[도식(infographic) 선택 — 기사에 가장 맞는 것 하나]
+매번 같은 그래프를 붙이지 마세요. 아래 다섯 중 기사 내용에 실제로 어울리는 것을 고르세요.
+  · comparison  — 대비가 핵심일 때 (반려 표현 vs 대안, 개정 전 vs 후)
+  · timeline    — 시행 일정·단계별 진행이 핵심일 때
+  · process     — 절차·신청 순서가 핵심일 때
+  · checklist   — 실무 점검 항목이 핵심일 때
+  · stat_trend  — 우리 심의 통과 건수 추이가 기사와 **직접** 관련될 때만
+도식 안의 문구도 근거 자료 범위를 벗어나면 안 됩니다.
+
+[이미지 — 기사마다 다른 그림이 나와야 합니다]
+표지와 본문 각 1장. concept 은 이 기사에서만 나올 수 있는 **구체적인 장면**을 영어로 묘사하세요.
+"medical marketing concept" 같은 뻔한 표현 금지. 무엇이 화면 어디에 어떻게 배치되는지 쓰세요.
+예) "An oversized magnifying glass hovering over a stack of layered paper documents, one sheet
+lifted and glowing, small floating checkmark and cross badges orbiting around it, isometric angle"
+글자·숫자·사람 얼굴은 이미지에 넣지 마세요 (모델이 한글을 깨뜨립니다). alt 는 한국어로.
 
 JSON으로만 답하세요:
 {{
-  "title": "40자 이내, 사실 중심 제목",
+  "title": "40자 이내. 핵심 검색어를 앞쪽에 둔 사실 중심 제목",
+  "seo_title": "검색결과용 제목 60자 이내. 제목 + 핵심 키워드 보강",
   "slug_hint": "url-용-영문소문자-하이픈-4~6단어",
-  "summary": "검색 결과에 노출될 2문장 요약 (150자 이내)",
+  "summary": "검색 스니펫용 2문장 요약 (150자 이내)",
+  "key_points": ["기사 핵심 3가지. 각 한 문장, 문맥 없이 읽어도 뜻이 통하게"],
+  "keywords": ["검색 키워드 5~8개"],
   "lead": "도입 문단",
   "sections": [
-    {{"heading": "소제목", "paragraphs": ["문단1", "문단2"]}}
+    {{"heading": "검색어를 포함한 질문형/결론형 소제목",
+      "paragraphs": ["문단1", "문단2"]}}
   ],
   "checklist": ["체크 항목1", "체크 항목2", "체크 항목3"],
-  "chart_caption": "우리 심의 통과 건수 추이 그래프에 붙일 설명 1~2문장 (이 기사 주제와 연결)",
-  "cover_prompt": "표지 일러스트를 위한 영어 프롬프트. 사람 얼굴·로고·글자 없이 추상적 개념 일러스트.",
-  "cover_alt": "표지 이미지의 대체 텍스트. 그림에 실제로 보이는 것을 기사 맥락과 함께 한국어 한 문장으로 (80자 이내).",
-  "inline_prompt": "본문 중간 일러스트를 위한 영어 프롬프트. 위와 다른 구도.",
-  "inline_alt": "본문 이미지의 대체 텍스트. 한국어 한 문장 (80자 이내).",
-  "faq": [
-    {{"q": "이 사안과 관련해 마케터가 가장 궁금해할 질문", "a": "2~3문장 답변"}}
+  "faq": [{{"q": "실무자가 검색할 법한 질문", "a": "2~3문장 답변"}}],
+  "infographic": {{
+    "type": "comparison | timeline | process | checklist | stat_trend",
+    "title": "도식 제목",
+    "caption": "도식 아래 설명 1문장",
+    "alt": "도식 대체 텍스트 (한국어)",
+    "left_title": "comparison 일 때만", "right_title": "comparison 일 때만",
+    "rows": [{{"left": "...", "right": "..."}}],
+    "steps": [{{"when": "timeline 일 때", "label": "...", "note": "process 일 때 보조설명"}}],
+    "items": ["checklist 일 때"]
+  }},
+  "images": [
+    {{"role": "cover", "concept": "구체적 장면 묘사 (영어, 25단어 이상)",
+      "detail": "구도·시점·강조점 보충 (영어)", "alt": "한국어 대체 텍스트 (80자 이내)"}},
+    {{"role": "inline", "concept": "표지와 완전히 다른 장면 (영어)",
+      "detail": "...", "alt": "한국어 대체 텍스트"}}
   ],
-  "tags": ["태그1", "태그2", "태그3"]
+  "tags": ["태그 3~5개"]
 }}"""
 
 
@@ -362,13 +395,21 @@ def _numbers_in(text: str) -> set[str]:
 
 
 def _article_text(article: dict) -> str:
-    chunks = [article.get("title", ""), article.get("summary", ""), article.get("lead", "")]
+    """수치 검증 대상 텍스트. 화면에 보이는 문자열은 전부 포함해야 한다."""
+    chunks = [article.get("title", ""), article.get("seo_title", ""),
+              article.get("summary", ""), article.get("lead", "")]
+    chunks += list(article.get("key_points", []) or [])
     for sec in article.get("sections", []):
         chunks.append(sec.get("heading", ""))
         chunks.extend(sec.get("paragraphs", []))
     chunks.extend(article.get("checklist", []))
     for f in article.get("faq", []) or []:
         chunks.extend([f.get("q", ""), f.get("a", "")])
+
+    # 도식 안의 문구도 독자에게 보이므로 같은 기준으로 검증한다.
+    from news_images import infographic_text
+    chunks.append(infographic_text(article.get("infographic") or {}))
+
     return " ".join(c for c in chunks if c)
 
 

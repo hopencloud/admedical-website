@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 
     <url>
         <loc>https://www.admedical.co.kr/</loc>
@@ -100,16 +101,34 @@
         <priority>0.9</priority>
     </url>
     <url>
-        <loc>https://www.admedical.co.kr/news/2026-08-01-patient-experience-rating-expansion</loc>
+        <loc>https://www.admedical.co.kr/news/2026-08-01-patient-experience-evaluation-hospital-expansion</loc>
         <lastmod>2026-08-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://www.admedical.co.kr/assets/news/2026-08-01-patient-experience-evaluation-hospital-expansion-thumb.jpg</image:loc>
+            <image:title>환자경험평가 등급제 도입, 병원급 확대 논의 중</image:title>
+        </image:image>
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-01-medical-ad-review-2026</loc>
         <lastmod>2026-08-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://www.admedical.co.kr/assets/news/2026-08-01-medical-ad-review-2026-thumb.jpg</image:loc>
+            <image:title>2026년 의료 광고 심의 강화, SNS·블로그 주의</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://www.admedical.co.kr/news/2026-08-01-patient-experience-rating-expansion</loc>
+        <lastmod>2026-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://www.admedical.co.kr/assets/news/2026-08-01-patient-experience-rating-expansion-thumb.jpg</image:loc>
+            <image:title>환자 경험 평가 등급제, 병원 서비스 개선의 기회</image:title>
+        </image:image>
     </url>
     <!-- news:end -->
 

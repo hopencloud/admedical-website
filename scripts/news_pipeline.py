@@ -105,6 +105,66 @@ def record_post(client, post: dict, model: str) -> None:
         log(f"Supabase 이력 기록 실패 (파일은 정상 생성됨): {exc}")
 
 
+# ---------- 진행상황 ----------
+#
+# /admin 이 폴링해서 "지금 몇 건 중 몇 건, 어느 단계인지"를 보여준다.
+# Supabase 가 없거나 실패해도 파이프라인은 그대로 진행한다.
+
+_run_id: int | None = None
+
+
+def start_run(client, total: int) -> None:
+    global _run_id
+    _run_id = None
+    if client is None:
+        return
+    try:
+        res = client.table("news_runs").insert({
+            "status": "running", "total": total, "done": 0,
+            "stage": "시작", "detail": "",
+        }).execute()
+        _run_id = res.data[0]["id"] if res.data else None
+    except Exception as exc:
+        log(f"진행상황 기록 불가 (계속 진행): {exc}")
+
+
+def progress(client, stage: str = "", detail: str = "",
+             done: int | None = None, title: str | None = None) -> None:
+    log(f"· {stage}{(' — ' + detail) if detail else ''}")
+    if client is None or _run_id is None:
+        return
+    patch = {"stage": stage, "detail": detail[:200], "updated_at": now_iso()}
+    if done is not None:
+        patch["done"] = done
+    if title is not None:
+        patch["current_title"] = title[:200]
+    try:
+        client.table("news_runs").update(patch).eq("id", _run_id).execute()
+    except Exception:
+        pass
+
+
+def finish_run(client, status: str, note: str = "") -> None:
+    if client is None or _run_id is None:
+        return
+    try:
+        client.table("news_runs").update({
+            "status": status, "stage": "완료" if status == "done" else "중단",
+            "detail": note[:200], "finished_at": now_iso(), "updated_at": now_iso(),
+        }).eq("id", _run_id).execute()
+    except Exception:
+        pass
+
+
+def now_iso() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+def sort_key(post: dict) -> str:
+    """최신 글이 먼저. 발행 시각이 없는 옛 글은 날짜 자정으로 본다."""
+    return post.get("published_at") or f'{post["date"]}T00:00:00+09:00'
+
+
 def top_expressions() -> list[str]:
     data = load_json(TOP_JSON, {})
     items = data.get("top20") or data.get("items") or []
@@ -121,12 +181,13 @@ def top_expressions() -> list[str]:
 
 # ---------- 본체 ----------
 
-def publish_one(posts: list[dict], candidates: list, stats: dict,
-                dry_run: bool = False) -> dict | None:
+def publish_one(client, posts: list[dict], candidates: list, stats: dict,
+                index: int = 0, dry_run: bool = False) -> dict | None:
     """한 편 생성. 성공하면 새 post dict, 발행할 게 없으면 None."""
     published_titles = [p["title"] for p in posts]
     published_keys = {p.get("topic_key", "") for p in posts}
 
+    progress(client, "주제 선정", "수집된 기사에서 오늘 다룰 주제 고르는 중", done=index)
     topic = news_writer.select_topic(candidates, published_titles)
     if not topic:
         log("오늘 다룰 만한 주제가 없습니다. 발행하지 않고 종료합니다.")
@@ -135,14 +196,17 @@ def publish_one(posts: list[dict], candidates: list, stats: dict,
     log(f"주제: {topic['topic']}")
     log(f"관점: {topic.get('angle', '')}")
 
+    progress(client, "원고 작성", topic["topic"][:120], title=topic["topic"])
     draft = news_writer.write_article(topic, stats, top_expressions())
     log(f"초고 작성 완료: {draft.get('title', '')} ({news_writer.word_count(draft)}자)")
 
+    progress(client, "분량 보강", f'{draft.get("title", "")}', title=draft.get("title", ""))
     before = news_writer.word_count(draft)
     draft = news_writer.expand_article(draft, topic)
     if news_writer.word_count(draft) != before:
         log(f"분량 보강: {before}자 → {news_writer.word_count(draft)}자")
 
+    progress(client, "자체 검수", "근거 대조 및 표현 교정 중")
     verdict, article, issues = news_writer.review_article(draft, topic, stats)
     log(f"자체 검수: {verdict}")
     for issue in issues[:6]:
@@ -153,6 +217,7 @@ def publish_one(posts: list[dict], candidates: list, stats: dict,
         return None
 
     # 근거에 없는 숫자는 파이썬이 직접 잡는다 (AI 자기검수만으로는 새는 경우가 있음)
+    progress(client, "수치 검증", "본문 숫자를 근거 자료와 대조 중")
     bad_before = news_writer.unsupported_numbers(article, topic, stats)
     if bad_before:
         log(f"근거 미확인 수치 {len(bad_before)}개 발견: {', '.join(bad_before[:8])}")
@@ -184,37 +249,53 @@ def publish_one(posts: list[dict], candidates: list, stats: dict,
 
     # ----- 시각자료 -----
     IMG_DIR.mkdir(parents=True, exist_ok=True)
-    cover_rel = inline_rel = None
+    images = article.get("images") or []
+    cover_spec = next((i for i in images if i.get("role") == "cover"), {})
+    inline_spec = next((i for i in images if i.get("role") == "inline"), {})
+
+    progress(client, stage="이미지 제작", detail="표지 일러스트 생성 중")
+    cover_rel = inline_rel = thumb_rel = None
 
     cover_file = IMG_DIR / news_images.safe_filename(slug, "cover", "jpg")
-    if news_images.generate_illustration(article.get("cover_prompt", topic["topic"]),
-                                         cover_file, landscape=True):
+    if news_images.generate_illustration(
+            cover_spec.get("concept") or topic["topic"], cover_file,
+            detail=cover_spec.get("detail", ""), landscape=True):
         cover_rel = f"/assets/news/{cover_file.name}"
 
+    progress(client, stage="이미지 제작", detail="본문 일러스트 생성 중")
     inline_file = IMG_DIR / news_images.safe_filename(slug, "inline")
-    if news_images.generate_illustration(article.get("inline_prompt", topic["topic"]),
-                                         inline_file, landscape=False):
+    if news_images.generate_illustration(
+            inline_spec.get("concept") or topic["topic"], inline_file,
+            detail=inline_spec.get("detail", ""), landscape=False):
         inline_rel = f"/assets/news/{inline_file.name}"
 
-    chart_svg = news_images.render_trend_chart_svg(
-        stats.get("chart_30d", []),
-        title="일자별 의료광고 심의 통과 건수 (최근 14일)",
-        caption=article.get("chart_caption", ""),
-    )
+    # 도식은 기사 성격에 맞는 유형으로. 실데이터 추이는 stat_trend 일 때만 쓰인다.
+    progress(client, stage="도표 생성", detail=(article.get("infographic") or {}).get("type", ""))
+    infographic_svg = news_images.render_infographic(
+        article.get("infographic") or {}, stats.get("chart_30d", []))
 
-    checklist_svg = ""
-    if not cover_rel and not inline_rel:
-        # 이미지 생성이 전부 실패한 날에도 시각자료가 최소 2개는 남도록
-        checklist_svg = news_images.render_checklist_card_svg(
-            "오늘의 마케터 체크리스트", article.get("checklist", [])
-        )
+    extra_svg = ""
+    if not infographic_svg:
+        # 도식이 비면 체크리스트 카드로 대체 — 시각자료가 최소 2개는 되게 한다.
+        extra_svg = news_images.render_checklist(
+            {"title": "오늘의 마케터 체크리스트", "items": article.get("checklist", [])})
+
+    # 썸네일 — 목록·메인·SNS 공유에 쓰는 일관 디자인 카드
+    progress(client, stage="썸네일 생성", detail=slug)
+    thumb_file = IMG_DIR / news_images.safe_filename(slug, "thumb", "jpg")
+    if news_images.render_thumbnail(
+            article.get("title", ""), f"{now:%Y년 %-m월 %-d일}", thumb_file,
+            cover_file if cover_rel else None):
+        thumb_rel = f"/assets/news/{thumb_file.name}"
 
     # ----- HTML -----
+    progress(client, stage="페이지 생성", detail=slug)
     meta = {
         "slug": slug,
         "date": f"{now:%Y-%m-%d}",
         "cover": cover_rel,
         "inline_image": inline_rel,
+        "thumb": thumb_rel,
         "sources": [
             {"title": s.title, "source": s.source, "link": s.link,
              "date": f"{s.published:%Y-%m-%d}"}
@@ -222,7 +303,7 @@ def publish_one(posts: list[dict], candidates: list, stats: dict,
         ],
     }
 
-    html_out = news_render.render_post(article, meta, chart_svg, checklist_svg)
+    html_out = news_render.render_post(article, meta, infographic_svg, extra_svg)
     news_render.NEWS_DIR.mkdir(parents=True, exist_ok=True)
     (news_render.NEWS_DIR / f"{slug}.html").write_text(html_out, encoding="utf-8")
     log(f"기사 생성: website/news/{slug}.html")
@@ -232,7 +313,10 @@ def publish_one(posts: list[dict], candidates: list, stats: dict,
         "title": article.get("title", ""),
         "summary": article.get("summary", ""),
         "date": meta["date"],
+        # 같은 날 여러 편을 내면 날짜만으로는 순서가 정해지지 않는다. 시각까지 남긴다.
+        "published_at": now.isoformat(),
         "cover": cover_rel,
+        "thumb": thumb_rel,
         "tags": article.get("tags", [])[:6],
         "topic_key": topic_key,
         "sources": [{"title": s["title"], "source": s["source"], "link": s["link"]}
@@ -266,7 +350,8 @@ def main() -> int:
     log(f"통계 로드: 어제 {stats.get('yesterday', {}).get('count', '-')}건 / "
         f"누적 {stats.get('total', {}).get('count', '-')}건")
 
-    log("뉴스 수집 시작")
+    start_run(client, total=max(1, count))
+    progress(client, "뉴스 수집", "의료 전문지 RSS · 정부 보도자료 수집 중")
     candidates = news_sources.collect(
         hours=int(os.getenv("NEWS_LOOKBACK_HOURS", "48")),
         use_web_search=not args.no_web_search,
@@ -275,6 +360,7 @@ def main() -> int:
 
     if not candidates:
         log("수집된 기사가 없습니다. 종료합니다.")
+        finish_run(client, "skipped", "수집된 기사 없음")
         return 0
 
     created: list[dict] = []
@@ -282,10 +368,12 @@ def main() -> int:
         if i:
             log(f"--- {i + 1}번째 글 ---")
         try:
-            post = publish_one(posts + created, candidates, stats, dry_run=args.dry_run)
-        except Exception:
+            post = publish_one(client, posts + created, candidates, stats,
+                               index=i, dry_run=args.dry_run)
+        except Exception as exc:
             log("발행 중 오류 — 이번 편은 건너뜁니다.")
             traceback.print_exc()
+            finish_run(client, "failed", f"{type(exc).__name__}: {exc}")
             break
         if not post:
             break
@@ -294,15 +382,18 @@ def main() -> int:
 
     if not created:
         log("새로 발행된 글이 없습니다.")
+        finish_run(client, "skipped", "발행 조건을 만족한 기사 없음")
         return 0
 
-    all_posts = sorted(created + posts, key=lambda p: (p["date"], p["slug"]), reverse=True)
+    progress(client, "목록·사이트맵·RSS 갱신", f"{len(created)}편 반영", done=len(created))
+    all_posts = sorted(created + posts, key=sort_key, reverse=True)
     news_render.write_post_files(all_posts)
     write_rss(all_posts)
 
+    finish_run(client, "done", f"신규 {len(created)}편")
     log(f"완료 — 신규 {len(created)}편 / 전체 {len(all_posts)}편")
     for p in created:
-        log(f"   → https://www.admedical.co.kr/news/{p['slug']}.html")
+        log(f"   → https://www.admedical.co.kr/news/{p['slug']}")
     return 0
 
 

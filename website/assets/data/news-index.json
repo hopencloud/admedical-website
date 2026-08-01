@@ -1,7 +1,62 @@
 {
-  "generated_at": "2026-08-01T19:15:29.506766+09:00",
-  "count": 2,
+  "generated_at": "2026-08-01T19:41:10.396842+09:00",
+  "count": 3,
   "posts": [
+    {
+      "slug": "2026-08-01-patient-experience-evaluation-hospital-expansion",
+      "title": "환자경험평가 등급제 도입, 병원급 확대 논의 중",
+      "summary": "환자경험평가에 등급제가 도입되었습니다. 병원급까지 확대가 논의 중이며, 의료서비스 개선이 요구됩니다.",
+      "date": "2026-08-01",
+      "published_at": "2026-08-01T19:36:00.098805+09:00",
+      "cover": "/assets/news/2026-08-01-patient-experience-evaluation-hospital-expansion-cover.jpg",
+      "thumb": "/assets/news/2026-08-01-patient-experience-evaluation-hospital-expansion-thumb.jpg",
+      "tags": [
+        "환자경험평가",
+        "병원 마케팅",
+        "의료서비스",
+        "등급제"
+      ],
+      "topic_key": "논의 도입 등급제 병원급 확대 환자경험평가",
+      "sources": [
+        {
+          "title": "'빅5' 흔든 환자경험평가…지방 상급종합병원 상위권 비결은?",
+          "source": "청년의사",
+          "link": "http://www.docdocdoc.co.kr/news/articleView.html?idxno=3041414"
+        },
+        {
+          "title": "환자경험평가 첫 등급제 도입…내년부터 병원급까지 확대",
+          "source": "히트뉴스",
+          "link": "https://www.hitnews.co.kr/news/articleView.html?idxno=78102"
+        },
+        {
+          "title": "환자경험평가, 종병 중 여의도·은평·부천·의정부성모·강동성심 등 1등급",
+          "source": "의학신문",
+          "link": "https://www.bosa.co.kr/news/articleView.html?idxno=3009465"
+        }
+      ]
+    },
+    {
+      "slug": "2026-08-01-medical-ad-review-2026",
+      "title": "2026년 의료 광고 심의 강화, SNS·블로그 주의",
+      "summary": "2026년부터 SNS·블로그 의료광고에 대한 사전심의가 강화될 예정입니다. 병원 마케터는 이에 맞춰 전략을 재조정해야 합니다.",
+      "date": "2026-08-01",
+      "cover": "/assets/news/2026-08-01-medical-ad-review-2026-cover.jpg",
+      "tags": [
+        "의료광고",
+        "심의규정",
+        "SNS마케팅"
+      ],
+      "topic_key": "2026년 sns 강화 광고 블로그 심의",
+      "sources": [
+        {
+          "title": "2026년 의료 광고 심의: 병원 블로그·SNS, 지금 당장 알아야 할 모든 것",
+          "source": "인블로그 블로그",
+          "link": "https://inblog.ai/ko/blog/medical-ad-review"
+        }
+      ],
+      "published_at": "2026-08-01T14:40:00+09:00",
+      "thumb": "/assets/news/2026-08-01-medical-ad-review-2026-thumb.jpg"
+    },
     {
       "slug": "2026-08-01-patient-experience-rating-expansion",
       "title": "환자 경험 평가 등급제, 병원 서비스 개선의 기회",
@@ -30,27 +85,9 @@
           "source": "의학신문",
           "link": "https://www.bosa.co.kr/news/articleView.html?idxno=3009465"
         }
-      ]
-    },
-    {
-      "slug": "2026-08-01-medical-ad-review-2026",
-      "title": "2026년 의료 광고 심의 강화, SNS·블로그 주의",
-      "summary": "2026년부터 SNS·블로그 의료광고에 대한 사전심의가 강화될 예정입니다. 병원 마케터는 이에 맞춰 전략을 재조정해야 합니다.",
-      "date": "2026-08-01",
-      "cover": "/assets/news/2026-08-01-medical-ad-review-2026-cover.jpg",
-      "tags": [
-        "의료광고",
-        "심의규정",
-        "SNS마케팅"
       ],
-      "topic_key": "2026년 sns 강화 광고 블로그 심의",
-      "sources": [
-        {
-          "title": "2026년 의료 광고 심의: 병원 블로그·SNS, 지금 당장 알아야 할 모든 것",
-          "source": "인블로그 블로그",
-          "link": "https://inblog.ai/ko/blog/medical-ad-review"
-        }
-      ]
+      "published_at": "2026-08-01T04:30:00+09:00",
+      "thumb": "/assets/news/2026-08-01-patient-experience-rating-expansion-thumb.jpg"
     }
   ]
 }

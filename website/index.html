@@ -16,13 +16,14 @@
     <meta name="author" content="의료광고 심의 통과 문구">
 
     <!-- 검색엔진 봇 -->
-    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="googlebot" content="index, follow">
     <meta name="naver:robots" content="all">
     <meta name="Yeti" content="index, follow">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://www.admedical.co.kr/">
+    <link rel="alternate" type="application/rss+xml" title="admedical 의료광고 인사이트" href="https://www.admedical.co.kr/rss.xml">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
@@ -31,6 +32,7 @@
     <meta property="og:description" content="대한의사협회 의료광고심의위원회를 통과한 의료광고 문구를 키워드로 검색. 병의원 마케터를 위한 무료 인사이트.">
     <meta property="og:url" content="https://www.admedical.co.kr/">
     <meta property="og:image" content="https://www.admedical.co.kr/assets/img/ogimage.png">
+    <meta property="og:image:alt" content="의료광고심의 통과 문구 검색 | 광고 문구 키워드 검색">
     <meta property="og:image:width" content="1729">
     <meta property="og:image:height" content="910">
     <meta property="og:locale" content="ko_KR">
@@ -40,6 +42,7 @@
     <meta name="twitter:title" content="의료광고심의 통과 문구 검색">
     <meta name="twitter:description" content="대한의사협회 의료광고심의위원회 통과 광고의 광고 문구를 키워드로 검색하세요.">
     <meta name="twitter:image" content="https://www.admedical.co.kr/assets/img/ogimage.png">
+    <meta name="twitter:image:alt" content="의료광고심의 통과 문구 검색">
 
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32x32.png">
@@ -393,8 +396,23 @@
             posts.slice(0, 3).forEach(function (p) {
                 var a = document.createElement("a");
                 a.href = "/news/" + p.slug;
-                a.className = "block bg-white rounded-2xl border border-slate-200 p-4 " +
-                              "shadow-soft hover:border-brand-500 transition";
+                a.className = "block bg-white rounded-2xl border border-slate-200 " +
+                              "overflow-hidden shadow-soft hover:border-brand-500 transition";
+
+                var thumb = p.thumb || p.cover;
+                if (thumb) {
+                    var img = document.createElement("img");
+                    img.src = thumb;
+                    img.alt = p.title || "의료광고 인사이트 기사 썸네일";
+                    img.loading = "lazy";
+                    img.width = 1200;
+                    img.height = 630;
+                    img.className = "w-full h-36 object-cover";
+                    a.appendChild(img);
+                }
+
+                var box = document.createElement("div");
+                box.className = "p-4";
                 var date = document.createElement("div");
                 date.className = "text-xs text-slate-400";
                 date.textContent = (p.date || "").replace(/-/g, ".");
@@ -404,7 +422,8 @@
                 var desc = document.createElement("p");
                 desc.className = "text-xs text-slate-600 leading-relaxed line-clamp-2";
                 desc.textContent = p.summary || "";
-                a.appendChild(date); a.appendChild(h3); a.appendChild(desc);
+                box.appendChild(date); box.appendChild(h3); box.appendChild(desc);
+                a.appendChild(box);
                 list.appendChild(a);
             });
             section.classList.remove("hidden");

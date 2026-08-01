@@ -61,3 +61,27 @@ ALTER TABLE news_posts    ENABLE ROW LEVEL SECURITY;
 
 -- 확인
 SELECT 'news_settings / news_posts 생성 완료' AS status;
+
+
+-- ---------- 3. 발행 진행상황 ----------
+-- /admin 이 폴링해 "지금 몇 건 중 몇 건, 어느 단계인지" 를 보여준다.
+CREATE TABLE IF NOT EXISTS news_runs (
+    id             BIGSERIAL    PRIMARY KEY,
+    status         TEXT         NOT NULL DEFAULT 'running',  -- running | done | failed | skipped
+    total          SMALLINT     NOT NULL DEFAULT 1,          -- 이번 실행에서 발행할 목표 편수
+    done           SMALLINT     NOT NULL DEFAULT 0,          -- 완료한 편수
+    stage          TEXT,                                      -- 뉴스 수집 / 원고 작성 / 이미지 제작 …
+    detail         TEXT,                                      -- 단계 상세
+    current_title  TEXT,                                      -- 지금 쓰고 있는 기사 제목
+    started_at     TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
+    updated_at     TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
+    finished_at    TIMESTAMPTZ
+);
+
+CREATE INDEX IF NOT EXISTS idx_news_runs_started_desc ON news_runs (started_at DESC);
+
+ALTER TABLE news_runs ENABLE ROW LEVEL SECURITY;
+
+COMMENT ON TABLE news_runs IS '뉴스 자동 발행 실행별 진행상황 (관리자 대시보드 표시용)';
+
+SELECT 'news_runs 생성 완료' AS status;

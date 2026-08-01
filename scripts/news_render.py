@@ -6,17 +6,22 @@ Supabase가 아니라 정적 파일을 원본으로 삼는다. 이유:
   · Vercel 정적 호스팅이라 추가 비용·지연이 없다
   · 글이 깨져도 git 이력으로 즉시 되돌릴 수 있다
 
-기존 페이지(guide/*.html)와 동일한 디자인 토큰을 쓴다.
+검색 노출을 위해 기사 페이지에 넣는 것:
+  · H1 1개 + H2 소제목(앵커 id) + 목차 → 스니펫·AI 답변 인용 대상
+  · 핵심 요약 박스 → 문맥 없이 읽어도 완결된 문장 (AEO/GEO)
+  · NewsArticle + BreadcrumbList + FAQPage + ImageObject + speakable 스키마
+  · OG/Twitter 전체 필드, article:* 메타
+  · 본문 키워드 → 가이드 페이지 자동 내부링크
 """
 from __future__ import annotations
 
 import html
 import json
 import re
+import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-import sys
 sys.path.insert(0, str(Path(__file__).parent))
 from build_header import build_block, extract_header_html   # noqa: E402
 
@@ -34,19 +39,55 @@ ASSET_VER = "20260801a"
 SITEMAP_BEGIN = "    <!-- news:begin (자동 생성 — 직접 수정하지 마세요) -->"
 SITEMAP_END = "    <!-- news:end -->"
 
-
 # 헤더는 정적으로 심는다 — 네이버 Yeti 는 JS 주입 헤더의 링크를 못 읽는다.
 STATIC_HEADER = build_block(extract_header_html())
+
+# 본문에 이 표현이 처음 나오면 해당 가이드로 링크한다.
+# 긴 표현이 먼저 와야 짧은 표현에 먹히지 않는다.
+INTERNAL_LINKS: list[tuple[str, str]] = [
+    ("의료광고 사전심의", "/guide/about-review"),
+    ("의료광고심의위원회", "/guide/about-review"),
+    ("의료광고 심의", "/guide/about-review"),
+    ("심의 신청", "/guide/application"),
+    ("심의 대상 매체", "/guide/target-media"),
+    ("심의 면제", "/guide/exempt"),
+    ("금지 표현", "/guide/forbidden-expressions"),
+    ("심의번호", "/guide/review-number"),
+    ("의료법 제56조", "/guide/forbidden-expressions"),
+    ("의료법 제57조", "/guide/about-review"),
+    ("비급여", "/guide/forbidden-expressions"),
+]
 
 
 def esc(text) -> str:
     return html.escape(str(text or ""), quote=True)
 
 
+def slug_anchor(text: str, idx: int) -> str:
+    base = re.sub(r"[^0-9a-zA-Z가-힣]+", "-", str(text)).strip("-").lower()
+    return f"sec-{idx + 1}-{base[:24]}" if base else f"sec-{idx + 1}"
+
+
+def autolink(text: str, used: set[str]) -> str:
+    """이스케이프된 문단에 가이드 링크를 심는다. 표현당 문서 전체에서 1회만."""
+    for phrase, url in INTERNAL_LINKS:
+        if phrase in used or phrase not in text:
+            continue
+        text = text.replace(
+            phrase,
+            f'<a href="{url}" class="text-brand-600 hover:underline">{phrase}</a>',
+            1,
+        )
+        used.add(phrase)
+    return text
+
+
 # ---------- 공통 head ----------
 
 def _head(title: str, description: str, canonical: str, og_image: str,
-          og_type: str = "article", extra_ld: str = "") -> str:
+          og_type: str = "article", extra_ld: str = "", extra_meta: str = "",
+          image_alt: str = "") -> str:
+    alt = esc(image_alt or title)
     return f"""<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -64,10 +105,12 @@ def _head(title: str, description: str, canonical: str, og_image: str,
     <title>{esc(title)}</title>
     <meta name="description" content="{esc(description)}">
     <meta name="author" content="admedical">
-    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1">
     <meta name="naver:robots" content="all">
     <meta name="Yeti" content="index, follow">
     <link rel="canonical" href="{esc(canonical)}">
+    <link rel="alternate" type="application/rss+xml" title="admedical 의료광고 인사이트" href="{BASE_URL}/rss.xml">
 
     <meta property="og:type" content="{og_type}">
     <meta property="og:site_name" content="admedical 의료광고 인사이트">
@@ -75,13 +118,18 @@ def _head(title: str, description: str, canonical: str, og_image: str,
     <meta property="og:description" content="{esc(description)}">
     <meta property="og:url" content="{esc(canonical)}">
     <meta property="og:image" content="{esc(og_image)}">
+    <meta property="og:image:secure_url" content="{esc(og_image)}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="{alt}">
     <meta property="og:locale" content="ko_KR">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{esc(title)}">
     <meta name="twitter:description" content="{esc(description)}">
     <meta name="twitter:image" content="{esc(og_image)}">
-
+    <meta name="twitter:image:alt" content="{alt}">
+{extra_meta}
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 
@@ -118,6 +166,15 @@ FOOTER = f"""<footer class="bg-white border-t border-slate-200 mt-20">
 </html>
 """
 
+# 일러스트마다 붙는 짧은 고지. 독자가 실제 사진으로 오해하지 않도록.
+AI_IMAGE_NOTE = "이해를 돕기 위해 AI로 제작한 일러스트입니다."
+
+
+def _img_caption(alt: str) -> str:
+    return (f'<figcaption class="text-xs text-slate-500 mt-3 leading-relaxed">'
+            f'{esc(alt)}<span class="text-slate-400"> · {AI_IMAGE_NOTE}</span></figcaption>')
+
+
 AI_DISCLOSURE = """
     <aside class="mt-10 bg-slate-100 border border-slate-200 rounded-2xl px-5 py-4">
         <p class="text-xs text-slate-600 leading-relaxed">
@@ -133,31 +190,70 @@ AI_DISCLOSURE = """
 
 # ---------- 기사 상세 ----------
 
-def render_post(article: dict, meta: dict, chart_svg: str = "",
-                checklist_svg: str = "") -> str:
-    """meta: {slug, date, cover, inline_image, sources:[{title,source,link,date}]}"""
+def render_post(article: dict, meta: dict, infographic_svg: str = "",
+                extra_svg: str = "") -> str:
+    """meta: {slug, date, cover, inline_image, thumb, sources:[...]}"""
     slug = meta["slug"]
-    date_str = meta["date"]                       # YYYY-MM-DD
+    date_str = meta["date"]
     canonical = f"{BASE_URL}/news/{slug}"
-    cover = meta.get("cover") or ""
-    og_image = f"{BASE_URL}{cover}" if cover else f"{BASE_URL}/assets/img/ogimage.png"
 
+    cover = meta.get("cover") or ""
+    thumb = meta.get("thumb") or cover
+    og_image = f"{BASE_URL}{thumb}" if thumb else f"{BASE_URL}/assets/img/ogimage.png"
+
+    title = article.get("title", "")
+    seo_title = article.get("seo_title") or f"{title} | admedical 의료광고 인사이트"
+    summary = article.get("summary", "")
+    keywords = [k for k in (article.get("keywords") or []) if k][:10]
+    tags = [t for t in (article.get("tags") or []) if t][:6]
+    key_points = [p for p in (article.get("key_points") or []) if p][:4]
+    faqs = [f for f in (article.get("faq") or []) if f.get("q") and f.get("a")][:5]
+    sections = article.get("sections") or []
+
+    cover_meta = next((i for i in (article.get("images") or []) if i.get("role") == "cover"), {})
+    inline_meta = next((i for i in (article.get("images") or []) if i.get("role") == "inline"), {})
+    cover_alt = cover_meta.get("alt") or f"{title} 내용을 표현한 일러스트"
+    inline_alt = inline_meta.get("alt") or f"{title} 관련 설명 일러스트"
+
+    body_text = " ".join(
+        [article.get("lead", "")] +
+        [p for s in sections for p in s.get("paragraphs", [])]
+    )
+
+    # ----- 스키마 -----
     ld_article = json.dumps({
         "@context": "https://schema.org",
         "@type": "NewsArticle",
-        "headline": article.get("title", "")[:110],
-        "description": article.get("summary", ""),
-        "image": og_image,
-        "datePublished": f"{date_str}T09:00:00+09:00",
-        "dateModified": f"{date_str}T09:00:00+09:00",
+        "headline": title[:110],
+        "alternativeHeadline": seo_title[:110],
+        "description": summary,
+        "image": {
+            "@type": "ImageObject",
+            "url": og_image,
+            "width": 1200,
+            "height": 630,
+            "caption": cover_alt,
+        },
+        "datePublished": f"{date_str}T04:30:00+09:00",
+        "dateModified": f"{date_str}T04:30:00+09:00",
         "inLanguage": "ko",
-        "author": {"@type": "Organization", "name": "admedical"},
+        "isAccessibleForFree": True,
+        "articleSection": "의료광고",
+        "keywords": ", ".join(keywords or tags),
+        "wordCount": len(re.sub(r"\s", "", body_text)),
+        "author": {"@type": "Organization", "name": "admedical", "url": f"{BASE_URL}/about"},
         "publisher": {
             "@type": "Organization",
             "name": "admedical",
+            "url": BASE_URL,
             "logo": {"@type": "ImageObject", "url": f"{BASE_URL}/assets/img/ogimage.png"},
         },
-        "mainEntityOfPage": canonical,
+        "mainEntityOfPage": {"@type": "WebPage", "@id": canonical},
+        # 음성 검색·AI 답변이 읽어갈 부분을 지정한다 (AEO)
+        "speakable": {
+            "@type": "SpeakableSpecification",
+            "cssSelector": [".article-summary", "h1"],
+        },
     }, ensure_ascii=False, indent=4)
 
     ld_crumb = json.dumps({
@@ -166,15 +262,13 @@ def render_post(article: dict, meta: dict, chart_svg: str = "",
         "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "홈", "item": f"{BASE_URL}/"},
             {"@type": "ListItem", "position": 2, "name": "의료광고 인사이트", "item": f"{BASE_URL}/news"},
-            {"@type": "ListItem", "position": 3, "name": article.get("title", ""), "item": canonical},
+            {"@type": "ListItem", "position": 3, "name": title, "item": canonical},
         ],
     }, ensure_ascii=False, indent=4)
 
     extra_ld = (f'    <script type="application/ld+json">\n{ld_article}\n    </script>\n'
                 f'    <script type="application/ld+json">\n{ld_crumb}\n    </script>\n')
 
-    # FAQ 스키마 — 구글 리치결과와 AI 검색 답변 인용(AEO)에 쓰인다.
-    faqs = [f for f in (article.get("faq") or []) if f.get("q") and f.get("a")][:5]
     if faqs:
         ld_faq = json.dumps({
             "@context": "https://schema.org",
@@ -187,83 +281,112 @@ def render_post(article: dict, meta: dict, chart_svg: str = "",
         }, ensure_ascii=False, indent=4)
         extra_ld += f'    <script type="application/ld+json">\n{ld_faq}\n    </script>\n'
 
-    head = _head(
-        title=f"{article.get('title', '')} | admedical 의료광고 인사이트",
-        description=article.get("summary", ""),
-        canonical=canonical,
-        og_image=og_image,
-        extra_ld=extra_ld,
+    extra_meta = (
+        f'    <meta name="keywords" content="{esc(", ".join(keywords or tags))}">\n'
+        f'    <meta property="article:published_time" content="{date_str}T04:30:00+09:00">\n'
+        f'    <meta property="article:modified_time" content="{date_str}T04:30:00+09:00">\n'
+        f'    <meta property="article:author" content="admedical">\n'
+        f'    <meta property="article:section" content="의료광고">\n'
+        + "".join(f'    <meta property="article:tag" content="{esc(t)}">\n' for t in tags)
     )
 
-    # ----- 본문 조립 -----
-    body: list[str] = []
+    head = _head(seo_title, summary, canonical, og_image,
+                 extra_ld=extra_ld, extra_meta=extra_meta, image_alt=cover_alt)
 
-    # alt 는 AI가 기사 내용에 맞춰 써 준 설명문을 쓰고, 없으면 제목으로 대체한다.
-    cover_alt = article.get("cover_alt") or f'{article.get("title", "")} 내용을 표현한 일러스트'
-    inline_alt = article.get("inline_alt") or f'{article.get("title", "")} 관련 설명 일러스트'
+    # ----- 본문 -----
+    body: list[str] = []
+    used_links: set[str] = set()
+
+    def para(text: str, cls: str) -> str:
+        return f'<p class="{cls}">{autolink(esc(text), used_links)}</p>'
 
     if cover:
         body.append(
             f'<figure class="mb-8 -mx-4 sm:mx-0">'
             f'<img src="{esc(cover)}" alt="{esc(cover_alt)}" '
-            f'class="w-full sm:rounded-2xl border border-slate-200" loading="eager" width="1536" height="1024">'
+            f'class="w-full sm:rounded-2xl border border-slate-200" '
+            f'loading="eager" fetchpriority="high" width="1400" height="933">'
+            f'{_img_caption(cover_alt)}'
             f'</figure>'
         )
 
     if article.get("lead"):
+        body.append(para(
+            article["lead"],
+            "text-base md:text-lg text-slate-700 leading-relaxed mb-8 "
+            "bg-brand-50 border-l-4 border-brand-500 px-4 py-3 rounded-r-lg"))
+
+    # 핵심 요약 — AI 검색·스니펫이 그대로 인용하는 자리
+    if key_points:
+        items = "".join(
+            f'<li class="flex gap-2.5"><span class="text-brand-600 font-bold shrink-0">·</span>'
+            f'<span>{autolink(esc(p), used_links)}</span></li>'
+            for p in key_points
+        )
         body.append(
-            f'<p class="text-base md:text-lg text-slate-700 leading-relaxed mb-8 '
-            f'bg-brand-50 border-l-4 border-brand-500 px-4 py-3 rounded-r-lg">'
-            f'{esc(article["lead"])}</p>'
+            '<section class="article-summary mb-8 bg-white rounded-2xl border border-slate-200 p-5 shadow-soft">'
+            '<h2 class="text-sm font-bold text-slate-700 mb-3">3줄 요약</h2>'
+            f'<ul class="space-y-2 text-[15px] text-slate-800 leading-relaxed">{items}</ul>'
+            '</section>'
+        )
+
+    # 목차 — 앵커 링크. 구글 사이트링크 스니펫 대상.
+    anchors = [(slug_anchor(s.get("heading", ""), i), s.get("heading", ""))
+               for i, s in enumerate(sections) if s.get("heading")]
+    if len(anchors) >= 3:
+        links = "".join(
+            f'<li><a href="#{a}" class="text-brand-600 hover:underline">{esc(h)}</a></li>'
+            for a, h in anchors
+        )
+        body.append(
+            '<nav class="mb-8 bg-slate-100 rounded-2xl px-5 py-4" aria-label="목차">'
+            '<h2 class="text-sm font-bold text-slate-700 mb-2">이 글의 순서</h2>'
+            f'<ol class="list-decimal pl-5 space-y-1 text-sm">{links}</ol>'
+            '</nav>'
         )
 
     body.append('<div class="ad-slot" data-slot-name="article-section" data-ad-format="auto"></div>')
 
-    sections = article.get("sections") or []
     inline_img = meta.get("inline_image")
-
     for idx, sec in enumerate(sections):
-        body.append('<section class="mb-10">')
+        anchor = slug_anchor(sec.get("heading", ""), idx)
+        body.append(f'<section id="{anchor}" class="mb-10 scroll-mt-24">')
         if sec.get("heading"):
             body.append(
-                f'<h2 class="text-2xl font-bold mb-4 tracking-tight text-slate-900">{esc(sec["heading"])}</h2>'
-            )
-        for para in sec.get("paragraphs", []):
-            body.append(f'<p class="text-[15px] md:text-base text-slate-700 leading-[1.9] mb-4">{esc(para)}</p>')
+                f'<h2 class="text-2xl font-bold mb-4 tracking-tight text-slate-900">'
+                f'{esc(sec["heading"])}</h2>')
+        for p in sec.get("paragraphs", []):
+            body.append(para(p, "text-[15px] md:text-base text-slate-700 leading-[1.9] mb-4"))
         body.append('</section>')
 
-        # 첫 섹션 뒤 = 데이터 도표, 두 번째 섹션 뒤 = 본문 일러스트
-        if idx == 0 and chart_svg:
-            body.append(chart_svg)
+        if idx == 0 and infographic_svg:
+            body.append(infographic_svg)
         if idx == 1 and inline_img:
             body.append(
                 f'<figure class="my-8">'
                 f'<img src="{esc(inline_img)}" alt="{esc(inline_alt)}" '
-                f'class="w-full rounded-2xl border border-slate-200" loading="lazy" width="1024" height="1024">'
+                f'class="w-full rounded-2xl border border-slate-200" loading="lazy" '
+                f'width="1024" height="1024">'
+                f'{_img_caption(inline_alt)}'
                 f'</figure>'
             )
-        if idx == 1:
             body.append('<div class="ad-slot" data-slot-name="article-section" data-ad-format="auto"></div>')
 
-    # 도표/일러스트가 섹션 수 부족으로 못 들어갔으면 마지막에 붙인다
-    if chart_svg and not any(chart_svg in b for b in body):
-        body.append(chart_svg)
+    if infographic_svg and infographic_svg not in body:
+        body.append(infographic_svg)
     if inline_img and not any(str(inline_img) in b for b in body):
         body.append(
-            f'<figure class="my-8">'
-            f'<img src="{esc(inline_img)}" alt="{esc(inline_alt)}" '
-            f'class="w-full rounded-2xl border border-slate-200" loading="lazy" width="1024" height="1024">'
-            f'</figure>'
-        )
-
-    if checklist_svg:
-        body.append(checklist_svg)
+            f'<figure class="my-8"><img src="{esc(inline_img)}" alt="{esc(inline_alt)}" '
+            f'class="w-full rounded-2xl border border-slate-200" loading="lazy" '
+            f'width="1024" height="1024">{_img_caption(inline_alt)}</figure>')
+    if extra_svg:
+        body.append(extra_svg)
 
     checklist = article.get("checklist") or []
     if checklist:
         items = "".join(
             f'<li class="flex gap-3"><span class="text-brand-600 font-bold shrink-0">✓</span>'
-            f'<span class="text-slate-700">{esc(c)}</span></li>'
+            f'<span class="text-slate-700">{autolink(esc(c), used_links)}</span></li>'
             for c in checklist
         )
         body.append(
@@ -273,11 +396,10 @@ def render_post(article: dict, meta: dict, chart_svg: str = "",
             '</section>'
         )
 
-    # FAQ — 본문에도 노출해야 스키마와 내용이 일치한다.
     if faqs:
         qa = "".join(
             '<details class="faq bg-white p-5 rounded-2xl border border-slate-200 shadow-soft">'
-            f'<summary><span class="font-semibold text-slate-900">{esc(f["q"])}</span></summary>'
+            f'<summary><h3 class="font-semibold text-slate-900 inline">{esc(f["q"])}</h3></summary>'
             f'<p class="mt-3 text-sm text-slate-700 leading-relaxed">{esc(f["a"])}</p>'
             '</details>'
             for f in faqs
@@ -289,7 +411,6 @@ def render_post(article: dict, meta: dict, chart_svg: str = "",
             '</section>'
         )
 
-    # 출처
     sources = meta.get("sources") or []
     if sources:
         rows = "".join(
@@ -308,13 +429,12 @@ def render_post(article: dict, meta: dict, chart_svg: str = "",
             '</section>'
         )
 
-    tags = article.get("tags") or []
     tag_html = ""
     if tags:
         chips = "".join(
             f'<span class="inline-block bg-slate-100 text-slate-600 text-xs font-medium '
             f'px-3 py-1 rounded-full mr-2 mb-2">#{esc(t)}</span>'
-            for t in tags[:6]
+            for t in tags
         )
         tag_html = f'<div class="mt-8">{chips}</div>'
 
@@ -337,7 +457,8 @@ def render_post(article: dict, meta: dict, chart_svg: str = "",
         </ol>
     </nav>
 
-    <h1 class="text-3xl md:text-4xl font-bold mb-4 tracking-tight leading-tight">{esc(article.get('title', ''))}</h1>
+    <article>
+    <h1 class="text-3xl md:text-4xl font-bold mb-4 tracking-tight leading-tight">{esc(title)}</h1>
 
     <div class="flex flex-wrap items-center gap-3 text-sm text-slate-500 mb-8 pb-6 border-b border-slate-200">
         <time datetime="{esc(date_str)}">{dt:%Y년 %-m월 %-d일}</time>
@@ -347,6 +468,7 @@ def render_post(article: dict, meta: dict, chart_svg: str = "",
 
 {"".join(body)}
 {tag_html}
+    </article>
 {AI_DISCLOSURE}
 
     <aside class="mt-10 bg-white rounded-2xl border border-slate-200 p-6 shadow-soft">
@@ -368,12 +490,31 @@ def render_post(article: dict, meta: dict, chart_svg: str = "",
 
 def render_list(posts: list[dict]) -> str:
     canonical = f"{BASE_URL}/news"
+
+    ld_list = json.dumps({
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "의료광고 인사이트",
+        "description": "병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑",
+        "url": canonical,
+        "inLanguage": "ko",
+        "mainEntity": {
+            "@type": "ItemList",
+            "itemListElement": [
+                {"@type": "ListItem", "position": i + 1,
+                 "url": f"{BASE_URL}/news/{p['slug']}", "name": p["title"]}
+                for i, p in enumerate(posts[:30])
+            ],
+        },
+    }, ensure_ascii=False, indent=4)
+
     head = _head(
         title="의료광고 인사이트 — 병의원 마케팅 뉴스 | admedical",
         description="병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 심의 통과 시안 데이터와 함께 매일 업데이트됩니다.",
         canonical=canonical,
         og_image=f"{BASE_URL}/assets/img/ogimage.png",
         og_type="website",
+        extra_ld=f'    <script type="application/ld+json">\n{ld_list}\n    </script>\n',
     )
 
     if not posts:
@@ -417,14 +558,16 @@ def render_list(posts: list[dict]) -> str:
 
 def _card(post: dict, featured: bool = False) -> str:
     dt = datetime.strptime(post["date"], "%Y-%m-%d")
-    span = ' md:col-span-2' if featured else ''
-    cover = post.get("cover")
+    span = " md:col-span-2" if featured else ""
+    thumb = post.get("thumb") or post.get("cover")
 
-    thumb = ""
-    if cover:
-        h = "h-56" if featured else "h-40"
-        thumb = (f'<img src="{esc(cover)}" alt="{esc(post["title"])}" loading="lazy" '
-                 f'class="w-full {h} object-cover rounded-xl mb-4 border border-slate-200">')
+    thumb_html = ""
+    if thumb:
+        h = "h-64" if featured else "h-44"
+        thumb_html = (
+            f'<img src="{esc(thumb)}" alt="{esc(post["title"])}" loading="lazy" '
+            f'width="1200" height="630" '
+            f'class="w-full {h} object-cover rounded-xl mb-4 border border-slate-200">')
 
     tags = "".join(
         f'<span class="inline-block bg-slate-100 text-slate-500 text-[11px] font-medium '
@@ -434,7 +577,7 @@ def _card(post: dict, featured: bool = False) -> str:
 
     return f"""        <article class="bg-white rounded-2xl border border-slate-200 p-5 shadow-soft hover:border-brand-500 transition{span}">
             <a href="/news/{esc(post['slug'])}" class="block">
-                {thumb}
+                {thumb_html}
                 <time class="text-xs text-slate-400" datetime="{esc(post['date'])}">{dt:%Y.%m.%d}</time>
                 <h2 class="text-lg font-bold text-slate-900 mt-1.5 mb-2 leading-snug">{esc(post['title'])}</h2>
                 <p class="text-sm text-slate-600 leading-relaxed line-clamp-3">{esc(post.get('summary', ''))}</p>
@@ -472,7 +615,6 @@ def update_sitemap(posts: list[dict]) -> None:
         return
 
     text = SITEMAP.read_text(encoding="utf-8")
-
     latest = posts[0]["date"] if posts else f"{datetime.now(KST):%Y-%m-%d}"
 
     entries = [f"""
@@ -484,12 +626,20 @@ def update_sitemap(posts: list[dict]) -> None:
     </url>"""]
 
     for p in posts[:500]:
+        img = ""
+        thumb = p.get("thumb") or p.get("cover")
+        if thumb:
+            img = (f"""
+        <image:image>
+            <image:loc>{BASE_URL}{thumb}</image:loc>
+            <image:title>{html.escape(p['title'])}</image:title>
+        </image:image>""")
         entries.append(f"""
     <url>
         <loc>{BASE_URL}/news/{p['slug']}</loc>
         <lastmod>{p['date']}</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
+        <priority>0.7</priority>{img}
     </url>""")
 
     block = SITEMAP_BEGIN + "".join(entries) + "\n" + SITEMAP_END
@@ -497,18 +647,21 @@ def update_sitemap(posts: list[dict]) -> None:
     if SITEMAP_BEGIN in text and SITEMAP_END in text:
         text = re.sub(
             re.escape(SITEMAP_BEGIN) + r".*?" + re.escape(SITEMAP_END),
-            lambda _: block,
-            text,
-            flags=re.S,
-        )
+            lambda _: block, text, flags=re.S)
     else:
         text = text.replace("</urlset>", block + "\n\n</urlset>")
+
+    # 이미지 사이트맵 네임스페이스 보강
+    if "xmlns:image" not in text:
+        text = text.replace(
+            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n'
+            '        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">')
 
     SITEMAP.write_text(text, encoding="utf-8")
 
 
 def write_post_files(posts: list[dict]) -> None:
-    """목록 페이지 + 사이트맵 + 인덱스 JSON 재생성."""
     NEWS_DIR.mkdir(parents=True, exist_ok=True)
     (NEWS_DIR / "index.html").write_text(render_list(posts), encoding="utf-8")
     save_index(posts)

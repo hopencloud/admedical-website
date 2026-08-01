@@ -46,6 +46,10 @@ jobs:
           python-version: "3.11"
           cache: pip
 
+      - name: 한글 폰트 설치
+        # 썸네일에 기사 제목을 한글로 넣는다. 폰트가 없으면 썸네일이 생성되지 않는다.
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-nanum
+
       - name: Install dependencies
         # OCR 계열(easyocr 등)은 이 작업에 불필요하고 무거워서 최소 의존성만 설치한다.
         run: |

@@ -101,6 +101,38 @@ def check_images_alt() -> None:
                 fail("이미지 alt", f"{rel(p)} → alt 가 비어 있음: {tag[:70]}")
 
 
+def check_headings() -> None:
+    """H1 은 정확히 1개, H2 는 최소 1개. 검색엔진이 문서 구조를 읽는 기준이다."""
+    for p in public_pages():
+        text = p.read_text(encoding="utf-8")
+        h1 = len(re.findall(r"<h1\b", text))
+        h2 = len(re.findall(r"<h2\b", text))
+        if h1 != 1:
+            fail("제목 구조", f"{rel(p)} → H1 이 {h1}개 (정확히 1개여야 함)")
+        if h2 < 1:
+            fail("제목 구조", f"{rel(p)} → H2 가 없음")
+
+
+def check_social_meta() -> None:
+    """OG/트위터 카드 필수 필드. 공유·네이버 미리보기에 직접 쓰인다."""
+    required = [
+        ('property="og:title"', "og:title"),
+        ('property="og:description"', "og:description"),
+        ('property="og:image"', "og:image"),
+        ('property="og:image:alt"', "og:image:alt"),
+        ('property="og:url"', "og:url"),
+        ('property="og:locale"', "og:locale"),
+        ('name="twitter:card"', "twitter:card"),
+        ('name="twitter:image"', "twitter:image"),
+        ('name="description"', "meta description"),
+    ]
+    for p in public_pages():
+        text = p.read_text(encoding="utf-8")
+        missing = [label for needle, label in required if needle not in text]
+        if missing:
+            fail("소셜/메타", f"{rel(p)} → 누락: {', '.join(missing)}")
+
+
 def check_canonical() -> None:
     for p in public_pages():
         text = p.read_text(encoding="utf-8")
@@ -195,6 +227,19 @@ def check_news_index() -> None:
     slugs = [p["slug"] for p in posts]
     if len(slugs) != len(set(slugs)):
         fail("뉴스 인덱스", "중복 slug 존재")
+
+    # 썸네일 — 목록·메인·SNS 공유에 쓰인다
+    for post in posts:
+        thumb = post.get("thumb")
+        if not thumb:
+            fail("뉴스 썸네일", f"{post['slug']} → 썸네일 없음")
+        elif not (WEB / thumb.lstrip("/")).exists():
+            fail("뉴스 썸네일", f"{post['slug']} → 파일 없음: {thumb}")
+
+    # 최신 글이 먼저 와야 한다 (같은 날 여러 편이면 발행 시각으로 비교)
+    keys = [p.get("published_at") or f'{p["date"]}T00:00:00+09:00' for p in posts]
+    if keys != sorted(keys, reverse=True):
+        fail("뉴스 정렬", "최신 글이 맨 위가 아님 — news-index.json 정렬 확인 필요")
 
 
 def check_statistics() -> None:
@@ -304,8 +349,9 @@ def main() -> int:
 
     if not args.live_only:
         for fn in (check_internal_links, check_static_header, check_images_alt,
-                   check_canonical, check_jsonld, check_sitemap, check_rss,
-                   check_news_index, check_statistics, check_adsense_and_robots):
+                   check_headings, check_social_meta, check_canonical, check_jsonld,
+                   check_sitemap, check_rss, check_news_index, check_statistics,
+                   check_adsense_and_robots):
             try:
                 fn()
             except Exception as e:

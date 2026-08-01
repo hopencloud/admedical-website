@@ -39,13 +39,19 @@ def _mime(path: str) -> str:
             "webp": "image/webp", "png": "image/png"}.get(ext, "image/jpeg")
 
 
-def _rfc822(date_str: str) -> str:
-    """'2026-08-01' → 'Sat, 01 Aug 2026 09:00:00 +0900'"""
+def _rfc822(post: dict) -> str:
+    """발행 시각(published_at)이 있으면 그걸, 없으면 날짜 09:00 으로."""
+    from email.utils import format_datetime
+    raw = post.get("published_at")
+    if raw:
+        try:
+            return format_datetime(datetime.fromisoformat(raw))
+        except ValueError:
+            pass
     try:
-        dt = datetime.strptime(date_str, "%Y-%m-%d").replace(hour=9, tzinfo=KST)
+        dt = datetime.strptime(post.get("date", ""), "%Y-%m-%d").replace(hour=9, tzinfo=KST)
     except ValueError:
         dt = datetime.now(KST)
-    from email.utils import format_datetime
     return format_datetime(dt)
 
 
@@ -73,7 +79,7 @@ def build_rss(posts: list[dict]) -> str:
             <guid isPermaLink="true">{escape(url)}</guid>
             <description>{escape(p.get('summary', ''))}</description>
             <author>admedical</author>
-            <pubDate>{_rfc822(p.get('date', ''))}</pubDate>{categories}{enclosure}
+            <pubDate>{_rfc822(p)}</pubDate>{categories}{enclosure}
         </item>""")
 
     return f"""<?xml version="1.0" encoding="UTF-8"?>

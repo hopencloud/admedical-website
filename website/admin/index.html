@@ -104,6 +104,19 @@
                 </label>
             </div>
 
+            <!-- 발행 진행상황 -->
+            <div id="news-progress" class="hidden mb-5 rounded-xl border border-slate-200 bg-slate-50 p-4">
+                <div class="flex items-center justify-between mb-2">
+                    <span id="news-progress-stage" class="text-sm font-semibold text-slate-800">—</span>
+                    <span id="news-progress-count" class="text-xs font-medium text-slate-500">0 / 0</span>
+                </div>
+                <div class="h-2 w-full rounded-full bg-slate-200 overflow-hidden">
+                    <div id="news-progress-bar" class="h-2 rounded-full bg-brand-600 transition-all" style="width:0%"></div>
+                </div>
+                <p id="news-progress-detail" class="mt-2 text-xs text-slate-500 leading-relaxed"></p>
+                <p id="news-progress-title" class="mt-1 text-xs text-slate-400"></p>
+            </div>
+
             <div id="news-recent" class="text-sm divide-y divide-slate-100 border-t border-slate-100 pt-1"></div>
             <p id="news-status" class="hidden mt-3 text-sm"></p>
         </div>
@@ -314,6 +327,54 @@ function paintNewsToggle() {
     }
 }
 
+const NEWS_STAGES = ["뉴스 수집", "주제 선정", "원고 작성", "분량 보강", "자체 검수",
+                     "수치 검증", "이미지 제작", "도표 생성", "썸네일 생성", "페이지 생성",
+                     "목록·사이트맵·RSS 갱신"];
+let newsPollTimer = null;
+
+function paintNewsProgress(run) {
+    const box = document.getElementById("news-progress");
+    if (!run) { box.classList.add("hidden"); return; }
+
+    // 끝난 지 10분 넘은 실행은 감춘다
+    const ended = run.finished_at ? new Date(run.finished_at).getTime() : null;
+    if (ended && Date.now() - ended > 10 * 60 * 1000) {
+        box.classList.add("hidden");
+        if (newsPollTimer) { clearInterval(newsPollTimer); newsPollTimer = null; }
+        return;
+    }
+    box.classList.remove("hidden");
+
+    const running = run.status === "running";
+    const stageIdx = Math.max(0, NEWS_STAGES.indexOf(run.stage || ""));
+    // 진행률 = 완료한 글 비중 + 현재 글의 단계 진행분
+    const total = Math.max(1, run.total || 1);
+    const perPost = 100 / total;
+    const pct = running
+        ? Math.min(97, (run.done || 0) * perPost + perPost * (stageIdx / NEWS_STAGES.length))
+        : 100;
+
+    const label = { done: "발행 완료", failed: "실패", skipped: "발행 없음" }[run.status] || run.stage || "진행 중";
+    document.getElementById("news-progress-stage").textContent =
+        running ? `${run.stage || "진행 중"}…` : label;
+    document.getElementById("news-progress-count").textContent =
+        `${run.done || 0} / ${total}편`;
+    const bar = document.getElementById("news-progress-bar");
+    bar.style.width = pct.toFixed(0) + "%";
+    bar.className = "h-2 rounded-full transition-all " +
+        (run.status === "failed" ? "bg-rose-500" : running ? "bg-brand-600" : "bg-emerald-500");
+    document.getElementById("news-progress-detail").textContent = run.detail || "";
+    document.getElementById("news-progress-title").textContent =
+        run.current_title ? `현재 기사: ${run.current_title}` : "";
+
+    // 실행 중일 때만 5초 간격으로 따라간다
+    if (running && !newsPollTimer) {
+        newsPollTimer = setInterval(loadNewsSettings, 5000);
+    } else if (!running && newsPollTimer) {
+        clearInterval(newsPollTimer); newsPollTimer = null;
+    }
+}
+
 async function loadNewsSettings() {
     try {
         const res = await api("/api/news-settings");
@@ -323,6 +384,8 @@ async function loadNewsSettings() {
         newsAutoPublish = data.settings?.auto_publish !== false;
         document.getElementById("news-count").value = data.settings?.daily_count || 1;
         paintNewsToggle();
+
+        paintNewsProgress(data.run);
 
         const list = document.getElementById("news-recent");
         const posts = data.recent || [];
@@ -375,7 +438,8 @@ document.getElementById("news-run").addEventListener("click", async () => {
             body: JSON.stringify({ workflow: "news", inputs: { force: "true", count: "1" } }),
         });
         if (res.ok) {
-            newsStatus("발행 작업을 시작했습니다. 3~5분 뒤 게시판을 확인하세요.");
+            newsStatus("발행 작업을 시작했습니다. 아래에 진행상황이 표시됩니다.");
+            setTimeout(loadNewsSettings, 8000);
         } else {
             newsStatus((await res.json()).error || "트리거 실패", false);
         }

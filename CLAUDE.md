@@ -47,13 +47,22 @@
 - 파이프라인: `scripts/news_pipeline.py`
   1. `news_sources.py` — 의료 전문지 RSS 5곳 + 복지부 보도자료 (+OpenAI 웹검색) 수집
   2. `news_writer.py` — 주제 선정 → 초고 → 분량 보강 → 자체 검수 → **수치 검증**
-  3. `news_images.py` — AI 일러스트 2장(gpt-image-2, jpg/webp 압축) + 실데이터 도표 SVG
+  3. `news_images.py` — AI 일러스트 2장(gpt-image-2 high) + 인포그래픽 SVG + 썸네일(Pillow)
   4. `news_render.py` — 정적 HTML 생성, 목록·사이트맵 갱신
   5. `news_feed.py` — RSS 2.0 피드(`/rss.xml`) 생성
 - **원칙**: 기사 본문은 크롤링하지 않는다. RSS 제목/요약만 재료로 쓰고 출처를 명시한다.
 - **수치 검증**: 본문의 모든 숫자가 근거 자료나 자체 통계에 실제로 있는지 파이썬이 대조.
   없으면 정정 패스를 돌리고, 그래도 남으면 발행을 포기한다 (`unsupported_numbers`).
 - **도표 데이터는 AI가 만들지 않는다**. `statistics.json` 실측값만 사용하며 0건인 날은 제외.
+- **도식은 기사마다 유형이 달라야 한다.** AI가 comparison / timeline / process / checklist /
+  stat_trend 중에서 고르고 파이썬이 SVG 로 그린다. 한글이 정확해야 하는 텍스트는 전부 SVG·썸네일에 넣고,
+  AI 이미지에는 글자를 넣지 않는다(모델이 한글을 깨뜨림).
+- **이미지 프롬프트는 기사에서 뽑는다.** `images[].concept` 에 그 기사에서만 나올 장면을 구체적으로 묘사.
+  공통 톤은 `news_images.HOUSE_STYLE` 한 곳에서 관리.
+- **썸네일**: 1200x630, 표지 이미지 위에 제목을 한글로 얹은 일관 디자인 카드.
+  목록·메인·OG 이미지에 모두 이 썸네일을 쓴다. GitHub Actions 는 `fonts-nanum` 설치 필요.
+- **정렬은 `published_at`(시각) 기준**. 같은 날 여러 편이면 날짜만으로 순서가 뒤집힌다.
+- 진행상황: `news_runs` 테이블에 단계별로 기록 → /admin 이 5초 간격 폴링해 표시.
 - 킬스위치: Supabase `news_settings.auto_publish` → /admin 에서 토글.
 
 ## 자동 검증 (회귀 방지)
@@ -78,6 +87,11 @@
 - 기사 페이지는 NewsArticle + BreadcrumbList + FAQPage 스키마 3종을 넣는다.
 - `robots.txt` 는 생성형 AI 크롤러(GPTBot/ClaudeBot/PerplexityBot 등)를 명시적으로 허용한다.
 - `/llms.txt` 로 AI 검색엔진에 사이트 성격·한계·주요 URL을 제공한다.
+- **모든 페이지 공통**: H1 정확히 1개 + H2 1개 이상, canonical, meta description,
+  OG 전체(title/description/image/image:alt/url/locale), twitter:card, JSON-LD 스키마 1개 이상.
+  `validate_site.py` 가 이걸 검사하므로 새 페이지를 만들 때 반드시 채울 것.
+- 기사 페이지는 3줄 요약 박스(`.article-summary`) + 목차 + 본문 키워드 자동 내부링크를 넣는다.
+  요약 박스는 `speakable` 스키마 대상이라 AI 검색이 그대로 인용한다.
 
 ## 웹사이트 페이지 구조
 - 메인: 통계 대시보드 + 검색 + 최신 인사이트 3건
