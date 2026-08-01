@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-08-01T00:50:06.096006+09:00",
-  "count": 1,
+  "generated_at": "2026-08-01T19:15:29.506766+09:00",
+  "count": 2,
   "posts": [
     {
       "slug": "2026-08-01-patient-experience-rating-expansion",
@@ -29,6 +29,26 @@
           "title": "환자경험평가, 종병 중 여의도·은평·부천·의정부성모·강동성심 등 1등급",
           "source": "의학신문",
           "link": "https://www.bosa.co.kr/news/articleView.html?idxno=3009465"
+        }
+      ]
+    },
+    {
+      "slug": "2026-08-01-medical-ad-review-2026",
+      "title": "2026년 의료 광고 심의 강화, SNS·블로그 주의",
+      "summary": "2026년부터 SNS·블로그 의료광고에 대한 사전심의가 강화될 예정입니다. 병원 마케터는 이에 맞춰 전략을 재조정해야 합니다.",
+      "date": "2026-08-01",
+      "cover": "/assets/news/2026-08-01-medical-ad-review-2026-cover.jpg",
+      "tags": [
+        "의료광고",
+        "심의규정",
+        "SNS마케팅"
+      ],
+      "topic_key": "2026년 sns 강화 광고 블로그 심의",
+      "sources": [
+        {
+          "title": "2026년 의료 광고 심의: 병원 블로그·SNS, 지금 당장 알아야 할 모든 것",
+          "source": "인블로그 블로그",
+          "link": "https://inblog.ai/ko/blog/medical-ad-review"
         }
       ]
     }

@@ -105,6 +105,12 @@
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
+    <url>
+        <loc>https://www.admedical.co.kr/news/2026-08-01-medical-ad-review-2026</loc>
+        <lastmod>2026-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
     <!-- news:end -->
 
 </urlset>
