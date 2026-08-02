@@ -1,7 +1,37 @@
 {
-  "generated_at": "2026-08-01T20:20:12.626393+09:00",
-  "count": 5,
+  "generated_at": "2026-08-02T11:47:27.092496+09:00",
+  "count": 6,
   "posts": [
+    {
+      "slug": "2026-08-02-medical-advertising-regulations-2026",
+      "title": "의료광고 심의 기준 변화와 마케팅 전략",
+      "summary": "의료광고 심의 기준이 강화되었습니다. 마케팅 담당자는 변화된 규제를 이해하고 전략을 재정비해야 합니다.",
+      "date": "2026-08-02",
+      "published_at": "2026-08-02T11:44:57.411593+09:00",
+      "cover": "/assets/news/2026-08-02-medical-advertising-regulations-2026-photo.jpg",
+      "thumb": "/assets/news/2026-08-02-medical-advertising-regulations-2026-thumb.jpg",
+      "infographic_type": "checklist",
+      "tags": [
+        "의료광고",
+        "마케팅 전략",
+        "의료법",
+        "광고 심의",
+        "법적 규제"
+      ],
+      "topic_key": "기준 마케팅 변화와 심의 의료광고 전략",
+      "sources": [
+        {
+          "title": "의료광고 금지사항 및 심의 제도 정비",
+          "source": "코닥(한국온라인광고자율심의기구)",
+          "link": "https://kodaa.or.kr/post_file_download.cm?c=YTo1OntzOjEwOiJib2FyZF9jb2RlIjtzOjIyOiJiMjAxODA4MjM1YjdlNTAxNTUyMTdlIjtzOjk6InBvc3RfY29kZSI7czoyMjoicDIwMTkwMTE4NWM0MTcxZjk0MWE3MCI7czo5OiJmaWxlX2NvZGUiO3M6MjI6InAyMDE5MDExODVjNDE3MWZhNzRlYzQiO3M6MTk6InBvc3RfZG93bmxvYWRfdG9rZW4iO3M6MTM6IjY5ZTQ5Yjg4MjRhOGYiO3M6MTE6Im1lbWJlcl9jb2RlIjtOO30="
+        },
+        {
+          "title": "2026년 의료광고 심의 기준 5가지 핵심 정리",
+          "source": "노아",
+          "link": "https://noahgroup.co.kr/articles/medical-ad-review-2026.html"
+        }
+      ]
+    },
     {
       "slug": "2026-08-01-medical-marketing-impact-regulation",
       "title": "비급여 관리 특별법 논의, 병원 마케팅에 미칠 영향",

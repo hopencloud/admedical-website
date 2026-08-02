@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Sat, 01 Aug 2026 20:20:12 +0900</lastBuildDate>
-        <pubDate>Sat, 01 Aug 2026 20:20:12 +0900</pubDate>
+        <lastBuildDate>Sun, 02 Aug 2026 11:47:27 +0900</lastBuildDate>
+        <pubDate>Sun, 02 Aug 2026 11:47:27 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,20 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>의료광고 심의 기준 변화와 마케팅 전략</title>
+            <link>https://www.admedical.co.kr/news/2026-08-02-medical-advertising-regulations-2026</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-02-medical-advertising-regulations-2026</guid>
+            <description>의료광고 심의 기준이 강화되었습니다. 마케팅 담당자는 변화된 규제를 이해하고 전략을 재정비해야 합니다.</description>
+            <author>admedical</author>
+            <pubDate>Sun, 02 Aug 2026 11:44:57 +0900</pubDate>
+            <category>의료광고</category>
+            <category>마케팅 전략</category>
+            <category>의료법</category>
+            <category>광고 심의</category>
+            <category>법적 규제</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-02-medical-advertising-regulations-2026-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>비급여 관리 특별법 논의, 병원 마케팅에 미칠 영향</title>
             <link>https://www.admedical.co.kr/news/2026-08-01-medical-marketing-impact-regulation</link>

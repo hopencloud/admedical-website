@@ -96,9 +96,19 @@
     <!-- news:begin (자동 생성 — 직접 수정하지 마세요) -->
     <url>
         <loc>https://www.admedical.co.kr/news</loc>
-        <lastmod>2026-08-01</lastmod>
+        <lastmod>2026-08-02</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://www.admedical.co.kr/news/2026-08-02-medical-advertising-regulations-2026</loc>
+        <lastmod>2026-08-02</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://www.admedical.co.kr/assets/news/2026-08-02-medical-advertising-regulations-2026-thumb.jpg</image:loc>
+            <image:title>의료광고 심의 기준 변화와 마케팅 전략</image:title>
+        </image:image>
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-01-medical-marketing-impact-regulation</loc>
