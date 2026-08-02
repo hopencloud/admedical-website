@@ -83,7 +83,10 @@ jobs:
         if: github.event.inputs.mail_only != 'true' 
         # 생성된 기사가 규칙을 깨면 커밋하지 않는다.
         # (alt 누락, 사이트맵 확장자, 통계 0건 표시, JSON-LD 깨짐 등)
-        run: python scripts/validate_site.py
+        #
+        # --skip-freshness: 수집이 며칠 밀린 것과 기사 품질은 별개다.
+        # 맥북이 꺼져 있었다고 기사 발행까지 막으면 안 된다.
+        run: python scripts/validate_site.py --skip-freshness
 
       - name: Commit & push
         if: github.event.inputs.mail_only != 'true'
@@ -99,6 +102,19 @@ jobs:
           git commit -m "뉴스 자동 발행 ($(TZ=Asia/Seoul date '+%Y-%m-%d %a'))"
           git pull --rebase origin main || true
           git push origin HEAD:main
+
+      - name: 실패 원인 요약
+        if: failure()
+        run: |
+          {
+            echo "## 발행 실패"
+            echo
+            echo "생성된 기사 파일:"
+            ls -1 website/news/*.html 2>/dev/null | grep -v index || echo "  (없음)"
+            echo
+            echo "검증 결과:"
+            python scripts/validate_site.py --skip-freshness 2>&1 | tail -20 || true
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: 뉴스레터 발송
         # 커밋·푸시 뒤에 보낸다. 링크가 살아있는 상태로 메일이 나가야 한다.

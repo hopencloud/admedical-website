@@ -263,6 +263,9 @@ def check_news_index() -> None:
         fail("뉴스 정렬", "최신 글이 맨 위가 아님 — news-index.json 정렬 확인 필요")
 
 
+SKIP_FRESHNESS = False
+
+
 def check_statistics() -> None:
     """아직 게시 전인 날을 0건으로 노출하면 '심의 0건'으로 잘못 읽힌다."""
     path = WEB / "assets" / "data" / "statistics.json"
@@ -291,7 +294,10 @@ def check_statistics() -> None:
         last = max((r["date"] for r in chart if r.get("count", 0) > 0), default=None)
         if last:
             behind = (datetime.now(KST).date() - date.fromisoformat(last)).days
-            if behind >= 4:
+            if SKIP_FRESHNESS:
+                if behind >= 3:
+                    warn("통계", f"최신 데이터가 {behind}일 전({last})")
+            elif behind >= 4:
                 fail("통계", f"최신 데이터가 {behind}일 전({last}) — 수집이 멈춘 것으로 보입니다. "
                              f"맥북 전원과 daily_pipeline 로그를 확인하세요.")
             elif behind >= 3:
@@ -375,7 +381,13 @@ def main() -> int:
     ap = argparse.ArgumentParser(description="사이트 불변조건 검사")
     ap.add_argument("--live", action="store_true", help="배포된 사이트까지 검사")
     ap.add_argument("--live-only", action="store_true", help="라이브만 검사")
+    ap.add_argument("--skip-freshness", action="store_true",
+                    help="통계 신선도 검사 제외 (뉴스 발행 전 검사용). "
+                         "수집이 밀린 것과 기사 품질은 별개 문제다.")
     args = ap.parse_args()
+
+    global SKIP_FRESHNESS
+    SKIP_FRESHNESS = args.skip_freshness
 
     if not args.live_only:
         for fn in (check_internal_links, check_static_header, check_images_alt,
