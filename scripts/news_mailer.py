@@ -19,6 +19,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import smtplib
 import ssl
 import sys
@@ -134,19 +135,22 @@ def build_text(posts: list[dict], date_str: str, token: str) -> str:
     return "\n".join(lines)
 
 
-def send_all(posts: list[dict], date_str: str, dry_run: bool = False) -> int:
-    user, password = os.getenv("SMTP_USER"), os.getenv("SMTP_PASS")
-    if not user or not password:
-        log("SMTP_USER/SMTP_PASS 가 없어 발송을 건너뜁니다.")
-        return 0
+def creds() -> tuple[str, str]:
+    """Gmail 앱 비밀번호는 'abcd efgh ijkl mnop' 형태로 표시돼 공백째로 붙여넣기 쉽다.
+    공백이 들어가면 로그인이 실패하므로 여기서 제거한다."""
+    user = (os.getenv("SMTP_USER") or "").strip()
+    password = re.sub(r"\s+", "", os.getenv("SMTP_PASS") or "")
+    return user, password
 
+
+def send_all(posts: list[dict], date_str: str, dry_run: bool = False) -> int:
     client = get_supabase()
     if client is None:
         log("Supabase 연결 정보가 없어 발송을 건너뜁니다.")
         return 0
 
     rows = client.table("newsletter_subscribers").select(
-        "email, token").eq("status", "active").execute().data or []
+        "email, token, send_count").eq("status", "active").execute().data or []
     if not rows:
         log("활성 구독자가 없습니다.")
         return 0
@@ -160,10 +164,26 @@ def send_all(posts: list[dict], date_str: str, dry_run: bool = False) -> int:
         print(build_text(posts, date_str, "SAMPLE-TOKEN"))
         return 0
 
+    user, password = creds()
+    if not user or not password:
+        log("SMTP_USER/SMTP_PASS 가 없어 발송을 건너뜁니다.")
+        return 0
+
     sent = 0
     context = ssl.create_default_context()
-    with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT, context=context) as server:
+    try:
+        server = smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT, context=context, timeout=30)
         server.login(user, password)
+    except smtplib.SMTPAuthenticationError as exc:
+        log("SMTP 로그인 실패 — 앱 비밀번호를 확인하세요. "
+            "Gmail 계정 비밀번호가 아니라 2단계 인증 후 발급받는 16자리입니다.")
+        log(f"  서버 응답: {exc}")
+        return 0
+    except Exception as exc:
+        log(f"SMTP 접속 실패: {type(exc).__name__}: {exc}")
+        return 0
+
+    with server:
         for row in rows:
             msg = MIMEMultipart("alternative")
             msg["Subject"] = Header(subject, "utf-8")
@@ -186,6 +206,12 @@ def send_all(posts: list[dict], date_str: str, dry_run: bool = False) -> int:
             time.sleep(SEND_INTERVAL_SEC)
 
     log(f"발송 완료: {sent}/{len(rows)}명")
+
+    path = os.environ.get("GITHUB_STEP_SUMMARY")
+    if path:
+        with open(path, "a", encoding="utf-8") as f:
+            f.write(f"## 뉴스레터 발송\n\n- 대상 **{len(rows)}명** 중 **{sent}명** 발송\n"
+                    f"- 기사 **{len(posts)}건** ({date_str})\n")
     return sent
 
 
@@ -203,7 +229,13 @@ def main() -> int:
         log(f"{args.date} 발행분이 없습니다. 발송하지 않습니다.")
         return 0
 
-    send_all(posts, args.date, dry_run=args.dry_run)
+    try:
+        send_all(posts, args.date, dry_run=args.dry_run)
+    except Exception as exc:
+        # 메일이 안 나가는 것과 기사가 안 올라가는 것은 별개다.
+        # 여기서 죽으면 워크플로우 전체가 실패로 보인다.
+        log(f"발송 중 오류: {type(exc).__name__}: {exc}")
+        import traceback; traceback.print_exc()
     return 0
 
 
