@@ -100,12 +100,31 @@ function formatDelta(delta, refLabel) {
 function renderChart(rows) {
     const ctx = document.getElementById("chart-30d");
     if (!ctx || !rows) return;
+
+    // 그래프 끝의 0건은 '심의가 0건'이 아니라 '아직 집계 전'이다.
+    // 의협이 심의 결과를 하루 이상 늦게 올리기 때문에 최근 며칠은 비어 있는 게 정상인데,
+    // 막대 0으로 그리면 통과 건수가 급감한 것처럼 잘못 읽힌다. 뒤쪽 0은 잘라낸다.
+    // (중간의 0은 주말·공휴일이라 실제 0건이 맞으므로 그대로 둔다)
+    let end = rows.length;
+    while (end > 0 && !(rows[end - 1].count > 0)) end--;
+    rows = rows.slice(0, end);
+    if (!rows.length) return;
     const DOW = ["일","월","화","수","목","금","토"];
     const labels = rows.map(r => {
         const d = new Date(r.date + "T00:00:00+09:00");
         return `${r.date.slice(5)}(${DOW[d.getDay()]})`;  // MM-DD(요일)
     });
     const counts = rows.map(r => r.count);
+
+    // 그래프가 어디까지 집계된 것인지 명시
+    const chartNote = document.getElementById("chart-note");
+    if (chartNote) {
+        const last = rows[rows.length - 1].date;
+        const d = new Date(last + "T00:00:00+09:00");
+        chartNote.textContent =
+            `${d.getMonth() + 1}월 ${d.getDate()}일까지 집계 · ` +
+            `이후 분은 심의 결과가 공개되는 대로 반영됩니다`;
+    }
     new Chart(ctx, {
         type: "bar",
         data: {

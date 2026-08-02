@@ -17,9 +17,9 @@ on:
   workflow_dispatch:
     inputs:
       count:
-        description: "발행할 글 수"
+        description: "발행할 글 수 (비워두면 /admin 의 '하루 발행 수' 설정을 따름)"
         required: false
-        default: "1"
+        default: ""
       force:
         description: "오늘 이미 발행했어도 실행 (true/false)"
         required: false
@@ -76,7 +76,10 @@ jobs:
         run: |
           ARGS=""
           if [ "${{ github.event.inputs.force }}" = "true" ]; then ARGS="$ARGS --force"; fi
+          # count 를 비워두면 --count 를 넘기지 않는다 → 파이프라인이 Supabase
+          # news_settings.daily_count (=/admin 의 '하루 발행 수') 를 쓴다.
           if [ -n "${{ github.event.inputs.count }}" ]; then ARGS="$ARGS --count ${{ github.event.inputs.count }}"; fi
+          echo "실행 인자: ${ARGS:-（설정값 사용）}"
           python scripts/news_pipeline.py $ARGS
 
       - name: 발행 전 검증
