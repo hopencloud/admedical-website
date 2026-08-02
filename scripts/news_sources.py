@@ -202,21 +202,20 @@ def openai_web_search(max_items: int = 5) -> list[NewsItem]:
     from openai import OpenAI
     client = OpenAI(api_key=api_key)
 
-    for tool_name in ("web_search", "web_search_preview"):
-        try:
-            resp = client.responses.create(
-                model=os.getenv("NEWS_SEARCH_MODEL", "gpt-4o"),
-                tools=[{"type": tool_name}],
-                input=prompt,
-            )
-            text = getattr(resp, "output_text", "") or ""
-            return _parse_search_json(text, max_items)
-        except Exception as exc:
-            print(f"  [정보] 웹검색({tool_name}) 사용 불가: {type(exc).__name__}: {exc}")
-            continue
-
-    print("  [정보] 웹검색 건너뜀 — RSS/보도자료만 사용합니다.")
-    return []
+    # 한 번만 시도한다. 예전에는 두 가지 도구 이름을 순서대로 시도했는데,
+    # 실패할 때마다 수 분이 날아가 전체 실행이 25분 제한을 넘겼다.
+    # 웹검색은 어차피 보강용이고 RSS 만으로도 후보가 200건 가까이 나온다.
+    try:
+        resp = client.responses.create(
+            model=os.getenv("NEWS_SEARCH_MODEL", "gpt-4o"),
+            tools=[{"type": "web_search"}],
+            input=prompt,
+            timeout=90,
+        )
+        return _parse_search_json(getattr(resp, "output_text", "") or "", max_items)
+    except Exception as exc:
+        print(f"  [정보] 웹검색 건너뜀 ({type(exc).__name__}) — RSS/보도자료만 사용합니다.")
+        return []
 
 
 def _parse_search_json(text: str, max_items: int) -> list[NewsItem]:

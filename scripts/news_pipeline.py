@@ -21,6 +21,7 @@ import json
 import os
 import re
 import sys
+from concurrent.futures import ThreadPoolExecutor
 import traceback
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -332,21 +333,28 @@ def publish_one(client, posts: list[dict], candidates: list, stats: dict,
     photo_spec = _spec("photo", "cover")
     illust_spec = _spec("illustration", "inline")
 
-    progress(client, stage="이미지 제작", detail="① 사진 생성 중")
+    # 사진과 일러스트를 동시에 만든다. 순차로 하면 편당 1분 이상 더 걸려
+    # 5편이면 GitHub Actions 제한 시간을 넘긴다.
+    progress(client, stage="이미지 제작", detail="사진·일러스트 동시 생성 중")
     cover_rel = inline_rel = thumb_rel = None
 
     cover_file = IMG_DIR / news_images.safe_filename(slug, "photo", "jpg")
-    if news_images.generate_image(
-            photo_spec.get("concept") or topic["topic"], cover_file,
-            detail=photo_spec.get("detail", ""), landscape=True, style="photo"):
-        cover_rel = f"/assets/news/{cover_file.name}"
-
-    progress(client, stage="이미지 제작", detail="② 일러스트 생성 중")
     inline_file = IMG_DIR / news_images.safe_filename(slug, "illust")
-    if news_images.generate_image(
+
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        photo_job = pool.submit(
+            news_images.generate_image,
+            photo_spec.get("concept") or topic["topic"], cover_file,
+            photo_spec.get("detail", ""), True, "photo")
+        illust_job = pool.submit(
+            news_images.generate_image,
             illust_spec.get("concept") or topic["topic"], inline_file,
-            detail=illust_spec.get("detail", ""), landscape=False, style="illustration"):
-        inline_rel = f"/assets/news/{inline_file.name}"
+            illust_spec.get("detail", ""), False, "illustration")
+
+        if photo_job.result():
+            cover_rel = f"/assets/news/{cover_file.name}"
+        if illust_job.result():
+            inline_rel = f"/assets/news/{inline_file.name}"
 
     # ③ 도식 — 기사 성격에 맞는 유형으로. 실데이터 추이는 stat_trend 일 때만.
     progress(client, stage="도표 생성", detail=(article.get("infographic") or {}).get("type", ""))
@@ -464,6 +472,12 @@ def main() -> int:
             break
         created.append(post)
         record_post(client, post, news_writer.WRITER_MODEL)
+
+        # 편마다 목록·사이트맵·RSS 를 갱신해 둔다. 뒤쪽 편에서 실패하거나
+        # 실행이 중단돼도 앞서 만든 글은 온전한 상태로 남는다.
+        snapshot = sorted(created + posts, key=sort_key, reverse=True)
+        news_render.write_post_files(snapshot)
+        write_rss(snapshot)
 
     if not created:
         log("새로 발행된 글이 없습니다.")

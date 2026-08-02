@@ -36,7 +36,9 @@ concurrency:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    # 기사 1편에 3~5분(원고 4~5회 LLM 호출 + 고화질 이미지 2장).
+    # 5편이면 25분을 넘겨 강제 종료됐다. 여유를 둔다.
+    timeout-minutes: 55
     permissions:
       contents: write
 
