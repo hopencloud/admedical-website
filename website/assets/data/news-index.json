@@ -1,7 +1,133 @@
 {
-  "generated_at": "2026-08-02T11:47:27.092496+09:00",
-  "count": 6,
+  "generated_at": "2026-08-03T06:39:56.944819+09:00",
+  "count": 11,
   "posts": [
+    {
+      "slug": "2026-08-03-medical-advertising-review-event-risks",
+      "title": "의료광고 규제 속 병원 리뷰 이벤트의 법적 리스크",
+      "summary": "병원 리뷰 이벤트는 여전히 인기 있는 마케팅 기법이지만, 법적 리스크가 존재합니다. 의료법상 환자 경험담을 대가로 유도하는 것은 금지되어 있습니다.",
+      "date": "2026-08-03",
+      "published_at": "2026-08-03T06:37:35.307221+09:00",
+      "cover": "/assets/news/2026-08-03-medical-advertising-review-event-risks-photo.jpg",
+      "thumb": "/assets/news/2026-08-03-medical-advertising-review-event-risks-thumb.jpg",
+      "infographic_type": "comparison",
+      "tags": [
+        "의료광고",
+        "병원 마케팅",
+        "법적 리스크",
+        "환자 리뷰"
+      ],
+      "topic_key": "규제 리뷰 리스크 법적 병원 의료광고",
+      "sources": [
+        {
+          "title": "병·의원 온라인 리뷰·이벤트 규제와 판례 정리",
+          "source": "E:NULRE Research",
+          "link": "https://enulre.co.kr/research-review-regulation"
+        },
+        {
+          "title": "의료광고 규제 회색지대…확산하는 병·의원 리뷰 이벤트",
+          "source": "이데일리",
+          "link": "https://v.daum.net/v/20260701064305592"
+        }
+      ]
+    },
+    {
+      "slug": "2026-08-03-hospital-advertising-review-law-change",
+      "title": "병원 의료광고 심의, 병원급 단체가 맡을 가능성",
+      "summary": "의료광고 심의 대상을 병원급 단체로 확대하는 법안이 발의되었습니다. 병원 마케팅 담당자는 이에 따른 전략 수립이 필요할 수 있습니다.",
+      "date": "2026-08-03",
+      "published_at": "2026-08-03T06:34:23.111718+09:00",
+      "cover": "/assets/news/2026-08-03-hospital-advertising-review-law-change-photo.jpg",
+      "thumb": "/assets/news/2026-08-03-hospital-advertising-review-law-change-thumb.jpg",
+      "infographic_type": "comparison",
+      "tags": [
+        "의료광고",
+        "병원마케팅",
+        "의료법",
+        "법안발의",
+        "광고심의"
+      ],
+      "topic_key": "가능성 단체가 맡을 병원 병원급 심의",
+      "sources": [
+        {
+          "title": "병원 의료광고는 병원급 단체가 심의해야…의료법 일부개정법률안 발의",
+          "source": "의학신문",
+          "link": "https://v.daum.net/v/20260401192239885"
+        }
+      ]
+    },
+    {
+      "slug": "2026-08-03-suction-illegal-ruling-impact-operations",
+      "title": "간병인 석션 불법 판결, 병원 운영에 미칠 영향",
+      "summary": "대법원이 간병인의 석션을 불법으로 판결했습니다. 이는 병원의 운영 방식에 영향을 미칠 수 있습니다.",
+      "date": "2026-08-03",
+      "published_at": "2026-08-03T06:31:15.595627+09:00",
+      "cover": "/assets/news/2026-08-03-suction-illegal-ruling-impact-operations-photo.jpg",
+      "thumb": "/assets/news/2026-08-03-suction-illegal-ruling-impact-operations-thumb.jpg",
+      "infographic_type": "comparison",
+      "tags": [
+        "의료법",
+        "간병인",
+        "대법원 판결",
+        "병원 운영",
+        "의료행위"
+      ],
+      "topic_key": "간병인 미칠 병원 불법 석션 영향",
+      "sources": [
+        {
+          "title": "[보이는 기사] “간병인 석션은 불법”…대법원 판결이 불러올 파장",
+          "source": "청년의사",
+          "link": "http://www.docdocdoc.co.kr/news/articleView.html?idxno=3041409"
+        }
+      ]
+    },
+    {
+      "slug": "2026-08-03-medical-platform-fee-violation-risk",
+      "title": "의료기관 플랫폼 수수료, 의료법 위반 가능성",
+      "summary": "의료기관이 플랫폼에 수수료를 제공할 경우 의료법 위반 소지가 있습니다. 마케팅 담당자는 법적 리스크를 피할 전략을 마련해야 합니다.",
+      "date": "2026-08-03",
+      "published_at": "2026-08-03T06:28:10.703569+09:00",
+      "cover": "/assets/news/2026-08-03-medical-platform-fee-violation-risk-photo.jpg",
+      "thumb": "/assets/news/2026-08-03-medical-platform-fee-violation-risk-thumb.jpg",
+      "infographic_type": "process",
+      "tags": [
+        "의료법",
+        "플랫폼 수수료",
+        "의료기관 마케팅",
+        "법적 리스크"
+      ],
+      "topic_key": "가능성 수수료 위반 의료기관 의료법 플랫폼",
+      "sources": [
+        {
+          "title": "의료기관 플랫폼 수수료 제공 시 의료법 위반 가능성",
+          "source": "LawTalk",
+          "link": "https://www.lawtalk.co.kr/posts/49202"
+        }
+      ]
+    },
+    {
+      "slug": "2026-08-03-medical-advertising-law-revision-penalties",
+      "title": "의료광고법 개정: 거짓 광고에 대한 처벌 강화",
+      "summary": "의료광고법 개정으로 거짓·과장 광고에 대한 처벌이 강화되었습니다. 병원 마케터는 광고 전략을 재조정해야 합니다.",
+      "date": "2026-08-03",
+      "published_at": "2026-08-03T06:24:59.995533+09:00",
+      "cover": "/assets/news/2026-08-03-medical-advertising-law-revision-penalties-photo.jpg",
+      "thumb": "/assets/news/2026-08-03-medical-advertising-law-revision-penalties-thumb.jpg",
+      "infographic_type": "comparison",
+      "tags": [
+        "의료광고",
+        "법령개정",
+        "병원마케팅"
+      ],
+      "topic_key": "강화 개정 거짓 광고에 대한 의료광고법",
+      "sources": [
+        {
+          "title": "표시광고법·의료법 연계 행정처분 기준 개정…거짓·과장 광고에 과징금·업무정지 새 근거",
+          "source": "메디킹",
+          "link": "https://www.mediking.net/medlaw/"
+        }
+      ]
+    },
     {
       "slug": "2026-08-02-medical-advertising-regulations-2026",
       "title": "의료광고 심의 기준 변화와 마케팅 전략",

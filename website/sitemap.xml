@@ -96,9 +96,59 @@
     <!-- news:begin (자동 생성 — 직접 수정하지 마세요) -->
     <url>
         <loc>https://www.admedical.co.kr/news</loc>
-        <lastmod>2026-08-02</lastmod>
+        <lastmod>2026-08-03</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://www.admedical.co.kr/news/2026-08-03-medical-advertising-review-event-risks</loc>
+        <lastmod>2026-08-03</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://www.admedical.co.kr/assets/news/2026-08-03-medical-advertising-review-event-risks-thumb.jpg</image:loc>
+            <image:title>의료광고 규제 속 병원 리뷰 이벤트의 법적 리스크</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://www.admedical.co.kr/news/2026-08-03-hospital-advertising-review-law-change</loc>
+        <lastmod>2026-08-03</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://www.admedical.co.kr/assets/news/2026-08-03-hospital-advertising-review-law-change-thumb.jpg</image:loc>
+            <image:title>병원 의료광고 심의, 병원급 단체가 맡을 가능성</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://www.admedical.co.kr/news/2026-08-03-suction-illegal-ruling-impact-operations</loc>
+        <lastmod>2026-08-03</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://www.admedical.co.kr/assets/news/2026-08-03-suction-illegal-ruling-impact-operations-thumb.jpg</image:loc>
+            <image:title>간병인 석션 불법 판결, 병원 운영에 미칠 영향</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://www.admedical.co.kr/news/2026-08-03-medical-platform-fee-violation-risk</loc>
+        <lastmod>2026-08-03</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://www.admedical.co.kr/assets/news/2026-08-03-medical-platform-fee-violation-risk-thumb.jpg</image:loc>
+            <image:title>의료기관 플랫폼 수수료, 의료법 위반 가능성</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://www.admedical.co.kr/news/2026-08-03-medical-advertising-law-revision-penalties</loc>
+        <lastmod>2026-08-03</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://www.admedical.co.kr/assets/news/2026-08-03-medical-advertising-law-revision-penalties-thumb.jpg</image:loc>
+            <image:title>의료광고법 개정: 거짓 광고에 대한 처벌 강화</image:title>
+        </image:image>
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-02-medical-advertising-regulations-2026</loc>
