@@ -12,7 +12,7 @@ const DEFAULT_REPO = "hopencloud/admedical-website";
 // 트리거 가능한 워크플로우 화이트리스트. 임의 문자열을 그대로 URL 에 넣지 않는다.
 const WORKFLOWS = {
     pipeline: "daily-pipeline.yml",   // 수집 → OCR → 통계 → 배포
-    news:     "news-daily.yml",       // 뉴스 기사 자동 발행
+    news:     "news-weekly.yml",      // 주간 인사이트 자동 발행
 };
 const DEFAULT_WORKFLOW = "pipeline";
 

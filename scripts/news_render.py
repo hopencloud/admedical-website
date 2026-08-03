@@ -34,7 +34,7 @@ SITEMAP = WEB / "sitemap.xml"
 
 BASE_URL = "https://www.admedical.co.kr"
 ADSENSE_PUB = "ca-pub-7650355816152791"
-ASSET_VER = "20260801a"
+ASSET_VER = "20260803a"
 
 SITEMAP_BEGIN = "    <!-- news:begin (자동 생성 — 직접 수정하지 마세요) -->"
 SITEMAP_END = "    <!-- news:end -->"
@@ -148,7 +148,7 @@ def _head(title: str, description: str, canonical: str, og_image: str,
 
 
 FOOTER = f"""<footer class="bg-white border-t border-slate-200 mt-20">
-    <div class="max-w-5xl mx-auto px-4 py-8 text-sm text-slate-500">
+    <div class="max-w-5xl mx-auto px-5 sm:px-6 py-8 text-sm text-slate-500">
         <div class="flex flex-wrap gap-5 mb-3 font-medium">
             <a href="/about" class="hover:text-brand-600">서비스 소개</a>
             <a href="/news" class="hover:text-brand-600">의료광고 인사이트</a>
@@ -181,7 +181,7 @@ SUBSCRIBE_FORM = """
     <section class="my-10 bg-brand-50 border border-brand-100 rounded-2xl p-6">
         <h2 class="text-lg font-bold text-slate-900 mb-1.5">의료광고 인사이트 뉴스레터</h2>
         <p class="text-sm text-slate-600 leading-relaxed mb-4">
-            병의원 마케터가 알아야 할 규제·정책 변화를 매일 아침 메일로 보내드립니다.
+            병의원 마케터가 알아야 할 규제·정책 변화를 매주 월요일 아침 메일로 보내드립니다.
             이메일 주소만 남기시면 됩니다. 언제든 메일 하단 링크로 수신을 해지하실 수 있습니다.
         </p>
         <form class="newsletter-form flex flex-col sm:flex-row gap-2" novalidate>
@@ -338,7 +338,7 @@ def render_post(article: dict, meta: dict, infographic_svg: str = "",
 
     if cover:
         body.append(
-            f'<figure class="mb-8 -mx-4 sm:mx-0">'
+            f'<figure class="mb-8 -mx-5 sm:mx-0">'
             f'<img src="{esc(cover)}" alt="{esc(cover_alt)}" '
             f'class="w-full sm:rounded-2xl border border-slate-200" '
             f'loading="eager" fetchpriority="high" width="1400" height="933">'
@@ -483,7 +483,7 @@ def render_post(article: dict, meta: dict, infographic_svg: str = "",
 
 {STATIC_HEADER}
 
-<main class="max-w-3xl mx-auto px-4 py-10">
+<main class="max-w-3xl mx-auto px-5 sm:px-6 py-8 sm:py-12">
 
     <nav class="text-xs text-slate-500 mb-4" aria-label="Breadcrumb">
         <ol class="flex flex-wrap items-center gap-1.5">
@@ -548,7 +548,7 @@ def render_list(posts: list[dict]) -> str:
 
     head = _head(
         title="의료광고 인사이트 — 병의원 마케팅 뉴스 | admedical",
-        description="병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 심의 통과 시안 데이터와 함께 매일 업데이트됩니다.",
+        description="병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 심의 통과 시안 데이터와 함께 매주 업데이트됩니다.",
         canonical=canonical,
         og_image=f"{BASE_URL}/assets/img/ogimage.png",
         og_type="website",
@@ -570,7 +570,7 @@ def render_list(posts: list[dict]) -> str:
 
 {STATIC_HEADER}
 
-<main class="max-w-4xl mx-auto px-4 py-10">
+<main class="max-w-4xl mx-auto px-5 sm:px-6 py-8 sm:py-12">
 
     <nav class="text-xs text-slate-500 mb-4" aria-label="Breadcrumb">
         <ol class="flex flex-wrap items-center gap-1.5">
@@ -582,7 +582,7 @@ def render_list(posts: list[dict]) -> str:
 
     <h1 class="text-3xl md:text-4xl font-bold mb-3 tracking-tight">의료광고 인사이트</h1>
     <p class="text-slate-600 mb-8 leading-relaxed">
-        병의원 마케터가 알아야 할 규제·정책·시장 변화를 매일 정리합니다.
+        병의원 마케터가 알아야 할 규제·정책·시장 변화를 매주 정리합니다.
         심의 통과 시안 데이터와 함께 읽으면 실무 판단이 빨라집니다.
     </p>
 
@@ -606,9 +606,9 @@ def _row(post: dict) -> str:
     thumb_html = (
         f'<img src="{esc(thumb)}" alt="{esc(post["title"])}" loading="lazy" '
         f'width="1200" height="630" '
-        f'class="w-28 h-20 sm:w-40 sm:h-[90px] object-cover rounded-lg border border-slate-200 shrink-0">'
+        f'class="w-32 sm:w-44 aspect-[1200/630] object-cover rounded-lg border border-slate-200 shrink-0">'
         if thumb else
-        '<div class="w-28 h-20 sm:w-40 sm:h-[90px] rounded-lg bg-slate-100 shrink-0"></div>'
+        '<div class="w-32 sm:w-44 aspect-[1200/630] rounded-lg bg-slate-100 shrink-0"></div>'
     )
 
     tags = "".join(
@@ -618,7 +618,7 @@ def _row(post: dict) -> str:
     )
 
     return f"""        <article>
-            <a href="/news/{esc(post['slug'])}" class="flex gap-4 p-4 sm:p-5 hover:bg-slate-50 transition">
+            <a href="/news/{esc(post['slug'])}" class="flex gap-4 p-4 sm:p-5 hover:bg-slate-50 transition items-start">
                 {thumb_html}
                 <div class="min-w-0 flex-1">
                     <time class="text-xs text-slate-400" datetime="{esc(post['date'])}">{dt:%Y.%m.%d}</time>

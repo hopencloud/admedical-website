@@ -446,7 +446,7 @@ def main() -> int:
     start_run(client, total=max(1, count))
     progress(client, "뉴스 수집", "의료 전문지 RSS · 정부 보도자료 수집 중")
     candidates = news_sources.collect(
-        hours=int(os.getenv("NEWS_LOOKBACK_HOURS", "48")),
+        hours=int(os.getenv("NEWS_LOOKBACK_HOURS", "168")),   # 주 1회 발행이라 지난 7일
         use_web_search=not args.no_web_search,
     )
     log(f"후보 {len(candidates)}건 수집")

@@ -84,7 +84,7 @@
                    class="text-xs text-brand-600 hover:underline">게시판 보기 →</a>
             </div>
             <p class="text-xs text-slate-500 mb-4">
-                매일 새벽 5시 30분(KST)에 의료계 뉴스를 수집해 기사 1편을 자동 발행합니다.
+                매주 월요일 새벽 5시 30분(KST)에 지난 한 주 의료계 뉴스를 수집해 자동 발행합니다.
                 문제가 생기면 아래 스위치를 꺼두세요. 다음 실행부터 즉시 중단됩니다.
             </p>
 
@@ -98,7 +98,7 @@
                     지금 발행
                 </button>
                 <label class="text-xs text-slate-500">
-                    하루 발행 수
+                    한 번에 발행할 수
                     <input id="news-count" type="number" min="1" max="5" value="1"
                            class="ml-1.5 w-14 px-2 py-1 border border-slate-300 rounded-lg text-center">
                 </label>
@@ -128,7 +128,7 @@
                 <span id="sub-count" class="text-sm font-semibold text-brand-600">–</span>
             </div>
             <p class="text-xs text-slate-500 mb-4">
-                매일 새벽 4시 기사 발행 직후 자동 발송됩니다. 구독 즉시 환영 메일이 1통 나갑니다.
+                매주 월요일 기사 발행 직후 자동 발송됩니다. 구독 즉시 환영 메일이 1통 나갑니다.
             </p>
             <div id="sub-list" class="text-sm divide-y divide-slate-100 border-t border-slate-100 max-h-80 overflow-y-auto"></div>
         </div>
@@ -496,7 +496,7 @@ document.getElementById("news-count").addEventListener("change", async (e) => {
             method: "POST",
             body: JSON.stringify({ daily_count: n }),
         });
-        newsStatus(`하루 발행 수를 ${n}편으로 바꿨습니다.`);
+        newsStatus(`한 번에 발행할 수를 ${n}편으로 바꿨습니다.`);
     } catch (err) {
         newsStatus("변경 실패: " + err.message, false);
     }

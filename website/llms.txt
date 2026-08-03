@@ -25,7 +25,7 @@
 ## 주요 페이지
 
 - [홈 — 키워드 검색과 통계 대시보드](https://www.admedical.co.kr/)
-- [의료광고 인사이트 — 규제·정책 동향 브리핑 (매일 갱신)](https://www.admedical.co.kr/news)
+- [의료광고 인사이트 — 규제·정책 동향 브리핑 (매주 월요일 갱신)](https://www.admedical.co.kr/news)
 - [심의통과 TOP 20 키워드](https://www.admedical.co.kr/top20)
 - [의료광고심의란?](https://www.admedical.co.kr/guide/about-review)
 - [심의 신청 방법](https://www.admedical.co.kr/guide/application)

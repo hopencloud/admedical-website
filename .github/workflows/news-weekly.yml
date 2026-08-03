@@ -1,6 +1,6 @@
-name: News Daily (자동 발행)
+name: News Weekly (자동 발행)
 
-# 매일 새벽 의료계 뉴스를 수집해 기사 1편을 생성하고 커밋한다.
+# 매주 월요일 새벽, 지난 한 주 의료계 뉴스를 수집해 기사를 생성하고 커밋한다.
 # 맥북과 무관하게 GitHub 클라우드에서 돌기 때문에 노트북이 꺼져 있어도 발행된다.
 #
 # 중단 방법 3가지:
@@ -10,18 +10,19 @@ name: News Daily (자동 발행)
 
 on:
   schedule:
-    # 매일 05:30 KST = 전날 20:30 UTC. GitHub cron 은 UTC 기준.
+    # 매주 월요일 05:30 KST = 일요일 20:30 UTC. GitHub cron 은 UTC 기준이라
+    # 요일도 UTC 기준(0=일)으로 적어야 한국 시간 월요일이 된다.
     # 맥북의 심의 데이터 수집·통계 갱신(05:00)이 끝난 뒤에 기사를 써야
-    # 기사에 인용되는 통과 건수가 당일 최신값이 된다.
-    - cron: "30 20 * * *"
+    # 기사에 인용되는 통과 건수가 최신값이 된다.
+    - cron: "30 20 * * 0"
   workflow_dispatch:
     inputs:
       count:
-        description: "발행할 글 수 (비워두면 /admin 의 '하루 발행 수' 설정을 따름)"
+        description: "발행할 글 수 (비워두면 /admin 의 '한 번에 발행할 수' 설정을 따름)"
         required: false
         default: ""
       force:
-        description: "오늘 이미 발행했어도 실행 (true/false)"
+        description: "이미 발행한 날이어도 실행 (true/false)"
         required: false
         default: "false"
       mail_only:
@@ -73,6 +74,8 @@ jobs:
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
           NEWS_MODEL: ${{ vars.NEWS_MODEL || 'gpt-4o' }}
           NEWS_IMAGE_MODEL: ${{ vars.NEWS_IMAGE_MODEL || 'gpt-image-2' }}
+          # 주 1회 발행이므로 지난 한 주치를 훑는다 (매일 발행일 때는 48시간이었다)
+          NEWS_LOOKBACK_HOURS: "168"
         run: |
           ARGS=""
           if [ "${{ github.event.inputs.force }}" = "true" ]; then ARGS="$ARGS --force"; fi
@@ -102,7 +105,7 @@ jobs:
             echo "변경 사항 없음 — 오늘은 발행하지 않았습니다."
             exit 0
           fi
-          git commit -m "뉴스 자동 발행 ($(TZ=Asia/Seoul date '+%Y-%m-%d %a'))"
+          git commit -m "주간 인사이트 발행 ($(TZ=Asia/Seoul date '+%Y-%m-%d %a'))"
           git pull --rebase origin main || true
           git push origin HEAD:main
 

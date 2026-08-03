@@ -20,7 +20,7 @@
     // ---------- 1. 공통 헤더 HTML ----------
     const HEADER_HTML = `
 <header class="bg-white border-b border-slate-200 sticky top-0 z-20">
-    <div class="max-w-5xl mx-auto px-4 py-3.5 flex items-center justify-between gap-3">
+    <div class="max-w-5xl mx-auto px-5 sm:px-6 py-3.5 flex items-center justify-between gap-3">
         <a href="/" class="text-base md:text-xl font-bold text-brand-600 truncate tracking-tight">의료광고심의 통과 문구</a>
 
         <nav class="hidden md:flex items-center gap-1 text-sm font-medium text-slate-700 shrink-0">
@@ -57,7 +57,7 @@
         <button id="mobile-menu-btn" class="md:hidden text-2xl text-slate-700 px-2" aria-label="메뉴 열기" aria-expanded="false">☰</button>
     </div>
 
-    <nav id="mobile-menu" class="hidden md:hidden border-t border-slate-100 px-4 py-2 text-sm">
+    <nav id="mobile-menu" class="hidden md:hidden border-t border-slate-100 px-5 py-3 text-sm">
         <a data-nav="/about" href="/about" class="block py-2 text-slate-700 hover:text-brand-600">서비스 소개</a>
         <details class="mobile-group" data-nav-group="/guide/">
             <summary>심의 가이드</summary>

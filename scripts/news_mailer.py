@@ -109,7 +109,7 @@ def build_html(posts: list[dict], date_str: str, token: str) -> str:
 
     <tr><td style="padding:28px">
       <p style="color:#475569;font-size:14px;line-height:1.7;margin:0 0 24px">
-        병의원 마케터가 알아야 할 오늘의 규제·정책·시장 변화입니다.
+        병의원 마케터가 알아야 할 지난 한 주의 규제·정책·시장 변화입니다.
       </p>
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
         {''.join(items)}
@@ -164,8 +164,10 @@ def send_all(posts: list[dict], date_str: str, dry_run: bool = False) -> int:
         log("활성 구독자가 없습니다.")
         return 0
 
-    subject = f"[의료광고 인사이트] {posts[0]['title']}" if len(posts) == 1 else \
-              f"[의료광고 인사이트] {datetime.strptime(date_str, '%Y-%m-%d'):%-m월 %-d일} · {len(posts)}건"
+    # 제목은 날짜와 요일만. 건수는 열어보면 아는 정보라 제목 자리를 낭비한다.
+    dt = datetime.strptime(date_str, "%Y-%m-%d")
+    dow = "월화수목금토일"[dt.weekday()]
+    subject = f"[Admedical 의료광고 인사이트] {dt:%y}년 {dt:%-m}월 {dt:%-d}일 {dow}요일"
 
     log(f"대상 {len(rows)}명 / 기사 {len(posts)}건")
     if dry_run:
