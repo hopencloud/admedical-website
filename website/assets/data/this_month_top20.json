@@ -1,9 +1,150 @@
 {
-  "label": "이번달 (2026년 8월: 2026-08-01 ~ 2026-08-03)",
+  "label": "이번달 (2026년 8월: 2026-08-01 ~ 2026-08-04)",
   "start_date": "2026-08-01",
-  "end_date": "2026-08-03",
-  "ads_analyzed": 0,
-  "method": "frequency_only",
-  "generated_at": "2026-08-03T05:08:52.919191+09:00",
-  "top20": []
+  "end_date": "2026-08-04",
+  "ads_analyzed": 2,
+  "method": "ai_refined",
+  "generated_at": "2026-08-04T05:22:19.817893+09:00",
+  "top20": [
+    {
+      "expression": "남성수술",
+      "count": 1,
+      "examples": [
+        "260803-중-217805"
+      ]
+    },
+    {
+      "expression": "남성확대수술을",
+      "count": 1,
+      "examples": [
+        "260803-중-217805"
+      ]
+    },
+    {
+      "expression": "남성수술은",
+      "count": 1,
+      "examples": [
+        "260803-중-217805"
+      ]
+    },
+    {
+      "expression": "남성수술 시",
+      "count": 1,
+      "examples": [
+        "260803-중-217805"
+      ]
+    },
+    {
+      "expression": "상담하여 결정하세요.",
+      "count": 1,
+      "examples": [
+        "260803-중-217805"
+      ]
+    },
+    {
+      "expression": "체크사항 정리 남성수술을",
+      "count": 1,
+      "examples": [
+        "260803-중-217805"
+      ]
+    },
+    {
+      "expression": "체크사항 정리 남성확대수술을",
+      "count": 1,
+      "examples": [
+        "260803-중-217805"
+      ]
+    },
+    {
+      "expression": "남성수술을 고민하고",
+      "count": 1,
+      "examples": [
+        "260803-중-217805"
+      ]
+    },
+    {
+      "expression": "고민하고 계신가요?",
+      "count": 1,
+      "examples": [
+        "260803-중-217805"
+      ]
+    },
+    {
+      "expression": "개인의 상태에 따라",
+      "count": 1,
+      "examples": [
+        "260803-중-217805"
+      ]
+    },
+    {
+      "expression": "수술의 효과, 재료",
+      "count": 1,
+      "examples": [
+        "260803-중-217805"
+      ]
+    },
+    {
+      "expression": "전화예약",
+      "count": 1,
+      "examples": [
+        "260803-중-217806"
+      ]
+    },
+    {
+      "expression": "인터넷예약",
+      "count": 1,
+      "examples": [
+        "260803-중-217806"
+      ]
+    },
+    {
+      "expression": "건강검진",
+      "count": 1,
+      "examples": [
+        "260803-중-217806"
+      ]
+    },
+    {
+      "expression": "검진안내",
+      "count": 1,
+      "examples": [
+        "260803-중-217806"
+      ]
+    },
+    {
+      "expression": "국민건강보험공단",
+      "count": 1,
+      "examples": [
+        "260803-중-217806"
+      ]
+    },
+    {
+      "expression": "체크하고 의료진과",
+      "count": 1,
+      "examples": [
+        "260803-중-217805"
+      ]
+    },
+    {
+      "expression": "의료진과 충분히 상담하여",
+      "count": 1,
+      "examples": [
+        "260803-중-217805"
+      ]
+    },
+    {
+      "expression": "충분히 상담하여 결정하세요.",
+      "count": 1,
+      "examples": [
+        "260803-중-217805"
+      ]
+    },
+    {
+      "expression": "결정하세요. 남성수술",
+      "count": 1,
+      "examples": [
+        "260803-중-217805"
+      ]
+    }
+  ]
 }

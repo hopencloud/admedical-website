@@ -1,19 +1,19 @@
 {
-  "generated_at": "2026-08-03T10:32:00.929187+09:00",
+  "generated_at": "2026-08-04T05:22:12.626416+09:00",
   "yesterday": {
-    "date": "2026-07-30",
-    "count": 80,
-    "pending": true
+    "date": "2026-08-03",
+    "count": 2,
+    "pending": false
   },
   "this_week": {
     "start": "2026-08-03",
-    "end": "2026-08-03",
-    "count": 0
+    "end": "2026-08-04",
+    "count": 2
   },
   "this_month": {
     "start": "2026-08-01",
-    "end": "2026-08-03",
-    "count": 0
+    "end": "2026-08-04",
+    "count": 2
   },
   "last_week": {
     "start": "2026-07-27",
@@ -30,15 +30,11 @@
     "prev_count": 1837
   },
   "total": {
-    "count": 13530,
+    "count": 13532,
     "first_date": "2025-12-12",
-    "last_date": "2026-07-30"
+    "last_date": "2026-08-03"
   },
   "chart_30d": [
-    {
-      "date": "2026-07-05",
-      "count": 0
-    },
     {
       "date": "2026-07-06",
       "count": 105
@@ -153,6 +149,10 @@
     },
     {
       "date": "2026-08-03",
+      "count": 2
+    },
+    {
+      "date": "2026-08-04",
       "count": 0
     }
   ]
