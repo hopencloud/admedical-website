@@ -46,6 +46,15 @@ def log(msg: str) -> None:
     print(f"[mail] {msg}", flush=True)
 
 
+def summary(text: str) -> None:
+    """Actions 요약 화면에 남긴다. 실패 이유를 로그 단계까지 펼쳐 찾지 않도록."""
+    path = os.environ.get("GITHUB_STEP_SUMMARY")
+    if not path:
+        return
+    with open(path, "a", encoding="utf-8") as f:
+        f.write(text + "\n")
+
+
 def get_supabase():
     url, key = os.getenv("SUPABASE_URL"), os.getenv("SUPABASE_SERVICE_KEY")
     if not url or not key:
@@ -167,7 +176,12 @@ def send_all(posts: list[dict], date_str: str, dry_run: bool = False) -> int:
     user, password = creds()
     if not user or not password:
         log("SMTP_USER/SMTP_PASS 가 없어 발송을 건너뜁니다.")
+        summary("## ⚠️ 뉴스레터 발송 건너뜀 — SMTP 설정 없음\n\n"
+                f"- `SMTP_USER` {'있음' if user else '**없음**'}\n"
+                f"- `SMTP_PASS` {'있음' if password else '**없음**'}\n\n"
+                "GitHub → Settings → Secrets and variables → Actions 에서 등록하세요.\n")
         return 0
+    log(f"발신 계정: {user}")
 
     sent = 0
     context = ssl.create_default_context()
@@ -175,12 +189,21 @@ def send_all(posts: list[dict], date_str: str, dry_run: bool = False) -> int:
         server = smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT, context=context, timeout=30)
         server.login(user, password)
     except smtplib.SMTPAuthenticationError as exc:
-        log("SMTP 로그인 실패 — 앱 비밀번호를 확인하세요. "
-            "Gmail 계정 비밀번호가 아니라 2단계 인증 후 발급받는 16자리입니다.")
+        log("SMTP 로그인 실패 — 앱 비밀번호를 확인하세요.")
         log(f"  서버 응답: {exc}")
+        summary("## ❌ 뉴스레터 발송 실패 — SMTP 로그인 거부\n\n"
+                f"- 계정: `{user}`\n"
+                f"- 서버 응답: `{str(exc)[:300]}`\n\n"
+                "**확인할 것**\n"
+                "1. `SMTP_PASS` 는 Gmail 계정 비밀번호가 아니라 **앱 비밀번호 16자리** 입니다\n"
+                "2. 앱 비밀번호는 2단계 인증이 켜져 있어야 발급됩니다\n"
+                "3. 공백 없이 붙여넣었는지 (스크립트가 공백은 자동 제거합니다)\n"
+                "4. `SMTP_USER` 가 그 앱 비밀번호를 발급한 Gmail 주소인지\n")
         return 0
     except Exception as exc:
         log(f"SMTP 접속 실패: {type(exc).__name__}: {exc}")
+        summary(f"## ❌ 뉴스레터 발송 실패 — SMTP 접속 오류\n\n"
+                f"- 계정: `{user}`\n- 오류: `{type(exc).__name__}: {str(exc)[:300]}`\n")
         return 0
 
     with server:
@@ -207,11 +230,8 @@ def send_all(posts: list[dict], date_str: str, dry_run: bool = False) -> int:
 
     log(f"발송 완료: {sent}/{len(rows)}명")
 
-    path = os.environ.get("GITHUB_STEP_SUMMARY")
-    if path:
-        with open(path, "a", encoding="utf-8") as f:
-            f.write(f"## 뉴스레터 발송\n\n- 대상 **{len(rows)}명** 중 **{sent}명** 발송\n"
-                    f"- 기사 **{len(posts)}건** ({date_str})\n")
+    summary(f"## ✅ 뉴스레터 발송\n\n- 대상 **{len(rows)}명** 중 **{sent}명** 발송\n"
+            f"- 기사 **{len(posts)}건** ({date_str})\n- 발신: `{user}`\n")
     return sent
 
 
@@ -227,6 +247,7 @@ def main() -> int:
     posts = todays_posts(args.date)
     if not posts:
         log(f"{args.date} 발행분이 없습니다. 발송하지 않습니다.")
+        summary(f"## ⚠️ 뉴스레터 발송 건너뜀\n\n{args.date} 발행분이 없습니다.\n")
         return 0
 
     try:
