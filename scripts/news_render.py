@@ -34,7 +34,7 @@ SITEMAP = WEB / "sitemap.xml"
 
 BASE_URL = "https://www.admedical.co.kr"
 ADSENSE_PUB = "ca-pub-7650355816152791"
-ASSET_VER = "20260803a"
+ASSET_VER = "20260803b"
 
 SITEMAP_BEGIN = "    <!-- news:begin (자동 생성 — 직접 수정하지 마세요) -->"
 SITEMAP_END = "    <!-- news:end -->"
@@ -338,9 +338,9 @@ def render_post(article: dict, meta: dict, infographic_svg: str = "",
 
     if cover:
         body.append(
-            f'<figure class="mb-8 -mx-5 sm:mx-0">'
+            f'<figure class="mb-8">'
             f'<img src="{esc(cover)}" alt="{esc(cover_alt)}" '
-            f'class="w-full sm:rounded-2xl border border-slate-200" '
+            f'class="w-full rounded-xl sm:rounded-2xl border border-slate-200" '
             f'loading="eager" fetchpriority="high" width="1400" height="933">'
             f'{_img_caption(cover_alt, "이미지")}'
             f'</figure>'
@@ -401,7 +401,7 @@ def render_post(article: dict, meta: dict, infographic_svg: str = "",
             body.append(
                 f'<figure class="my-8">'
                 f'<img src="{esc(inline_img)}" alt="{esc(inline_alt)}" '
-                f'class="w-full rounded-2xl border border-slate-200" loading="lazy" '
+                f'class="w-full rounded-xl sm:rounded-2xl border border-slate-200" loading="lazy" '
                 f'width="1024" height="1024">'
                 f'{_img_caption(inline_alt)}'
                 f'</figure>'
@@ -413,7 +413,7 @@ def render_post(article: dict, meta: dict, infographic_svg: str = "",
     if inline_img and not any(str(inline_img) in b for b in body):
         body.append(
             f'<figure class="my-8"><img src="{esc(inline_img)}" alt="{esc(inline_alt)}" '
-            f'class="w-full rounded-2xl border border-slate-200" loading="lazy" '
+            f'class="w-full rounded-xl sm:rounded-2xl border border-slate-200" loading="lazy" '
             f'width="1024" height="1024">{_img_caption(inline_alt)}</figure>')
     if extra_svg:
         body.append(extra_svg)
