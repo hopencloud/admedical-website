@@ -151,15 +151,10 @@ def main() -> int:
         ext = path.suffix.lower()
 
         if ext in MEDIA_EXTS:
-            # 같은 심의번호의 다른 페이지에서 텍스트를 이미 확보했는지만 본다.
-            num = review_num_of(path)
-            info = db.get(num) if num else None
-            if info and info["done"] and (info["text"] or info["notice"]) and (
-                    info["notice"] or num in synced):
-                media.append((path, path.stat().st_size))
-            else:
-                kept["동영상·음성 (텍스트 미확보)"] += 1
-                kept_bytes["동영상·음성 (텍스트 미확보)"] += path.stat().st_size
+            # 동영상·음성은 OCR 파이프라인이 처리하지 못한다. 텍스트를 뽑을 방법이
+            # 없으므로 보관해도 쓸 데가 없다. --include-media 면 조건 없이 지운다.
+            # (수집기도 더 이상 내려받지 않는다 — collector.DOWNLOAD_IMAGES_ONLY)
+            media.append((path, path.stat().st_size))
             continue
 
         if ext not in IMAGE_EXTS:

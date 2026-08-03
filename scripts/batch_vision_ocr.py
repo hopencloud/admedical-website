@@ -26,6 +26,7 @@ import re
 import sqlite3
 import sys
 import threading
+import unicodedata
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
@@ -66,8 +67,15 @@ def setup_logging() -> logging.Logger:
     return logger
 
 
+def nfc(name: str) -> str:
+    """macOS 는 한글 파일명을 분해형(NFD)으로 저장한다. 정규화하지 않으면
+    '중' 이 ㅈ+ㅜ+ㅇ 으로 들어와 파일명 패턴이 하나도 맞지 않는다.
+    DB 키도 이 형태로 통일한다."""
+    return unicodedata.normalize("NFC", name)
+
+
 def parse_filename(filename: str) -> dict | None:
-    stem = Path(filename).stem
+    stem = Path(nfc(filename)).stem
     m = FILENAME_PATTERN.match(stem)
     if not m:
         return None
@@ -99,16 +107,23 @@ def scan_images(src_dir: Path) -> list[Path]:
             continue
         if p.suffix.lower() not in IMAGE_EXTS:
             continue
-        if not parse_filename(p.name):
+        if not parse_filename(nfc(p.name)):
             continue
         files.append(p)
     return files
 
 
-def load_done_filenames(conn: sqlite3.Connection) -> set[str]:
-    return {row[0] for row in conn.execute(
-        "SELECT filename FROM files WHERE vision_ocr_done = 1"
-    )}
+def load_done_filenames(conn: sqlite3.Connection, retry_empty: bool = False) -> set[str]:
+    """이미 처리한 파일명. retry_empty 면 텍스트가 비어 있는 건 '미처리'로 되돌린다.
+
+    OCR 이 한 번 돌았지만 텍스트를 못 뽑은 파일(vision_ocr_done=1, ocr_text 빈값)은
+    그대로 두면 영원히 건너뛴다. 이미지 정리 시에도 재시도 여지로 계속 남게 되므로
+    한 번씩 다시 시도할 수 있어야 한다.
+    """
+    query = "SELECT filename FROM files WHERE vision_ocr_done = 1"
+    if retry_empty:
+        query += " AND ocr_text IS NOT NULL AND TRIM(ocr_text) != ''"
+    return {nfc(row[0]) for row in conn.execute(query)}
 
 
 # Thread-safe DB writer
@@ -117,7 +132,7 @@ _db_lock = threading.Lock()
 
 def process_one(path: Path, log: logging.Logger) -> tuple[Path, dict | None, str | None, str | None]:
     """OCR 1장. (path, meta, text, error) 반환."""
-    meta = parse_filename(path.name)
+    meta = parse_filename(nfc(path.name))
     if not meta:
         return (path, None, None, "filename_parse_error")
     try:
@@ -132,6 +147,8 @@ def main():
     parser.add_argument("--src", type=Path, default=DEFAULT_SRC)
     parser.add_argument("--limit", type=int, default=None)
     parser.add_argument("--workers", type=int, default=5)
+    parser.add_argument("--retry-empty", action="store_true",
+                        help="텍스트를 못 뽑은 파일을 다시 시도한다")
     args = parser.parse_args()
 
     log = setup_logging()
@@ -146,14 +163,14 @@ def main():
     # 기존 vision_ocr_done 확인
     conn = sqlite3.connect(DB_PATH, isolation_level=None, check_same_thread=False)
     conn.execute("PRAGMA journal_mode=WAL")
-    done = load_done_filenames(conn)
+    done = load_done_filenames(conn, retry_empty=args.retry_empty)
     log.info(f"DB에 이미 vision_ocr_done=1인 파일: {len(done):,}개")
 
     log.info(f"이미지 스캔 시작: {args.src}")
     all_images = scan_images(args.src)
     log.info(f"발견된 이미지: {len(all_images):,}개")
 
-    pending = [p for p in all_images if p.name not in done]
+    pending = [p for p in all_images if nfc(p.name) not in done]
     if args.limit:
         pending = pending[: args.limit]
 
@@ -188,7 +205,7 @@ def main():
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1, 1)
                 """,
                 (
-                    path.name,
+                    nfc(path.name),
                     meta["review_date"],
                     meta["review_num"],
                     meta["page"],
@@ -205,7 +222,7 @@ def main():
         for fut in as_completed(future_to_path):
             path, meta, text, err = fut.result()
             if err or text is None or meta is None:
-                failures.append((path.name, err or "no_text"))
+                failures.append((nfc(path.name), err or "no_text"))
                 pbar.set_postfix({"성공": success, "실패": len(failures)})
                 pbar.update(1)
                 continue

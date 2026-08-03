@@ -194,13 +194,21 @@ def sanitize(name: str) -> str:
     return re.sub(r"[/\x00\x3a]", "_", name)
 
 
+# 이미지가 아닌 첨부(동영상·음성)는 받지 않는다.
+# OCR 파이프라인이 처리하지 못해 DB 에 기록조차 남지 않고, 용량만 크다
+# (mp4 한 개가 400MB 넘는 경우도 있었다). 사이트는 텍스트만 쓴다.
+DOWNLOAD_IMAGES_ONLY = os.environ.get("ADMEDICAL_IMAGES_ONLY", "1") == "1"
+
+
 def plan_filenames(full_no: str, files: list[dict]) -> list[tuple[dict, str, str]]:
-    """파일별로 (file_dict, kind, filename) 계획."""
+    """파일별로 (file_dict, kind, filename) 계획. 이미지가 아니면 제외."""
     full_clean = sanitize(full_no)
     out = []
     for idx, fd in enumerate(files, start=1):
         ct = (fd.get("content_type") or "").lower()
         is_image = ct.startswith("image/")
+        if DOWNLOAD_IMAGES_ONLY and not is_image:
+            continue
         kind = "image" if is_image else "attachment"
         org = fd.get("org_file_name") or fd.get("save_file_name") or ""
         ext = os.path.splitext(org)[1]
@@ -251,7 +259,11 @@ def append_metadata(suffix: int, full_no: str, valid_until: str,
 
 
 def process_one(session: requests.Session, suffix: int, log: logging.Logger) -> str:
-    """returns 'hit' | 'miss' | 'error'"""
+    """returns 'hit' | 'skip' | 'miss' | 'error'
+
+    'skip' = 심의번호는 존재하는데 받을 이미지가 없는 경우(동영상 시안 등).
+             'miss' 로 처리하면 연속 미스로 잡혀 수집이 조기 종료된다.
+    """
     payload = query(session, suffix, log)
     if payload is None:
         return "error"
@@ -266,8 +278,13 @@ def process_one(session: requests.Session, suffix: int, log: logging.Logger) -> 
     if not matched or not full_no:
         return "miss"
 
+    planned = plan_filenames(full_no, matched)
+    if not planned:
+        log.info("[%s] 이미지 없음 (동영상·음성만) — 건너뜀", suffix)
+        return "skip"
+
     saved = False
-    for fd, kind, fname in plan_filenames(full_no, matched):
+    for fd, kind, fname in planned:
         dest = SAVE_DIR / fname
         if dest.exists():
             continue
@@ -279,7 +296,8 @@ def process_one(session: requests.Session, suffix: int, log: logging.Logger) -> 
         append_metadata(suffix, full_no, valid_until, fname, kind, fd.get("org_file_name") or "")
         saved = True
         log.info("[%s] saved %s (%s, %s)", suffix, fname, kind, valid_until)
-    return "hit" if saved else "miss"
+    # 이미 받아둔 파일뿐이어도 '존재하는 번호' 이므로 miss 가 아니다
+    return "hit" if saved else "skip"
 
 
 def main() -> None:
@@ -332,6 +350,9 @@ def main() -> None:
         if outcome == "hit":
             miss_streak = 0
             saved_count += 1
+            known.add(cursor)
+        elif outcome == "skip":
+            miss_streak = 0
             known.add(cursor)
         elif outcome == "miss":
             miss_streak += 1
