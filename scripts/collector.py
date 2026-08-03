@@ -44,8 +44,11 @@ USER_AGENT = (
 )
 
 CERT_PATH = str(Path(__file__).parent / "certs" / "admedical_chain.pem")
-# 저장 위치는 ADMEDICAL_SAVE_DIR 로 오버라이드 가능 (클라우드 파이프라인에서 /tmp 로 지정).
-SAVE_DIR = Path(os.environ.get("ADMEDICAL_SAVE_DIR", str(Path.home() / "Desktop" / "admedical_ads")))
+# 저장 위치. 기본값은 OCR(batch_vision_ocr.py)이 읽는 폴더와 **같아야 한다**.
+# 예전 기본값은 ~/Desktop/admedical_ads 였는데, OCR 은 기존데이터/수집 을 읽어서
+# 새로 받은 시안이 OCR 대상에서 통째로 빠지는 구조였다. (바탕화면에 빈 폴더만 계속 생겼다)
+# ADMEDICAL_SAVE_DIR 로 오버라이드 가능 (클라우드 파이프라인에서 /tmp 로 지정).
+SAVE_DIR = Path(os.environ.get("ADMEDICAL_SAVE_DIR", str(ROOT / "기존데이터" / "수집")))
 METADATA_PATH = SAVE_DIR / "metadata.csv"
 METADATA_COLUMNS = [
     "approval_suffix", "full_approval_no", "valid_until",

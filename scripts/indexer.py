@@ -24,11 +24,13 @@ import sqlite3
 import sys
 import time
 from datetime import datetime
+import os
 from pathlib import Path
 
 ROOT = Path(__file__).parent.parent
 DB_PATH = ROOT / "index.sqlite"
-SAVE_DIR = Path.home() / "Desktop" / "admedical_ads"
+# collector 의 저장 위치와 동일해야 한다 (batch_vision_ocr.py 도 같은 폴더를 읽는다).
+SAVE_DIR = Path(os.environ.get("ADMEDICAL_SAVE_DIR", str(ROOT / "기존데이터" / "수집")))
 
 IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".gif"}
 FILENAME_PATTERN = re.compile(r"^(\d{6})-중-(\d+)(?:_(\d+))?$")
