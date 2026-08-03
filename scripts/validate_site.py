@@ -289,7 +289,9 @@ def check_statistics() -> None:
     # 클라우드·VPN 경유가 전부 막힘 — probe-admedical / probe-nordvpn 참고).
     # 맥북이 꺼져 있거나 파이프라인이 실패하면 조용히 멈추므로 여기서 잡아 알린다.
     #
-    # 금요일 데이터가 마지막이면 월요일 아침에 3일 전이 된다. 그래서 기준은 4일.
+    # 의협은 심의 결과를 며칠 늦게 올린다. 금요일치가 마지막이면 월요일 아침에
+    # 이미 3일 전이고, 게시가 하루이틀 더 밀리면 5일까지 간다.
+    # 4일로 잡았더니 정상 상황에서도 경보가 울렸다. 6일로 둔다.
     try:
         last = max((r["date"] for r in chart if r.get("count", 0) > 0), default=None)
         if last:
@@ -297,7 +299,7 @@ def check_statistics() -> None:
             if SKIP_FRESHNESS:
                 if behind >= 3:
                     warn("통계", f"최신 데이터가 {behind}일 전({last})")
-            elif behind >= 4:
+            elif behind >= 6:
                 fail("통계", f"최신 데이터가 {behind}일 전({last}) — 수집이 멈춘 것으로 보입니다. "
                              f"맥북 전원과 daily_pipeline 로그를 확인하세요.")
             elif behind >= 3:

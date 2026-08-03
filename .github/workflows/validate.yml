@@ -36,9 +36,23 @@ jobs:
           python-version: "3.11"
 
       - name: 로컬 파일 검사
-        run: python scripts/validate_site.py
+        # --skip-freshness: 수집 데이터가 며칠 밀린 것은 코드 문제가 아니다.
+        # 여기서 실패시키면 의협이 결과를 안 올리는 동안 커밋마다 실패 메일이 간다.
+        # 수집 중단 감지는 아래 예약 실행(라이브 검사)에서만 한다.
+        run: python scripts/validate_site.py --skip-freshness
 
       - name: 배포 사이트 검사
         # push 직후에는 Vercel 배포가 끝나지 않았을 수 있어 예약 실행에서만 본다.
         if: github.event_name != 'push'
         run: python scripts/validate_site.py --live-only
+
+      - name: 실패 요약
+        if: failure()
+        run: |
+          {
+            echo "## 자동 점검 실패"
+            echo
+            echo '```'
+            python scripts/validate_site.py --skip-freshness 2>&1 | tail -25 || true
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
