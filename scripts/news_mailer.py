@@ -72,6 +72,7 @@ def todays_posts(date_str: str) -> list[dict]:
 
 def build_html(posts: list[dict], date_str: str, token: str) -> str:
     dt = datetime.strptime(date_str, "%Y-%m-%d")
+    dow = "월화수목금토일"[dt.weekday()]
     unsub = f"{BASE_URL}/api/unsubscribe?token={token}"
 
     items = []
@@ -101,10 +102,25 @@ def build_html(posts: list[dict], date_str: str, token: str) -> str:
   <table role="presentation" width="600" cellpadding="0" cellspacing="0"
          style="width:100%;max-width:600px;background:#ffffff;border-radius:16px;overflow:hidden">
 
-    <tr><td style="background:#1e3a8a;padding:24px 28px">
+    <tr><td style="background:#1e3a8a;padding:26px 28px 24px">
       <div style="color:#bfdbfe;font-size:12px;font-weight:700;letter-spacing:.4px">ADMEDICAL</div>
-      <div style="color:#ffffff;font-size:20px;font-weight:800;margin-top:4px">의료광고 인사이트</div>
-      <div style="color:#93c5fd;font-size:13px;margin-top:6px">{dt:%Y년 %-m월 %-d일}</div>
+      <div style="color:#ffffff;font-size:21px;font-weight:800;margin-top:4px">의료광고 인사이트</div>
+      <div style="color:#93c5fd;font-size:13px;margin-top:6px">
+        {dt:%Y}년 {dt:%-m}월 {dt:%-d}일 {dow}요일</div>
+
+      <!-- 사이트 유도 — 뉴스레터는 주 1회지만 심의 데이터는 매일 갱신된다 -->
+      <table role="presentation" cellpadding="0" cellspacing="0" style="margin:18px 0 0">
+        <tr><td>
+          <div style="color:#fbbf24;font-size:13.5px;font-weight:700;line-height:1.6;margin:0 0 12px">
+            매일 업데이트 되는 의료광고 심의 통과 문구 및 심의 현황을 확인하세요
+          </div>
+          <a href="{BASE_URL}/"
+             style="display:inline-block;padding:11px 22px;background:#fbbf24;color:#1e3a8a;
+                    border-radius:9px;text-decoration:none;font-weight:800;font-size:14px">
+            심의 통과 문구 바로가기 →
+          </a>
+        </td></tr>
+      </table>
     </td></tr>
 
     <tr><td style="padding:28px">
