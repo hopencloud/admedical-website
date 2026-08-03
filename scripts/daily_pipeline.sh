@@ -57,7 +57,10 @@ run_step "1/4 collector"  python "$ROOT/scripts/collector.py" --max-attempts 200
 
 # 2. Vision OCR — ~/Desktop/admedical_ads/ 의 신규 이미지 OCR → index.sqlite
 #    (OpenAI gpt-4o-mini Vision HIGH detail. EasyOCR보다 한국어 정확)
-run_step "2/4 vision ocr" python "$ROOT/scripts/batch_vision_ocr.py" --src "$HOME/Desktop/admedical_ads" --workers 5
+# --src 를 주지 않는다. collector.py 와 batch_vision_ocr.py 가 같은 기본값
+# (기존데이터/수집)을 쓰도록 통일했다. 예전엔 양쪽 다 ~/Desktop/admedical_ads 를
+# 봤는데, 바탕화면에 데이터가 쌓이는 구조라 위치만 옮겼다.
+run_step "2/4 vision ocr" python "$ROOT/scripts/batch_vision_ocr.py" --workers 5
 
 # 3. 일일 통계
 # 3·4 순서 주의: compute_statistics 는 Supabase 를 조회하므로, sync 가 먼저 끝나야
@@ -83,6 +86,11 @@ DOM=$(date +%d)
 if [ "$DOM" = "01" ]; then
     run_step "지난달 TOP20" python "$ROOT/scripts/compute_monthly_top20.py"
 fi
+
+# 9. OCR·동기화가 끝난 시안 이미지 삭제 (디스크 회수)
+#    텍스트는 sqlite + Supabase 양쪽에 남으므로 원본 이미지는 더 쓰지 않는다.
+#    최근 7일치와 OCR 실패분은 재시도 여지를 위해 남긴다.
+run_step "이미지 정리" python "$ROOT/scripts/prune_images.py" --apply
 
 # 7. SQLite 백업 (매일 1부, 7일치 보관)
 echo ""
