@@ -34,7 +34,7 @@ SITEMAP = WEB / "sitemap.xml"
 
 BASE_URL = "https://www.admedical.co.kr"
 ADSENSE_PUB = "ca-pub-7650355816152791"
-ASSET_VER = "20260803b"
+ASSET_VER = "20260804a"
 
 SITEMAP_BEGIN = "    <!-- news:begin (자동 생성 — 직접 수정하지 마세요) -->"
 SITEMAP_END = "    <!-- news:end -->"

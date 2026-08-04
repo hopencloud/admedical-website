@@ -125,6 +125,10 @@ function renderChart(rows) {
             `${d.getMonth() + 1}월 ${d.getDate()}일까지 집계 · ` +
             `이후 분은 심의 결과가 공개되는 대로 반영됩니다`;
     }
+    // 툴팁 첫 줄에 그날의 마지막 심의번호를 띄운다.
+    // 그 날짜에 어디까지 발급됐는지, 우리 수집이 어디까지 왔는지 함께 보인다.
+    const lastNos = rows.map(r => r.last_review_no || "");
+
     new Chart(ctx, {
         type: "bar",
         data: {
@@ -139,7 +143,21 @@ function renderChart(rows) {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    displayColors: false,
+                    padding: 10,
+                    callbacks: {
+                        // 제목 아래에 심의번호를 먼저 보여주고 건수를 잇는다
+                        beforeBody: (items) => {
+                            const no = lastNos[items[0].dataIndex];
+                            return no ? `마지막 심의번호  ${no}` : "";
+                        },
+                        label: (item) => `통과 건수  ${item.parsed.y.toLocaleString()}건`,
+                    },
+                },
+            },
             scales: {
                 x: { ticks: { font: { size: 10 }, maxRotation: 0 } },
                 y: { beginAtZero: true, ticks: { precision: 0 } },

@@ -43,15 +43,21 @@ def count_between(sb: Client, start: date, end: date) -> int:
     return r.count or 0
 
 
-def fetch_daily_counts(sb: Client, start: date, end: date) -> dict[str, int]:
-    """지정 기간의 날짜별 건수. Supabase 페이지네이션(1000개 상한)을 넘어가면 여러 번 fetch."""
-    out: dict[str, int] = {}
+def fetch_daily_counts(sb: Client, start: date, end: date) -> tuple[dict[str, int], dict[str, str]]:
+    """지정 기간의 날짜별 (건수, 그날의 마지막 심의번호).
+
+    마지막 심의번호는 그래프 툴팁에 띄운다. 그 날짜에 어디까지 발급됐는지
+    한눈에 보이고, 우리 수집이 어디까지 왔는지도 같이 확인된다.
+    Supabase 페이지네이션(1000개 상한)을 넘어가면 여러 번 fetch.
+    """
+    counts: dict[str, int] = {}
+    last_no: dict[str, tuple[int, str]] = {}
     page_size = 1000
     offset = 0
     while True:
         r = (
             sb.table("ads")
-            .select("review_date")
+            .select("review_date, review_num, review_no_display")
             .gte("review_date", start.isoformat())
             .lte("review_date", end.isoformat())
             .range(offset, offset + page_size - 1)
@@ -60,11 +66,14 @@ def fetch_daily_counts(sb: Client, start: date, end: date) -> dict[str, int]:
         rows = r.data or []
         for row in rows:
             d = row["review_date"]
-            out[d] = out.get(d, 0) + 1
+            counts[d] = counts.get(d, 0) + 1
+            num = row.get("review_num") or 0
+            if d not in last_no or num > last_no[d][0]:
+                last_no[d] = (num, row.get("review_no_display") or str(num))
         if len(rows) < page_size:
             break
         offset += page_size
-    return out
+    return counts, {d: v[1] for d, v in last_no.items()}
 
 
 def main() -> None:
@@ -119,11 +128,15 @@ def main() -> None:
     prev_last_month_count = count_between(sb, prev_last_month_start, prev_last_month_end)
 
     # 30일 그래프
-    by_date = fetch_daily_counts(sb, chart_start, today)
+    by_date, last_by_date = fetch_daily_counts(sb, chart_start, today)
     chart: list[dict[str, object]] = []
     cursor = chart_start
     while cursor <= today:
-        chart.append({"date": cursor.isoformat(), "count": by_date.get(cursor.isoformat(), 0)})
+        key = cursor.isoformat()
+        row: dict[str, object] = {"date": key, "count": by_date.get(key, 0)}
+        if key in last_by_date:
+            row["last_review_no"] = last_by_date[key]
+        chart.append(row)
         cursor += timedelta(days=1)
 
     # 데이터 범위

@@ -1,59 +1,64 @@
 {
-  "generated_at": "2026-08-04T05:22:12.626416+09:00",
+  "generated_at": "2026-08-04T12:51:48.233468+09:00",
   "yesterday": {
     "date": "2026-08-03",
-    "count": 2,
+    "count": 3,
     "pending": false
   },
   "this_week": {
     "start": "2026-08-03",
     "end": "2026-08-04",
-    "count": 2
+    "count": 113
   },
   "this_month": {
     "start": "2026-08-01",
     "end": "2026-08-04",
-    "count": 2
+    "count": 113
   },
   "last_week": {
     "start": "2026-07-27",
     "end": "2026-08-02",
-    "count": 241,
-    "delta": -126,
+    "count": 258,
+    "delta": -109,
     "prev_count": 367
   },
   "last_month": {
     "start": "2026-07-01",
     "end": "2026-07-31",
-    "count": 1820,
-    "delta": -17,
+    "count": 1837,
+    "delta": 0,
     "prev_count": 1837
   },
   "total": {
-    "count": 13532,
+    "count": 13660,
     "first_date": "2025-12-12",
-    "last_date": "2026-08-03"
+    "last_date": "2026-08-04"
   },
   "chart_30d": [
     {
       "date": "2026-07-06",
-      "count": 105
+      "count": 105,
+      "last_review_no": "260706-중-216129"
     },
     {
       "date": "2026-07-07",
-      "count": 101
+      "count": 101,
+      "last_review_no": "260707-중-216230"
     },
     {
       "date": "2026-07-08",
-      "count": 96
+      "count": 96,
+      "last_review_no": "260708-중-216326"
     },
     {
       "date": "2026-07-09",
-      "count": 127
+      "count": 127,
+      "last_review_no": "260709-중-216453"
     },
     {
       "date": "2026-07-10",
-      "count": 149
+      "count": 149,
+      "last_review_no": "260710-중-216602"
     },
     {
       "date": "2026-07-11",
@@ -65,19 +70,23 @@
     },
     {
       "date": "2026-07-13",
-      "count": 107
+      "count": 107,
+      "last_review_no": "260713-중-216711"
     },
     {
       "date": "2026-07-14",
-      "count": 106
+      "count": 106,
+      "last_review_no": "260714-중-216817"
     },
     {
       "date": "2026-07-15",
-      "count": 107
+      "count": 107,
+      "last_review_no": "260715-중-216926"
     },
     {
       "date": "2026-07-16",
-      "count": 49
+      "count": 49,
+      "last_review_no": "260716-중-216976"
     },
     {
       "date": "2026-07-17",
@@ -93,23 +102,28 @@
     },
     {
       "date": "2026-07-20",
-      "count": 75
+      "count": 75,
+      "last_review_no": "260720-중-217052"
     },
     {
       "date": "2026-07-21",
-      "count": 119
+      "count": 119,
+      "last_review_no": "260721-중-217172"
     },
     {
       "date": "2026-07-22",
-      "count": 52
+      "count": 52,
+      "last_review_no": "260722-중-217225"
     },
     {
       "date": "2026-07-23",
-      "count": 65
+      "count": 65,
+      "last_review_no": "260723-중-217343"
     },
     {
       "date": "2026-07-24",
-      "count": 56
+      "count": 56,
+      "last_review_no": "260724-중-217402"
     },
     {
       "date": "2026-07-25",
@@ -121,19 +135,23 @@
     },
     {
       "date": "2026-07-27",
-      "count": 22
+      "count": 22,
+      "last_review_no": "260727-중-217427"
     },
     {
       "date": "2026-07-28",
-      "count": 55
+      "count": 55,
+      "last_review_no": "260728-중-217615"
     },
     {
       "date": "2026-07-29",
-      "count": 84
+      "count": 84,
+      "last_review_no": "260729-중-217701"
     },
     {
       "date": "2026-07-30",
-      "count": 80
+      "count": 97,
+      "last_review_no": "260730-중-217803"
     },
     {
       "date": "2026-07-31",
@@ -149,11 +167,13 @@
     },
     {
       "date": "2026-08-03",
-      "count": 2
+      "count": 3,
+      "last_review_no": "260803-중-217806"
     },
     {
       "date": "2026-08-04",
-      "count": 0
+      "count": 110,
+      "last_review_no": "260804-중-217922"
     }
   ]
 }

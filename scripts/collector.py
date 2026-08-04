@@ -89,6 +89,34 @@ def load_known_suffixes() -> set[int]:
     return out
 
 
+def load_known_from_supabase() -> set[int] | None:
+    """이미 수집된 심의번호 전체. 빈 번호 판별의 기준이 된다.
+
+    metadata.csv 는 로컬 수집 폴더에 붙어 있어 폴더를 옮기거나 정리하면 비어 버린다.
+    실제 보유 여부의 기준은 Supabase 다.
+    """
+    url = os.environ.get("SUPABASE_URL")
+    key = os.environ.get("SUPABASE_SERVICE_KEY") or os.environ.get("SUPABASE_ANON_KEY")
+    if not (url and key):
+        return None
+    try:
+        from supabase import create_client
+        sb = create_client(url, key)
+    except Exception:
+        return None
+
+    out: set[int] = set()
+    page, size = 0, 1000
+    while True:
+        rows = sb.table("ads").select("review_num").range(
+            page * size, page * size + size - 1).execute().data or []
+        out.update(r["review_num"] for r in rows)
+        if len(rows) < size:
+            break
+        page += 1
+    return out
+
+
 def auto_seed() -> int | None:
     """가장 큰 review_num 반환. 우선순위:
        1. Supabase `ads` 테이블 (원격, 신뢰) — 클라우드 파이프라인 진실의 근원
@@ -335,6 +363,36 @@ def main() -> None:
     saved_count = 0
     error_count = 0
     attempts = 0  # 실제 HTTP 조회 시도 횟수 (skip은 제외)
+
+    # ---------- 빠진 번호 되짚기 ----------
+    #
+    # 의협은 승인번호를 발급 순서대로 게시하지 않는다. 어제는 없던 번호가
+    # 오늘 생기기도 한다. 그런데 다음 실행의 시작점은 '가장 큰 번호 + 1' 이라
+    # 한 번 지나친 구멍은 영영 다시 보지 않는다.
+    # 실제로 217804 가 이렇게 통째로 빠졌다 (217805·217806 은 수집됨).
+    #
+    # 그래서 최근 구간에 뚫린 구멍을 매번 다시 확인한다.
+    # 판별 기준은 Supabase (metadata.csv 는 폴더를 옮기면 비어 버린다)
+    holdings = load_known_from_supabase()
+    if holdings:
+        known |= holdings
+        top = max(holdings)
+        window = int(os.environ.get("ADMEDICAL_GAP_WINDOW", "80"))
+        cap = int(os.environ.get("ADMEDICAL_GAP_MAX", "40"))
+        # 프론티어 근처만 본다. 오래된 구멍은 애초에 발급되지 않은 번호일 가능성이 높고,
+        # 매 실행마다 수백 건을 다시 조회하면 사이트에 부담이 된다.
+        gaps = [n for n in range(top - window, top) if n not in holdings][-cap:]
+        if gaps:
+            log.info("빠진 번호 %d개 재확인 (최근 %d번 구간)", len(gaps), window)
+            for n in gaps:
+                outcome = process_one(session, n, log)
+                if outcome == "hit":
+                    saved_count += 1
+                    known.add(n)
+                    log.info("[%s] 빠졌던 번호를 새로 수집", n)
+                elif outcome == "skip":
+                    known.add(n)
+                time.sleep(random.uniform(args.sleep_min, args.sleep_max))
 
     log.info("수집 시작: seed=%d miss_limit=%d max_attempts=%d",
              seed, args.miss_limit, args.max_attempts)
