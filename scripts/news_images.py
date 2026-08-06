@@ -401,9 +401,10 @@ def render_stat_trend(points: list[dict], spec: dict) -> str:
         x = PAD_L + slot * i + (slot - bar_w) / 2
         y = PAD_T + plot_h - h
         last = i == n - 1
+        # <title> 은 넣지 않는다. SVG 규격상 툴팁이지만 검색엔진 검사기가
+        # 문서의 <title> 로 세어 '제목 태그 2개' 로 잡힌다 (네이버 SEO 진단에서 실제로 걸렸다).
         p.append(f'<rect x="{x:.1f}" y="{y:.1f}" width="{bar_w:.1f}" height="{max(h, 1):.1f}" rx="3" '
-                 f'fill="{"#2563eb" if last else "#93c5fd"}">'
-                 f'<title>{_esc(pt["date"])}: {pt["count"]}건</title></rect>')
+                 f'fill="{"#2563eb" if last else "#93c5fd"}"/>')
         if last or n <= 10:
             p.append(f'<text x="{x + bar_w / 2:.1f}" y="{y - 6:.1f}" text-anchor="middle" '
                      f'font-size="11" font-weight="700" fill="#1e40af">{pt["count"]}</text>')

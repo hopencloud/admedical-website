@@ -113,6 +113,27 @@ def check_headings() -> None:
             fail("제목 구조", f"{rel(p)} → H2 가 없음")
 
 
+def check_title_tag() -> None:
+    """<title> 은 문서에 정확히 1개.
+
+    SVG 안에 툴팁용 <title> 을 넣었더니 네이버 SEO 진단이 '제목 태그 2개' 로
+    잡았다. SVG 규격상으로는 문제없지만 검사기는 문서 전체를 센다.
+    """
+    for p in public_pages():
+        n = len(re.findall(r"<title[\s>]", p.read_text(encoding="utf-8")))
+        if n != 1:
+            fail("제목 태그", f"{rel(p)} → <title> 이 {n}개 (정확히 1개여야 함)")
+
+
+def check_description_length() -> None:
+    """네이버는 페이지 설명을 80자 이내로 권장한다. 넘으면 잘려 나온다."""
+    for p in public_pages():
+        m = re.search(r'<meta name="description" content="([^"]*)"',
+                      p.read_text(encoding="utf-8"))
+        if m and len(m.group(1)) > 80:
+            warn("페이지 설명", f"{rel(p)} → {len(m.group(1))}자 (권장 80자 이내)")
+
+
 def check_social_meta() -> None:
     """OG/트위터 카드 필수 필드. 공유·네이버 미리보기에 직접 쓰인다."""
     required = [
@@ -393,7 +414,8 @@ def main() -> int:
 
     if not args.live_only:
         for fn in (check_internal_links, check_static_header, check_images_alt,
-                   check_headings, check_social_meta, check_interactive_assets,
+                   check_headings, check_title_tag, check_description_length,
+                   check_social_meta, check_interactive_assets,
                    check_canonical, check_jsonld,
                    check_sitemap, check_rss, check_news_index, check_statistics,
                    check_adsense_and_robots):
