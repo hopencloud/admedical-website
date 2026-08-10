@@ -64,9 +64,11 @@ def render_top20() -> None:
         print("  [건너뜀] 지난주 TOP20 데이터가 비어 있습니다.")
         return
 
-    period = (f"{data.get('label', '지난주')} "
-              f"({fmt_date(data.get('start_date'))} ~ {fmt_date(data.get('end_date'))}) · "
-              f"광고 {data.get('ads_analyzed', 0):,}건 분석")
+    # label 에 이미 "지난주 (2026-08-03 ~ 2026-08-09)" 형태로 기간이 들어 있다.
+    # 여기서 날짜를 또 붙이면 같은 기간이 두 번 찍힌다.
+    label = str(data.get("label") or "지난주")
+    span = f"{fmt_date(data.get('start_date'))} ~ {fmt_date(data.get('end_date'))}"
+    period = f"{label} · 광고 {data.get('ads_analyzed', 0):,}건 분석"
 
     rows = []
     for i, item in enumerate(items, 1):
@@ -85,8 +87,7 @@ def render_top20() -> None:
     total = sum(x.get("count", 0) for x in items)
     lead = (
         f'<p class="text-slate-700 leading-relaxed mb-4">'
-        f'{data.get("label", "지난주")}({fmt_date(data.get("start_date"))} ~ '
-        f'{fmt_date(data.get("end_date"))}) 심의를 통과한 광고 '
+        f'{span} 심의를 통과한 광고 '
         f'{data.get("ads_analyzed", 0):,}건에서 가장 자주 등장한 표현은 '
         f'<strong>{top3}</strong> 순이었습니다. 상위 20개 표현은 모두 합쳐 '
         f'{total:,}회 등장했습니다.</p>'
