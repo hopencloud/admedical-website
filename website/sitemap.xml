@@ -96,9 +96,49 @@
     <!-- news:begin (자동 생성 — 직접 수정하지 마세요) -->
     <url>
         <loc>https://www.admedical.co.kr/news</loc>
-        <lastmod>2026-08-03</lastmod>
+        <lastmod>2026-08-10</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://www.admedical.co.kr/news/2026-08-10-rem-sleep-disorder-mri-parkinson-risk</loc>
+        <lastmod>2026-08-10</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://www.admedical.co.kr/assets/news/2026-08-10-rem-sleep-disorder-mri-parkinson-risk-thumb.jpg</image:loc>
+            <image:title>렘수면행동장애 MRI로 파킨슨병 위험 선별 가능성 제시</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://www.admedical.co.kr/news/2026-08-10-medical-dispute-adjustment-law-marketing-impact</loc>
+        <lastmod>2026-08-10</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://www.admedical.co.kr/assets/news/2026-08-10-medical-dispute-adjustment-law-marketing-impact-thumb.jpg</image:loc>
+            <image:title>의료분쟁조정법 개정, 병원 마케팅에 미칠 가능성</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://www.admedical.co.kr/news/2026-08-10-medical-advertising-guideline-update</loc>
+        <lastmod>2026-08-10</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://www.admedical.co.kr/assets/news/2026-08-10-medical-advertising-guideline-update-thumb.jpg</image:loc>
+            <image:title>의료광고 가이드라인 개정, 병의원 마케팅 전략 변화 필요</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://www.admedical.co.kr/news/2026-08-10-medical-advertising-online-regulation</loc>
+        <lastmod>2026-08-10</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://www.admedical.co.kr/assets/news/2026-08-10-medical-advertising-online-regulation-thumb.jpg</image:loc>
+            <image:title>의료광고 자율심의 확대, 온라인 채널 규제 강화</image:title>
+        </image:image>
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-03-medical-advertising-review-event-risks</loc>

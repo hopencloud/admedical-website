@@ -218,7 +218,8 @@ def top_expressions() -> list[str]:
 # ---------- 본체 ----------
 
 def publish_one(client, posts: list[dict], candidates: list, stats: dict,
-                index: int = 0, dry_run: bool = False) -> dict | None:
+                index: int = 0, dry_run: bool = False,
+                tried_links: set[str] | None = None) -> dict | None:
     """한 편 생성. 성공하면 새 post dict, 발행할 게 없으면 None."""
     published_titles = [p["title"] for p in posts]
     published_keys = {p.get("topic_key", "") for p in posts}
@@ -227,7 +228,9 @@ def publish_one(client, posts: list[dict], candidates: list, stats: dict,
 
     # 최근 발행분이 이미 근거로 쓴 기사는 후보에서 아예 뺀다.
     # AI 에게 "겹치지 마라"고 부탁하는 것만으로는 같은 주제가 반복해서 나왔다.
-    used = used_source_links(posts)
+    # 이번 실행에서 이미 손댄 기사도 뺀다. 안 그러면 한 편이 반려됐을 때
+    # 다음 시도가 똑같은 주제를 다시 골라 같은 이유로 또 반려된다.
+    used = used_source_links(posts) | (tried_links or set())
     pool = [c for c in candidates if c.link not in used]
     if len(pool) < len(candidates):
         log(f"이미 다룬 기사 {len(candidates) - len(pool)}건을 후보에서 제외")
@@ -237,6 +240,8 @@ def publish_one(client, posts: list[dict], candidates: list, stats: dict,
         picked = news_writer.select_topic(pool, published_titles)
         if not picked:
             break
+        if tried_links is not None:
+            tried_links |= {s.link for s in picked["sources"]}
         dup = duplicate_of(picked["topic"], posts)
         if not dup:
             topic = picked
@@ -308,10 +313,19 @@ def publish_one(client, posts: list[dict], candidates: list, stats: dict,
         log("이미 같은 주제를 발행했습니다. 건너뜁니다.")
         return None
 
+    # 제목이 겹치면 기사를 버리지 말고 제목만 다시 짓는다.
+    # 주제 단계에서 이미 중복 검사를 통과한 기사다. 좁은 분야라 제목만 뻔하게
+    # 나오는 경우가 잦은데, 그때마다 버리면 한 주에 한 편도 못 나간다.
     dup = duplicate_of(article.get("title", ""), posts)
     if dup:
-        log(f"최종 제목이 기존 글과 겹칩니다 ('{dup}'). 발행하지 않습니다.")
-        return None
+        log(f"최종 제목이 '{dup}' 와 겹칩니다. 제목을 다시 짓습니다.")
+        progress(client, "제목 재작성", f"'{dup}' 와 중복")
+        article = news_writer.retitle_article(article, dup)
+        dup = duplicate_of(article.get("title", ""), posts)
+        if dup:
+            log(f"다시 지은 제목도 '{dup}' 와 겹칩니다. 발행하지 않습니다.")
+            return None
+        log(f"새 제목: {article.get('title', '')}")
 
     now = datetime.now(KST)
     slug = news_writer.make_slug(article, now)
@@ -456,20 +470,40 @@ def main() -> int:
         finish_run(client, "skipped", "수집된 기사 없음")
         return 0
 
+    # 한 편이 반려돼도 다음 편을 시도한다.
+    #
+    # 예전에는 반려되면 곧바로 break 라서, 첫 편이 걸리면 나머지 4편도 시도조차
+    # 못 하고 그 주 발행이 통째로 0편이 됐다 (2026-08-10). 목표 편수를 채울 때까지
+    # 최대 count*3 번 시도하되, 연속 3번 반려되면 그날은 소재가 없다고 보고 멈춘다.
     created: list[dict] = []
-    for i in range(max(1, count)):
-        if i:
-            log(f"--- {i + 1}번째 글 ---")
+    target = max(1, count)
+    max_attempts = target * 3
+    misses = 0
+    tried_links: set[str] = set()
+    for attempt in range(max_attempts):
+        if len(created) >= target:
+            break
+        if attempt:
+            log(f"--- {attempt + 1}번째 시도 (발행 {len(created)}/{target}) ---")
         try:
             post = publish_one(client, posts + created, candidates, stats,
-                               index=i, dry_run=args.dry_run)
+                               index=len(created), dry_run=args.dry_run,
+                               tried_links=tried_links)
         except Exception as exc:
             log("발행 중 오류 — 이번 편은 건너뜁니다.")
             traceback.print_exc()
-            finish_run(client, "failed", f"{type(exc).__name__}: {exc}")
-            break
+            misses += 1
+            if misses >= 3:
+                finish_run(client, "failed", f"{type(exc).__name__}: {exc}")
+                break
+            continue
         if not post:
-            break
+            misses += 1
+            if misses >= 3:
+                log("연속 3번 반려됐습니다. 오늘은 여기서 멈춥니다.")
+                break
+            continue
+        misses = 0
         created.append(post)
         record_post(client, post, news_writer.WRITER_MODEL)
 

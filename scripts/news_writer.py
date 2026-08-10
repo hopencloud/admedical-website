@@ -518,6 +518,60 @@ def article_topic_key(article: dict) -> str:
     return normalize_topic_key(article.get("title", ""))
 
 
+RETITLE_SYSTEM = """당신은 의료 전문 매체의 제목 편집자입니다.
+기사 내용은 그대로 두고 제목만 다시 답니다."""
+
+RETITLE_PROMPT = """아래 기사의 제목이 이미 발행된 다른 글과 너무 비슷합니다.
+
+[겹치는 기존 제목]
+{conflict}
+
+[현재 제목]
+{title}
+
+[기사 요약]
+{summary}
+
+[기사 소제목들]
+{headings}
+
+이 기사에만 해당하는 **구체적인 사실**을 제목에 넣어 다시 지으세요.
+- "의료광고", "심의", "마케팅 전략", "변화", "대응" 같은 뭉뚱그린 말만으로 채우지 마세요.
+- 이 기사에서만 나오는 대상·제도명·주체·행위를 제목에 반드시 넣으세요.
+- 기사에 없는 사실을 새로 만들지 마세요.
+- 40자 이내.
+
+JSON으로만 답하세요:
+{{"title": "새 제목", "seo_title": "검색결과용 제목 60자 이내"}}"""
+
+
+def retitle_article(article: dict, conflict: str) -> dict:
+    """제목이 기존 글과 겹칠 때 제목만 다시 짓는다.
+
+    본문은 이미 주제 단계에서 중복 검사를 통과했다. 제목이 뻔하게 나왔을 뿐인데
+    기사를 통째로 버리면 그 주에 한 편도 못 나가는 일이 생긴다 (2026-08-10 실제 발생).
+    """
+    headings = " / ".join(s.get("heading", "") for s in article.get("sections", []))
+    result = _chat_json(
+        CHEAP_MODEL,
+        RETITLE_SYSTEM,
+        RETITLE_PROMPT.format(
+            conflict=conflict,
+            title=article.get("title", ""),
+            summary=article.get("summary", ""),
+            headings=headings,
+        ),
+        max_tokens=300,
+        temperature=0.7,
+    )
+    out = dict(article)
+    if result.get("title"):
+        out["title"] = result["title"].strip()
+    if result.get("seo_title"):
+        out["seo_title"] = result["seo_title"].strip()
+    return out
+
+
 def word_count(article: dict) -> int:
     text = article.get("lead", "")
     for sec in article.get("sections", []):

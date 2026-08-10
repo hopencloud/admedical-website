@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Thu, 06 Aug 2026 23:07:48 +0900</lastBuildDate>
-        <pubDate>Thu, 06 Aug 2026 23:07:48 +0900</pubDate>
+        <lastBuildDate>Mon, 10 Aug 2026 21:49:13 +0900</lastBuildDate>
+        <pubDate>Mon, 10 Aug 2026 21:49:13 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,60 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>렘수면행동장애 MRI로 파킨슨병 위험 선별 가능성 제시</title>
+            <link>https://www.admedical.co.kr/news/2026-08-10-rem-sleep-disorder-mri-parkinson-risk</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-10-rem-sleep-disorder-mri-parkinson-risk</guid>
+            <description>렘수면행동장애 환자 중 파킨슨병 위험을 MRI로 선별할 수 있는 가능성이 제시됐다.</description>
+            <author>admedical</author>
+            <pubDate>Mon, 10 Aug 2026 21:46:33 +0900</pubDate>
+            <category>의료마케팅</category>
+            <category>파킨슨병</category>
+            <category>MRI 검사</category>
+            <category>렘수면행동장애</category>
+            <category>의료기술</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-10-rem-sleep-disorder-mri-parkinson-risk-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
+        <item>
+            <title>의료분쟁조정법 개정, 병원 마케팅에 미칠 가능성</title>
+            <link>https://www.admedical.co.kr/news/2026-08-10-medical-dispute-adjustment-law-marketing-impact</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-10-medical-dispute-adjustment-law-marketing-impact</guid>
+            <description>의료분쟁조정법 개정이 병원 마케팅과 환자 신뢰 형성에 미칠 가능성을 분석합니다.</description>
+            <author>admedical</author>
+            <pubDate>Mon, 10 Aug 2026 21:39:28 +0900</pubDate>
+            <category>의료분쟁조정법</category>
+            <category>병원 마케팅</category>
+            <category>환자 신뢰</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-10-medical-dispute-adjustment-law-marketing-impact-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
+        <item>
+            <title>의료광고 가이드라인 개정, 병의원 마케팅 전략 변화 필요</title>
+            <link>https://www.admedical.co.kr/news/2026-08-10-medical-advertising-guideline-update</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-10-medical-advertising-guideline-update</guid>
+            <description>의료광고 가이드라인 개정으로 병의원 마케터는 새로운 광고 전략을 준비해야 합니다.</description>
+            <author>admedical</author>
+            <pubDate>Mon, 10 Aug 2026 20:38:03 +0900</pubDate>
+            <category>의료광고</category>
+            <category>가이드라인</category>
+            <category>병원 마케팅</category>
+            <category>광고 심의</category>
+            <category>법적 기준</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-10-medical-advertising-guideline-update-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
+        <item>
+            <title>의료광고 자율심의 확대, 온라인 채널 규제 강화</title>
+            <link>https://www.admedical.co.kr/news/2026-08-10-medical-advertising-online-regulation</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-10-medical-advertising-online-regulation</guid>
+            <description>의료광고 자율심의 대상이 확대되며 병원 마케팅 전략 재정립이 필요합니다.</description>
+            <author>admedical</author>
+            <pubDate>Mon, 10 Aug 2026 20:34:36 +0900</pubDate>
+            <category>의료광고</category>
+            <category>온라인 마케팅</category>
+            <category>법적 규제</category>
+            <category>디지털 플랫폼</category>
+            <category>병원 광고</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-10-medical-advertising-online-regulation-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>의료광고 규제 속 병원 리뷰 이벤트의 법적 리스크</title>
             <link>https://www.admedical.co.kr/news/2026-08-03-medical-advertising-review-event-risks</link>

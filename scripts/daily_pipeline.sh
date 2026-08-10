@@ -87,6 +87,11 @@ if [ "$DOM" = "01" ]; then
     run_step "지난달 TOP20" python "$ROOT/scripts/compute_monthly_top20.py"
 fi
 
+# 8-1. 통계·TOP20 을 정적 HTML 로 박아 넣는다.
+#      JSON 을 갱신한 다음에 반드시 돌아야 한다. 크롤러는 JS 를 안 돌리므로
+#      이걸 빼먹으면 /top20 이 "로딩 중...", 메인 통계가 "- 건" 으로만 보인다.
+run_step "정적 렌더" python "$ROOT/scripts/prerender_static.py"
+
 # 9. OCR·동기화가 끝난 시안 이미지 삭제 (디스크 회수)
 #    텍스트는 sqlite + Supabase 양쪽에 남으므로 원본 이미지는 더 쓰지 않는다.
 #    최근 7일치와 OCR 실패분은 재시도 여지를 위해 남긴다.
@@ -112,6 +117,10 @@ DATA_FILES=(
     "website/assets/data/this_month_top20.json"
     "website/assets/data/weekly_top20.json"
     "website/assets/data/monthly_top20.json"
+    # prerender_static.py 가 같은 수치를 HTML 에도 박아 넣는다. 함께 올려야
+    # 크롤러가 보는 페이지와 JSON 이 어긋나지 않는다.
+    "website/top20.html"
+    "website/index.html"
 )
 git add "${DATA_FILES[@]}" 2>/dev/null
 

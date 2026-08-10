@@ -134,6 +134,31 @@ def check_description_length() -> None:
             warn("페이지 설명", f"{rel(p)} → {len(m.group(1))}자 (권장 80자 이내)")
 
 
+def check_prerender() -> None:
+    """알맹이가 JS 렌더로만 존재하면 안 된다.
+
+    /top20 은 순위표 전체가, 메인은 통계 숫자 전체가 JS 로만 그려졌다.
+    크롤러가 받는 HTML 에는 "로딩 중...", "- 건" 만 있었고 /top20 의 정적 본문은
+    559자였다. 구글 애드센스가 '가치가 별로 없는 콘텐츠' 로 반려한 직접 원인이다
+    (2026-08-10). scripts/prerender_static.py 가 채운다.
+    """
+    targets = [("top20.html", "top20", 20), ("index.html", "stats", 1)]
+    for name, key, min_items in targets:
+        text = (WEB / name).read_text(encoding="utf-8")
+        m = re.search(rf"<!-- prerender:{key}:begin -->(.*?)<!-- prerender:{key}:end -->",
+                      text, flags=re.S)
+        if not m:
+            fail("정적 렌더", f"{name} → prerender:{key} 마커가 없음")
+            continue
+        body = re.sub(r"<[^>]+>", "", m.group(1)).strip()
+        if len(body) < 100:
+            fail("정적 렌더", f"{name} → prerender:{key} 가 비어 있음 "
+                              f"(prerender_static.py 를 돌려야 함)")
+        if min_items > 1 and m.group(1).count("<li") < min_items:
+            fail("정적 렌더", f"{name} → 항목이 {m.group(1).count('<li')}개 "
+                              f"({min_items}개 이상이어야 함)")
+
+
 def check_social_meta() -> None:
     """OG/트위터 카드 필수 필드. 공유·네이버 미리보기에 직접 쓰인다."""
     required = [
@@ -415,7 +440,7 @@ def main() -> int:
     if not args.live_only:
         for fn in (check_internal_links, check_static_header, check_images_alt,
                    check_headings, check_title_tag, check_description_length,
-                   check_social_meta, check_interactive_assets,
+                   check_social_meta, check_prerender, check_interactive_assets,
                    check_canonical, check_jsonld,
                    check_sitemap, check_rss, check_news_index, check_statistics,
                    check_adsense_and_robots):

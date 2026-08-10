@@ -1,7 +1,120 @@
 {
-  "generated_at": "2026-08-06T23:07:48.013354+09:00",
-  "count": 11,
+  "generated_at": "2026-08-10T21:49:13.686776+09:00",
+  "count": 15,
   "posts": [
+    {
+      "slug": "2026-08-10-rem-sleep-disorder-mri-parkinson-risk",
+      "title": "렘수면행동장애 MRI로 파킨슨병 위험 선별 가능성 제시",
+      "summary": "렘수면행동장애 환자 중 파킨슨병 위험을 MRI로 선별할 수 있는 가능성이 제시됐다.",
+      "date": "2026-08-10",
+      "published_at": "2026-08-10T21:46:33.907034+09:00",
+      "cover": "/assets/news/2026-08-10-rem-sleep-disorder-mri-parkinson-risk-photo.jpg",
+      "thumb": "/assets/news/2026-08-10-rem-sleep-disorder-mri-parkinson-risk-thumb.jpg",
+      "infographic_type": "checklist",
+      "tags": [
+        "의료마케팅",
+        "파킨슨병",
+        "MRI 검사",
+        "렘수면행동장애",
+        "의료기술"
+      ],
+      "topic_key": "mri로 가능성 렘수면행동장애 선별 위험 제시",
+      "sources": [
+        {
+          "title": "파킨슨병 위험 높은 '렘수면행동장애' MRI로 먼저 찾는다",
+          "source": "청년의사",
+          "link": "http://www.docdocdoc.co.kr/news/articleView.html?idxno=3041657"
+        }
+      ]
+    },
+    {
+      "slug": "2026-08-10-medical-dispute-adjustment-law-marketing-impact",
+      "title": "의료분쟁조정법 개정, 병원 마케팅에 미칠 가능성",
+      "summary": "의료분쟁조정법 개정이 병원 마케팅과 환자 신뢰 형성에 미칠 가능성을 분석합니다.",
+      "date": "2026-08-10",
+      "published_at": "2026-08-10T21:39:28.136476+09:00",
+      "cover": "/assets/news/2026-08-10-medical-dispute-adjustment-law-marketing-impact-photo.jpg",
+      "thumb": "/assets/news/2026-08-10-medical-dispute-adjustment-law-marketing-impact-thumb.jpg",
+      "infographic_type": "checklist",
+      "tags": [
+        "의료분쟁조정법",
+        "병원 마케팅",
+        "환자 신뢰"
+      ],
+      "topic_key": "가능성 개정 마케팅에 미칠 병원 의료분쟁조정법",
+      "sources": [
+        {
+          "title": "환자도 개정 '의료분쟁조정법' 우려…의료계와 얼마나 다를까?",
+          "source": "의협신문",
+          "link": "http://www.doctorsnews.co.kr/news/articleView.html?idxno=165772"
+        },
+        {
+          "title": "“간호사에 위험 업무 떠넘겨”…의료연대본부, PA 제도 보완 촉구",
+          "source": "청년의사",
+          "link": "http://www.docdocdoc.co.kr/news/articleView.html?idxno=3041660"
+        }
+      ]
+    },
+    {
+      "slug": "2026-08-10-medical-advertising-guideline-update",
+      "title": "의료광고 가이드라인 개정, 병의원 마케팅 전략 변화 필요",
+      "summary": "의료광고 가이드라인 개정으로 병의원 마케터는 새로운 광고 전략을 준비해야 합니다.",
+      "date": "2026-08-10",
+      "published_at": "2026-08-10T20:38:03.526974+09:00",
+      "cover": "/assets/news/2026-08-10-medical-advertising-guideline-update-photo.jpg",
+      "thumb": "/assets/news/2026-08-10-medical-advertising-guideline-update-thumb.jpg",
+      "infographic_type": "checklist",
+      "tags": [
+        "의료광고",
+        "가이드라인",
+        "병원 마케팅",
+        "광고 심의",
+        "법적 기준"
+      ],
+      "topic_key": "가이드라인 개정 마케팅 변화 병의원 의료광고",
+      "sources": [
+        {
+          "title": "‘건강한 의료광고, 우리가 함께 만들어요!’ 가이드라인 개정판 배포",
+          "source": "대전 대덕구청 자료실",
+          "link": "https://www.daedeok.go.kr/board/binary/CHC_000005/2100698.pdf"
+        }
+      ]
+    },
+    {
+      "slug": "2026-08-10-medical-advertising-online-regulation",
+      "title": "의료광고 자율심의 확대, 온라인 채널 규제 강화",
+      "summary": "의료광고 자율심의 대상이 확대되며 병원 마케팅 전략 재정립이 필요합니다.",
+      "date": "2026-08-10",
+      "published_at": "2026-08-10T20:34:36.934171+09:00",
+      "cover": "/assets/news/2026-08-10-medical-advertising-online-regulation-photo.jpg",
+      "thumb": "/assets/news/2026-08-10-medical-advertising-online-regulation-thumb.jpg",
+      "infographic_type": "checklist",
+      "tags": [
+        "의료광고",
+        "온라인 마케팅",
+        "법적 규제",
+        "디지털 플랫폼",
+        "병원 광고"
+      ],
+      "topic_key": "강화 규제 온라인 의료광고 자율심의 채널",
+      "sources": [
+        {
+          "title": "의료광고 자율심의 대상 확대—홈페이지 등 온라인 채널 규제 강조",
+          "source": "비젠메디컬",
+          "link": "https://medical.vizensoft.com/insight/read?no=550"
+        },
+        {
+          "title": "병·의원 SNS·블로그 광고, 대형 플랫폼이라면 사전심의 대상",
+          "source": "인블로그 블로그 (인용)",
+          "link": "https://inblog.ai/ko/blog/medical-ad-review"
+        },
+        {
+          "title": "디지털플랫폼 통한 의료광고 모니터링 및 삭제 권한 법제화 추진",
+          "source": "KODAA 법안정보",
+          "link": "https://kodaa.or.kr/post_file_download.cm?c=YTo1OntzOjEwOiJib2FyZF9jb2RlIjtzOjIyOiJiMjAxODA4MjM1YjdlNTAxNTUyMTdlIjtzOjk6InBvc3RfY29kZSI7czoyMjoicDIwMjYwMTE2ZmQxYzc0YTE0ZjY0OCI7czo5OiJmaWxlX2NvZGUiO3M6MjI6InAyMDI2MDExNmM4M2ExZTBhODk0MGEiO3M6MTk6InBvc3RfZG93bmxvYWRfdG9rZW4iO3M6MTM6IjY5OTgyOWIyZDZkNGEiO3M6MTE6Im1lbWJlcl9jb2RlIjtOO30%3D"
+        }
+      ]
+    },
     {
       "slug": "2026-08-03-medical-advertising-review-event-risks",
       "title": "의료광고 규제 속 병원 리뷰 이벤트의 법적 리스크",

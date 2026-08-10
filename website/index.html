@@ -248,6 +248,15 @@
         </div>
     </section>
 
+    <!-- 위 숫자 카드는 JS 가 채우므로 크롤러에게는 전부 '-' 로만 보인다.
+         같은 내용을 문장으로도 남긴다. scripts/prerender_static.py 가 만든다. -->
+    <section class="bg-white rounded-2xl p-6 border border-slate-200 shadow-soft mb-6">
+        <h2 class="text-sm font-semibold text-slate-700 mb-3">이번 주 심의 통과 현황</h2>
+        <!-- prerender:stats:begin -->
+<p class="text-slate-700 leading-relaxed">2026년 8월 7일 기준 대한의사협회 의료광고심의위원회를 통과한 광고는 <strong>120건</strong>입니다. 이번 주에는 464건, 지난주에는 258건이 통과했습니다(지난 기간 대비 -109건). 지난달 전체로는 1,837건이며, 2025년 12월 12일부터 지금까지 <strong>14,011건</strong>의 통과 시안을 텍스트로 인덱싱해 두었습니다.</p>
+<!-- prerender:stats:end -->
+    </section>
+
     <!-- 30일 그래프 -->
     <section class="bg-white rounded-2xl p-6 border border-slate-200 shadow-soft">
         <h2 class="text-sm font-semibold text-slate-700 mb-1">최근 30일 일자별 통과 건수</h2>
