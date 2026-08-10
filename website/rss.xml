@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Mon, 10 Aug 2026 21:49:13 +0900</lastBuildDate>
-        <pubDate>Mon, 10 Aug 2026 21:49:13 +0900</pubDate>
+        <lastBuildDate>Tue, 11 Aug 2026 06:16:48 +0900</lastBuildDate>
+        <pubDate>Tue, 11 Aug 2026 06:16:48 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,20 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>의료광고 변화: 원장 브랜딩의 부상</title>
+            <link>https://www.admedical.co.kr/news/2026-08-11-medical-marketing-director-branding</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-11-medical-marketing-director-branding</guid>
+            <description>의료광고 심의 강화로 원장 브랜딩이 병원 마케팅의 핵심 전략으로 부상하고 있다.</description>
+            <author>admedical</author>
+            <pubDate>Tue, 11 Aug 2026 06:14:40 +0900</pubDate>
+            <category>의료광고</category>
+            <category>병원 마케팅</category>
+            <category>브랜딩</category>
+            <category>콘텐츠 마케팅</category>
+            <category>의료법</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-11-medical-marketing-director-branding-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>렘수면행동장애 MRI로 파킨슨병 위험 선별 가능성 제시</title>
             <link>https://www.admedical.co.kr/news/2026-08-10-rem-sleep-disorder-mri-parkinson-risk</link>

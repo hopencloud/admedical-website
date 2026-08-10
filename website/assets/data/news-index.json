@@ -1,7 +1,32 @@
 {
-  "generated_at": "2026-08-10T21:49:13.686776+09:00",
-  "count": 15,
+  "generated_at": "2026-08-11T06:16:48.991410+09:00",
+  "count": 16,
   "posts": [
+    {
+      "slug": "2026-08-11-medical-marketing-director-branding",
+      "title": "의료광고 변화: 원장 브랜딩의 부상",
+      "summary": "의료광고 심의 강화로 원장 브랜딩이 병원 마케팅의 핵심 전략으로 부상하고 있다.",
+      "date": "2026-08-11",
+      "published_at": "2026-08-11T06:14:40.704137+09:00",
+      "cover": "/assets/news/2026-08-11-medical-marketing-director-branding-photo.jpg",
+      "thumb": "/assets/news/2026-08-11-medical-marketing-director-branding-thumb.jpg",
+      "infographic_type": "comparison",
+      "tags": [
+        "의료광고",
+        "병원 마케팅",
+        "브랜딩",
+        "콘텐츠 마케팅",
+        "의료법"
+      ],
+      "topic_key": "변화 부상 브랜딩의 원장 의료광고",
+      "sources": [
+        {
+          "title": "병의원 마케팅, ‘물량 공세’ 지고 ‘원장 브랜딩’ 뜬다",
+          "source": "케이메디컬뉴스",
+          "link": "https://kmedicalnews.com/news/index.php?section%5B%5D=10862&section%5B%5D=10865"
+        }
+      ]
+    },
     {
       "slug": "2026-08-10-rem-sleep-disorder-mri-parkinson-risk",
       "title": "렘수면행동장애 MRI로 파킨슨병 위험 선별 가능성 제시",
