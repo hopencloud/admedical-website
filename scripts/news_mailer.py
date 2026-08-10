@@ -63,11 +63,22 @@ def get_supabase():
     return create_client(url, key)
 
 
-def todays_posts(date_str: str) -> list[dict]:
+def todays_posts(date_str: str, days: int = 1) -> list[dict]:
+    """발송에 담을 기사. days=1 이면 그날치, days=7 이면 지난 7일치.
+
+    기사는 매일 나가지만 메일은 주 1회(월요일)만 보낸다. 매일 메일이 오면
+    구독 해지가 늘고 Gmail 발송 한도에도 부담이 된다. 그래서 월요일에
+    지난 한 주치를 묶어 보낸다.
+    """
     if not INDEX_JSON.exists():
         return []
+    end = datetime.strptime(date_str, "%Y-%m-%d").date()
+    start = end - timedelta(days=max(1, days) - 1)
     data = json.loads(INDEX_JSON.read_text(encoding="utf-8"))
-    return [p for p in data.get("posts", []) if p.get("date") == date_str]
+    picked = [p for p in data.get("posts", [])
+              if p.get("date") and start.isoformat() <= p["date"] <= end.isoformat()]
+    picked.sort(key=lambda p: p.get("published_at") or p["date"], reverse=True)
+    return picked
 
 
 def build_html(posts: list[dict], date_str: str, token: str) -> str:
@@ -257,15 +268,18 @@ def main() -> int:
     ap = argparse.ArgumentParser(description="뉴스레터 발송")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--date", default=f"{datetime.now(KST):%Y-%m-%d}")
+    ap.add_argument("--days", type=int, default=1,
+                    help="며칠치를 묶어 보낼지. 월요일 주간 발송은 7")
     args = ap.parse_args()
 
     from dotenv import load_dotenv
     load_dotenv(ROOT / ".env")
 
-    posts = todays_posts(args.date)
+    posts = todays_posts(args.date, days=args.days)
     if not posts:
-        log(f"{args.date} 발행분이 없습니다. 발송하지 않습니다.")
-        summary(f"## ⚠️ 뉴스레터 발송 건너뜀\n\n{args.date} 발행분이 없습니다.\n")
+        span = args.date if args.days <= 1 else f"최근 {args.days}일"
+        log(f"{span} 발행분이 없습니다. 발송하지 않습니다.")
+        summary(f"## ⚠️ 뉴스레터 발송 건너뜀\n\n{span} 발행분이 없습니다.\n")
         return 0
 
     try:
