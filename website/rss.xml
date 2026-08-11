@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Tue, 11 Aug 2026 06:16:48 +0900</lastBuildDate>
-        <pubDate>Tue, 11 Aug 2026 06:16:48 +0900</pubDate>
+        <lastBuildDate>Wed, 12 Aug 2026 06:26:48 +0900</lastBuildDate>
+        <pubDate>Wed, 12 Aug 2026 06:26:48 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,18 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>식약처 '셜록홈즈' 출범, 수사 전문성 강화</title>
+            <link>https://www.admedical.co.kr/news/2026-08-12-sherlock-holmes-investigation</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-12-sherlock-holmes-investigation</guid>
+            <description>식약처가 수사 전문성 강화를 위해 '셜록홈즈'를 출범, 변화하는 범죄 환경에 대응하기 위한 연구 모임.</description>
+            <author>admedical</author>
+            <pubDate>Wed, 12 Aug 2026 06:24:33 +0900</pubDate>
+            <category>식약처</category>
+            <category>의료광고</category>
+            <category>법적 규제</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-12-sherlock-holmes-investigation-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>의료광고 변화: 원장 브랜딩의 부상</title>
             <link>https://www.admedical.co.kr/news/2026-08-11-medical-marketing-director-branding</link>
