@@ -1,7 +1,42 @@
 {
-  "generated_at": "2026-08-12T06:26:48.491329+09:00",
-  "count": 17,
+  "generated_at": "2026-08-13T06:24:05.499058+09:00",
+  "count": 18,
   "posts": [
+    {
+      "slug": "2026-08-13-medical-accident-history-disclosure-debate",
+      "title": "의료사고 이력 공개 추진, 정부와 의료계 반응",
+      "summary": "의료사고 이력 공개 추진에 정부는 필수의료 위축 우려, 의료계는 반발 중.",
+      "date": "2026-08-13",
+      "published_at": "2026-08-13T06:21:50.273746+09:00",
+      "cover": "/assets/news/2026-08-13-medical-accident-history-disclosure-debate-photo.jpg",
+      "thumb": "/assets/news/2026-08-13-medical-accident-history-disclosure-debate-thumb.jpg",
+      "infographic_type": "comparison",
+      "tags": [
+        "의료사고",
+        "의료법",
+        "환자 권리",
+        "의료계 반발",
+        "정부 정책"
+      ],
+      "topic_key": "공개 반응 의료계 의료사고 이력 정부와",
+      "sources": [
+        {
+          "title": "의료사고 이력 공개 추진에 복지부 \"필수의료 위축 우려\"",
+          "source": "히트뉴스",
+          "link": "https://www.hitnews.co.kr/news/articleView.html?idxno=78370"
+        },
+        {
+          "title": "의료사고 이력 공개?…정부 \"득보다 실 훨씬 크다\"",
+          "source": "의협신문",
+          "link": "http://www.doctorsnews.co.kr/news/articleView.html?idxno=165808"
+        },
+        {
+          "title": "이소희 \"의협, 고압적이고 특권적\"…의료사고 이력 공개 논의 참여 요구",
+          "source": "청년의사",
+          "link": "http://www.docdocdoc.co.kr/news/articleView.html?idxno=3041753"
+        }
+      ]
+    },
     {
       "slug": "2026-08-12-sherlock-holmes-investigation",
       "title": "식약처 '셜록홈즈' 출범, 수사 전문성 강화",
