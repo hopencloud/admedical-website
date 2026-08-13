@@ -1,7 +1,42 @@
 {
-  "generated_at": "2026-08-13T06:24:05.499058+09:00",
-  "count": 18,
+  "generated_at": "2026-08-14T06:27:36.872916+09:00",
+  "count": 19,
   "posts": [
+    {
+      "slug": "2026-08-14-hospital-inheritance-tax-exclusion-impact",
+      "title": "병원 가업상속공제 제외 우려",
+      "summary": "가업상속공제에서 병원이 제외될 경우 경영난과 지역 의료 공백 우려가 있습니다.",
+      "date": "2026-08-14",
+      "published_at": "2026-08-14T06:25:04.214624+09:00",
+      "cover": "/assets/news/2026-08-14-hospital-inheritance-tax-exclusion-impact-photo.jpg",
+      "thumb": "/assets/news/2026-08-14-hospital-inheritance-tax-exclusion-impact-thumb.jpg",
+      "infographic_type": "checklist",
+      "tags": [
+        "병원 경영",
+        "상속세",
+        "의료 서비스",
+        "가업상속공제",
+        "지역 의료"
+      ],
+      "topic_key": "가업상속공제 병원 우려 제외",
+      "sources": [
+        {
+          "title": "\"가업상속공제 대상 병원 제외, 지필공도 '흔들'\"",
+          "source": "메디칼업저버",
+          "link": "https://www.monews.co.kr/news/articleView.html?idxno=413219"
+        },
+        {
+          "title": "병원계 ‘병원 가업상속공제 대상 제외’ 반발 확산",
+          "source": "의학신문",
+          "link": "https://www.bosa.co.kr/news/articleView.html?idxno=3010199"
+        },
+        {
+          "title": "\"지역·필수의료 한다더니…승계 막히면 지역의료도 흔들\"",
+          "source": "의협신문",
+          "link": "http://www.doctorsnews.co.kr/news/articleView.html?idxno=165821"
+        }
+      ]
+    },
     {
       "slug": "2026-08-13-medical-accident-history-disclosure-debate",
       "title": "의료사고 이력 공개 추진, 정부와 의료계 반응",
