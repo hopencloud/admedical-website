@@ -1,7 +1,42 @@
 {
-  "generated_at": "2026-08-14T06:27:36.872916+09:00",
-  "count": 19,
+  "generated_at": "2026-08-15T06:01:10.393338+09:00",
+  "count": 20,
   "posts": [
+    {
+      "slug": "2026-08-15-medical-advertising-law-penalties",
+      "title": "의료광고법 위반 시 행정처분과 형사처벌 기준",
+      "summary": "의료광고법 위반 시 행정처분과 형사처벌 기준을 명확히 이해해야 합니다.",
+      "date": "2026-08-15",
+      "published_at": "2026-08-15T05:58:52.578872+09:00",
+      "cover": "/assets/news/2026-08-15-medical-advertising-law-penalties-photo.jpg",
+      "thumb": "/assets/news/2026-08-15-medical-advertising-law-penalties-thumb.jpg",
+      "infographic_type": "process",
+      "tags": [
+        "의료광고법",
+        "병원마케팅",
+        "행정처분",
+        "형사처벌",
+        "사전심의"
+      ],
+      "topic_key": "기준 위반 의료광고법 행정처분과 형사처벌",
+      "sources": [
+        {
+          "title": "의료광고법 위반 시 행정처분 및 형사처벌 기준 정리",
+          "source": "메디킹",
+          "link": "https://www.mediking.net/medlaw/"
+        },
+        {
+          "title": "인터넷 광고 점검 결과 — 치료경험담 의료광고는 불법",
+          "source": "충북소비생활정보망",
+          "link": "https://www.chungbuk.go.kr/sobi/selectBbsNttView.do?bbsNo=218&key=1575&nttNo=24098"
+        },
+        {
+          "title": "블로그·SNS 의료광고, 사전심의 대상…플랫폼 크기로 판단",
+          "source": "뷰티앱",
+          "link": "https://beautyapp.co.kr/blog/hospital-marketing-trend-2026/"
+        }
+      ]
+    },
     {
       "slug": "2026-08-14-hospital-inheritance-tax-exclusion-impact",
       "title": "병원 가업상속공제 제외 우려",

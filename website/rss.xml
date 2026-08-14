@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Fri, 14 Aug 2026 06:27:36 +0900</lastBuildDate>
-        <pubDate>Fri, 14 Aug 2026 06:27:36 +0900</pubDate>
+        <lastBuildDate>Sat, 15 Aug 2026 06:01:10 +0900</lastBuildDate>
+        <pubDate>Sat, 15 Aug 2026 06:01:10 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,20 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>의료광고법 위반 시 행정처분과 형사처벌 기준</title>
+            <link>https://www.admedical.co.kr/news/2026-08-15-medical-advertising-law-penalties</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-15-medical-advertising-law-penalties</guid>
+            <description>의료광고법 위반 시 행정처분과 형사처벌 기준을 명확히 이해해야 합니다.</description>
+            <author>admedical</author>
+            <pubDate>Sat, 15 Aug 2026 05:58:52 +0900</pubDate>
+            <category>의료광고법</category>
+            <category>병원마케팅</category>
+            <category>행정처분</category>
+            <category>형사처벌</category>
+            <category>사전심의</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-15-medical-advertising-law-penalties-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>병원 가업상속공제 제외 우려</title>
             <link>https://www.admedical.co.kr/news/2026-08-14-hospital-inheritance-tax-exclusion-impact</link>
