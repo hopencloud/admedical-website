@@ -1,7 +1,32 @@
 {
-  "generated_at": "2026-08-16T05:53:31.239844+09:00",
-  "count": 21,
+  "generated_at": "2026-08-17T05:52:25.217040+09:00",
+  "count": 22,
   "posts": [
+    {
+      "slug": "2026-08-17-sns-medical-advertising-guidelines",
+      "title": "SNS 의료광고 심의, 인플루언서도 대상",
+      "summary": "SNS 의료광고는 심의 대상이며, 인플루언서 협찬도 포함됩니다.",
+      "date": "2026-08-17",
+      "published_at": "2026-08-17T05:50:15.673348+09:00",
+      "cover": "/assets/news/2026-08-17-sns-medical-advertising-guidelines-photo.jpg",
+      "thumb": "/assets/news/2026-08-17-sns-medical-advertising-guidelines-thumb.jpg",
+      "infographic_type": "comparison",
+      "tags": [
+        "의료광고",
+        "SNS 마케팅",
+        "인플루언서",
+        "의료법",
+        "광고심의"
+      ],
+      "topic_key": "sns 대상 심의 의료광고 인플루언서도",
+      "sources": [
+        {
+          "title": "SNS 의료광고 주의사항, 인플루언서 협찬도 심의 대상",
+          "source": "메디킹",
+          "link": "https://mediking.net/medlaw/"
+        }
+      ]
+    },
     {
       "slug": "2026-08-16-health-insurance-finance-discussion",
       "title": "건보 재정 악화와 청년 탈모 급여화 논의",

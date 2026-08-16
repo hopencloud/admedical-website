@@ -96,9 +96,19 @@
     <!-- news:begin (자동 생성 — 직접 수정하지 마세요) -->
     <url>
         <loc>https://www.admedical.co.kr/news</loc>
-        <lastmod>2026-08-16</lastmod>
+        <lastmod>2026-08-17</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://www.admedical.co.kr/news/2026-08-17-sns-medical-advertising-guidelines</loc>
+        <lastmod>2026-08-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://www.admedical.co.kr/assets/news/2026-08-17-sns-medical-advertising-guidelines-thumb.jpg</image:loc>
+            <image:title>SNS 의료광고 심의, 인플루언서도 대상</image:title>
+        </image:image>
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-16-health-insurance-finance-discussion</loc>
