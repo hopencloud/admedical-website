@@ -1,7 +1,42 @@
 {
-  "generated_at": "2026-08-17T05:52:25.217040+09:00",
-  "count": 22,
+  "generated_at": "2026-08-18T05:59:33.105336+09:00",
+  "count": 23,
   "posts": [
+    {
+      "slug": "2026-08-18-digital-healthcare-law-rights-protection",
+      "title": "디지털헬스케어법, 의사와 환자 권리 보호 논의 중",
+      "summary": "디지털헬스케어법 제정에서 의사와 환자 권리 보호가 핵심적으로 논의되어야 합니다.",
+      "date": "2026-08-18",
+      "published_at": "2026-08-18T05:57:18.800284+09:00",
+      "cover": "/assets/news/2026-08-18-digital-healthcare-law-rights-protection-photo.jpg",
+      "thumb": "/assets/news/2026-08-18-digital-healthcare-law-rights-protection-thumb.jpg",
+      "infographic_type": "timeline",
+      "tags": [
+        "디지털헬스케어",
+        "의료법",
+        "환자 권리",
+        "의사 역할",
+        "의료정보 보호"
+      ],
+      "topic_key": "권리 논의 디지털헬스케어법 보호 의사와 환자",
+      "sources": [
+        {
+          "title": "비대면진료 하위법령 촉각, 원산협 \"행정 편의 벗어나 진료 연속성 초점 맞춰야\"",
+          "source": "의학신문",
+          "link": "https://www.bosa.co.kr/news/articleView.html?idxno=3010255"
+        },
+        {
+          "title": "의료기사법 쟁점 부상…'처방' 아닌 '원격지도' 의료계 한목소리",
+          "source": "의협신문",
+          "link": "http://www.doctorsnews.co.kr/news/articleView.html?idxno=165832"
+        },
+        {
+          "title": "속도내는 디지털헬스케어법, '산업' 넘어 '의사-환자' 봐야",
+          "source": "의협신문",
+          "link": "http://www.doctorsnews.co.kr/news/articleView.html?idxno=165830"
+        }
+      ]
+    },
     {
       "slug": "2026-08-17-sns-medical-advertising-guidelines",
       "title": "SNS 의료광고 심의, 인플루언서도 대상",

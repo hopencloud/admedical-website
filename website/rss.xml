@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Mon, 17 Aug 2026 05:52:25 +0900</lastBuildDate>
-        <pubDate>Mon, 17 Aug 2026 05:52:25 +0900</pubDate>
+        <lastBuildDate>Tue, 18 Aug 2026 05:59:33 +0900</lastBuildDate>
+        <pubDate>Tue, 18 Aug 2026 05:59:33 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,20 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>디지털헬스케어법, 의사와 환자 권리 보호 논의 중</title>
+            <link>https://www.admedical.co.kr/news/2026-08-18-digital-healthcare-law-rights-protection</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-18-digital-healthcare-law-rights-protection</guid>
+            <description>디지털헬스케어법 제정에서 의사와 환자 권리 보호가 핵심적으로 논의되어야 합니다.</description>
+            <author>admedical</author>
+            <pubDate>Tue, 18 Aug 2026 05:57:18 +0900</pubDate>
+            <category>디지털헬스케어</category>
+            <category>의료법</category>
+            <category>환자 권리</category>
+            <category>의사 역할</category>
+            <category>의료정보 보호</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-18-digital-healthcare-law-rights-protection-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>SNS 의료광고 심의, 인플루언서도 대상</title>
             <link>https://www.admedical.co.kr/news/2026-08-17-sns-medical-advertising-guidelines</link>
