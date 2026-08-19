@@ -422,6 +422,42 @@ def check_live() -> None:
         if len(links) < 10:
             fail("라이브 메인", f"정적 내부링크가 {len(links)}개 (10개 미만)")
 
+    check_live_statistics()
+
+
+def check_live_statistics() -> None:
+    """라이브가 서빙하는 통계가 멈춰 있지 않은지.
+
+    로컬 파일만 보면 절대 못 잡는 종류의 사고가 있다. 맥북 파이프라인이 통계를
+    제대로 만들어도 git push 가 rejected 되면 사이트에는 옛날 숫자가 그대로 남는다.
+    뉴스 발행이 GitHub Actions 로 매일 돌기 시작한 뒤로 원격이 항상 앞서 있어서
+    8/11~8/19 아흐레 동안 통계가 한 번도 반영되지 않았는데 아무도 몰랐다.
+    """
+    status, body = _head(f"{BASE_URL}/assets/data/statistics.json")
+    if status != 200:
+        fail("라이브 통계", f"statistics.json HTTP {status}")
+        return
+    try:
+        data = json.loads(body)
+    except json.JSONDecodeError as e:
+        fail("라이브 통계", f"파싱 실패: {e}")
+        return
+
+    generated = (data.get("generated_at") or "")[:10]
+    try:
+        age = (datetime.now(KST).date() - date.fromisoformat(generated)).days
+    except ValueError:
+        fail("라이브 통계", f"generated_at 을 읽을 수 없음: {generated!r}")
+        return
+
+    if age > 2:
+        fail("라이브 통계",
+             f"사이트 통계가 {age}일째 그대로입니다 (생성 {generated}). "
+             f"맥북 파이프라인의 git push 가 막혔을 가능성이 큽니다 — "
+             f"'git pull --rebase origin main && git push origin main'")
+    elif age > 1:
+        warn("라이브 통계", f"생성 {generated} ({age}일 전)")
+
 
 # ==========================================================
 

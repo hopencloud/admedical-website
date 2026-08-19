@@ -31,15 +31,35 @@ def db() -> Client:
     return create_client(url, key)
 
 
+def retry(fn, *, tries: int = 4, what: str = "질의"):
+    """Supabase 조회를 재시도한다.
+
+    가정용 회선에서 수십 번 연달아 조회하다 보면 중간에 커넥션이 끊긴다
+    (httpx.ReadError: Connection reset by peer). 한 번 끊겼다고 통계 갱신이
+    통째로 죽으면 그날 사이트 숫자가 멈춘다. 실제로 8/14, 8/19 에 그랬다.
+    """
+    import time
+    for attempt in range(1, tries + 1):
+        try:
+            return fn()
+        except Exception as exc:
+            if attempt == tries:
+                raise
+            wait = 2 ** attempt
+            print(f"  [재시도] {what} 실패 ({type(exc).__name__}) — {wait}초 후 {attempt + 1}/{tries}",
+                  file=sys.stderr)
+            time.sleep(wait)
+
+
 def count_between(sb: Client, start: date, end: date) -> int:
-    r = (
+    r = retry(lambda: (
         sb.table("ads")
         .select("review_num", count="exact")
         .gte("review_date", start.isoformat())
         .lte("review_date", end.isoformat())
         .limit(1)
         .execute()
-    )
+    ), what=f"{start}~{end} 건수")
     return r.count or 0
 
 
@@ -55,14 +75,14 @@ def fetch_daily_counts(sb: Client, start: date, end: date) -> tuple[dict[str, in
     page_size = 1000
     offset = 0
     while True:
-        r = (
+        r = retry(lambda: (
             sb.table("ads")
             .select("review_date, review_num, review_no_display")
             .gte("review_date", start.isoformat())
             .lte("review_date", end.isoformat())
             .range(offset, offset + page_size - 1)
             .execute()
-        )
+        ), what=f"일자별 건수 offset={offset}")
         rows = r.data or []
         for row in rows:
             d = row["review_date"]
@@ -105,7 +125,9 @@ def main() -> None:
     chart_start = today - timedelta(days=29)
 
     # 카운트
-    total_count = sb.table("ads").select("review_num", count="exact").limit(1).execute().count or 0
+    total_count = retry(
+        lambda: sb.table("ads").select("review_num", count="exact").limit(1).execute(),
+        what="누적 건수").count or 0
 
     yesterday_count = count_between(sb, yesterday, yesterday)
     yesterday_pending = False          # 달력상 어제 데이터가 아직 안 올라온 상태인가
@@ -140,8 +162,10 @@ def main() -> None:
         cursor += timedelta(days=1)
 
     # 데이터 범위
-    r_min = sb.table("ads").select("review_date").order("review_date", desc=False).limit(1).execute()
-    r_max = sb.table("ads").select("review_date").order("review_date", desc=True).limit(1).execute()
+    r_min = retry(lambda: sb.table("ads").select("review_date")
+                  .order("review_date", desc=False).limit(1).execute(), what="최초 심의일")
+    r_max = retry(lambda: sb.table("ads").select("review_date")
+                  .order("review_date", desc=True).limit(1).execute(), what="최종 심의일")
     first_date = r_min.data[0]["review_date"] if r_min.data else None
     last_date = r_max.data[0]["review_date"] if r_max.data else None
 

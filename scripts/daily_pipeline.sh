@@ -130,10 +130,27 @@ if git diff --cached --quiet; then
 else
     DATE_LABEL=$(date '+%Y-%m-%d %a')
     if git commit -m "일일 통계 자동 갱신 (${DATE_LABEL})"; then
-        if git push origin main; then
-            echo "[git] push 성공 — Vercel 자동 배포 트리거됨"
-        else
-            echo "[git] push 실패 — 다음에 수동으로 'git push' 실행 필요"
+        # 반드시 pull 먼저.
+        #
+        # 뉴스 발행이 GitHub Actions 에서 매일 05:30 KST 에 돌면서 main 에
+        # 커밋을 얹는다. 맥북 파이프라인은 07:00 쯤 끝나므로 항상 원격이 앞서
+        # 있고, 그냥 push 하면 매번 rejected 된다. 실제로 8/11~8/19 아흐레 동안
+        # 통계가 한 번도 사이트에 반영되지 않았다 (주간 발행일 때는 월요일만
+        # 겹쳐서 눈에 안 띄었다).
+        PUSHED=0
+        for attempt in 1 2 3; do
+            git pull --rebase --autostash origin main >/dev/null 2>&1
+            if git push origin main; then
+                echo "[git] push 성공 — Vercel 자동 배포 트리거됨"
+                PUSHED=1
+                break
+            fi
+            echo "[git] push 재시도 ${attempt}/3"
+            sleep 5
+        done
+        if [ "$PUSHED" = "0" ]; then
+            echo "[git] ❌ push 실패 — 통계가 사이트에 반영되지 않았습니다."
+            echo "[git]    수동 조치: git pull --rebase origin main && git push origin main"
         fi
     else
         echo "[git] commit 실패"
