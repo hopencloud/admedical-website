@@ -61,6 +61,31 @@ NOISE_PATTERNS = [
     r"신간", r"포토", r"^\[포토", r"화보",
 ]
 
+# 업체 보도자료 — 남의 회사 홍보를 우리 기사로 써주는 일을 막는다.
+#
+# 2026-08-19 에 "미소몰닷컴 리뉴얼, 병의원 마케팅에 미칠 잠재적 영향" 이 발행됐다.
+# 근거로 쓴 두 건이 전부 GC메디아이의 플랫폼 리뉴얼 보도자료였다. 프롬프트의
+# "홍보성 소식 제외" 지시는 병원만 걸렀고 업체·플랫폼은 그냥 통과했다.
+# AI 에게 부탁하는 대신 파이썬이 제목에서 잘라낸다 (중복 차단 때와 같은 이유).
+PROMO_PATTERNS = [
+    r"리뉴얼", r"재단장", r"새단장", r"그랜드 ?오픈", r"오픈", r"개원", r"확장 ?이전",
+    r"출시", r"런칭", r"론칭", r"선보(여|인|이)", r"공개", r"첫 ?공개",
+    r"업무 ?협약", r"MOU", r"양해각서", r"맞손", r"손잡", r"제휴", r"파트너십",
+    r"수상", r"대상 ?수상", r"우수상", r"[0-9]+년 ?연속", r"[0-9]+주년", r"기념",
+    r"인증 ?획득", r"허가 ?획득", r"승인 ?획득", r"특허",
+    r"기부", r"후원", r"봉사", r"나눔", r"전달식",
+    r"심포지엄", r"세미나 ?개최", r"컨퍼런스 ?개최", r"간담회 ?개최",
+    r"매출", r"영업이익", r"실적", r"흑자", r"투자 ?유치", r"상장",
+]
+
+# 위 단어가 들어 있어도 제도·규제 기사면 살린다.
+# "심의 대상 매체 확대 시행", "의료법 개정안 공개" 같은 것들.
+POLICY_RESCUE = [
+    "의료법", "의료광고", "심의", "복지부", "보건복지부", "식약처", "공정위",
+    "법 개정", "개정안", "입법", "고시", "행정처분", "과태료", "벌금", "판결",
+    "가이드라인", "규제", "위반", "단속",
+]
+
 
 @dataclass
 class NewsItem:
@@ -129,9 +154,18 @@ def normalize_topic_key(title: str) -> str:
     return " ".join(sorted(words)[:6]).lower()
 
 
+def is_promo(item: NewsItem) -> bool:
+    """업체 홍보 보도자료인가. 제도·규제 내용이 섞여 있으면 살린다."""
+    if any(kw in item.title for kw in POLICY_RESCUE):
+        return False
+    return any(re.search(p, item.title) for p in PROMO_PATTERNS)
+
+
 def is_relevant(item: NewsItem) -> bool:
     blob = f"{item.title} {item.summary}"
     if any(re.search(p, item.title) for p in NOISE_PATTERNS):
+        return False
+    if is_promo(item):
         return False
     if item.kind == "gov":
         return True                                  # 보도자료는 전량 후보

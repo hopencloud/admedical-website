@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Wed, 19 Aug 2026 05:55:15 +0900</lastBuildDate>
-        <pubDate>Wed, 19 Aug 2026 05:55:15 +0900</pubDate>
+        <lastBuildDate>Wed, 19 Aug 2026 14:28:17 +0900</lastBuildDate>
+        <pubDate>Wed, 19 Aug 2026 14:28:17 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,20 +15,6 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
-        <item>
-            <title>미소몰닷컴 리뉴얼, 병의원 마케팅에 미칠 잠재적 영향</title>
-            <link>https://www.admedical.co.kr/news/2026-08-19-misomall-renewal-medical-marketing-impact</link>
-            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-19-misomall-renewal-medical-marketing-impact</guid>
-            <description>GC메디아이, 미소몰닷컴 플랫폼 리뉴얼로 병의원 마케팅 전략에 변화를 예고하다.</description>
-            <author>admedical</author>
-            <pubDate>Wed, 19 Aug 2026 05:52:47 +0900</pubDate>
-            <category>의료광고</category>
-            <category>병원마케팅</category>
-            <category>플랫폼리뉴얼</category>
-            <category>사용자경험</category>
-            <category>AI서비스</category>
-            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-19-misomall-renewal-medical-marketing-impact-photo.jpg" type="image/jpeg" length="0"/>
-        </item>
         <item>
             <title>디지털헬스케어법, 의사와 환자 권리 보호 논의 중</title>
             <link>https://www.admedical.co.kr/news/2026-08-18-digital-healthcare-law-rights-protection</link>

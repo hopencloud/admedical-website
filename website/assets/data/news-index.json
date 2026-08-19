@@ -1,37 +1,7 @@
 {
-  "generated_at": "2026-08-19T05:55:15.202956+09:00",
-  "count": 24,
+  "generated_at": "2026-08-19T14:28:17.373026+09:00",
+  "count": 23,
   "posts": [
-    {
-      "slug": "2026-08-19-misomall-renewal-medical-marketing-impact",
-      "title": "미소몰닷컴 리뉴얼, 병의원 마케팅에 미칠 잠재적 영향",
-      "summary": "GC메디아이, 미소몰닷컴 플랫폼 리뉴얼로 병의원 마케팅 전략에 변화를 예고하다.",
-      "date": "2026-08-19",
-      "published_at": "2026-08-19T05:52:47.623450+09:00",
-      "cover": "/assets/news/2026-08-19-misomall-renewal-medical-marketing-impact-photo.jpg",
-      "thumb": "/assets/news/2026-08-19-misomall-renewal-medical-marketing-impact-thumb.jpg",
-      "infographic_type": "comparison",
-      "tags": [
-        "의료광고",
-        "병원마케팅",
-        "플랫폼리뉴얼",
-        "사용자경험",
-        "AI서비스"
-      ],
-      "topic_key": "리뉴얼 마케팅에 미소몰닷컴 미칠 병의원 영향",
-      "sources": [
-        {
-          "title": "GC메디아이, 미소몰닷컴 플랫폼 전면 재단장",
-          "source": "청년의사",
-          "link": "http://www.docdocdoc.co.kr/news/articleView.html?idxno=3041866"
-        },
-        {
-          "title": "GC메디아이, 미소몰닷컴 25주년 맞아 플랫폼 전면 리뉴얼",
-          "source": "의학신문",
-          "link": "https://www.bosa.co.kr/news/articleView.html?idxno=3010357"
-        }
-      ]
-    },
     {
       "slug": "2026-08-18-digital-healthcare-law-rights-protection",
       "title": "디지털헬스케어법, 의사와 환자 권리 보호 논의 중",

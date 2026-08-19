@@ -96,19 +96,9 @@
     <!-- news:begin (자동 생성 — 직접 수정하지 마세요) -->
     <url>
         <loc>https://www.admedical.co.kr/news</loc>
-        <lastmod>2026-08-19</lastmod>
+        <lastmod>2026-08-18</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>
-    </url>
-    <url>
-        <loc>https://www.admedical.co.kr/news/2026-08-19-misomall-renewal-medical-marketing-impact</loc>
-        <lastmod>2026-08-19</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-        <image:image>
-            <image:loc>https://www.admedical.co.kr/assets/news/2026-08-19-misomall-renewal-medical-marketing-impact-thumb.jpg</image:loc>
-            <image:title>미소몰닷컴 리뉴얼, 병의원 마케팅에 미칠 잠재적 영향</image:title>
-        </image:image>
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-18-digital-healthcare-law-rights-protection</loc>
