@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Wed, 19 Aug 2026 14:28:17 +0900</lastBuildDate>
-        <pubDate>Wed, 19 Aug 2026 14:28:17 +0900</pubDate>
+        <lastBuildDate>Thu, 20 Aug 2026 05:59:31 +0900</lastBuildDate>
+        <pubDate>Thu, 20 Aug 2026 05:59:31 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,19 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>국립대병원, 보건복지부 이관으로 정책 변화</title>
+            <link>https://www.admedical.co.kr/news/2026-08-20-national-university-hospitals-transfer-policies</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-20-national-university-hospitals-transfer-policies</guid>
+            <description>국립대병원이 보건복지부로 이관되며 정책 변화와 지원 체계가 새롭게 구축될 것으로 예상됩니다.</description>
+            <author>admedical</author>
+            <pubDate>Thu, 20 Aug 2026 05:57:12 +0900</pubDate>
+            <category>국립대병원</category>
+            <category>보건복지부</category>
+            <category>정책 변화</category>
+            <category>의료광고</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-20-national-university-hospitals-transfer-policies-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>디지털헬스케어법, 의사와 환자 권리 보호 논의 중</title>
             <link>https://www.admedical.co.kr/news/2026-08-18-digital-healthcare-law-rights-protection</link>
