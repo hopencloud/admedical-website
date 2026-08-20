@@ -1,7 +1,42 @@
 {
-  "generated_at": "2026-08-20T05:59:31.285233+09:00",
-  "count": 24,
+  "generated_at": "2026-08-21T06:01:05.703677+09:00",
+  "count": 25,
   "posts": [
+    {
+      "slug": "2026-08-21-telemedicine-prescription-delivery-expansion",
+      "title": "비대면 진료 환자 약 배송 확대 논의 시작",
+      "summary": "정부가 비대면 진료 환자의 약 배송 확대를 논의하며 의료 마케팅에 변화가 예상됩니다.",
+      "date": "2026-08-21",
+      "published_at": "2026-08-21T05:58:52.295414+09:00",
+      "cover": "/assets/news/2026-08-21-telemedicine-prescription-delivery-expansion-photo.jpg",
+      "thumb": "/assets/news/2026-08-21-telemedicine-prescription-delivery-expansion-thumb.jpg",
+      "infographic_type": "timeline",
+      "tags": [
+        "비대면 진료",
+        "약 배송",
+        "의료 마케팅",
+        "의료법",
+        "환자 유입"
+      ],
+      "topic_key": "논의 배송 비대면 시작 진료 확대",
+      "sources": [
+        {
+          "title": "모든 비대면 진료 환자 약 배송 받나?…정부, 확대 논의 시작",
+          "source": "의협신문",
+          "link": "http://www.doctorsnews.co.kr/news/articleView.html?idxno=165919"
+        },
+        {
+          "title": "비대면 약배송 전면 확대 논의 착수…범부처 민관협의체 운영",
+          "source": "히트뉴스",
+          "link": "https://www.hitnews.co.kr/news/articleView.html?idxno=78519"
+        },
+        {
+          "title": "정부, 비대면진료 약 배송 전면 허용 논의... 플랫폼 업계 '달래기'",
+          "source": "의학신문",
+          "link": "https://www.bosa.co.kr/news/articleView.html?idxno=3010552"
+        }
+      ]
+    },
     {
       "slug": "2026-08-20-national-university-hospitals-transfer-policies",
       "title": "국립대병원, 보건복지부 이관으로 정책 변화",
