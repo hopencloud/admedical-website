@@ -1,7 +1,41 @@
 {
-  "generated_at": "2026-08-21T06:01:05.703677+09:00",
-  "count": 25,
+  "generated_at": "2026-08-22T05:54:47.186372+09:00",
+  "count": 26,
   "posts": [
+    {
+      "slug": "2026-08-22-pediatric-surgery-staffing-crisis",
+      "title": "소아외과 전문인력 부족, 정부 대책 시급",
+      "summary": "소아외과 전문인력 부족은 의료 서비스 제공에 영향을 미치며, 정부의 정책 변화가 논의되고 있다.",
+      "date": "2026-08-22",
+      "published_at": "2026-08-22T05:52:41.502655+09:00",
+      "cover": "/assets/news/2026-08-22-pediatric-surgery-staffing-crisis-photo.jpg",
+      "thumb": "/assets/news/2026-08-22-pediatric-surgery-staffing-crisis-thumb.jpg",
+      "infographic_type": "checklist",
+      "tags": [
+        "소아외과",
+        "의료정책",
+        "전문인력",
+        "정부지원"
+      ],
+      "topic_key": "대책 부족 소아외과 시급 전문인력 정부",
+      "sources": [
+        {
+          "title": "소아외과 전문가들, 정부에 전문인력 직접 지원 방안 마련 요청",
+          "source": "의학신문",
+          "link": "https://www.bosa.co.kr/news/articleView.html?idxno=3010634"
+        },
+        {
+          "title": "수가 올라도 소아외과 안 간다...전공의 93% “분과 선택 고려 안 해”",
+          "source": "의학신문",
+          "link": "https://www.bosa.co.kr/news/articleView.html?idxno=3010633"
+        },
+        {
+          "title": "소아 필수 치료재료, 저수가·적은 환자 수에 ‘공급 절벽’ 심각",
+          "source": "의학신문",
+          "link": "https://www.bosa.co.kr/news/articleView.html?idxno=3010630"
+        }
+      ]
+    },
     {
       "slug": "2026-08-21-telemedicine-prescription-delivery-expansion",
       "title": "비대면 진료 환자 약 배송 확대 논의 시작",
