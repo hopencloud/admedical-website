@@ -1,7 +1,32 @@
 {
-  "generated_at": "2026-08-22T05:54:47.186372+09:00",
-  "count": 26,
+  "generated_at": "2026-08-23T05:52:59.697188+09:00",
+  "count": 27,
   "posts": [
+    {
+      "slug": "2026-08-23-local-government-healthcare-policy",
+      "title": "지방정부 필수의료 설계, 병원 마케팅 전략 변화 필요성 논의",
+      "summary": "지방정부가 필수의료 정책을 설계하며 병원 마케팅 전략 변화의 필요성이 논의되고 있습니다.",
+      "date": "2026-08-23",
+      "published_at": "2026-08-23T05:50:39.647754+09:00",
+      "cover": "/assets/news/2026-08-23-local-government-healthcare-policy-photo.jpg",
+      "thumb": "/assets/news/2026-08-23-local-government-healthcare-policy-thumb.jpg",
+      "infographic_type": "process",
+      "tags": [
+        "의료 정책",
+        "지역 맞춤형",
+        "병원 마케팅",
+        "정부 지원",
+        "필수의료"
+      ],
+      "topic_key": "논의 마케팅 변화 병원 설계 전략",
+      "sources": [
+        {
+          "title": "지방정부, 필수의료 직접 설계…복지부, 지역 맞춤형 지원",
+          "source": "청년의사",
+          "link": "http://www.docdocdoc.co.kr/news/articleView.html?idxno=3041993"
+        }
+      ]
+    },
     {
       "slug": "2026-08-22-pediatric-surgery-staffing-crisis",
       "title": "소아외과 전문인력 부족, 정부 대책 시급",

@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Sat, 22 Aug 2026 05:54:47 +0900</lastBuildDate>
-        <pubDate>Sat, 22 Aug 2026 05:54:47 +0900</pubDate>
+        <lastBuildDate>Sun, 23 Aug 2026 05:52:59 +0900</lastBuildDate>
+        <pubDate>Sun, 23 Aug 2026 05:52:59 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,20 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>지방정부 필수의료 설계, 병원 마케팅 전략 변화 필요성 논의</title>
+            <link>https://www.admedical.co.kr/news/2026-08-23-local-government-healthcare-policy</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-23-local-government-healthcare-policy</guid>
+            <description>지방정부가 필수의료 정책을 설계하며 병원 마케팅 전략 변화의 필요성이 논의되고 있습니다.</description>
+            <author>admedical</author>
+            <pubDate>Sun, 23 Aug 2026 05:50:39 +0900</pubDate>
+            <category>의료 정책</category>
+            <category>지역 맞춤형</category>
+            <category>병원 마케팅</category>
+            <category>정부 지원</category>
+            <category>필수의료</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-23-local-government-healthcare-policy-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>소아외과 전문인력 부족, 정부 대책 시급</title>
             <link>https://www.admedical.co.kr/news/2026-08-22-pediatric-surgery-staffing-crisis</link>
