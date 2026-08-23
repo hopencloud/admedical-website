@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Sun, 23 Aug 2026 05:52:59 +0900</lastBuildDate>
-        <pubDate>Sun, 23 Aug 2026 05:52:59 +0900</pubDate>
+        <lastBuildDate>Mon, 24 Aug 2026 05:53:09 +0900</lastBuildDate>
+        <pubDate>Mon, 24 Aug 2026 05:53:09 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,19 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>의료기관 영업정지 판결, 부당청구 규제에 영향</title>
+            <link>https://www.admedical.co.kr/news/2026-08-24-medical-institution-suspension-verdict</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-24-medical-institution-suspension-verdict</guid>
+            <description>부당청구 일부 유죄에도 영업정지 전체 적용은 위법 판결로 최종 확정되었습니다.</description>
+            <author>admedical</author>
+            <pubDate>Mon, 24 Aug 2026 05:51:07 +0900</pubDate>
+            <category>의료법</category>
+            <category>부당청구</category>
+            <category>영업정지</category>
+            <category>법적 선례</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-24-medical-institution-suspension-verdict-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>지방정부 필수의료 설계, 병원 마케팅 전략 변화 필요성 논의</title>
             <link>https://www.admedical.co.kr/news/2026-08-23-local-government-healthcare-policy</link>

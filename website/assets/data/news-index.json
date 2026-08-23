@@ -1,7 +1,31 @@
 {
-  "generated_at": "2026-08-23T05:52:59.697188+09:00",
-  "count": 27,
+  "generated_at": "2026-08-24T05:53:09.333398+09:00",
+  "count": 28,
   "posts": [
+    {
+      "slug": "2026-08-24-medical-institution-suspension-verdict",
+      "title": "의료기관 영업정지 판결, 부당청구 규제에 영향",
+      "summary": "부당청구 일부 유죄에도 영업정지 전체 적용은 위법 판결로 최종 확정되었습니다.",
+      "date": "2026-08-24",
+      "published_at": "2026-08-24T05:51:07.607471+09:00",
+      "cover": "/assets/news/2026-08-24-medical-institution-suspension-verdict-photo.jpg",
+      "thumb": "/assets/news/2026-08-24-medical-institution-suspension-verdict-thumb.jpg",
+      "infographic_type": "comparison",
+      "tags": [
+        "의료법",
+        "부당청구",
+        "영업정지",
+        "법적 선례"
+      ],
+      "topic_key": "규제에 부당청구 영업정지 영향 의료기관 판결",
+      "sources": [
+        {
+          "title": "부당청구 일부 유죄 판결에도 영업정지는 전체 적용...'위법'",
+          "source": "의협신문",
+          "link": "http://www.doctorsnews.co.kr/news/articleView.html?idxno=165841"
+        }
+      ]
+    },
     {
       "slug": "2026-08-23-local-government-healthcare-policy",
       "title": "지방정부 필수의료 설계, 병원 마케팅 전략 변화 필요성 논의",
