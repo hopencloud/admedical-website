@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Mon, 24 Aug 2026 05:53:09 +0900</lastBuildDate>
-        <pubDate>Mon, 24 Aug 2026 05:53:09 +0900</pubDate>
+        <lastBuildDate>Tue, 25 Aug 2026 06:03:11 +0900</lastBuildDate>
+        <pubDate>Tue, 25 Aug 2026 06:03:11 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,20 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>1급 응급구조사 국시, 지정대학 졸업생만 응시 가능</title>
+            <link>https://www.admedical.co.kr/news/2026-08-25-emergency-medic-2029-designation</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-25-emergency-medic-2029-designation</guid>
+            <description>2029년부터 1급 응급구조사 국시 응시 자격이 정부 지정대학 졸업생으로 제한됩니다.</description>
+            <author>admedical</author>
+            <pubDate>Tue, 25 Aug 2026 06:01:00 +0900</pubDate>
+            <category>응급구조사</category>
+            <category>지정대학</category>
+            <category>국가시험</category>
+            <category>병원 인력</category>
+            <category>교육 전략</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-25-emergency-medic-2029-designation-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>의료기관 영업정지 판결, 부당청구 규제에 영향</title>
             <link>https://www.admedical.co.kr/news/2026-08-24-medical-institution-suspension-verdict</link>

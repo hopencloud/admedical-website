@@ -1,7 +1,42 @@
 {
-  "generated_at": "2026-08-24T05:53:09.333398+09:00",
-  "count": 28,
+  "generated_at": "2026-08-25T06:03:11.651525+09:00",
+  "count": 29,
   "posts": [
+    {
+      "slug": "2026-08-25-emergency-medic-2029-designation",
+      "title": "1급 응급구조사 국시, 지정대학 졸업생만 응시 가능",
+      "summary": "2029년부터 1급 응급구조사 국시 응시 자격이 정부 지정대학 졸업생으로 제한됩니다.",
+      "date": "2026-08-25",
+      "published_at": "2026-08-25T06:01:00.620490+09:00",
+      "cover": "/assets/news/2026-08-25-emergency-medic-2029-designation-photo.jpg",
+      "thumb": "/assets/news/2026-08-25-emergency-medic-2029-designation-thumb.jpg",
+      "infographic_type": "timeline",
+      "tags": [
+        "응급구조사",
+        "지정대학",
+        "국가시험",
+        "병원 인력",
+        "교육 전략"
+      ],
+      "topic_key": "1급 가능 국시 응급구조사 응시 졸업생만",
+      "sources": [
+        {
+          "title": "응급구조사 양성 교육 국가가 관리한다, 2029학년도부터 1급 응급구조사 양성대학 ‘지정제’ 시행",
+          "source": "보건복지부 보도자료",
+          "link": "https://www.mohw.go.kr/board.es?mid=a10503010100&bid=0027&list_no=1491651&act=view"
+        },
+        {
+          "title": "2029년부터 정부 지정대학 졸업생만 1급 응급구조사 국시 응시",
+          "source": "청년의사",
+          "link": "http://www.docdocdoc.co.kr/news/articleView.html?idxno=3042028"
+        },
+        {
+          "title": "政, 2029년부터 1급 응급구조사 양성대학 지정제 시행",
+          "source": "메디칼업저버",
+          "link": "https://www.monews.co.kr/news/articleView.html?idxno=413388"
+        }
+      ]
+    },
     {
       "slug": "2026-08-24-medical-institution-suspension-verdict",
       "title": "의료기관 영업정지 판결, 부당청구 규제에 영향",
