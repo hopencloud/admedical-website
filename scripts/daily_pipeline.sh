@@ -38,6 +38,24 @@ echo "================================================================"
 
 source "$ROOT/venv/bin/activate"
 
+# 네트워크가 붙을 때까지 기다린다 (최대 3분).
+#
+# 맥북이 자다 깬 직후에 파이프라인이 시작되면 와이파이가 아직 안 올라와 있다.
+# 그 상태로 Supabase 를 부르면 DNS 부터 실패한다
+# (ConnectError: nodename nor servname provided). 2026-08-22 에 그래서 통계가
+# 통째로 날아갔고, 다음날 자동 점검이 "통계가 3일째 그대로" 로 잡아냈다.
+echo ""
+echo "--- [네트워크 대기] $(date '+%H:%M:%S') ---"
+for i in $(seq 1 18); do
+    if ping -c1 -t2 supabase.co >/dev/null 2>&1 || \
+       curl -sS -o /dev/null -m 5 https://www.google.com/generate_204 2>/dev/null; then
+        echo "[네트워크] 연결됨 (${i}회차)"
+        break
+    fi
+    [ "$i" = "18" ] && echo "[네트워크] ⚠ 3분 기다려도 안 붙음 — 그대로 진행합니다"
+    sleep 10
+done
+
 run_step() {
     local name="$1"
     shift

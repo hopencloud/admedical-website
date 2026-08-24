@@ -31,23 +31,40 @@ def db() -> Client:
     return create_client(url, key)
 
 
-def retry(fn, *, tries: int = 4, what: str = "질의"):
+# 재시도 간격(초). 연결 자체가 안 되는 경우와 중간에 끊기는 경우는 성격이 다르다.
+#
+#   ReadError  — 조회 도중 커넥션이 끊김. 곧바로 다시 걸면 대개 붙는다.
+#   ConnectError — DNS 조차 안 풀림. 맥북이 자다 깨서 와이파이가 아직 안 붙은 상태다.
+#                  짧게 재시도해봐야 소용없고, 네트워크가 올라올 때까지 기다려야 한다.
+#                  실제로 8/22 에 2·4·8초(합 14초) 안에 4번 다 실패하고 그날 통계가 날아갔다.
+BACKOFF_READ = [2, 4, 8, 16]
+BACKOFF_CONNECT = [10, 20, 40, 60, 60, 60]        # 최대 4분 가까이 기다린다
+
+
+def retry(fn, *, what: str = "질의"):
     """Supabase 조회를 재시도한다.
 
-    가정용 회선에서 수십 번 연달아 조회하다 보면 중간에 커넥션이 끊긴다
-    (httpx.ReadError: Connection reset by peer). 한 번 끊겼다고 통계 갱신이
-    통째로 죽으면 그날 사이트 숫자가 멈춘다. 실제로 8/14, 8/19 에 그랬다.
+    한 번 끊겼다고 통계 갱신이 통째로 죽으면 그날 사이트 숫자가 멈춘다.
+    실제로 8/14·8/19(커넥션 끊김), 8/22(DNS 실패) 에 그랬다.
     """
     import time
-    for attempt in range(1, tries + 1):
+    schedule = BACKOFF_READ
+    attempt = 0
+    while True:
         try:
             return fn()
         except Exception as exc:
-            if attempt == tries:
+            name = type(exc).__name__
+            # 첫 실패가 연결 실패면 대기 일정을 통째로 늘린다.
+            # (반복문 안에서 바꿔야 하므로 미리 만든 이터레이터를 쓰지 않는다)
+            if attempt == 0 and "Connect" in name:
+                schedule = BACKOFF_CONNECT
+            if attempt >= len(schedule):
                 raise
-            wait = 2 ** attempt
-            print(f"  [재시도] {what} 실패 ({type(exc).__name__}) — {wait}초 후 {attempt + 1}/{tries}",
-                  file=sys.stderr)
+            wait = schedule[attempt]
+            attempt += 1
+            print(f"  [재시도] {what} 실패 ({name}) — {wait}초 후 "
+                  f"{attempt + 1}/{len(schedule) + 1}", file=sys.stderr)
             time.sleep(wait)
 
 
