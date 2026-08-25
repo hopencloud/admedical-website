@@ -1,7 +1,31 @@
 {
-  "generated_at": "2026-08-25T06:03:11.651525+09:00",
-  "count": 29,
+  "generated_at": "2026-08-26T06:05:18.802430+09:00",
+  "count": 30,
   "posts": [
+    {
+      "slug": "2026-08-26-multidisciplinary-care-hospitalization-need",
+      "title": "입원환자 다학제팀의료, 제도화 필요성 대두",
+      "summary": "입원환자 다학제팀의료의 필요성이 증가하고 있습니다.",
+      "date": "2026-08-26",
+      "published_at": "2026-08-26T06:03:05.833782+09:00",
+      "cover": "/assets/news/2026-08-26-multidisciplinary-care-hospitalization-need-photo.jpg",
+      "thumb": "/assets/news/2026-08-26-multidisciplinary-care-hospitalization-need-thumb.jpg",
+      "infographic_type": "checklist",
+      "tags": [
+        "다학제팀의료",
+        "환자 관리",
+        "약사 수가",
+        "의료 제도화"
+      ],
+      "topic_key": "다학제팀의료 대두 입원환자 제도화 필요성",
+      "sources": [
+        {
+          "title": "입원환자 다학제팀의료 제도화 필요…“약사 수가·인력 뒷받침돼야”",
+          "source": "의학신문",
+          "link": "https://www.bosa.co.kr/news/articleView.html?idxno=3010800"
+        }
+      ]
+    },
     {
       "slug": "2026-08-25-emergency-medic-2029-designation",
       "title": "1급 응급구조사 국시, 지정대학 졸업생만 응시 가능",
