@@ -1,7 +1,36 @@
 {
-  "generated_at": "2026-08-26T06:05:18.802430+09:00",
-  "count": 30,
+  "generated_at": "2026-08-27T09:01:12.589433+09:00",
+  "count": 31,
   "posts": [
+    {
+      "slug": "2026-08-27-pharmacy-name-restriction-law-change",
+      "title": "약사법 개정으로 약국 명칭 사용 제한",
+      "summary": "약사법 개정으로 약국 명칭 사용 제한, 의약품 오남용 예방 강화.",
+      "date": "2026-08-27",
+      "published_at": "2026-08-27T08:59:01.801830+09:00",
+      "cover": "/assets/news/2026-08-27-pharmacy-name-restriction-law-change-photo.jpg",
+      "thumb": "/assets/news/2026-08-27-pharmacy-name-restriction-law-change-thumb.jpg",
+      "infographic_type": "comparison",
+      "tags": [
+        "약사법",
+        "의약품 오남용",
+        "약국 명칭",
+        "보건복지부"
+      ],
+      "topic_key": "개정으로 명칭 사용 약국 약사법 제한",
+      "sources": [
+        {
+          "title": "의약품 오남용 조장 창고형 약국, 약국 명칭 사용 금지돼",
+          "source": "메디칼업저버",
+          "link": "https://www.monews.co.kr/news/articleView.html?idxno=413475"
+        },
+        {
+          "title": "약국 허위광고·오남용 예방…약사법 개정안 본회의 통과",
+          "source": "히트뉴스",
+          "link": "https://www.hitnews.co.kr/news/articleView.html?idxno=78659"
+        }
+      ]
+    },
     {
       "slug": "2026-08-26-multidisciplinary-care-hospitalization-need",
       "title": "입원환자 다학제팀의료, 제도화 필요성 대두",
