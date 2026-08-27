@@ -2,52 +2,110 @@
     "$schema": "https://openapi.vercel.sh/vercel.json",
     "buildCommand": null,
     "outputDirectory": "website",
+    "redirects": [
+        {
+            "source": "/news/2026-08-01-patient-experience-rating-expansion",
+            "destination": "/news/2026-08-01-patient-experience-rating-hospital-marketing",
+            "permanent": true
+        },
+        {
+            "source": "/news/2026-08-01-patient-experience-evaluation-hospital-expansion",
+            "destination": "/news/2026-08-01-patient-experience-rating-hospital-marketing",
+            "permanent": true
+        },
+        {
+            "source": "/news/2026-08-01-medical-ad-review-2026",
+            "destination": "/news/2026-08-02-medical-advertising-regulations-2026",
+            "permanent": true
+        },
+        {
+            "source": "/news/2026-08-19-misomall-renewal-medical-marketing-impact",
+            "destination": "/news",
+            "permanent": true
+        }
+    ],
     "headers": [
         {
             "source": "/assets/data/(.*)\\.json",
             "headers": [
-                { "key": "Cache-Control", "value": "public, max-age=300, s-maxage=300" }
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=300, s-maxage=300"
+                }
             ]
         },
         {
             "source": "/assets/(.*)",
             "headers": [
-                { "key": "Cache-Control", "value": "public, max-age=86400" }
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=86400"
+                }
             ]
         },
         {
             "source": "/sitemap.xml",
             "headers": [
-                { "key": "Content-Type", "value": "application/xml; charset=utf-8" },
-                { "key": "Cache-Control", "value": "public, max-age=3600" }
+                {
+                    "key": "Content-Type",
+                    "value": "application/xml; charset=utf-8"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=3600"
+                }
             ]
         },
         {
             "source": "/robots.txt",
             "headers": [
-                { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
-                { "key": "Cache-Control", "value": "public, max-age=3600" }
+                {
+                    "key": "Content-Type",
+                    "value": "text/plain; charset=utf-8"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=3600"
+                }
             ]
         },
         {
             "source": "/ads.txt",
             "headers": [
-                { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
-                { "key": "Cache-Control", "value": "public, max-age=3600" }
+                {
+                    "key": "Content-Type",
+                    "value": "text/plain; charset=utf-8"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=3600"
+                }
             ]
         },
         {
             "source": "/rss.xml",
             "headers": [
-                { "key": "Content-Type", "value": "application/rss+xml; charset=utf-8" },
-                { "key": "Cache-Control", "value": "public, max-age=1800" }
+                {
+                    "key": "Content-Type",
+                    "value": "application/rss+xml; charset=utf-8"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=1800"
+                }
             ]
         },
         {
             "source": "/llms.txt",
             "headers": [
-                { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
-                { "key": "Cache-Control", "value": "public, max-age=3600" }
+                {
+                    "key": "Content-Type",
+                    "value": "text/plain; charset=utf-8"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=3600"
+                }
             ]
         }
     ],
