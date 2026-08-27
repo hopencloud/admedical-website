@@ -151,10 +151,10 @@ jobs:
           fi
           python scripts/news_mailer.py --days 7
 
-      - name: 검색엔진에 사이트맵 알리기
+      - name: 검색엔진에 재수집 요청 (IndexNow)
+        # 구글은 색인 요청 API 를 일반 페이지에 열어주지 않는다(서치콘솔에서 수동).
+        # 네이버·빙은 IndexNow 를 받으므로 바뀐 URL 을 바로 밀어넣는다.
         # 발행에 성공했을 때만. 실패해도 워크플로우는 통과시킨다.
         if: success()
         continue-on-error: true
-        run: |
-          curl -sS -o /dev/null -w "빙 핑 응답: %{http_code}\n" \
-            "https://www.bing.com/ping?sitemap=https%3A%2F%2Fwww.admedical.co.kr%2Fsitemap.xml" || true
+        run: python scripts/indexnow.py --changed 2
