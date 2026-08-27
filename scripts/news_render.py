@@ -653,6 +653,41 @@ def save_index(posts: list[dict]) -> None:
     INDEX_JSON.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
+def _file_mtime(rel_path: str) -> str | None:
+    """실제 파일이 마지막으로 바뀐 날짜. 사이트맵 lastmod 용.
+
+    발행일을 그대로 쓰면 나중에 제목이나 본문을 고쳐도 lastmod 가 그대로라
+    검색엔진이 "안 바뀐 페이지" 로 보고 다시 안 온다. 2026-08-27 에 기사 31편의
+    검색용 제목을 전부 바꿨는데 lastmod 는 8월 1일에 머물러 있었다.
+    """
+    f = WEB / rel_path
+    if not f.exists():
+        return None
+    from datetime import date
+    return date.fromtimestamp(f.stat().st_mtime).isoformat()
+
+
+def refresh_static_lastmod() -> None:
+    """사이트맵의 정적 URL lastmod 를 실제 파일 수정일로 맞춘다."""
+    if not SITEMAP.exists():
+        return
+    text = SITEMAP.read_text(encoding="utf-8")
+
+    def fix(m):
+        loc = m.group(2)
+        slug = loc[len(BASE_URL):].strip("/") or "index"
+        for cand in (f"{slug}.html", f"{slug}/index.html"):
+            mt = _file_mtime(cand)
+            if mt:
+                return m.group(1) + loc + m.group(3) + mt + m.group(5)
+        return m.group(0)
+
+    text = re.sub(
+        r"(<loc>)(" + re.escape(BASE_URL) + r"[^<]*)(</loc>\s*<lastmod>)([^<]*)(</lastmod>)",
+        fix, text)
+    SITEMAP.write_text(text, encoding="utf-8")
+
+
 def update_sitemap(posts: list[dict]) -> None:
     """사이트맵의 news 블록만 통째로 교체. 기존 정적 URL은 건드리지 않는다."""
     if not SITEMAP.exists():
@@ -681,7 +716,7 @@ def update_sitemap(posts: list[dict]) -> None:
         entries.append(f"""
     <url>
         <loc>{BASE_URL}/news/{p['slug']}</loc>
-        <lastmod>{p['date']}</lastmod>
+        <lastmod>{_file_mtime(f"news/{p['slug']}.html") or p['date']}</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>{img}
     </url>""")
