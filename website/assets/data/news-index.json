@@ -1,7 +1,42 @@
 {
-  "generated_at": "2026-08-27T09:01:12.589433+09:00",
-  "count": 31,
+  "generated_at": "2026-08-28T13:29:06.249371+09:00",
+  "count": 32,
   "posts": [
+    {
+      "slug": "2026-08-28-medical-ad-review-blog-sns",
+      "title": "의료광고 심의: 블로그·SNS도 사전심의 필수",
+      "summary": "보건복지부가 블로그와 SNS 의료광고에 사전심의를 의무화하는 공문을 발송했다.",
+      "date": "2026-08-28",
+      "published_at": "2026-08-28T13:26:58.185014+09:00",
+      "cover": "/assets/news/2026-08-28-medical-ad-review-blog-sns-photo.jpg",
+      "thumb": "/assets/news/2026-08-28-medical-ad-review-blog-sns-thumb.jpg",
+      "infographic_type": "checklist",
+      "tags": [
+        "의료광고",
+        "병원마케팅",
+        "보건복지부",
+        "사전심의",
+        "디지털광고"
+      ],
+      "topic_key": "sns도 블로그 사전심의 심의 의료광고 필수",
+      "sources": [
+        {
+          "title": "블로그·SNS 의료광고에도 사전심의 명확히 요구하는 공문 발송",
+          "source": "인블로그",
+          "link": "https://inblog.ai/ko/blog/medical-ad-review"
+        },
+        {
+          "title": "복지부, 페이백 의심 병의원 15곳 추가 수사의뢰",
+          "source": "의학신문",
+          "link": "https://www.bosa.co.kr/news/articleView.html?idxno=3011019"
+        },
+        {
+          "title": "진료비 돌려주고 네일숍 쿠폰까지…‘페이백 병원’ 15곳 수사의뢰",
+          "source": "청년의사",
+          "link": "http://www.docdocdoc.co.kr/news/articleView.html?idxno=3042221"
+        }
+      ]
+    },
     {
       "slug": "2026-08-27-pharmacy-name-restriction-law-change",
       "title": "약사법 개정으로 약국 명칭 사용 제한",

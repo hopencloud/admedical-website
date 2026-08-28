@@ -96,13 +96,23 @@
     <!-- news:begin (자동 생성 — 직접 수정하지 마세요) -->
     <url>
         <loc>https://www.admedical.co.kr/news</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
+        <loc>https://www.admedical.co.kr/news/2026-08-28-medical-ad-review-blog-sns</loc>
+        <lastmod>2026-08-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://www.admedical.co.kr/assets/news/2026-08-28-medical-ad-review-blog-sns-thumb.jpg</image:loc>
+            <image:title>의료광고 심의: 블로그·SNS도 사전심의 필수</image:title>
+        </image:image>
+    </url>
+    <url>
         <loc>https://www.admedical.co.kr/news/2026-08-27-pharmacy-name-restriction-law-change</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
@@ -112,7 +122,7 @@
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-26-multidisciplinary-care-hospitalization-need</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
@@ -122,7 +132,7 @@
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-25-emergency-medic-2029-designation</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
@@ -132,7 +142,7 @@
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-24-medical-institution-suspension-verdict</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
@@ -142,7 +152,7 @@
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-23-local-government-healthcare-policy</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
@@ -152,7 +162,7 @@
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-22-pediatric-surgery-staffing-crisis</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
@@ -162,7 +172,7 @@
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-21-telemedicine-prescription-delivery-expansion</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
@@ -172,7 +182,7 @@
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-20-national-university-hospitals-transfer-policies</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
@@ -182,7 +192,7 @@
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-18-digital-healthcare-law-rights-protection</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
@@ -192,7 +202,7 @@
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-17-sns-medical-advertising-guidelines</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
@@ -202,7 +212,7 @@
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-16-health-insurance-finance-discussion</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
@@ -212,7 +222,7 @@
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-15-medical-advertising-law-penalties</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
@@ -222,7 +232,7 @@
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-14-hospital-inheritance-tax-exclusion-impact</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
@@ -232,7 +242,7 @@
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-13-medical-accident-history-disclosure-debate</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
@@ -242,7 +252,7 @@
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-12-sherlock-holmes-investigation</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
@@ -252,7 +262,7 @@
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-11-medical-marketing-director-branding</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
@@ -262,7 +272,7 @@
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-10-rem-sleep-disorder-mri-parkinson-risk</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
@@ -272,7 +282,7 @@
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-10-medical-dispute-adjustment-law-marketing-impact</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
@@ -282,7 +292,7 @@
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-10-medical-advertising-guideline-update</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
@@ -292,7 +302,7 @@
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-10-medical-advertising-online-regulation</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
@@ -302,7 +312,7 @@
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-03-medical-advertising-review-event-risks</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
@@ -312,7 +322,7 @@
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-03-hospital-advertising-review-law-change</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
@@ -322,7 +332,7 @@
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-03-suction-illegal-ruling-impact-operations</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
@@ -332,7 +342,7 @@
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-03-medical-platform-fee-violation-risk</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
@@ -342,7 +352,7 @@
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-03-medical-advertising-law-revision-penalties</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
@@ -352,7 +362,7 @@
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-02-medical-advertising-regulations-2026</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
@@ -362,7 +372,7 @@
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-01-medical-marketing-impact-regulation</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
@@ -372,7 +382,7 @@
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-01-dementia-management-pilot-expansion-response</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
@@ -382,7 +392,7 @@
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-01-nurse-patient-ratio-legislation-marketing</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
@@ -392,7 +402,7 @@
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-01-drug-pricing-reform-healthcare-marketing</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
@@ -402,7 +412,7 @@
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-01-patient-experience-rating-hospital-marketing</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
         <image:image>
