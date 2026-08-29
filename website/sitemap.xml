@@ -96,9 +96,19 @@
     <!-- news:begin (자동 생성 — 직접 수정하지 마세요) -->
     <url>
         <loc>https://www.admedical.co.kr/news</loc>
-        <lastmod>2026-08-29</lastmod>
+        <lastmod>2026-08-30</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://www.admedical.co.kr/news/2026-08-30-madmedcheck-ai-ad-compliance</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://www.admedical.co.kr/assets/news/2026-08-30-madmedcheck-ai-ad-compliance-thumb.jpg</image:loc>
+            <image:title>의료광고 심의 자동화 서비스의 등장</image:title>
+        </image:image>
     </url>
     <url>
         <loc>https://www.admedical.co.kr/news/2026-08-29-medical-marketing-news</loc>

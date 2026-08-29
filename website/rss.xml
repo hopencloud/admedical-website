@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Sat, 29 Aug 2026 11:56:47 +0900</lastBuildDate>
-        <pubDate>Sat, 29 Aug 2026 11:56:47 +0900</pubDate>
+        <lastBuildDate>Sun, 30 Aug 2026 07:47:53 +0900</lastBuildDate>
+        <pubDate>Sun, 30 Aug 2026 07:47:53 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,20 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>의료광고 심의 자동화 서비스의 등장</title>
+            <link>https://www.admedical.co.kr/news/2026-08-30-madmedcheck-ai-ad-compliance</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-30-madmedcheck-ai-ad-compliance</guid>
+            <description>의료광고 자동 심의 서비스로 법적 리스크를 줄일 수 있습니다.</description>
+            <author>admedical</author>
+            <pubDate>Sun, 30 Aug 2026 07:45:49 +0900</pubDate>
+            <category>의료광고</category>
+            <category>마케팅</category>
+            <category>AI 서비스</category>
+            <category>규제 준수</category>
+            <category>법적 리스크</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-30-madmedcheck-ai-ad-compliance-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>지역의사제 변화가 병원 마케팅에 미칠 잠재적 영향</title>
             <link>https://www.admedical.co.kr/news/2026-08-29-medical-marketing-news</link>
