@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Fri, 28 Aug 2026 13:29:06 +0900</lastBuildDate>
-        <pubDate>Fri, 28 Aug 2026 13:29:06 +0900</pubDate>
+        <lastBuildDate>Sat, 29 Aug 2026 11:56:47 +0900</lastBuildDate>
+        <pubDate>Sat, 29 Aug 2026 11:56:47 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,20 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>지역의사제 변화가 병원 마케팅에 미칠 잠재적 영향</title>
+            <link>https://www.admedical.co.kr/news/2026-08-29-medical-marketing-news</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-29-medical-marketing-news</guid>
+            <description>지역의사제 시행이 병원 마케팅 전략에 미칠 잠재적 영향을 분석합니다.</description>
+            <author>admedical</author>
+            <pubDate>Sat, 29 Aug 2026 11:54:37 +0900</pubDate>
+            <category>지역의사제</category>
+            <category>병원 마케팅</category>
+            <category>의료 정책</category>
+            <category>의과대학</category>
+            <category>지자체 협력</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-29-medical-marketing-news-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>의료광고 심의: 블로그·SNS도 사전심의 필수</title>
             <link>https://www.admedical.co.kr/news/2026-08-28-medical-ad-review-blog-sns</link>

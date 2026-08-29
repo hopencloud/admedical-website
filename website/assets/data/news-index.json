@@ -1,7 +1,42 @@
 {
-  "generated_at": "2026-08-28T13:29:06.249371+09:00",
-  "count": 32,
+  "generated_at": "2026-08-29T11:56:47.753071+09:00",
+  "count": 33,
   "posts": [
+    {
+      "slug": "2026-08-29-medical-marketing-news",
+      "title": "지역의사제 변화가 병원 마케팅에 미칠 잠재적 영향",
+      "summary": "지역의사제 시행이 병원 마케팅 전략에 미칠 잠재적 영향을 분석합니다.",
+      "date": "2026-08-29",
+      "published_at": "2026-08-29T11:54:37.015489+09:00",
+      "cover": "/assets/news/2026-08-29-medical-marketing-news-photo.jpg",
+      "thumb": "/assets/news/2026-08-29-medical-marketing-news-thumb.jpg",
+      "infographic_type": "process",
+      "tags": [
+        "지역의사제",
+        "병원 마케팅",
+        "의료 정책",
+        "의과대학",
+        "지자체 협력"
+      ],
+      "topic_key": "마케팅에 미칠 변화가 병원 영향 잠재적",
+      "sources": [
+        {
+          "title": "'490명' 지역의사, 어떻게 선발·교육·수련할 것인가?",
+          "source": "의협신문",
+          "link": "http://www.doctorsnews.co.kr/news/articleView.html?idxno=166047"
+        },
+        {
+          "title": "지역의사 선발 앞둔 전남광주 과제는 '평가·재정'… 어떻게 키우고 누가 책임질까",
+          "source": "청년의사",
+          "link": "http://www.docdocdoc.co.kr/news/articleView.html?idxno=3042255"
+        },
+        {
+          "title": "조선대·전남의사회, 지역의사제 운영 과제 점검",
+          "source": "의학신문",
+          "link": "https://www.bosa.co.kr/news/articleView.html?idxno=3011040"
+        }
+      ]
+    },
     {
       "slug": "2026-08-28-medical-ad-review-blog-sns",
       "title": "의료광고 심의: 블로그·SNS도 사전심의 필수",
