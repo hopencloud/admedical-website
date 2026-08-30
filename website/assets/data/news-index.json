@@ -1,7 +1,32 @@
 {
-  "generated_at": "2026-08-30T07:47:53.398383+09:00",
-  "count": 34,
+  "generated_at": "2026-08-31T07:56:58.995945+09:00",
+  "count": 35,
   "posts": [
+    {
+      "slug": "2026-08-31-foreign-patient-medical-law",
+      "title": "해외환자 유치, 의료법 규제 이해하기",
+      "summary": "해외환자 유치 시 의료법상 허용되는 것과 금지되는 것을 이해합니다.",
+      "date": "2026-08-31",
+      "published_at": "2026-08-31T07:54:57.007445+09:00",
+      "cover": "/assets/news/2026-08-31-foreign-patient-medical-law-photo.jpg",
+      "thumb": "/assets/news/2026-08-31-foreign-patient-medical-law-thumb.jpg",
+      "infographic_type": "comparison",
+      "tags": [
+        "의료법",
+        "해외환자",
+        "병원 마케팅",
+        "의료광고",
+        "의료해외진출법"
+      ],
+      "topic_key": "규제 유치 의료법 이해하기 해외환자",
+      "sources": [
+        {
+          "title": "해외환자 유치, 의료법상 되는 것과 안 되는 것 (2026년 개정 반영)",
+          "source": "인블로그",
+          "link": "https://inblog.ai/ko/blog/foreign-patient-medical-law"
+        }
+      ]
+    },
     {
       "slug": "2026-08-30-madmedcheck-ai-ad-compliance",
       "title": "의료광고 심의 자동화 서비스의 등장",
