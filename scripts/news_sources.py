@@ -67,15 +67,28 @@ NOISE_PATTERNS = [
 # 근거로 쓴 두 건이 전부 GC메디아이의 플랫폼 리뉴얼 보도자료였다. 프롬프트의
 # "홍보성 소식 제외" 지시는 병원만 걸렀고 업체·플랫폼은 그냥 통과했다.
 # AI 에게 부탁하는 대신 파이썬이 제목에서 잘라낸다 (중복 차단 때와 같은 이유).
+# 업체가 무언가를 내놓았다는 신호. 제도 기사에는 나올 일이 없다.
+# 아래 POLICY_RESCUE 로도 구제되지 않는다.
+#
+# 2026-08-30 에 "의료광고 심의 자동화 서비스의 등장" 이 발행됐다. 근거가
+# 경쟁 업체(MADMEDCHECK)의 자사 홈페이지 한 곳이었다. 제목에 "의료광고"와
+# "심의"가 들어 있어 POLICY_RESCUE 가 통째로 살려버린 것이다. 이 사이트 주제상
+# 업체 홍보에도 그 단어들이 반드시 들어가므로, 구제 조건을 나눠야 한다.
+HARD_PROMO_PATTERNS = [
+    r"출시", r"런칭", r"론칭", r"리뉴얼", r"재단장", r"새단장",
+    r"그랜드 ?오픈", r"정식 ?오픈", r"선보(여|인|이|입)", r"등장", r"첫 ?공개",
+    r"상용화", r"베타 ?(서비스|버전)", r"정식 ?서비스", r"신규 ?서비스", r"신제품",
+    r"업무 ?협약", r"MOU", r"양해각서", r"맞손", r"손잡", r"파트너십",
+    r"수상", r"[0-9]+년 ?연속", r"[0-9]+주년",
+    r"매출", r"영업이익", r"실적", r"흑자", r"투자 ?유치", r"시리즈 ?[A-C]", r"상장",
+]
+
+# 약한 신호. 제도 기사에도 쓰일 수 있어 POLICY_RESCUE 로 구제된다.
 PROMO_PATTERNS = [
-    r"리뉴얼", r"재단장", r"새단장", r"그랜드 ?오픈", r"오픈", r"개원", r"확장 ?이전",
-    r"출시", r"런칭", r"론칭", r"선보(여|인|이)", r"공개", r"첫 ?공개",
-    r"업무 ?협약", r"MOU", r"양해각서", r"맞손", r"손잡", r"제휴", r"파트너십",
-    r"수상", r"대상 ?수상", r"우수상", r"[0-9]+년 ?연속", r"[0-9]+주년", r"기념",
+    r"오픈", r"개원", r"확장 ?이전", r"제휴", r"기념",
     r"인증 ?획득", r"허가 ?획득", r"승인 ?획득", r"특허",
     r"기부", r"후원", r"봉사", r"나눔", r"전달식",
     r"심포지엄", r"세미나 ?개최", r"컨퍼런스 ?개최", r"간담회 ?개최",
-    r"매출", r"영업이익", r"실적", r"흑자", r"투자 ?유치", r"상장",
 ]
 
 # 위 단어가 들어 있어도 제도·규제 기사면 살린다.
@@ -85,6 +98,43 @@ POLICY_RESCUE = [
     "법 개정", "개정안", "입법", "고시", "행정처분", "과태료", "벌금", "판결",
     "가이드라인", "규제", "위반", "단속",
 ]
+
+
+# 웹검색 결과로 받아들일 도메인.
+#
+# 2026-08-30 에 경쟁 업체(MADMEDCHECK)의 **자사 홈페이지**가 근거 자료로 들어와
+# 그 업체를 홍보하는 기사가 발행됐다. 법률사무소·마케팅 대행사 블로그도 같이
+# 섞여 들어왔다. 이런 곳은 기사가 아니라 영업 콘텐츠다.
+#
+# 화이트리스트로 간다. 새 매체를 넣을 때는 그게 정말 언론사인지 확인할 것.
+CREDIBLE_DOMAINS = {
+    # 의료 전문지
+    "docdocdoc.co.kr", "doctorsnews.co.kr", "bosa.co.kr", "monews.co.kr",
+    "hitnews.co.kr", "medicaltimes.com", "dailymedi.com", "medipana.com",
+    "쿠키뉴스".encode().decode(), "kukinews.com", "yakup.com", "hkn24.com",
+    "mdtoday.co.kr", "whosaeng.com", "medifonews.com", "dailypharm.com",
+    # 종합지·통신사
+    "yna.co.kr", "yonhapnews.co.kr", "chosun.com", "donga.com", "joongang.co.kr",
+    "hani.co.kr", "khan.co.kr", "hankyung.com", "mk.co.kr", "sedaily.com",
+    "kbs.co.kr", "imnews.imbc.com", "news.sbs.co.kr", "ytn.co.kr", "newsis.com",
+    # 포털 뉴스 — 등록 언론사 기사만 실린다. 원문 매체명은 기사에 표기된다.
+    "v.daum.net", "news.daum.net", "n.news.naver.com", "news.naver.com",
+    # 정부·공공
+    "mohw.go.kr", "mfds.go.kr", "law.go.kr", "korea.kr", "ftc.go.kr",
+    "hira.or.kr", "nhis.or.kr", "kdca.go.kr",
+}
+
+
+def is_credible_source(link: str) -> bool:
+    """언론사·정부 도메인인가. 업체 자사 사이트·블로그는 근거로 쓰지 않는다."""
+    try:
+        from urllib.parse import urlparse
+        host = (urlparse(link).hostname or "").lower().lstrip("www.")
+    except Exception:
+        return False
+    if not host:
+        return False
+    return any(host == d or host.endswith("." + d) for d in CREDIBLE_DOMAINS)
 
 
 @dataclass
@@ -155,7 +205,13 @@ def normalize_topic_key(title: str) -> str:
 
 
 def is_promo(item: NewsItem) -> bool:
-    """업체 홍보 보도자료인가. 제도·규제 내용이 섞여 있으면 살린다."""
+    """업체 홍보인가.
+
+    강한 신호(출시·등장·MOU·실적 등)는 제목에 '의료광고'·'심의'가 들어 있어도
+    구제하지 않는다. 이 사이트 주제상 업체 홍보에도 그 단어가 반드시 들어간다.
+    """
+    if any(re.search(p, item.title) for p in HARD_PROMO_PATTERNS):
+        return True
     if any(kw in item.title for kw in POLICY_RESCUE):
         return False
     return any(re.search(p, item.title) for p in PROMO_PATTERNS)
@@ -304,10 +360,25 @@ def collect(hours: int = 48, use_web_search: bool = True) -> list[NewsItem]:
         print(f"  {feed['name']}: {len(items)}건 중 {kept}건 채택")
 
     if use_web_search:
+        # 웹검색 결과가 필터를 통째로 건너뛰고 있었다. RSS 는 is_relevant() 를
+        # 거치는데 여기만 그대로 append 했다. 그래서 경쟁 업체 자사 홈페이지가
+        # 근거 자료로 들어와 홍보 기사가 나갔다 (2026-08-30).
+        kept = dropped = 0
         for item in openai_web_search():
-            if item.link not in seen_links:
-                seen_links.add(item.link)
-                collected.append(item)
+            if item.link in seen_links:
+                continue
+            if not is_credible_source(item.link):
+                print(f"  [제외] 언론사가 아님: {item.source} — {item.title[:40]}")
+                dropped += 1
+                continue
+            if not is_relevant(item):
+                print(f"  [제외] 홍보성: {item.title[:50]}")
+                dropped += 1
+                continue
+            seen_links.add(item.link)
+            collected.append(item)
+            kept += 1
+        print(f"  웹검색: {kept}건 채택 / {dropped}건 제외")
 
     collected.sort(key=lambda i: i.published, reverse=True)
     return collected
