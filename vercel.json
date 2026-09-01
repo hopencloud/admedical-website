@@ -22,6 +22,71 @@
             "source": "/news/2026-08-19-misomall-renewal-medical-marketing-impact",
             "destination": "/news",
             "permanent": true
+        },
+        {
+            "source": "/news/2026-08-02-medical-advertising-regulations-2026",
+            "destination": "/news",
+            "permanent": true
+        },
+        {
+            "source": "/news/2026-08-03-hospital-advertising-review-law-change",
+            "destination": "/news",
+            "permanent": true
+        },
+        {
+            "source": "/news/2026-08-03-medical-advertising-law-revision-penalties",
+            "destination": "/news",
+            "permanent": true
+        },
+        {
+            "source": "/news/2026-08-03-medical-advertising-review-event-risks",
+            "destination": "/news",
+            "permanent": true
+        },
+        {
+            "source": "/news/2026-08-03-medical-platform-fee-violation-risk",
+            "destination": "/news",
+            "permanent": true
+        },
+        {
+            "source": "/news/2026-08-10-medical-advertising-guideline-update",
+            "destination": "/news",
+            "permanent": true
+        },
+        {
+            "source": "/news/2026-08-10-medical-advertising-online-regulation",
+            "destination": "/news",
+            "permanent": true
+        },
+        {
+            "source": "/news/2026-08-11-medical-marketing-director-branding",
+            "destination": "/news",
+            "permanent": true
+        },
+        {
+            "source": "/news/2026-08-15-medical-advertising-law-penalties",
+            "destination": "/news",
+            "permanent": true
+        },
+        {
+            "source": "/news/2026-08-17-sns-medical-advertising-guidelines",
+            "destination": "/news",
+            "permanent": true
+        },
+        {
+            "source": "/news/2026-08-30-madmedcheck-ai-ad-compliance",
+            "destination": "/news",
+            "permanent": true
+        },
+        {
+            "source": "/news/2026-08-31-foreign-patient-medical-law",
+            "destination": "/news",
+            "permanent": true
+        },
+        {
+            "source": "/news/2026-09-01-medical-law-risk-patient-reviews",
+            "destination": "/news",
+            "permanent": true
         }
     ],
     "headers": [
