@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Mon, 31 Aug 2026 07:56:58 +0900</lastBuildDate>
-        <pubDate>Mon, 31 Aug 2026 07:56:58 +0900</pubDate>
+        <lastBuildDate>Tue, 01 Sep 2026 09:03:56 +0900</lastBuildDate>
+        <pubDate>Tue, 01 Sep 2026 09:03:56 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,20 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>의료법 위반 위험: 환자 후기 공유 주의점</title>
+            <link>https://www.admedical.co.kr/news/2026-09-01-medical-law-risk-patient-reviews</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-09-01-medical-law-risk-patient-reviews</guid>
+            <description>로그인 없이 공개된 병원 후기와 체험단 콘텐츠는 의료법 위반 위험이 있습니다.</description>
+            <author>admedical</author>
+            <pubDate>Tue, 01 Sep 2026 09:01:38 +0900</pubDate>
+            <category>의료광고</category>
+            <category>병원 마케팅</category>
+            <category>의료법</category>
+            <category>환자 후기</category>
+            <category>법적 리스크</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-09-01-medical-law-risk-patient-reviews-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>해외환자 유치, 의료법 규제 이해하기</title>
             <link>https://www.admedical.co.kr/news/2026-08-31-foreign-patient-medical-law</link>

@@ -1,7 +1,32 @@
 {
-  "generated_at": "2026-08-31T07:56:58.995945+09:00",
-  "count": 35,
+  "generated_at": "2026-09-01T09:03:56.556839+09:00",
+  "count": 36,
   "posts": [
+    {
+      "slug": "2026-09-01-medical-law-risk-patient-reviews",
+      "title": "의료법 위반 위험: 환자 후기 공유 주의점",
+      "summary": "로그인 없이 공개된 병원 후기와 체험단 콘텐츠는 의료법 위반 위험이 있습니다.",
+      "date": "2026-09-01",
+      "published_at": "2026-09-01T09:01:38.724878+09:00",
+      "cover": "/assets/news/2026-09-01-medical-law-risk-patient-reviews-photo.jpg",
+      "thumb": "/assets/news/2026-09-01-medical-law-risk-patient-reviews-thumb.jpg",
+      "infographic_type": "checklist",
+      "tags": [
+        "의료광고",
+        "병원 마케팅",
+        "의료법",
+        "환자 후기",
+        "법적 리스크"
+      ],
+      "topic_key": "공유 위반 위험 의료법 주의점 환자",
+      "sources": [
+        {
+          "title": "병원 방문 후기나 체험단 후기는 로그인 없이 공개 공유 시 의료법 위반 리스크",
+          "source": "뉴로이어 법률사무소",
+          "link": "https://newlawyer.co.kr/41/160"
+        }
+      ]
+    },
     {
       "slug": "2026-08-31-foreign-patient-medical-law",
       "title": "해외환자 유치, 의료법 규제 이해하기",
