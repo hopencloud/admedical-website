@@ -1,7 +1,32 @@
 {
-  "generated_at": "2026-09-01T14:38:54.268003+09:00",
-  "count": 17,
+  "generated_at": "2026-09-01T14:50:22.746024+09:00",
+  "count": 18,
   "posts": [
+    {
+      "slug": "2026-09-01-medical-advertising-enhancement-electronic-evidence",
+      "title": "의료광고 심의 강화, 전자 채증 시스템 필요성 논의 중",
+      "summary": "편법적 의료광고 증가로 전자 채증 시스템 구축이 논의되고 있습니다.",
+      "date": "2026-09-01",
+      "published_at": "2026-09-01T14:48:06.768005+09:00",
+      "cover": "/assets/news/2026-09-01-medical-advertising-enhancement-electronic-evidence-photo.jpg",
+      "thumb": "/assets/news/2026-09-01-medical-advertising-enhancement-electronic-evidence-thumb.jpg",
+      "infographic_type": "checklist",
+      "tags": [
+        "의료광고",
+        "병원 마케팅",
+        "전자 채증",
+        "자율규제",
+        "보건복지부"
+      ],
+      "topic_key": "강화 논의 시스템 심의 의료광고 전자",
+      "sources": [
+        {
+          "title": "편법적 의료광고 증가에 대응 필요…전자 채증 시스템 구축 제안",
+          "source": "데일리메디",
+          "link": "https://www.dailymedi.com/news/news_view.php?wr_id=938060"
+        }
+      ]
+    },
     {
       "slug": "2026-08-29-medical-marketing-news",
       "title": "지역의사제 변화가 병원 마케팅에 미칠 잠재적 영향",

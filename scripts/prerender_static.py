@@ -83,7 +83,10 @@ def render_top20() -> None:
 
     # 순위표만 있으면 표 하나짜리 페이지다. 그 주에 무엇이 눈에 띄었는지
     # 문장으로 정리해 사람이 읽을 거리를 만든다. 수치는 전부 실측값에서 뽑는다.
-    top3 = ", ".join(html.escape(str(x.get("expression", ""))) for x in items[:3])
+    # 목록 순서는 AI 가 마케팅 가치로 고른 것이라 빈도순이 아니다.
+    # "가장 자주 등장한" 이라고 쓰려면 등장 횟수로 다시 정렬해야 한다.
+    by_count = sorted(items, key=lambda x: -x.get("count", 0))
+    top3 = ", ".join(html.escape(str(x.get("expression", ""))) for x in by_count[:3])
     total = sum(x.get("count", 0) for x in items)
     lead = (
         f'<p class="text-slate-700 leading-relaxed mb-4">'

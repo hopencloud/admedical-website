@@ -30,6 +30,7 @@ from dotenv import load_dotenv
 
 sys.path.insert(0, str(Path(__file__).parent))
 
+import news_data_story                               # noqa: E402
 import news_images                                    # noqa: E402
 import news_render                                    # noqa: E402
 import news_sources                                   # noqa: E402
@@ -263,8 +264,18 @@ def publish_one(client, posts: list[dict], candidates: list, stats: dict,
         pool = [c for c in pool if c.link not in drop]
 
     if not topic:
-        log("최근 발행분과 겹치지 않는 주제가 없습니다. 발행하지 않습니다.")
-        return None
+        # 뉴스에 우리 주제가 없는 날이 있다. 의료광고 규제 소식이 매일 나오지는
+        # 않는다(2026-09-01 후보 178건 중 0건). 그렇다고 임상·예산 기사를 억지로
+        # 쓰면 사이트 정체성이 무너지고, 안 쓰면 발행이 끊긴다.
+        # 우리 심의 데이터로 쓴다. 15,000건 집계는 다른 곳에 없는 재료다.
+        log("뉴스에 마땅한 주제가 없습니다. 자체 집계 데이터로 씁니다.")
+        topic = news_data_story.build_topic()
+        if not topic:
+            log("자체 데이터도 부족합니다. 발행하지 않습니다.")
+            return None
+        if duplicate_of(topic["topic"], posts):
+            log("자체 집계 기사도 최근 발행분과 겹칩니다. 발행하지 않습니다.")
+            return None
 
     log(f"주제: {topic['topic']}")
     log(f"관점: {topic.get('angle', '')}")
