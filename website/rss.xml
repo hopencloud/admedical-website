@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Tue, 01 Sep 2026 14:50:22 +0900</lastBuildDate>
-        <pubDate>Tue, 01 Sep 2026 14:50:22 +0900</pubDate>
+        <lastBuildDate>Wed, 02 Sep 2026 07:47:30 +0900</lastBuildDate>
+        <pubDate>Wed, 02 Sep 2026 07:47:30 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,20 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>의료광고 심의 통과 표현 '리프팅' 분석</title>
+            <link>https://www.admedical.co.kr/news/2026-09-02-medical-advertising-approval-lifting-analysis</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-09-02-medical-advertising-approval-lifting-analysis</guid>
+            <description>지난주 의료광고 심의에서 '리프팅' 표현이 가장 많이 통과되었습니다.</description>
+            <author>admedical</author>
+            <pubDate>Wed, 02 Sep 2026 07:45:25 +0900</pubDate>
+            <category>의료광고</category>
+            <category>병원 마케팅</category>
+            <category>의료법</category>
+            <category>광고 심의</category>
+            <category>리프팅</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-09-02-medical-advertising-approval-lifting-analysis-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>의료광고 심의 강화, 전자 채증 시스템 필요성 논의 중</title>
             <link>https://www.admedical.co.kr/news/2026-09-01-medical-advertising-enhancement-electronic-evidence</link>
