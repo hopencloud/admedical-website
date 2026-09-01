@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-01T14:26:35.596770+09:00",
-  "count": 23,
+  "generated_at": "2026-09-01T14:38:54.268003+09:00",
+  "count": 17,
   "posts": [
     {
       "slug": "2026-08-29-medical-marketing-news",
@@ -97,65 +97,6 @@
       ]
     },
     {
-      "slug": "2026-08-26-multidisciplinary-care-hospitalization-need",
-      "title": "입원환자 다학제팀의료, 제도화 필요성 대두",
-      "summary": "입원환자 다학제팀의료의 필요성이 증가하고 있습니다.",
-      "date": "2026-08-26",
-      "published_at": "2026-08-26T06:03:05.833782+09:00",
-      "cover": "/assets/news/2026-08-26-multidisciplinary-care-hospitalization-need-photo.jpg",
-      "thumb": "/assets/news/2026-08-26-multidisciplinary-care-hospitalization-need-thumb.jpg",
-      "infographic_type": "checklist",
-      "tags": [
-        "다학제팀의료",
-        "환자 관리",
-        "약사 수가",
-        "의료 제도화"
-      ],
-      "topic_key": "다학제팀의료 대두 입원환자 제도화 필요성",
-      "sources": [
-        {
-          "title": "입원환자 다학제팀의료 제도화 필요…“약사 수가·인력 뒷받침돼야”",
-          "source": "의학신문",
-          "link": "https://www.bosa.co.kr/news/articleView.html?idxno=3010800"
-        }
-      ]
-    },
-    {
-      "slug": "2026-08-25-emergency-medic-2029-designation",
-      "title": "1급 응급구조사 국시, 지정대학 졸업생만 응시 가능",
-      "summary": "2029년부터 1급 응급구조사 국시 응시 자격이 정부 지정대학 졸업생으로 제한됩니다.",
-      "date": "2026-08-25",
-      "published_at": "2026-08-25T06:01:00.620490+09:00",
-      "cover": "/assets/news/2026-08-25-emergency-medic-2029-designation-photo.jpg",
-      "thumb": "/assets/news/2026-08-25-emergency-medic-2029-designation-thumb.jpg",
-      "infographic_type": "timeline",
-      "tags": [
-        "응급구조사",
-        "지정대학",
-        "국가시험",
-        "병원 인력",
-        "교육 전략"
-      ],
-      "topic_key": "1급 가능 국시 응급구조사 응시 졸업생만",
-      "sources": [
-        {
-          "title": "응급구조사 양성 교육 국가가 관리한다, 2029학년도부터 1급 응급구조사 양성대학 ‘지정제’ 시행",
-          "source": "보건복지부 보도자료",
-          "link": "https://www.mohw.go.kr/board.es?mid=a10503010100&bid=0027&list_no=1491651&act=view"
-        },
-        {
-          "title": "2029년부터 정부 지정대학 졸업생만 1급 응급구조사 국시 응시",
-          "source": "청년의사",
-          "link": "http://www.docdocdoc.co.kr/news/articleView.html?idxno=3042028"
-        },
-        {
-          "title": "政, 2029년부터 1급 응급구조사 양성대학 지정제 시행",
-          "source": "메디칼업저버",
-          "link": "https://www.monews.co.kr/news/articleView.html?idxno=413388"
-        }
-      ]
-    },
-    {
       "slug": "2026-08-24-medical-institution-suspension-verdict",
       "title": "의료기관 영업정지 판결, 부당청구 규제에 영향",
       "summary": "부당청구 일부 유죄에도 영업정지 전체 적용은 위법 판결로 최종 확정되었습니다.",
@@ -201,40 +142,6 @@
           "title": "지방정부, 필수의료 직접 설계…복지부, 지역 맞춤형 지원",
           "source": "청년의사",
           "link": "http://www.docdocdoc.co.kr/news/articleView.html?idxno=3041993"
-        }
-      ]
-    },
-    {
-      "slug": "2026-08-22-pediatric-surgery-staffing-crisis",
-      "title": "소아외과 전문인력 부족, 정부 대책 시급",
-      "summary": "소아외과 전문인력 부족은 의료 서비스 제공에 영향을 미치며, 정부의 정책 변화가 논의되고 있다.",
-      "date": "2026-08-22",
-      "published_at": "2026-08-22T05:52:41.502655+09:00",
-      "cover": "/assets/news/2026-08-22-pediatric-surgery-staffing-crisis-photo.jpg",
-      "thumb": "/assets/news/2026-08-22-pediatric-surgery-staffing-crisis-thumb.jpg",
-      "infographic_type": "checklist",
-      "tags": [
-        "소아외과",
-        "의료정책",
-        "전문인력",
-        "정부지원"
-      ],
-      "topic_key": "대책 부족 소아외과 시급 전문인력 정부",
-      "sources": [
-        {
-          "title": "소아외과 전문가들, 정부에 전문인력 직접 지원 방안 마련 요청",
-          "source": "의학신문",
-          "link": "https://www.bosa.co.kr/news/articleView.html?idxno=3010634"
-        },
-        {
-          "title": "수가 올라도 소아외과 안 간다...전공의 93% “분과 선택 고려 안 해”",
-          "source": "의학신문",
-          "link": "https://www.bosa.co.kr/news/articleView.html?idxno=3010633"
-        },
-        {
-          "title": "소아 필수 치료재료, 저수가·적은 환자 수에 ‘공급 절벽’ 심각",
-          "source": "의학신문",
-          "link": "https://www.bosa.co.kr/news/articleView.html?idxno=3010630"
         }
       ]
     },
@@ -368,41 +275,6 @@
       ]
     },
     {
-      "slug": "2026-08-14-hospital-inheritance-tax-exclusion-impact",
-      "title": "병원 가업상속공제 제외 우려",
-      "summary": "가업상속공제에서 병원이 제외될 경우 경영난과 지역 의료 공백 우려가 있습니다.",
-      "date": "2026-08-14",
-      "published_at": "2026-08-14T06:25:04.214624+09:00",
-      "cover": "/assets/news/2026-08-14-hospital-inheritance-tax-exclusion-impact-photo.jpg",
-      "thumb": "/assets/news/2026-08-14-hospital-inheritance-tax-exclusion-impact-thumb.jpg",
-      "infographic_type": "checklist",
-      "tags": [
-        "병원 경영",
-        "상속세",
-        "의료 서비스",
-        "가업상속공제",
-        "지역 의료"
-      ],
-      "topic_key": "가업상속공제 병원 우려 제외",
-      "sources": [
-        {
-          "title": "\"가업상속공제 대상 병원 제외, 지필공도 '흔들'\"",
-          "source": "메디칼업저버",
-          "link": "https://www.monews.co.kr/news/articleView.html?idxno=413219"
-        },
-        {
-          "title": "병원계 ‘병원 가업상속공제 대상 제외’ 반발 확산",
-          "source": "의학신문",
-          "link": "https://www.bosa.co.kr/news/articleView.html?idxno=3010199"
-        },
-        {
-          "title": "\"지역·필수의료 한다더니…승계 막히면 지역의료도 흔들\"",
-          "source": "의협신문",
-          "link": "http://www.doctorsnews.co.kr/news/articleView.html?idxno=165821"
-        }
-      ]
-    },
-    {
       "slug": "2026-08-13-medical-accident-history-disclosure-debate",
       "title": "의료사고 이력 공개 추진, 정부와 의료계 반응",
       "summary": "의료사고 이력 공개 추진에 정부는 필수의료 위축 우려, 의료계는 반발 중.",
@@ -462,31 +334,6 @@
           "title": "몸집 키운 식약처 특사경, ‘셜록 홈즈’ 자처하고 나선 까닭?",
           "source": "의협신문",
           "link": "http://www.doctorsnews.co.kr/news/articleView.html?idxno=165789"
-        }
-      ]
-    },
-    {
-      "slug": "2026-08-10-rem-sleep-disorder-mri-parkinson-risk",
-      "title": "렘수면행동장애 MRI로 파킨슨병 위험 선별 가능성 제시",
-      "summary": "렘수면행동장애 환자 중 파킨슨병 위험을 MRI로 선별할 수 있는 가능성이 제시됐다.",
-      "date": "2026-08-10",
-      "published_at": "2026-08-10T21:46:33.907034+09:00",
-      "cover": "/assets/news/2026-08-10-rem-sleep-disorder-mri-parkinson-risk-photo.jpg",
-      "thumb": "/assets/news/2026-08-10-rem-sleep-disorder-mri-parkinson-risk-thumb.jpg",
-      "infographic_type": "checklist",
-      "tags": [
-        "의료마케팅",
-        "파킨슨병",
-        "MRI 검사",
-        "렘수면행동장애",
-        "의료기술"
-      ],
-      "topic_key": "mri로 가능성 렘수면행동장애 선별 위험 제시",
-      "sources": [
-        {
-          "title": "파킨슨병 위험 높은 '렘수면행동장애' MRI로 먼저 찾는다",
-          "source": "청년의사",
-          "link": "http://www.docdocdoc.co.kr/news/articleView.html?idxno=3041657"
         }
       ]
     },
@@ -625,38 +472,6 @@
           "title": "간호사 1인당 환자 수 법제화 눈앞…간호계 “강제 수단 필요”",
           "source": "청년의사",
           "link": "http://www.docdocdoc.co.kr/news/articleView.html?idxno=3041413"
-        }
-      ]
-    },
-    {
-      "slug": "2026-08-01-drug-pricing-reform-healthcare-marketing",
-      "title": "약가제도 개편과 약제선별급여부 신설의 영향",
-      "summary": "약가제도 개편이 8월 1일부터 시행되며, 약제선별급여부가 신설됩니다. 병의원은 이에 따른 마케팅 전략 조정이 필요합니다.",
-      "date": "2026-08-01",
-      "published_at": "2026-08-01T19:58:16.454655+09:00",
-      "cover": "/assets/news/2026-08-01-drug-pricing-reform-healthcare-marketing-photo.jpg",
-      "thumb": "/assets/news/2026-08-01-drug-pricing-reform-healthcare-marketing-thumb.jpg",
-      "tags": [
-        "약가제도",
-        "병원마케팅",
-        "약제선별급여부"
-      ],
-      "topic_key": "개편과 신설의 약가제도 약제선별급여부 영향",
-      "sources": [
-        {
-          "title": "\"7월 급여신청부터 새 약가… 계열사 생산은 직접생산 아냐\"",
-          "source": "히트뉴스",
-          "link": "https://www.hitnews.co.kr/news/articleView.html?idxno=78112"
-        },
-        {
-          "title": "심평원 약제실에 선별급여부 신설... 가짜진료조사단도 구성",
-          "source": "히트뉴스",
-          "link": "https://www.hitnews.co.kr/news/articleView.html?idxno=78111"
-        },
-        {
-          "title": "약가 우대 수급안정 선도기업 18곳… 녹십자·명인제약 등 포함",
-          "source": "히트뉴스",
-          "link": "https://www.hitnews.co.kr/news/articleView.html?idxno=78110"
         }
       ]
     },

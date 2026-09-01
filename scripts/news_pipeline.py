@@ -242,6 +242,18 @@ def publish_one(client, posts: list[dict], candidates: list, stats: dict,
             break
         if tried_links is not None:
             tried_links |= {s.link for s in picked["sources"]}
+
+        # 우리 주제인지 파이썬이 확인한다. 프롬프트로 아무리 지시해도
+        # AI 는 "편두통 치료 지침 개정" 같은 임상 뉴스를 골라온다.
+        # 근거 기사 제목 중 하나라도 광고·마케팅 핵심어가 있어야 한다.
+        src_titles = [x.title for x in picked["sources"]]
+        if not any(news_sources.is_our_topic(t) for t in src_titles + [picked["topic"]]):
+            log(f"주제가 우리 분야가 아닙니다 — '{picked['topic'][:50]}'. 다시 고릅니다 "
+                f"({attempt + 1}/3)")
+            drop = {x.link for x in picked["sources"]}
+            pool = [c for c in pool if c.link not in drop]
+            continue
+
         dup = duplicate_of(picked["topic"], posts)
         if not dup:
             topic = picked

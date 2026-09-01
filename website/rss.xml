@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Tue, 01 Sep 2026 14:26:35 +0900</lastBuildDate>
-        <pubDate>Tue, 01 Sep 2026 14:26:35 +0900</pubDate>
+        <lastBuildDate>Tue, 01 Sep 2026 14:38:54 +0900</lastBuildDate>
+        <pubDate>Tue, 01 Sep 2026 14:38:54 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -57,33 +57,6 @@
             <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-27-pharmacy-name-restriction-law-change-photo.jpg" type="image/jpeg" length="0"/>
         </item>
         <item>
-            <title>입원환자 다학제팀의료, 제도화 필요성 대두</title>
-            <link>https://www.admedical.co.kr/news/2026-08-26-multidisciplinary-care-hospitalization-need</link>
-            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-26-multidisciplinary-care-hospitalization-need</guid>
-            <description>입원환자 다학제팀의료의 필요성이 증가하고 있습니다.</description>
-            <author>admedical</author>
-            <pubDate>Wed, 26 Aug 2026 06:03:05 +0900</pubDate>
-            <category>다학제팀의료</category>
-            <category>환자 관리</category>
-            <category>약사 수가</category>
-            <category>의료 제도화</category>
-            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-26-multidisciplinary-care-hospitalization-need-photo.jpg" type="image/jpeg" length="0"/>
-        </item>
-        <item>
-            <title>1급 응급구조사 국시, 지정대학 졸업생만 응시 가능</title>
-            <link>https://www.admedical.co.kr/news/2026-08-25-emergency-medic-2029-designation</link>
-            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-25-emergency-medic-2029-designation</guid>
-            <description>2029년부터 1급 응급구조사 국시 응시 자격이 정부 지정대학 졸업생으로 제한됩니다.</description>
-            <author>admedical</author>
-            <pubDate>Tue, 25 Aug 2026 06:01:00 +0900</pubDate>
-            <category>응급구조사</category>
-            <category>지정대학</category>
-            <category>국가시험</category>
-            <category>병원 인력</category>
-            <category>교육 전략</category>
-            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-25-emergency-medic-2029-designation-photo.jpg" type="image/jpeg" length="0"/>
-        </item>
-        <item>
             <title>의료기관 영업정지 판결, 부당청구 규제에 영향</title>
             <link>https://www.admedical.co.kr/news/2026-08-24-medical-institution-suspension-verdict</link>
             <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-24-medical-institution-suspension-verdict</guid>
@@ -109,19 +82,6 @@
             <category>정부 지원</category>
             <category>필수의료</category>
             <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-23-local-government-healthcare-policy-photo.jpg" type="image/jpeg" length="0"/>
-        </item>
-        <item>
-            <title>소아외과 전문인력 부족, 정부 대책 시급</title>
-            <link>https://www.admedical.co.kr/news/2026-08-22-pediatric-surgery-staffing-crisis</link>
-            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-22-pediatric-surgery-staffing-crisis</guid>
-            <description>소아외과 전문인력 부족은 의료 서비스 제공에 영향을 미치며, 정부의 정책 변화가 논의되고 있다.</description>
-            <author>admedical</author>
-            <pubDate>Sat, 22 Aug 2026 05:52:41 +0900</pubDate>
-            <category>소아외과</category>
-            <category>의료정책</category>
-            <category>전문인력</category>
-            <category>정부지원</category>
-            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-22-pediatric-surgery-staffing-crisis-photo.jpg" type="image/jpeg" length="0"/>
         </item>
         <item>
             <title>비대면 진료 환자 약 배송 확대 논의 시작</title>
@@ -179,20 +139,6 @@
             <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-16-health-insurance-finance-discussion-photo.jpg" type="image/jpeg" length="0"/>
         </item>
         <item>
-            <title>병원 가업상속공제 제외 우려</title>
-            <link>https://www.admedical.co.kr/news/2026-08-14-hospital-inheritance-tax-exclusion-impact</link>
-            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-14-hospital-inheritance-tax-exclusion-impact</guid>
-            <description>가업상속공제에서 병원이 제외될 경우 경영난과 지역 의료 공백 우려가 있습니다.</description>
-            <author>admedical</author>
-            <pubDate>Fri, 14 Aug 2026 06:25:04 +0900</pubDate>
-            <category>병원 경영</category>
-            <category>상속세</category>
-            <category>의료 서비스</category>
-            <category>가업상속공제</category>
-            <category>지역 의료</category>
-            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-14-hospital-inheritance-tax-exclusion-impact-photo.jpg" type="image/jpeg" length="0"/>
-        </item>
-        <item>
             <title>의료사고 이력 공개 추진, 정부와 의료계 반응</title>
             <link>https://www.admedical.co.kr/news/2026-08-13-medical-accident-history-disclosure-debate</link>
             <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-13-medical-accident-history-disclosure-debate</guid>
@@ -217,20 +163,6 @@
             <category>의료광고</category>
             <category>법적 규제</category>
             <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-12-sherlock-holmes-investigation-photo.jpg" type="image/jpeg" length="0"/>
-        </item>
-        <item>
-            <title>렘수면행동장애 MRI로 파킨슨병 위험 선별 가능성 제시</title>
-            <link>https://www.admedical.co.kr/news/2026-08-10-rem-sleep-disorder-mri-parkinson-risk</link>
-            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-10-rem-sleep-disorder-mri-parkinson-risk</guid>
-            <description>렘수면행동장애 환자 중 파킨슨병 위험을 MRI로 선별할 수 있는 가능성이 제시됐다.</description>
-            <author>admedical</author>
-            <pubDate>Mon, 10 Aug 2026 21:46:33 +0900</pubDate>
-            <category>의료마케팅</category>
-            <category>파킨슨병</category>
-            <category>MRI 검사</category>
-            <category>렘수면행동장애</category>
-            <category>의료기술</category>
-            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-10-rem-sleep-disorder-mri-parkinson-risk-photo.jpg" type="image/jpeg" length="0"/>
         </item>
         <item>
             <title>의료분쟁조정법 개정, 병원 마케팅에 미칠 가능성</title>
@@ -297,18 +229,6 @@
             <category>환자 관리</category>
             <category>간호법</category>
             <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-01-nurse-patient-ratio-legislation-marketing-photo.jpg" type="image/jpeg" length="0"/>
-        </item>
-        <item>
-            <title>약가제도 개편과 약제선별급여부 신설의 영향</title>
-            <link>https://www.admedical.co.kr/news/2026-08-01-drug-pricing-reform-healthcare-marketing</link>
-            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-08-01-drug-pricing-reform-healthcare-marketing</guid>
-            <description>약가제도 개편이 8월 1일부터 시행되며, 약제선별급여부가 신설됩니다. 병의원은 이에 따른 마케팅 전략 조정이 필요합니다.</description>
-            <author>admedical</author>
-            <pubDate>Sat, 01 Aug 2026 19:58:16 +0900</pubDate>
-            <category>약가제도</category>
-            <category>병원마케팅</category>
-            <category>약제선별급여부</category>
-            <enclosure url="https://www.admedical.co.kr/assets/news/2026-08-01-drug-pricing-reform-healthcare-marketing-photo.jpg" type="image/jpeg" length="0"/>
         </item>
         <item>
             <title>환자경험평가 등급제 도입과 병원 마케팅 전략 변화</title>
