@@ -1,7 +1,30 @@
 {
-  "generated_at": "2026-09-02T07:47:30.809359+09:00",
-  "count": 19,
+  "generated_at": "2026-09-03T07:50:17.891503+09:00",
+  "count": 20,
   "posts": [
+    {
+      "slug": "2026-09-03-medical-advertising-anti-aging-trend",
+      "title": "의료광고 심의에서 '안티에이징' 표현 증가 추세",
+      "summary": "의료광고 심의에서 '안티에이징' 표현이 증가 추세를 보이고 있습니다. 마케터는 주의가 필요합니다.",
+      "date": "2026-09-03",
+      "published_at": "2026-09-03T07:48:14.875983+09:00",
+      "cover": "/assets/news/2026-09-03-medical-advertising-anti-aging-trend-photo.jpg",
+      "thumb": "/assets/news/2026-09-03-medical-advertising-anti-aging-trend-thumb.jpg",
+      "infographic_type": "comparison",
+      "tags": [
+        "의료광고",
+        "심의",
+        "안티에이징"
+      ],
+      "topic_key": "심의에서 안티에이징 의료광고 증가 추세 표현",
+      "sources": [
+        {
+          "title": "admedical 자체 집계 — 지난주 (2026-08-17 ~ 2026-08-23) 심의 통과 시안 분석",
+          "source": "admedical 자체 데이터",
+          "link": "https://www.admedical.co.kr/top20"
+        }
+      ]
+    },
     {
       "slug": "2026-09-02-medical-advertising-approval-lifting-analysis",
       "title": "의료광고 심의 통과 표현 '리프팅' 분석",
