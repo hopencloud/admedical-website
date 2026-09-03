@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Thu, 03 Sep 2026 07:50:17 +0900</lastBuildDate>
-        <pubDate>Thu, 03 Sep 2026 07:50:17 +0900</pubDate>
+        <lastBuildDate>Fri, 04 Sep 2026 07:48:47 +0900</lastBuildDate>
+        <pubDate>Fri, 04 Sep 2026 07:48:47 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,18 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>비급여 진료비 공개가 병원 마케팅에 미치는 영향</title>
+            <link>https://www.admedical.co.kr/news/2026-09-04-non-covered-medical-fees-marketing-impact</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-09-04-non-covered-medical-fees-marketing-impact</guid>
+            <description>비급여 진료비 공개가 병원 마케팅에 어떻게 영향을 미치는지 분석합니다.</description>
+            <author>admedical</author>
+            <pubDate>Fri, 04 Sep 2026 07:46:45 +0900</pubDate>
+            <category>비급여 진료비</category>
+            <category>병원 마케팅</category>
+            <category>의료광고</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-09-04-non-covered-medical-fees-marketing-impact-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>의료광고 심의에서 '안티에이징' 표현 증가 추세</title>
             <link>https://www.admedical.co.kr/news/2026-09-03-medical-advertising-anti-aging-trend</link>

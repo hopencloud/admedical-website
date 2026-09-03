@@ -1,7 +1,30 @@
 {
-  "generated_at": "2026-09-03T07:50:17.891503+09:00",
-  "count": 20,
+  "generated_at": "2026-09-04T07:48:47.911784+09:00",
+  "count": 21,
   "posts": [
+    {
+      "slug": "2026-09-04-non-covered-medical-fees-marketing-impact",
+      "title": "비급여 진료비 공개가 병원 마케팅에 미치는 영향",
+      "summary": "비급여 진료비 공개가 병원 마케팅에 어떻게 영향을 미치는지 분석합니다.",
+      "date": "2026-09-04",
+      "published_at": "2026-09-04T07:46:45.756057+09:00",
+      "cover": "/assets/news/2026-09-04-non-covered-medical-fees-marketing-impact-photo.jpg",
+      "thumb": "/assets/news/2026-09-04-non-covered-medical-fees-marketing-impact-thumb.jpg",
+      "infographic_type": "process",
+      "tags": [
+        "비급여 진료비",
+        "병원 마케팅",
+        "의료광고"
+      ],
+      "topic_key": "공개가 마케팅에 미치는 병원 비급여 영향",
+      "sources": [
+        {
+          "title": "병·의원 7만4000여 곳 753개 비급여 가격 비교 공개",
+          "source": "의협신문",
+          "link": "http://www.doctorsnews.co.kr/news/articleView.html?idxno=166142"
+        }
+      ]
+    },
     {
       "slug": "2026-09-03-medical-advertising-anti-aging-trend",
       "title": "의료광고 심의에서 '안티에이징' 표현 증가 추세",
