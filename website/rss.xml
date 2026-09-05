@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Fri, 04 Sep 2026 07:48:47 +0900</lastBuildDate>
-        <pubDate>Fri, 04 Sep 2026 07:48:47 +0900</pubDate>
+        <lastBuildDate>Sun, 06 Sep 2026 07:13:16 +0900</lastBuildDate>
+        <pubDate>Sun, 06 Sep 2026 07:13:16 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,20 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>비영리 의료법인, 중소기업으로 인정받아 지원 기회 확대</title>
+            <link>https://www.admedical.co.kr/news/2026-09-06-nonprofit-medical-corporation-sme-recognition</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-09-06-nonprofit-medical-corporation-sme-recognition</guid>
+            <description>비영리 의료법인이 중소기업으로 인정받아 병원 지원 기회가 확대될 전망입니다.</description>
+            <author>admedical</author>
+            <pubDate>Sun, 06 Sep 2026 07:11:07 +0900</pubDate>
+            <category>비영리 의료법인</category>
+            <category>중소기업</category>
+            <category>병원 지원</category>
+            <category>의료법 개정</category>
+            <category>마케팅 전략</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-09-06-nonprofit-medical-corporation-sme-recognition-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>비급여 진료비 공개가 병원 마케팅에 미치는 영향</title>
             <link>https://www.admedical.co.kr/news/2026-09-04-non-covered-medical-fees-marketing-impact</link>

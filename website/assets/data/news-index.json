@@ -1,7 +1,32 @@
 {
-  "generated_at": "2026-09-04T07:48:47.911784+09:00",
-  "count": 21,
+  "generated_at": "2026-09-06T07:13:16.236853+09:00",
+  "count": 22,
   "posts": [
+    {
+      "slug": "2026-09-06-nonprofit-medical-corporation-sme-recognition",
+      "title": "비영리 의료법인, 중소기업으로 인정받아 지원 기회 확대",
+      "summary": "비영리 의료법인이 중소기업으로 인정받아 병원 지원 기회가 확대될 전망입니다.",
+      "date": "2026-09-06",
+      "published_at": "2026-09-06T07:11:07.996349+09:00",
+      "cover": "/assets/news/2026-09-06-nonprofit-medical-corporation-sme-recognition-photo.jpg",
+      "thumb": "/assets/news/2026-09-06-nonprofit-medical-corporation-sme-recognition-thumb.jpg",
+      "infographic_type": "comparison",
+      "tags": [
+        "비영리 의료법인",
+        "중소기업",
+        "병원 지원",
+        "의료법 개정",
+        "마케팅 전략"
+      ],
+      "topic_key": "기회 비영리 의료법인 인정받아 중소기업으로 지원",
+      "sources": [
+        {
+          "title": "비영리 의료법인도 '중소기업' 인정…중소병원 지원 길 열린다",
+          "source": "의협신문",
+          "link": "http://www.doctorsnews.co.kr/news/articleView.html?idxno=166180"
+        }
+      ]
+    },
     {
       "slug": "2026-09-04-non-covered-medical-fees-marketing-impact",
       "title": "비급여 진료비 공개가 병원 마케팅에 미치는 영향",
