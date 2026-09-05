@@ -1,19 +1,19 @@
 {
-  "generated_at": "2026-09-05T13:42:15.323953+09:00",
+  "generated_at": "2026-09-06T05:50:19.415072+09:00",
   "yesterday": {
     "date": "2026-09-04",
-    "count": 88,
+    "count": 89,
     "pending": false
   },
   "this_week": {
     "start": "2026-08-31",
-    "end": "2026-09-05",
-    "count": 420
+    "end": "2026-09-06",
+    "count": 421
   },
   "this_month": {
     "start": "2026-09-01",
-    "end": "2026-09-05",
-    "count": 312
+    "end": "2026-09-06",
+    "count": 313
   },
   "last_week": {
     "start": "2026-08-24",
@@ -30,16 +30,11 @@
     "prev_count": 1837
   },
   "total": {
-    "count": 15708,
+    "count": 15709,
     "first_date": "2025-12-12",
     "last_date": "2026-09-04"
   },
   "chart_30d": [
-    {
-      "date": "2026-08-07",
-      "count": 120,
-      "last_review_no": "260807-중-218272"
-    },
     {
       "date": "2026-08-08",
       "count": 0
@@ -169,11 +164,15 @@
     },
     {
       "date": "2026-09-04",
-      "count": 88,
+      "count": 89,
       "last_review_no": "260904-중-219991"
     },
     {
       "date": "2026-09-05",
+      "count": 0
+    },
+    {
+      "date": "2026-09-06",
       "count": 0
     }
   ]
