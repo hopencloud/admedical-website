@@ -1,7 +1,42 @@
 {
-  "generated_at": "2026-09-06T07:13:16.236853+09:00",
-  "count": 22,
+  "generated_at": "2026-09-07T07:17:02.923489+09:00",
+  "count": 23,
   "posts": [
+    {
+      "slug": "2026-09-07-telemedicine-pharmacy-wholesale-ban-law",
+      "title": "비대면진료 플랫폼 의약품 도매업 제한법 통과",
+      "summary": "비대면진료 플랫폼의 의약품 도매업 겸업을 제한하는 법안이 통과되었습니다.",
+      "date": "2026-09-07",
+      "published_at": "2026-09-07T07:14:59.446022+09:00",
+      "cover": "/assets/news/2026-09-07-telemedicine-pharmacy-wholesale-ban-law-photo.jpg",
+      "thumb": "/assets/news/2026-09-07-telemedicine-pharmacy-wholesale-ban-law-thumb.jpg",
+      "infographic_type": "checklist",
+      "tags": [
+        "비대면진료",
+        "의약품 도매업",
+        "의료 마케팅",
+        "보건복지부",
+        "닥터나우 방지법"
+      ],
+      "topic_key": "도매업 비대면진료 의약품 제한법 통과 플랫폼",
+      "sources": [
+        {
+          "title": "‘닥터나우 방지법’ 왜 필요?…복지부 “보건의료, 일반 산업과 달라”",
+          "source": "청년의사",
+          "link": "http://www.docdocdoc.co.kr/news/articleView.html?idxno=3042503"
+        },
+        {
+          "title": "비대면 플랫폼 업체가 의약품 도매업을? 복지부 \"안돼\" 못 박아",
+          "source": "의협신문",
+          "link": "http://www.doctorsnews.co.kr/news/articleView.html?idxno=166187"
+        },
+        {
+          "title": "곽순헌 정책관, \"보건의료, 타 산업분야 혁신과 같은 잣대 안돼\"",
+          "source": "메디칼업저버",
+          "link": "https://www.monews.co.kr/news/articleView.html?idxno=413686"
+        }
+      ]
+    },
     {
       "slug": "2026-09-06-nonprofit-medical-corporation-sme-recognition",
       "title": "비영리 의료법인, 중소기업으로 인정받아 지원 기회 확대",

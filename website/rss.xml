@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Sun, 06 Sep 2026 07:13:16 +0900</lastBuildDate>
-        <pubDate>Sun, 06 Sep 2026 07:13:16 +0900</pubDate>
+        <lastBuildDate>Mon, 07 Sep 2026 07:17:02 +0900</lastBuildDate>
+        <pubDate>Mon, 07 Sep 2026 07:17:02 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,20 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>비대면진료 플랫폼 의약품 도매업 제한법 통과</title>
+            <link>https://www.admedical.co.kr/news/2026-09-07-telemedicine-pharmacy-wholesale-ban-law</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-09-07-telemedicine-pharmacy-wholesale-ban-law</guid>
+            <description>비대면진료 플랫폼의 의약품 도매업 겸업을 제한하는 법안이 통과되었습니다.</description>
+            <author>admedical</author>
+            <pubDate>Mon, 07 Sep 2026 07:14:59 +0900</pubDate>
+            <category>비대면진료</category>
+            <category>의약품 도매업</category>
+            <category>의료 마케팅</category>
+            <category>보건복지부</category>
+            <category>닥터나우 방지법</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-09-07-telemedicine-pharmacy-wholesale-ban-law-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>비영리 의료법인, 중소기업으로 인정받아 지원 기회 확대</title>
             <link>https://www.admedical.co.kr/news/2026-09-06-nonprofit-medical-corporation-sme-recognition</link>
