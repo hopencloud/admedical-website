@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Mon, 07 Sep 2026 07:17:02 +0900</lastBuildDate>
-        <pubDate>Mon, 07 Sep 2026 07:17:02 +0900</pubDate>
+        <lastBuildDate>Tue, 08 Sep 2026 08:01:36 +0900</lastBuildDate>
+        <pubDate>Tue, 08 Sep 2026 08:01:36 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,20 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>지난주 의료광고 심의 통과 421건 중 '건강검진' 최다</title>
+            <link>https://www.admedical.co.kr/news/2026-09-08-medical-advertising-review-health-checkup</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-09-08-medical-advertising-review-health-checkup</guid>
+            <description>지난주 의료광고 심의 통과 421건 중 '건강검진' 표현이 가장 많이 사용됐습니다.</description>
+            <author>admedical</author>
+            <pubDate>Tue, 08 Sep 2026 07:59:29 +0900</pubDate>
+            <category>의료광고</category>
+            <category>병원마케팅</category>
+            <category>광고심의</category>
+            <category>건강검진</category>
+            <category>비수술치료</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-09-08-medical-advertising-review-health-checkup-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>비대면진료 플랫폼 의약품 도매업 제한법 통과</title>
             <link>https://www.admedical.co.kr/news/2026-09-07-telemedicine-pharmacy-wholesale-ban-law</link>
