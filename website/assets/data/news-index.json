@@ -1,7 +1,42 @@
 {
-  "generated_at": "2026-09-08T08:01:36.416303+09:00",
-  "count": 24,
+  "generated_at": "2026-09-10T07:44:31.153564+09:00",
+  "count": 25,
   "posts": [
+    {
+      "slug": "2026-09-10-high-cost-cancer-drugs-insurance-impact",
+      "title": "고가 항암제 급여화와 병원 마케팅 전략 변화",
+      "summary": "고가 항암제 급여화 및 비급여 관리가 병원 마케팅에 미치는 영향 분석.",
+      "date": "2026-09-10",
+      "published_at": "2026-09-10T07:42:26.473120+09:00",
+      "cover": "/assets/news/2026-09-10-high-cost-cancer-drugs-insurance-impact-photo.jpg",
+      "thumb": "/assets/news/2026-09-10-high-cost-cancer-drugs-insurance-impact-thumb.jpg",
+      "infographic_type": "timeline",
+      "tags": [
+        "건강보험",
+        "항암제",
+        "비급여",
+        "병원 마케팅",
+        "의료 정책"
+      ],
+      "topic_key": "고가 급여화와 마케팅 변화 병원 전략",
+      "sources": [
+        {
+          "title": "건보 보장 혁신 2단계는 ‘암’도 본다…고가 항암제·비급여 손질",
+          "source": "청년의사",
+          "link": "http://www.docdocdoc.co.kr/news/articleView.html?idxno=3042628"
+        },
+        {
+          "title": "건보 보장성 강화, 중증·희귀질환부터 단계적 확대",
+          "source": "메디칼업저버",
+          "link": "https://www.monews.co.kr/news/articleView.html?idxno=413786"
+        },
+        {
+          "title": "건강보험 보장 속도전, 2단계 혁신방안 '내년 초' 발표 예고",
+          "source": "의협신문",
+          "link": "http://www.doctorsnews.co.kr/news/articleView.html?idxno=166261"
+        }
+      ]
+    },
     {
       "slug": "2026-09-08-medical-advertising-review-health-checkup",
       "title": "지난주 의료광고 심의 통과 421건 중 '건강검진' 최다",
