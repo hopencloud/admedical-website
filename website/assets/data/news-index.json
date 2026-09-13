@@ -1,7 +1,37 @@
 {
-  "generated_at": "2026-09-10T07:44:31.153564+09:00",
-  "count": 25,
+  "generated_at": "2026-09-14T07:36:35.729781+09:00",
+  "count": 26,
   "posts": [
+    {
+      "slug": "2026-09-14-abnormal-medical-practice-crackdown",
+      "title": "비정상 진료 단속 상설화, 병원 광고 전략 변화 예고",
+      "summary": "보건복지부, 비정상 진료 단속 상설화 추진. 병원 마케팅 전략 변화 필수.",
+      "date": "2026-09-14",
+      "published_at": "2026-09-14T07:34:37.844482+09:00",
+      "cover": "/assets/news/2026-09-14-abnormal-medical-practice-crackdown-photo.jpg",
+      "thumb": "/assets/news/2026-09-14-abnormal-medical-practice-crackdown-thumb.jpg",
+      "infographic_type": "checklist",
+      "tags": [
+        "비정상 진료",
+        "병원 마케팅",
+        "의료법",
+        "보건복지부",
+        "의료광고"
+      ],
+      "topic_key": "단속 마케팅에 미치는 병원 비정상 상설화가",
+      "sources": [
+        {
+          "title": "페이백 등 단속 상시화…복지부, 전담 조직 신설 추진",
+          "source": "청년의사",
+          "link": "http://www.docdocdoc.co.kr/news/articleView.html?idxno=3042723"
+        },
+        {
+          "title": "비정상가짜진료 적발 '일회성' 아냐 '상설화'",
+          "source": "메디칼업저버",
+          "link": "https://www.monews.co.kr/news/articleView.html?idxno=413847"
+        }
+      ]
+    },
     {
       "slug": "2026-09-10-high-cost-cancer-drugs-insurance-impact",
       "title": "고가 항암제 급여화와 병원 마케팅 전략 변화",
