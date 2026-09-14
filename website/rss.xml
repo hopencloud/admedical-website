@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Mon, 14 Sep 2026 07:36:35 +0900</lastBuildDate>
-        <pubDate>Mon, 14 Sep 2026 07:36:35 +0900</pubDate>
+        <lastBuildDate>Tue, 15 Sep 2026 08:22:57 +0900</lastBuildDate>
+        <pubDate>Tue, 15 Sep 2026 08:22:57 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,20 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>법원 판결이 의료광고에 미칠 수 있는 영향</title>
+            <link>https://www.admedical.co.kr/news/2026-09-15-medical-advertising-court-ruling-impact</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-09-15-medical-advertising-court-ruling-impact</guid>
+            <description>법원 판결이 의료광고에서 단순처치와 수술의 기준에 대한 논의를 촉발할 수 있습니다.</description>
+            <author>admedical</author>
+            <pubDate>Tue, 15 Sep 2026 08:21:06 +0900</pubDate>
+            <category>의료광고</category>
+            <category>병원 마케팅</category>
+            <category>비급여 진료</category>
+            <category>법원 판결</category>
+            <category>의료법</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-09-15-medical-advertising-court-ruling-impact-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>비정상 진료 단속 상설화, 병원 광고 전략 변화 예고</title>
             <link>https://www.admedical.co.kr/news/2026-09-14-abnormal-medical-practice-crackdown</link>
