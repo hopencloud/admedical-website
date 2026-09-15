@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Tue, 15 Sep 2026 08:22:57 +0900</lastBuildDate>
-        <pubDate>Tue, 15 Sep 2026 08:22:57 +0900</pubDate>
+        <lastBuildDate>Wed, 16 Sep 2026 08:08:30 +0900</lastBuildDate>
+        <pubDate>Wed, 16 Sep 2026 08:08:30 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,20 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>불법 의료광고 제재율 4.3%, 심의 강화 필요</title>
+            <link>https://www.admedical.co.kr/news/2026-09-16-illegal-medical-ads-enforcement-need</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-09-16-illegal-medical-ads-enforcement-need</guid>
+            <description>불법 의료광고 제재율이 4.3%에 그쳐, 심의 강화 필요성이 제기되고 있다.</description>
+            <author>admedical</author>
+            <pubDate>Wed, 16 Sep 2026 08:06:29 +0900</pubDate>
+            <category>의료광고</category>
+            <category>불법 광고</category>
+            <category>의료법</category>
+            <category>병원 마케팅</category>
+            <category>광고 심의</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-09-16-illegal-medical-ads-enforcement-need-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>법원 판결이 의료광고에 미칠 수 있는 영향</title>
             <link>https://www.admedical.co.kr/news/2026-09-15-medical-advertising-court-ruling-impact</link>

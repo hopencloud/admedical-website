@@ -1,7 +1,32 @@
 {
-  "generated_at": "2026-09-15T08:22:57.895478+09:00",
-  "count": 27,
+  "generated_at": "2026-09-16T08:08:30.259616+09:00",
+  "count": 28,
   "posts": [
+    {
+      "slug": "2026-09-16-illegal-medical-ads-enforcement-need",
+      "title": "불법 의료광고 제재율 4.3%, 심의 강화 필요",
+      "summary": "불법 의료광고 제재율이 4.3%에 그쳐, 심의 강화 필요성이 제기되고 있다.",
+      "date": "2026-09-16",
+      "published_at": "2026-09-16T08:06:29.850513+09:00",
+      "cover": "/assets/news/2026-09-16-illegal-medical-ads-enforcement-need-photo.jpg",
+      "thumb": "/assets/news/2026-09-16-illegal-medical-ads-enforcement-need-thumb.jpg",
+      "infographic_type": "checklist",
+      "tags": [
+        "의료광고",
+        "불법 광고",
+        "의료법",
+        "병원 마케팅",
+        "광고 심의"
+      ],
+      "topic_key": "강화 불법 심의 의료광고 제재율 필요",
+      "sources": [
+        {
+          "title": "'암 세포 사멸' 과장 광고도 '경고'뿐…불법 의료광고 제재율 4.3% 그쳐",
+          "source": "청년의사",
+          "link": "http://www.docdocdoc.co.kr/news/articleView.html?idxno=3042803"
+        }
+      ]
+    },
     {
       "slug": "2026-09-15-medical-advertising-court-ruling-impact",
       "title": "법원 판결이 의료광고에 미칠 수 있는 영향",
