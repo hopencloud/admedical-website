@@ -1,7 +1,42 @@
 {
-  "generated_at": "2026-09-16T08:08:30.259616+09:00",
-  "count": 28,
+  "generated_at": "2026-09-17T08:13:36.819437+09:00",
+  "count": 29,
   "posts": [
+    {
+      "slug": "2026-09-17-emergency-medical-law-revision-discussion",
+      "title": "응급의료법 개정으로 의료진 형사책임 완화 논의",
+      "summary": "응급의료법 개정으로 의료진 형사책임 부담이 완화될 가능성이 논의되고 있습니다.",
+      "date": "2026-09-17",
+      "published_at": "2026-09-17T08:11:34.633668+09:00",
+      "cover": "/assets/news/2026-09-17-emergency-medical-law-revision-discussion-photo.jpg",
+      "thumb": "/assets/news/2026-09-17-emergency-medical-law-revision-discussion-thumb.jpg",
+      "infographic_type": "comparison",
+      "tags": [
+        "응급의료법",
+        "의료법 개정",
+        "의료진 형사책임",
+        "병원 마케팅",
+        "환자 유치"
+      ],
+      "topic_key": "개정으로 논의 완화 응급의료법 의료진 형사책임",
+      "sources": [
+        {
+          "title": "복지부 “응급의료법 개정 핵심은 ‘의료진 형 감면’ 강화”",
+          "source": "청년의사",
+          "link": "http://www.docdocdoc.co.kr/news/articleView.html?idxno=3042852"
+        },
+        {
+          "title": "응급의료법 개정이 갖는 의미? \"형사처벌 최후 방어선 될 것\"",
+          "source": "의협신문",
+          "link": "http://www.doctorsnews.co.kr/news/articleView.html?idxno=166383"
+        },
+        {
+          "title": "응급의료사고 형사책임 감면, 필수 규정으로 강화된다",
+          "source": "메디칼업저버",
+          "link": "https://www.monews.co.kr/news/articleView.html?idxno=413962"
+        }
+      ]
+    },
     {
       "slug": "2026-09-16-illegal-medical-ads-enforcement-need",
       "title": "불법 의료광고 제재율 4.3%, 심의 강화 필요",
