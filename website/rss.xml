@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Thu, 17 Sep 2026 08:13:36 +0900</lastBuildDate>
-        <pubDate>Thu, 17 Sep 2026 08:13:36 +0900</pubDate>
+        <lastBuildDate>Fri, 18 Sep 2026 08:02:00 +0900</lastBuildDate>
+        <pubDate>Fri, 18 Sep 2026 08:02:00 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,20 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>의료광고 심의 통과 표현, '리프팅' 사용 증가</title>
+            <link>https://www.admedical.co.kr/news/2026-09-18-medical-advertising-lifting-approval</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-09-18-medical-advertising-lifting-approval</guid>
+            <description>지난주 의료광고 심의에서 '리프팅' 표현이 가장 많이 통과되었습니다.</description>
+            <author>admedical</author>
+            <pubDate>Fri, 18 Sep 2026 08:00:13 +0900</pubDate>
+            <category>의료광고</category>
+            <category>심의</category>
+            <category>리프팅</category>
+            <category>마케팅</category>
+            <category>의료법</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-09-18-medical-advertising-lifting-approval-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>응급의료법 개정으로 의료진 형사책임 완화 논의</title>
             <link>https://www.admedical.co.kr/news/2026-09-17-emergency-medical-law-revision-discussion</link>

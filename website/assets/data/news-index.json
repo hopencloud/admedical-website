@@ -1,7 +1,32 @@
 {
-  "generated_at": "2026-09-17T08:13:36.819437+09:00",
-  "count": 29,
+  "generated_at": "2026-09-18T08:02:00.909651+09:00",
+  "count": 30,
   "posts": [
+    {
+      "slug": "2026-09-18-medical-advertising-lifting-approval",
+      "title": "의료광고 심의 통과 표현, '리프팅' 사용 증가",
+      "summary": "지난주 의료광고 심의에서 '리프팅' 표현이 가장 많이 통과되었습니다.",
+      "date": "2026-09-18",
+      "published_at": "2026-09-18T08:00:13.033366+09:00",
+      "cover": "/assets/news/2026-09-18-medical-advertising-lifting-approval-photo.jpg",
+      "thumb": "/assets/news/2026-09-18-medical-advertising-lifting-approval-thumb.jpg",
+      "infographic_type": "checklist",
+      "tags": [
+        "의료광고",
+        "심의",
+        "리프팅",
+        "마케팅",
+        "의료법"
+      ],
+      "topic_key": "리프팅 사용 심의 의료광고 증가 통과",
+      "sources": [
+        {
+          "title": "admedical 자체 집계 — 지난주 (2026-09-07 ~ 2026-09-13) 심의 통과 시안 분석",
+          "source": "admedical 자체 데이터",
+          "link": "https://www.admedical.co.kr/top20"
+        }
+      ]
+    },
     {
       "slug": "2026-09-17-emergency-medical-law-revision-discussion",
       "title": "응급의료법 개정으로 의료진 형사책임 완화 논의",
