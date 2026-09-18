@@ -1,7 +1,30 @@
 {
-  "generated_at": "2026-09-18T08:02:00.909651+09:00",
-  "count": 30,
+  "generated_at": "2026-09-19T07:48:35.453804+09:00",
+  "count": 31,
   "posts": [
+    {
+      "slug": "2026-09-19-rebate-academic-marketing-boundaries",
+      "title": "리베이트와 학술 마케팅의 법적 경계",
+      "summary": "리베이트와 학술 마케팅의 구분이 병원 마케팅 전략 수립에 중요합니다.",
+      "date": "2026-09-19",
+      "published_at": "2026-09-19T07:46:41.782150+09:00",
+      "cover": "/assets/news/2026-09-19-rebate-academic-marketing-boundaries-photo.jpg",
+      "thumb": "/assets/news/2026-09-19-rebate-academic-marketing-boundaries-thumb.jpg",
+      "infographic_type": "comparison",
+      "tags": [
+        "리베이트",
+        "학술 마케팅",
+        "병원 마케팅"
+      ],
+      "topic_key": "경계 리베이트와 마케팅의 법적 학술",
+      "sources": [
+        {
+          "title": "학술마케팅 지킨 JW 리베이트 판결… 기등재약 재평가 기준 공개",
+          "source": "히트뉴스",
+          "link": "https://www.hitnews.co.kr/news/articleView.html?idxno=79244"
+        }
+      ]
+    },
     {
       "slug": "2026-09-18-medical-advertising-lifting-approval",
       "title": "의료광고 심의 통과 표현, '리프팅' 사용 증가",

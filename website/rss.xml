@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Fri, 18 Sep 2026 08:02:00 +0900</lastBuildDate>
-        <pubDate>Fri, 18 Sep 2026 08:02:00 +0900</pubDate>
+        <lastBuildDate>Sat, 19 Sep 2026 07:48:35 +0900</lastBuildDate>
+        <pubDate>Sat, 19 Sep 2026 07:48:35 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,18 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>리베이트와 학술 마케팅의 법적 경계</title>
+            <link>https://www.admedical.co.kr/news/2026-09-19-rebate-academic-marketing-boundaries</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-09-19-rebate-academic-marketing-boundaries</guid>
+            <description>리베이트와 학술 마케팅의 구분이 병원 마케팅 전략 수립에 중요합니다.</description>
+            <author>admedical</author>
+            <pubDate>Sat, 19 Sep 2026 07:46:41 +0900</pubDate>
+            <category>리베이트</category>
+            <category>학술 마케팅</category>
+            <category>병원 마케팅</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-09-19-rebate-academic-marketing-boundaries-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>의료광고 심의 통과 표현, '리프팅' 사용 증가</title>
             <link>https://www.admedical.co.kr/news/2026-09-18-medical-advertising-lifting-approval</link>
