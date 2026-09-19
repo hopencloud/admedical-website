@@ -1,7 +1,42 @@
 {
-  "generated_at": "2026-09-19T07:48:35.453804+09:00",
-  "count": 31,
+  "generated_at": "2026-09-20T07:28:28.324208+09:00",
+  "count": 32,
   "posts": [
+    {
+      "slug": "2026-09-20-medical-fraud-regulation-strategy-adjustment",
+      "title": "의료기관 부당청구 규제 강화, 마케팅 전략 조정 필요",
+      "summary": "의료기관의 부당청구 규제가 강화되면서 마케팅 전략 조정이 필요하다.",
+      "date": "2026-09-20",
+      "published_at": "2026-09-20T07:26:28.522959+09:00",
+      "cover": "/assets/news/2026-09-20-medical-fraud-regulation-strategy-adjustment-photo.jpg",
+      "thumb": "/assets/news/2026-09-20-medical-fraud-regulation-strategy-adjustment-thumb.jpg",
+      "infographic_type": "checklist",
+      "tags": [
+        "의료기관",
+        "부당청구",
+        "병원마케팅",
+        "의료법",
+        "법적규제"
+      ],
+      "topic_key": "강화 규제 마케팅 부당청구 의료기관 전략",
+      "sources": [
+        {
+          "title": "주·야간보호기관 돌며 '가정간호비' 청구한 요양병원…13억원대 환수",
+          "source": "청년의사",
+          "link": "http://www.docdocdoc.co.kr/news/articleView.html?idxno=3042527"
+        },
+        {
+          "title": "5년간 건보료 4조2477억원 잘못 걷었다…455억원 미환급",
+          "source": "의협신문",
+          "link": "http://www.doctorsnews.co.kr/news/articleView.html?idxno=166417"
+        },
+        {
+          "title": "유령환자 거짓진료 급여비 타낸 한의사 136일 업무정지",
+          "source": "의협신문",
+          "link": "http://www.doctorsnews.co.kr/news/articleView.html?idxno=166356"
+        }
+      ]
+    },
     {
       "slug": "2026-09-19-rebate-academic-marketing-boundaries",
       "title": "리베이트와 학술 마케팅의 법적 경계",
