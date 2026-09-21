@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Mon, 21 Sep 2026 07:40:47 +0900</lastBuildDate>
-        <pubDate>Mon, 21 Sep 2026 07:40:47 +0900</pubDate>
+        <lastBuildDate>Tue, 22 Sep 2026 08:33:19 +0900</lastBuildDate>
+        <pubDate>Tue, 22 Sep 2026 08:33:19 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,20 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>'맞춤 시술' 표현, 의료광고 심의에서 증가하는 이유</title>
+            <link>https://www.admedical.co.kr/news/2026-09-22-medical-ad-review-custom-treatment</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-09-22-medical-ad-review-custom-treatment</guid>
+            <description>'맞춤 시술'이 의료광고 심의에서 자주 통과된 표현 중 하나로 나타났습니다.</description>
+            <author>admedical</author>
+            <pubDate>Tue, 22 Sep 2026 08:31:19 +0900</pubDate>
+            <category>의료광고</category>
+            <category>병원 마케팅</category>
+            <category>의료법</category>
+            <category>광고 심의</category>
+            <category>표현 검토</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-09-22-medical-ad-review-custom-treatment-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>의료광고 심의 강화와 비급여 공개가 병원 마케팅에 미치는 영향</title>
             <link>https://www.admedical.co.kr/news/2026-09-21-medical-advertising-regulation-impact</link>
