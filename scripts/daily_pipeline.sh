@@ -110,6 +110,13 @@ fi
 #      이걸 빼먹으면 /top20 이 "로딩 중...", 메인 통계가 "- 건" 으로만 보인다.
 run_step "정적 렌더" python "$ROOT/scripts/prerender_static.py"
 
+# 8-2. 진료과별 통과 표현 페이지 (/expressions/*)
+#      여기 없으면 수동으로 돌려야 하는데, 결국 아무도 안 돌려서
+#      2026-09-22 까지 8월 집계가 그대로 걸려 있었다. 표현 추출 로직을
+#      고쳐도 이 두 줄을 안 돌리면 화면은 옛날 표 그대로다.
+run_step "진료과 집계" python "$ROOT/scripts/compute_dept_expressions.py"
+run_step "진료과 페이지" python "$ROOT/scripts/render_dept_pages.py"
+
 # 9. OCR·동기화가 끝난 시안 이미지 삭제 (디스크 회수)
 #    텍스트는 sqlite + Supabase 양쪽에 남으므로 원본 이미지는 더 쓰지 않는다.
 #    최근 7일치와 OCR 실패분은 재시도 여지를 위해 남긴다.
@@ -139,6 +146,9 @@ DATA_FILES=(
     # 크롤러가 보는 페이지와 JSON 이 어긋나지 않는다.
     "website/top20.html"
     "website/index.html"
+    # 진료과별 표현 집계와 그 페이지
+    "website/assets/data/dept"
+    "website/expressions"
 )
 git add "${DATA_FILES[@]}" 2>/dev/null
 
