@@ -236,8 +236,24 @@ def publish_one(client, posts: list[dict], candidates: list, stats: dict,
     if len(pool) < len(candidates):
         log(f"이미 다룬 기사 {len(candidates) - len(pool)}건을 후보에서 제외")
 
-    topic = None
+    # 자체 집계 기사를 먼저 쓴다 (2026-09-22 에 순서를 뒤집었다).
+    #
+    # 예전에는 외부 뉴스를 기본으로 쓰고, 마땅한 뉴스가 없는 날에만 자체 데이터로
+    # 썼다. 그 결과 최근 12편 중 9편이 남의 기사 요약이었다. 요약은 원본 가치가
+    # 없어서 구글이 '가치가 별로 없는 콘텐츠'로 본다 (애드센스 8/10, 9/20 반려).
+    #
+    # 심의 통과 시안 16,000건 집계는 다른 곳에 없다. 이걸로 쓴 글만 이 사이트가
+    # 원본이다. 외부 뉴스는 데이터에 새로 쓸 것이 없는 날의 대타로 내린다.
+    topic = news_data_story.build_topic()
+    if topic and duplicate_of(topic["topic"], posts):
+        log("자체 집계 기사가 최근 발행분과 겹칩니다. 외부 뉴스로 넘어갑니다.")
+        topic = None
+    if topic:
+        log("자체 집계 데이터로 씁니다.")
+
     for attempt in range(3):
+        if topic:
+            break
         picked = news_writer.select_topic(pool, published_titles)
         if not picked:
             break
@@ -264,18 +280,10 @@ def publish_one(client, posts: list[dict], candidates: list, stats: dict,
         pool = [c for c in pool if c.link not in drop]
 
     if not topic:
-        # 뉴스에 우리 주제가 없는 날이 있다. 의료광고 규제 소식이 매일 나오지는
-        # 않는다(2026-09-01 후보 178건 중 0건). 그렇다고 임상·예산 기사를 억지로
-        # 쓰면 사이트 정체성이 무너지고, 안 쓰면 발행이 끊긴다.
-        # 우리 심의 데이터로 쓴다. 15,000건 집계는 다른 곳에 없는 재료다.
-        log("뉴스에 마땅한 주제가 없습니다. 자체 집계 데이터로 씁니다.")
-        topic = news_data_story.build_topic()
-        if not topic:
-            log("자체 데이터도 부족합니다. 발행하지 않습니다.")
-            return None
-        if duplicate_of(topic["topic"], posts):
-            log("자체 집계 기사도 최근 발행분과 겹칩니다. 발행하지 않습니다.")
-            return None
+        # 자체 데이터에도, 외부 뉴스에도 쓸 것이 없는 날이다.
+        # 억지로 임상·예산 기사를 쓰면 사이트 정체성이 무너지므로 그냥 쉰다.
+        log("자체 데이터와 외부 뉴스 모두 오늘 쓸 주제가 없습니다. 발행하지 않습니다.")
+        return None
 
     log(f"주제: {topic['topic']}")
     log(f"관점: {topic.get('angle', '')}")
