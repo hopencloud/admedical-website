@@ -146,9 +146,44 @@ def render_index() -> None:
     )
 
     path = WEB / "index.html"
-    path.write_text(inject(path.read_text(encoding="utf-8"), "stats", block),
-                    encoding="utf-8")
-    print(f"  index.html — 통계 문장 정적화 (누적 {total.get('count', 0):,}건)")
+    text = inject(path.read_text(encoding="utf-8"), "stats", block)
+
+    # 첫 화면 숫자판 네 칸. 마커 블록 밖에 있어서 지금까지 크롤러에게는
+    # "- 건" 으로만 보였다. 2026-08-10 반려의 원인이 이 패턴이었고
+    # 아래쪽 문장만 정적화돼 있어 숫자판은 그대로 남아 있었다.
+    def short_date(iso: str) -> str:
+        """JS 와 같은 '9월 18일 (금) 기준' 형태."""
+        try:
+            d = date.fromisoformat(iso)
+        except (ValueError, TypeError):
+            return "건"
+        dow = "월화수목금토일"[d.weekday()]
+        return f"{d.month}월 {d.day}일 ({dow}) 기준"
+
+    def short_delta(d: dict, ref: str) -> str:
+        n = d.get("delta", 0)
+        if n == 0:
+            return f"{ref} 대비 동일"
+        return f"{'▲' if n > 0 else '▼'} {abs(n):,} vs {ref}"
+
+    tiles = {
+        "stat-yesterday": f'{y.get("count", 0):,}',
+        "stat-yesterday-date": short_date(y.get("date")),
+        "stat-week": f'{stats.get("this_week", {}).get("count", 0):,}',
+        "stat-last-week": f'{lw.get("count", 0):,}',
+        "stat-last-week-delta": short_delta(lw, "지지난주"),
+        "stat-last-month": f'{lm.get("count", 0):,}',
+        "stat-last-month-delta": short_delta(lm, "지지난달"),
+    }
+    for tile_id, value in tiles.items():
+        pat = re.compile(rf'(<div id="{tile_id}"[^>]*>).*?(</div>)', re.S)
+        if not pat.search(text):
+            raise SystemExit(f"[오류] '#{tile_id}' 를 index.html 에서 못 찾았습니다.")
+        text = pat.sub(lambda m: m.group(1) + html.escape(value) + m.group(2), text, count=1)
+
+    path.write_text(text, encoding="utf-8")
+    print(f"  index.html — 통계 문장 + 숫자판 {len(tiles)}칸 정적화 "
+          f"(누적 {total.get('count', 0):,}건)")
 
 
 def main() -> None:

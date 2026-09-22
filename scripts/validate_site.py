@@ -158,6 +158,19 @@ def check_prerender() -> None:
             fail("정적 렌더", f"{name} → 항목이 {m.group(1).count('<li')}개 "
                               f"({min_items}개 이상이어야 함)")
 
+    # 메인 첫 화면 숫자판. 마커 블록 밖이라 2026-08-10 반려 뒤에도 "-" 로 남아 있었고
+    # 2026-09-20 재반려 때까지 크롤러는 빈 숫자판을 봤다.
+    index_text = (WEB / "index.html").read_text(encoding="utf-8")
+    for tile_id in ("stat-yesterday", "stat-week", "stat-last-week", "stat-last-month"):
+        m = re.search(rf'<div id="{tile_id}"[^>]*>(.*?)</div>', index_text, flags=re.S)
+        if not m:
+            fail("정적 렌더", f"index.html → #{tile_id} 를 찾을 수 없음")
+            continue
+        value = re.sub(r"<[^>]+>", "", m.group(1)).strip()
+        if not value or value in {"-", "–", "—"}:
+            fail("정적 렌더", f"index.html → #{tile_id} 가 '{value or '빈칸'}' "
+                              f"(prerender_static.py 를 돌려야 함)")
+
 
 def check_social_meta() -> None:
     """OG/트위터 카드 필수 필드. 공유·네이버 미리보기에 직접 쓰인다."""
