@@ -123,10 +123,35 @@ def fetch_ads_in_range(start_date: str, end_date: str) -> list[dict]:
 _UNIGRAM_MIN_HANGUL = 3
 _HANGUL_RE = re.compile(r"[가-힣]")
 
+# 토큰 양끝에서 떼어낼 구두점. 앞쪽의 '#' 는 해시태그라 남긴다.
+_EDGE_PUNCT = " \t\r\n,.·⋅‧•:;!?~-–—_/\\|()[]{}<>\"'“”‘’「」『』〈〉《》*+=^"
+
+# 단독 토큰으로는 의미가 없는 어미. "이용한", "개인별" 같은 수식어 조각이
+# 표현 순위에 올라오면 자동생성 티가 난다.
+_FILLER_UNIGRAM_SUFFIX = (
+    "한", "된", "하는", "되는", "있는", "없는", "같은", "위한", "통한",
+    "따른", "별로", "에서", "으로", "에게", "까지", "부터", "라면", "지만",
+)
+
+
+def normalize_token(tok: str) -> str:
+    """토큰 양끝 구두점 제거. '리프팅,' 과 '리프팅' 이 따로 세어지던 것을 막는다."""
+    lead_hash = tok.startswith("#")
+    tok = tok.strip(_EDGE_PUNCT)
+    if lead_hash and tok and not tok.startswith("#"):
+        tok = "#" + tok
+    return tok
+
+
+def _is_filler_unigram(tok: str) -> bool:
+    if tok.startswith("#"):
+        return False
+    return any(tok.endswith(s) for s in _FILLER_UNIGRAM_SUFFIX)
+
 
 def extract_ngrams(text: str, ngram_sizes: tuple[int, ...] = (1, 2, 3, 4)) -> list[str]:
     """공백 단위 토큰으로 N-gram 생성. n=1(단일 단어)는 한글 3자 이상만."""
-    tokens = text.split()
+    tokens = [t for t in (normalize_token(t) for t in text.split()) if t]
     ngrams: list[str] = []
     for n in ngram_sizes:
         for i in range(len(tokens) - n + 1):
@@ -138,8 +163,15 @@ def extract_ngrams(text: str, ngram_sizes: tuple[int, ...] = (1, 2, 3, 4)) -> li
                     continue
                 if is_garbage_token(tok):
                     continue
+                if _is_filler_unigram(tok):
+                    continue
             ngrams.append(" ".join(window))
     return ngrams
+
+
+def _dedupe_key(ngram: str) -> str:
+    """'피부과 전문의' 와 '피부과전문의' 를 같은 표현으로 본다."""
+    return ngram.replace(" ", "")
 
 
 def build_candidates(
@@ -166,7 +198,16 @@ def build_candidates(
             if len(examples[ng]) < 3:
                 examples[ng].append(ad.get("review_no_display", str(ad.get("review_num", ""))))
 
-    return [(ng, cnt, examples[ng]) for ng, cnt in counter.most_common(top_k)]
+    # 띄어쓰기만 다른 표현은 한 줄로 합친다. 빈도가 큰 표기를 대표로 남기고
+    # 나머지는 버린다 (같은 시안을 두 번 세지 않기 위해 합산하지 않는다).
+    best: dict[str, tuple[str, int]] = {}
+    for ng, cnt in counter.items():
+        key = _dedupe_key(ng)
+        if key not in best or cnt > best[key][1]:
+            best[key] = (ng, cnt)
+
+    ranked = sorted(best.values(), key=lambda x: (-x[1], x[0]))[:top_k]
+    return [(ng, cnt, examples[ng]) for ng, cnt in ranked]
 
 
 # ---------- AI 정제 ----------
