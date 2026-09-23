@@ -1,14 +1,14 @@
 {
   "dept": "성형외과",
   "slug": "plastic-surgery",
-  "ads_analyzed": 446,
+  "ads_analyzed": 450,
   "first_date": "2025-12-15",
-  "last_date": "2026-09-21",
-  "generated_at": "2026-09-22T14:33:47.345273+09:00",
+  "last_date": "2026-09-22",
+  "generated_at": "2026-09-23T15:16:02.471862+09:00",
   "expressions": [
     {
       "expression": "전문의",
-      "count": 174,
+      "count": 176,
       "examples": [
         "260130-중-207012",
         "260202-중-207066",
@@ -17,7 +17,7 @@
     },
     {
       "expression": "성형외과 전문의",
-      "count": 168,
+      "count": 170,
       "examples": [
         "260130-중-207012",
         "260202-중-207066",
@@ -35,7 +35,7 @@
     },
     {
       "expression": "눈성형",
-      "count": 60,
+      "count": 61,
       "examples": [
         "260202-중-207066",
         "260203-중-207247",
@@ -44,7 +44,7 @@
     },
     {
       "expression": "코성형",
-      "count": 48,
+      "count": 49,
       "examples": [
         "260203-중-207247",
         "260206-중-207444",
