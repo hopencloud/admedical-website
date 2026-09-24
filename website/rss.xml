@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Tue, 22 Sep 2026 08:33:19 +0900</lastBuildDate>
-        <pubDate>Tue, 22 Sep 2026 08:33:19 +0900</pubDate>
+        <lastBuildDate>Fri, 25 Sep 2026 08:21:10 +0900</lastBuildDate>
+        <pubDate>Fri, 25 Sep 2026 08:21:10 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,20 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>'리프팅' 표현 증가, 피부과와 성형외과의 광고 현황</title>
+            <link>https://www.admedical.co.kr/news/2026-09-25-medical-ad-lifting-approval-trend</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-09-25-medical-ad-lifting-approval-trend</guid>
+            <description>'리프팅' 표현이 의료광고 심의에서 증가한 이유와 검토 사항을 살펴봅니다.</description>
+            <author>admedical</author>
+            <pubDate>Fri, 25 Sep 2026 08:19:23 +0900</pubDate>
+            <category>의료광고</category>
+            <category>리프팅</category>
+            <category>병원 마케팅</category>
+            <category>의료법</category>
+            <category>광고 심의</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-09-25-medical-ad-lifting-approval-trend-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>'맞춤 시술' 표현, 의료광고 심의에서 증가하는 이유</title>
             <link>https://www.admedical.co.kr/news/2026-09-22-medical-ad-review-custom-treatment</link>

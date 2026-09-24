@@ -1,7 +1,32 @@
 {
-  "generated_at": "2026-09-22T08:33:19.849212+09:00",
-  "count": 34,
+  "generated_at": "2026-09-25T08:21:10.985220+09:00",
+  "count": 35,
   "posts": [
+    {
+      "slug": "2026-09-25-medical-ad-lifting-approval-trend",
+      "title": "'리프팅' 표현 증가, 피부과와 성형외과의 광고 현황",
+      "summary": "'리프팅' 표현이 의료광고 심의에서 증가한 이유와 검토 사항을 살펴봅니다.",
+      "date": "2026-09-25",
+      "published_at": "2026-09-25T08:19:23.461850+09:00",
+      "cover": "/assets/news/2026-09-25-medical-ad-lifting-approval-trend-photo.jpg",
+      "thumb": "/assets/news/2026-09-25-medical-ad-lifting-approval-trend-thumb.jpg",
+      "infographic_type": "stat_trend",
+      "tags": [
+        "의료광고",
+        "리프팅",
+        "병원 마케팅",
+        "의료법",
+        "광고 심의"
+      ],
+      "topic_key": "리프팅 심의에서 의료광고 증가 표현",
+      "sources": [
+        {
+          "title": "admedical 자체 집계 — 지난주 (2026-09-14 ~ 2026-09-20) 심의 통과 시안 분석",
+          "source": "admedical 자체 데이터",
+          "link": "https://www.admedical.co.kr/top20"
+        }
+      ]
+    },
     {
       "slug": "2026-09-22-medical-ad-review-custom-treatment",
       "title": "'맞춤 시술' 표현, 의료광고 심의에서 증가하는 이유",
