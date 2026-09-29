@@ -1,14 +1,14 @@
 {
   "dept": "이비인후과",
   "slug": "ent",
-  "ads_analyzed": 142,
+  "ads_analyzed": 143,
   "first_date": "2025-12-12",
-  "last_date": "2026-09-22",
-  "generated_at": "2026-09-29T08:25:18.132333+09:00",
+  "last_date": "2026-09-29",
+  "generated_at": "2026-09-30T05:16:28.605040+09:00",
   "expressions": [
     {
       "expression": "전문의",
-      "count": 44,
+      "count": 45,
       "examples": [
         "260304-중-208715",
         "260304-중-208736",
