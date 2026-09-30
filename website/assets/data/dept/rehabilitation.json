@@ -1,10 +1,10 @@
 {
   "dept": "재활의학과",
   "slug": "rehabilitation",
-  "ads_analyzed": 270,
+  "ads_analyzed": 271,
   "first_date": "2025-12-12",
-  "last_date": "2026-09-29",
-  "generated_at": "2026-09-30T05:16:28.226607+09:00",
+  "last_date": "2026-09-30",
+  "generated_at": "2026-10-01T05:11:56.606041+09:00",
   "expressions": [
     {
       "expression": "정형외과",
@@ -107,7 +107,7 @@
     },
     {
       "expression": "비수술",
-      "count": 46,
+      "count": 47,
       "examples": [
         "260129-중-206963",
         "260130-중-207044",
