@@ -1,10 +1,10 @@
 {
   "dept": "내과",
   "slug": "internal-medicine",
-  "ads_analyzed": 966,
+  "ads_analyzed": 968,
   "first_date": "2025-12-12",
-  "last_date": "2026-09-30",
-  "generated_at": "2026-10-01T05:11:54.948389+09:00",
+  "last_date": "2026-10-01",
+  "generated_at": "2026-10-02T05:08:34.649552+09:00",
   "expressions": [
     {
       "expression": "건강검진",
@@ -134,7 +134,7 @@
     },
     {
       "expression": "예방접종",
-      "count": 76,
+      "count": 77,
       "examples": [
         "260203-중-207143",
         "260116-중-206137",
@@ -206,7 +206,7 @@
     },
     {
       "expression": "만성질환",
-      "count": 56,
+      "count": 57,
       "examples": [
         "260203-중-207143",
         "260206-중-207394",
