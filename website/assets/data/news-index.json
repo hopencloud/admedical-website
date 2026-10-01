@@ -1,7 +1,30 @@
 {
-  "generated_at": "2026-09-25T08:21:10.985220+09:00",
-  "count": 35,
+  "generated_at": "2026-10-01T09:07:15.887340+09:00",
+  "count": 36,
   "posts": [
+    {
+      "slug": "2026-10-01-orthopedic-ad-approval-trends",
+      "title": "정형외과 광고 심의 통과 증가, 마케터 주의점은?",
+      "summary": "최근 의료광고 심의에서 '정형외과' 표현이 증가했습니다. 마케터가 주의할 점을 짚어봅니다.",
+      "date": "2026-10-01",
+      "published_at": "2026-10-01T09:05:29.690754+09:00",
+      "cover": "/assets/news/2026-10-01-orthopedic-ad-approval-trends-photo.jpg",
+      "thumb": "/assets/news/2026-10-01-orthopedic-ad-approval-trends-thumb.jpg",
+      "infographic_type": "comparison",
+      "tags": [
+        "의료광고",
+        "정형외과",
+        "병원 마케팅"
+      ],
+      "topic_key": "광고 마케터 심의 정형외과 주의점은 증가",
+      "sources": [
+        {
+          "title": "admedical 자체 집계 — 지난주 (2026-09-21 ~ 2026-09-27) 심의 통과 시안 분석",
+          "source": "admedical 자체 데이터",
+          "link": "https://www.admedical.co.kr/top20"
+        }
+      ]
+    },
     {
       "slug": "2026-09-25-medical-ad-lifting-approval-trend",
       "title": "'리프팅' 표현 증가, 피부과와 성형외과의 광고 현황",
