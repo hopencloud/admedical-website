@@ -1,7 +1,30 @@
 {
-  "generated_at": "2026-10-01T09:07:15.887340+09:00",
-  "count": 36,
+  "generated_at": "2026-10-04T08:18:22.044727+09:00",
+  "count": 37,
   "posts": [
+    {
+      "slug": "2026-10-04-orthopedic-ad-approval-trend",
+      "title": "정형외과 광고에서 '통과' 표현 증가 분석",
+      "summary": "최근 의료광고 심의에서 정형외과 관련 표현이 증가한 이유를 분석합니다.",
+      "date": "2026-10-04",
+      "published_at": "2026-10-04T08:16:35.379629+09:00",
+      "cover": "/assets/news/2026-10-04-orthopedic-ad-approval-trend-photo.jpg",
+      "thumb": "/assets/news/2026-10-04-orthopedic-ad-approval-trend-thumb.jpg",
+      "infographic_type": "checklist",
+      "tags": [
+        "의료광고",
+        "정형외과",
+        "병원 마케팅"
+      ],
+      "topic_key": "심의에서 의료광고 정형외과 증가 표현",
+      "sources": [
+        {
+          "title": "admedical 자체 집계 — 지난주 (2026-09-21 ~ 2026-09-27) 심의 통과 시안 분석",
+          "source": "admedical 자체 데이터",
+          "link": "https://www.admedical.co.kr/top20"
+        }
+      ]
+    },
     {
       "slug": "2026-10-01-orthopedic-ad-approval-trends",
       "title": "정형외과 광고 심의 통과 증가, 마케터 주의점은?",
