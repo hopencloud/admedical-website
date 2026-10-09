@@ -1,7 +1,30 @@
 {
-  "generated_at": "2026-10-04T08:18:22.044727+09:00",
-  "count": 37,
+  "generated_at": "2026-10-09T09:37:19.547421+09:00",
+  "count": 38,
   "posts": [
+    {
+      "slug": "2026-10-09-medical-ad-review-treatment-hours",
+      "title": "'진료시간' 표현 증가, 의료광고 심의 변화 분석",
+      "summary": "'진료시간' 표현이 의료광고 심의에서 증가한 이유와 주의점 분석.",
+      "date": "2026-10-09",
+      "published_at": "2026-10-09T09:35:33.525216+09:00",
+      "cover": "/assets/news/2026-10-09-medical-ad-review-treatment-hours-photo.jpg",
+      "thumb": "/assets/news/2026-10-09-medical-ad-review-treatment-hours-thumb.jpg",
+      "infographic_type": "checklist",
+      "tags": [
+        "의료광고",
+        "병원마케팅",
+        "진료시간"
+      ],
+      "topic_key": "심의에서 의료광고 증가 진료시간 표현",
+      "sources": [
+        {
+          "title": "admedical 자체 집계 — 지난주 (2026-09-21 ~ 2026-09-27) 심의 통과 시안 분석",
+          "source": "admedical 자체 데이터",
+          "link": "https://www.admedical.co.kr/top20"
+        }
+      ]
+    },
     {
       "slug": "2026-10-04-orthopedic-ad-approval-trend",
       "title": "정형외과 광고에서 '통과' 표현 증가 분석",

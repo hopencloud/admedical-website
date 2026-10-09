@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Sun, 04 Oct 2026 08:18:22 +0900</lastBuildDate>
-        <pubDate>Sun, 04 Oct 2026 08:18:22 +0900</pubDate>
+        <lastBuildDate>Fri, 09 Oct 2026 09:37:19 +0900</lastBuildDate>
+        <pubDate>Fri, 09 Oct 2026 09:37:19 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,18 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>'진료시간' 표현 증가, 의료광고 심의 변화 분석</title>
+            <link>https://www.admedical.co.kr/news/2026-10-09-medical-ad-review-treatment-hours</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-10-09-medical-ad-review-treatment-hours</guid>
+            <description>'진료시간' 표현이 의료광고 심의에서 증가한 이유와 주의점 분석.</description>
+            <author>admedical</author>
+            <pubDate>Fri, 09 Oct 2026 09:35:33 +0900</pubDate>
+            <category>의료광고</category>
+            <category>병원마케팅</category>
+            <category>진료시간</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-10-09-medical-ad-review-treatment-hours-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>정형외과 광고에서 '통과' 표현 증가 분석</title>
             <link>https://www.admedical.co.kr/news/2026-10-04-orthopedic-ad-approval-trend</link>
