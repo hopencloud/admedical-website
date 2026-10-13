@@ -65,12 +65,38 @@ for i in $(seq 1 18); do
     sleep 10
 done
 
+# 단계별 제한 시간(초). 넘으면 죽이고 다음 단계로 간다.
+#
+# 2026-10-09 에 OCR 호출 하나가 응답 없이 매달려 파이프라인이 5일 넘게 안 끝났다.
+# launchd 는 같은 작업이 돌고 있으면 다음 실행을 띄우지 않으므로, 그동안 수집·통계가
+# 통째로 멈췄고 사이트 숫자가 6일째 그대로였다. 한 단계가 전체를 볼모로 잡으면 안 된다.
+STEP_TIMEOUT_DEFAULT=${STEP_TIMEOUT_DEFAULT:-3600}     # 기본 1시간
+
 run_step() {
     local name="$1"
     shift
+    local limit="${STEP_TIMEOUT:-$STEP_TIMEOUT_DEFAULT}"
+
     echo ""
     echo "--- [$name] $(date '+%H:%M:%S') ---"
-    if "$@"; then
+
+    # macOS 에는 GNU timeout 이 없다. 직접 감시한다.
+    "$@" &
+    local pid=$!
+    local waited=0
+    while kill -0 "$pid" 2>/dev/null; do
+        if [ "$waited" -ge "$limit" ]; then
+            echo "[$name] ⏱ ${limit}초 초과 — 강제 종료하고 다음 단계로 넘어갑니다"
+            pkill -9 -P "$pid" 2>/dev/null
+            kill -9 "$pid" 2>/dev/null
+            wait "$pid" 2>/dev/null
+            return 1
+        fi
+        sleep 5
+        waited=$((waited + 5))
+    done
+
+    if wait "$pid"; then
         echo "[$name] OK"
     else
         echo "[$name] 실패 (계속 진행)"
@@ -80,14 +106,14 @@ run_step() {
 # 1. 수집 — admedical.org에서 신규 시안 다운로드 → ~/Desktop/admedical_ads/
 # max-attempts 를 크게 잡아 놓아 백로그(며칠 밀린 것) 도 한 번에 따라잡음.
 # miss_limit=15 안전장치는 그대로 → admedical 이 실제 발행한 만큼만 받음.
-run_step "1/4 collector"  python "$ROOT/scripts/collector.py" --max-attempts 2000
+STEP_TIMEOUT=7200 run_step "1/4 collector"  python "$ROOT/scripts/collector.py" --max-attempts 2000
 
 # 2. Vision OCR — ~/Desktop/admedical_ads/ 의 신규 이미지 OCR → index.sqlite
 #    (OpenAI gpt-4o-mini Vision HIGH detail. EasyOCR보다 한국어 정확)
 # --src 를 주지 않는다. collector.py 와 batch_vision_ocr.py 가 같은 기본값
 # (기존데이터/수집)을 쓰도록 통일했다. 예전엔 양쪽 다 ~/Desktop/admedical_ads 를
 # 봤는데, 바탕화면에 데이터가 쌓이는 구조라 위치만 옮겼다.
-run_step "2/4 vision ocr" python "$ROOT/scripts/batch_vision_ocr.py" --workers 5
+STEP_TIMEOUT=7200 run_step "2/4 vision ocr" python "$ROOT/scripts/batch_vision_ocr.py" --workers 5
 
 # 3. 일일 통계
 # 3·4 순서 주의: compute_statistics 는 Supabase 를 조회하므로, sync 가 먼저 끝나야

@@ -31,7 +31,14 @@ OCR_PROMPT = """이 이미지는 의료광고 시안입니다. 이미지에 보�
 def _get_client():
     global _client
     if _client is None:
-        _client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        # 타임아웃을 반드시 준다. 안 주면 소켓이 반쯤 끊겼을 때 끝없이 기다린다.
+        # 2026-10-09 에 OCR 호출 하나가 4일 넘게 매달려(CPU 0%) 파이프라인 전체가
+        # 안 끝났고, launchd 가 다음 실행을 띄우지 못해 통계가 6일 멈췄다.
+        _client = OpenAI(
+            api_key=os.getenv("OPENAI_API_KEY"),
+            timeout=float(os.getenv("OPENAI_TIMEOUT_SEC", "90")),
+            max_retries=2,
+        )
     return _client
 
 
