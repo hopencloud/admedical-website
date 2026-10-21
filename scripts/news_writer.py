@@ -36,7 +36,13 @@ def get_client() -> OpenAI:
         key = os.getenv("OPENAI_API_KEY")
         if not key:
             raise RuntimeError("OPENAI_API_KEY가 .env에 없습니다.")
-        _client = OpenAI(api_key=key)
+        # 타임아웃 없이 두면 소켓이 반쯤 끊겼을 때 끝없이 기다린다.
+        # 2026-10-21 에 render_dept_pages.py 가 이 호출에 2시간 매달렸다.
+        _client = OpenAI(
+            api_key=key,
+            timeout=float(os.getenv("OPENAI_TIMEOUT_SEC", "120")),
+            max_retries=2,
+        )
     return _client
 
 

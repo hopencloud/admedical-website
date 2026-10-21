@@ -130,6 +130,37 @@
 
 수집이 멈추면 `validate_site.py` 가 4일 기준으로 잡아 Actions 를 실패시킨다.
 
+## macOS git 이 죽는 경우 (2026-10-15 ~ 21, 일주일 무음 실패)
+맥북의 `git` 과 `python3` 은 Xcode Command Line Tools 껍데기다.
+Xcode 가 업데이트되면 **라이선스에 다시 동의할 때까지 모든 git 명령이 실패**한다.
+
+    You have not agreed to the Xcode license agreements.
+
+이때 파이프라인은 끝까지 돌지만 커밋·푸시만 실패하고, 로그에는 `[git] commit 실패`
+한 줄만 남는다. 사이트 통계가 일주일 멈췄는데 아무도 몰랐다.
+
+복구: 터미널에서 `sudo xcodebuild -license accept` (비밀번호 필요, 사람만 가능).
+
+`daily_pipeline.sh` 가 시작할 때 `git --version` 으로 확인하고, 죽어 있으면
+로그 맨 위에 복구 명령과 함께 크게 찍는다.
+`validate_site.py --live-only` 의 라이브 통계 검사가 이 상황을 잡아낸다.
+
+## 한 단계가 전체를 막지 않게 (2026-10-09 / 10-21)
+OpenAI 호출에 **타임아웃을 반드시 준다**. 안 주면 소켓이 반쯤 끊겼을 때
+(맥북 절전 복귀 등) 끝없이 기다린다. 실제로 두 번 났다.
+  · `vision_ocr.py` — OCR 호출이 4일간 매달려 파이프라인이 5일 안 끝남
+  · `news_writer.py` — 진료과 페이지 생성이 2시간 매달림
+둘 다 `timeout=` + `max_retries=2` 를 준다 (`OPENAI_TIMEOUT_SEC` 로 조절).
+
+`daily_pipeline.sh` 의 `run_step` 에 단계별 하드 타임아웃이 있다
+(기본 1시간, 수집·OCR 2시간). 넘으면 자식까지 죽이고 다음 단계로 간다.
+launchd 는 같은 작업이 돌고 있으면 다음 실행을 **띄우지 않으므로**,
+한 단계가 매달리면 그날 이후 전부 멈춘다.
+
+**주의**: bash 는 `VAR=값 함수명` 의 할당을 함수 호출 뒤에도 남긴다(외부 명령과 다름).
+`run_step` 안에서 `unset STEP_TIMEOUT` 을 하지 않으면 앞 단계에 준 값이
+그 뒤 모든 단계에 계속 적용된다.
+
 ## 자동 검증 (회귀 방지)
 - `scripts/validate_site.py` 가 사이트 불변조건을 검사한다. **규칙을 바꾸면 검사도 같이 고칠 것.**
   - 로컬: `python scripts/validate_site.py` / 라이브: `--live-only`

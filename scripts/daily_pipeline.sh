@@ -53,6 +53,27 @@ source "$ROOT/venv/bin/activate"
 # 그 상태로 Supabase 를 부르면 DNS 부터 실패한다
 # (ConnectError: nodename nor servname provided). 2026-08-22 에 그래서 통계가
 # 통째로 날아갔고, 다음날 자동 점검이 "통계가 3일째 그대로" 로 잡아냈다.
+# git 이 살아 있는지 먼저 본다.
+#
+# macOS 의 git 은 Xcode Command Line Tools 껍데기다. Xcode 가 업데이트되면
+# 라이선스에 다시 동의할 때까지 **모든 git 명령이 실패**한다.
+# 2026-10-15~21 에 이것 때문에 커밋·푸시가 일주일 내내 조용히 실패했고,
+# 로그에는 "[git] commit 실패" 한 줄만 찍혀 아무도 몰랐다.
+if ! git --version >/dev/null 2>&1; then
+    echo ""
+    echo "================================================================"
+    echo "❌ git 을 실행할 수 없습니다. 통계가 사이트에 반영되지 않습니다."
+    echo ""
+    git --version 2>&1 | head -2
+    echo ""
+    echo "   터미널에서 아래 명령을 실행하고 비밀번호를 입력하세요:"
+    echo "       sudo xcodebuild -license accept"
+    echo "================================================================"
+    GIT_BROKEN=1
+else
+    GIT_BROKEN=0
+fi
+
 echo ""
 echo "--- [네트워크 대기] $(date '+%H:%M:%S') ---"
 for i in $(seq 1 18); do
@@ -76,6 +97,10 @@ run_step() {
     local name="$1"
     shift
     local limit="${STEP_TIMEOUT:-$STEP_TIMEOUT_DEFAULT}"
+    # bash 는 `VAR=값 함수명` 의 할당을 함수 호출 뒤에도 남긴다(외부 명령과 다름).
+    # 비워주지 않으면 앞 단계에 준 값이 그 뒤 모든 단계에 계속 적용된다.
+    # 실제로 OCR 에 준 7200 이 새어나가 진료과 페이지가 2시간을 기다렸다.
+    unset STEP_TIMEOUT
 
     echo ""
     echo "--- [$name] $(date '+%H:%M:%S') ---"
@@ -216,7 +241,11 @@ else
             echo "[git]    수동 조치: git pull --rebase origin main && git push origin main"
         fi
     else
-        echo "[git] commit 실패"
+        if [ "$GIT_BROKEN" = "1" ]; then
+            echo "[git] ❌ git 이 죽어 있어 커밋할 수 없습니다 — sudo xcodebuild -license accept"
+        else
+            echo "[git] commit 실패"
+        fi
     fi
 fi
 
