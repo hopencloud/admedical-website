@@ -147,11 +147,24 @@ def render(d: dict, copy: dict) -> str:
         f'{html.escape(o["dept"])}</a>'
         for o in load_all() if o["slug"] != slug)
 
+    # Dataset 스키마의 description 은 구글이 **50~5000자**를 요구한다.
+    # meta description 은 네이버 때문에 80자로 자르므로 그대로 쓰면 50자에 미달한다
+    # (실제로 11개 페이지 전부 31~48자였고 서치콘솔이 '심각한 문제'로 잡았다).
+    # AI 가 쓴 문장 길이에 기대지 말고 실측값으로 직접 만든다.
+    ds_desc = (
+        f"대한의사협회 의료광고심의위원회를 통과한 {dept} 광고 "
+        f"{d['ads_analyzed']:,}건({fmt_date(d.get('first_date'))} ~ "
+        f"{fmt_date(d.get('last_date'))})의 문구를 집계한 자료입니다. "
+        f"자주 쓰인 표현 {len(d['expressions'])}개를 등장 횟수와 심의번호 예시와 함께 정리했습니다. "
+        f"광고 시안의 텍스트를 기계 판독(OCR)해 2~4단어 구간의 빈도를 센 결과이며, "
+        f"특정 표현의 심의 통과를 보장하지 않습니다."
+    )
+
     ld = json.dumps({
         "@context": "https://schema.org",
         "@type": "Dataset",
         "name": title,
-        "description": desc,
+        "description": ds_desc,
         "url": url,
         "inLanguage": "ko",
         "isAccessibleForFree": True,

@@ -172,6 +172,29 @@ def check_prerender() -> None:
                               f"(prerender_static.py 를 돌려야 함)")
 
 
+def check_dataset_schema() -> None:
+    """Dataset 스키마의 description 은 50~5000자.
+
+    구글이 요구하는 범위다. 벗어나면 검색결과에서 그 기능이 아예 빠진다
+    ('심각한 문제'). meta description 을 네이버 기준 80자로 자른 걸 그대로
+    재사용해서 /expressions/* 11개가 전부 31~48자로 나갔다 (2026-10-22).
+    """
+    for p in public_pages():
+        for block in re.findall(
+                r'<script type="application/ld\+json">(.*?)</script>',
+                p.read_text(encoding="utf-8"), flags=re.S):
+            try:
+                data = json.loads(block)
+            except json.JSONDecodeError:
+                continue
+            if data.get("@type") != "Dataset":
+                continue
+            n = len(data.get("description", ""))
+            if not 50 <= n <= 5000:
+                fail("Dataset 스키마",
+                     f"{rel(p)} → description 이 {n}자 (구글 요구: 50~5000자)")
+
+
 def check_social_meta() -> None:
     """OG/트위터 카드 필수 필드. 공유·네이버 미리보기에 직접 쓰인다."""
     required = [
@@ -489,7 +512,8 @@ def main() -> int:
     if not args.live_only:
         for fn in (check_internal_links, check_static_header, check_images_alt,
                    check_headings, check_title_tag, check_description_length,
-                   check_social_meta, check_prerender, check_interactive_assets,
+                   check_social_meta, check_dataset_schema, check_prerender,
+                   check_interactive_assets,
                    check_canonical, check_jsonld,
                    check_sitemap, check_rss, check_news_index, check_statistics,
                    check_adsense_and_robots):
