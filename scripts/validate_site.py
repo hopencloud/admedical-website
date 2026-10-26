@@ -459,6 +459,44 @@ def check_live() -> None:
             fail("라이브 메인", f"정적 내부링크가 {len(links)}개 (10개 미만)")
 
     check_live_statistics()
+    check_live_news_freshness()
+
+
+def check_live_news_freshness() -> None:
+    """기사가 며칠째 안 나오고 있지 않은지.
+
+    "실패"가 아니라 "조용히 아무것도 안 함"은 알림이 오지 않는다.
+    워크플로는 매일 success 인데 news_runs 는 "발행 조건을 만족한 기사 없음" 으로
+    끝나고 있었고, 그렇게 17일간 신규 0편이었다 (2026-10-09 ~ 10-26).
+    통계에는 신선도 검사가 있었지만 기사에는 없어서 아무도 몰랐다.
+    """
+    status, body = _head(f"{BASE_URL}/assets/data/news-index.json")
+    if status != 200:
+        fail("라이브 기사", f"news-index.json HTTP {status}")
+        return
+    try:
+        posts = json.loads(body).get("posts") or []
+    except json.JSONDecodeError as e:
+        fail("라이브 기사", f"파싱 실패: {e}")
+        return
+    if not posts:
+        fail("라이브 기사", "기사가 하나도 없습니다")
+        return
+
+    latest = max((p.get("date") or "") for p in posts)
+    try:
+        age = (datetime.now(KST).date() - date.fromisoformat(latest)).days
+    except ValueError:
+        fail("라이브 기사", f"최신 기사 날짜를 읽을 수 없음: {latest!r}")
+        return
+
+    if age > 3:
+        fail("라이브 기사",
+             f"신규 기사가 {age}일째 없습니다 (최신 {latest}). "
+             f"워크플로가 success 로 끝나도 발행이 0편일 수 있습니다 — "
+             f"Supabase news_runs 의 detail 을 확인하세요")
+    elif age > 2:
+        warn("라이브 기사", f"최신 기사가 {latest} ({age}일 전)")
 
 
 def check_live_statistics() -> None:
