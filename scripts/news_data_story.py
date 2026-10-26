@@ -117,15 +117,60 @@ def build_topic() -> dict | None:
     lead_expr = top5[0]["expression"] if top5 else ""
     riser_expr = risers[0][0] if risers else ""
 
+    # 각도를 돌려가며 쓴다.
+    #
+    # 예전에는 늘 "'X' 표현이 늘었다" 한 가지 틀이었다. 그래서 제목이 매번
+    # 비슷하게 나왔고, 최종 제목 중복 검사(바이그램 유사도 0.28)에 매일 걸려
+    # 17일 내리 0편이 나갔다 (2026-10-09 ~ 10-26). 기사 내용도 똑같아 보인다.
+    #
+    # 날짜로 각도를 고르되, 그 각도에 쓸 데이터가 없으면 다음 것으로 넘어간다.
+    # 같은 각도가 다시 돌아올 때쯤이면 주간 집계가 갱신돼 있다.
+    angles = []
+
     if riser_expr:
-        topic = (f"이번 주 의료광고 심의 통과 시안에서 '{riser_expr}' 표현이 늘었다 "
-                 f"— 지난주 통과 {last_week.get('count', 0)}건 집계")
-        angle = (f"'{riser_expr}' 가 어떤 맥락에서 통과됐는지, 비슷한 문구를 쓰려는 "
-                 f"마케터가 무엇을 확인해야 하는지 짚는다.")
-    else:
-        topic = (f"지난주 의료광고 심의 통과 {last_week.get('count', 0)}건 분석 "
-                 f"— '{lead_expr}' 가 가장 많이 쓰였다")
-        angle = ("자주 통과된 표현이 무엇을 뜻하는지, 그대로 베껴 쓰면 왜 위험한지 짚는다.")
+        angles.append((
+            f"{weekly.get('label', '지난주')} 대비 이번 주 '{riser_expr}' 표현이 더 자주 통과됐다",
+            f"'{riser_expr}' 가 어떤 맥락에서 쓰였는지, 비슷한 문구를 준비하는 마케터가 "
+            f"무엇을 확인해야 하는지 짚는다.",
+        ))
+
+    if dept5:
+        d0 = dept5[0]
+        angles.append((
+            f"{d0['dept']} 광고 {d0['ads_analyzed']}건에서 반복되는 문구 — "
+            f"통과 시안은 무엇을 강조하나",
+            f"{d0['dept']} 통과 시안이 공통으로 내세우는 것과, 그것을 그대로 베껴 쓸 때의 "
+            f"위험을 짚는다.",
+        ))
+
+    if last_week.get("count"):
+        d = last_week.get("delta", 0)
+        move = "늘었다" if d > 0 else ("줄었다" if d < 0 else "지난주와 같았다")
+        angles.append((
+            f"{weekly.get('label', '지난주')} 심의 통과 {last_week['count']}건 — "
+            f"지지난주보다 {abs(d)}건 {move}",
+            "통과 건수의 움직임이 심의 처리 속도와 광고 집행 일정에 어떤 뜻인지 짚는다.",
+        ))
+
+    if top5:
+        angles.append((
+            f"심의를 통과한 광고가 가장 많이 쓴 말 — '{lead_expr}' 외 {len(top5) - 1}개",
+            "상위 표현들이 공통으로 피해 간 것(효과 단정·최상급)이 무엇인지 짚는다.",
+        ))
+
+    if len(dept5) >= 3:
+        names = ", ".join(x["dept"] for x in dept5[:3])
+        angles.append((
+            f"진료과마다 다른 광고 문구 — {names} 비교",
+            "같은 의료광고라도 진료과별로 무엇을 내세우는지 대비해 보여준다.",
+        ))
+
+    if not angles:
+        return None
+
+    # 날짜 기준으로 고른다. 어제와 다른 각도가 나오게 한다.
+    idx = (datetime.now(KST).date().toordinal()) % len(angles)
+    topic, angle = angles[idx]
 
     src = NewsItem(
         title=f"admedical 자체 집계 — {weekly.get('label', '지난주')} 심의 통과 시안 분석",

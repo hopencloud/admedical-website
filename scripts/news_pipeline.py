@@ -347,7 +347,21 @@ def publish_one(client, posts: list[dict], candidates: list, stats: dict,
     # 제목이 겹치면 기사를 버리지 말고 제목만 다시 짓는다.
     # 주제 단계에서 이미 중복 검사를 통과한 기사다. 좁은 분야라 제목만 뻔하게
     # 나오는 경우가 잦은데, 그때마다 버리면 한 주에 한 편도 못 나간다.
-    dup = duplicate_of(article.get("title", ""), posts)
+    # 자체 집계 기사는 제목 유사도로 막지 않는다.
+    #
+    # 같은 데이터를 다루므로 제목이 구조적으로 비슷할 수밖에 없다. 바이그램
+    # 유사도 0.28 을 그대로 적용했더니 매일 세 번 다 걸려서 17일 내리 0편이
+    # 나갔다 (2026-10-09 ~ 10-26). 대신 **같은 각도를 이미 썼는지**로 막는다 —
+    # 각도는 news_data_story 가 날짜 기준 5종으로 돌린다.
+    if topic.get("is_data_story"):
+        key = news_writer.article_topic_key({"title": topic["topic"]})
+        if key and any(p.get("topic_key") == key for p in posts[:DEDUP_WINDOW]):
+            log("같은 각도의 자체 집계 기사를 최근에 냈습니다. 발행하지 않습니다.")
+            return None
+        article["topic_key"] = key
+        dup = None
+    else:
+        dup = duplicate_of(article.get("title", ""), posts)
     if dup:
         log(f"최종 제목이 '{dup}' 와 겹칩니다. 제목을 다시 짓습니다.")
         progress(client, "제목 재작성", f"'{dup}' 와 중복")
