@@ -179,17 +179,25 @@ def creds() -> tuple[str, str]:
     return user, password
 
 
-def send_all(posts: list[dict], date_str: str, dry_run: bool = False) -> int:
+def send_all(posts: list[dict], date_str: str,
+             dry_run: bool = False) -> tuple[int, int]:
+    """(보낸 통수, 대상 수) 를 돌려준다.
+
+    대상 수의 의미 — main() 이 이걸로 실패인지 아닌지를 가린다:
+        -1  설정이 틀려서 대상을 세지도 못했다 (Supabase/SMTP 없음, 로그인 거부)
+         0  구독자가 없다 — 보낼 사람이 없는 것은 고장이 아니다
+        >0  보낼 사람이 있었다. 이때 sent == 0 이면 고장이다.
+    """
     client = get_supabase()
     if client is None:
         log("Supabase 연결 정보가 없어 발송을 건너뜁니다.")
-        return 0
+        return 0, -1
 
     rows = client.table("newsletter_subscribers").select(
         "email, token, send_count").eq("status", "active").execute().data or []
     if not rows:
         log("활성 구독자가 없습니다.")
-        return 0
+        return 0, 0
 
     # 제목은 날짜와 요일만. 건수는 열어보면 아는 정보라 제목 자리를 낭비한다.
     dt = datetime.strptime(date_str, "%Y-%m-%d")
@@ -200,7 +208,7 @@ def send_all(posts: list[dict], date_str: str, dry_run: bool = False) -> int:
     if dry_run:
         log(f"제목: {subject}")
         print(build_text(posts, date_str, "SAMPLE-TOKEN"))
-        return 0
+        return 0, len(rows)
 
     user, password = creds()
     if not user or not password:
@@ -209,7 +217,7 @@ def send_all(posts: list[dict], date_str: str, dry_run: bool = False) -> int:
                 f"- `SMTP_USER` {'있음' if user else '**없음**'}\n"
                 f"- `SMTP_PASS` {'있음' if password else '**없음**'}\n\n"
                 "GitHub → Settings → Secrets and variables → Actions 에서 등록하세요.\n")
-        return 0
+        return 0, -1
     log(f"발신 계정: {user}")
 
     sent = 0
@@ -228,12 +236,12 @@ def send_all(posts: list[dict], date_str: str, dry_run: bool = False) -> int:
                 "2. 앱 비밀번호는 2단계 인증이 켜져 있어야 발급됩니다\n"
                 "3. 공백 없이 붙여넣었는지 (스크립트가 공백은 자동 제거합니다)\n"
                 "4. `SMTP_USER` 가 그 앱 비밀번호를 발급한 Gmail 주소인지\n")
-        return 0
+        return 0, -1
     except Exception as exc:
         log(f"SMTP 접속 실패: {type(exc).__name__}: {exc}")
         summary(f"## ❌ 뉴스레터 발송 실패 — SMTP 접속 오류\n\n"
                 f"- 계정: `{user}`\n- 오류: `{type(exc).__name__}: {str(exc)[:300]}`\n")
-        return 0
+        return 0, -1
 
     with server:
         for row in rows:
@@ -261,7 +269,7 @@ def send_all(posts: list[dict], date_str: str, dry_run: bool = False) -> int:
 
     summary(f"## ✅ 뉴스레터 발송\n\n- 대상 **{len(rows)}명** 중 **{sent}명** 발송\n"
             f"- 기사 **{len(posts)}건** ({date_str})\n- 발신: `{user}`\n")
-    return sent
+    return sent, len(rows)
 
 
 def main() -> int:
@@ -283,12 +291,26 @@ def main() -> int:
         return 0
 
     try:
-        send_all(posts, args.date, dry_run=args.dry_run)
+        sent, targets = send_all(posts, args.date, dry_run=args.dry_run)
     except Exception as exc:
-        # 메일이 안 나가는 것과 기사가 안 올라가는 것은 별개다.
-        # 여기서 죽으면 워크플로우 전체가 실패로 보인다.
         log(f"발송 중 오류: {type(exc).__name__}: {exc}")
         import traceback; traceback.print_exc()
+        sent, targets = 0, -1
+
+    if args.dry_run:
+        return 0
+
+    # 보낼 기사도 있고 보낼 사람도 있었는데 한 통도 못 나갔으면 실패다.
+    # 예전에는 어떤 경우에도 0 을 돌려줬다. 그래서 2026-10-05·10-12 월요일에
+    # 발송이 빠졌는데도 Actions 는 success 로 끝나 아무도 몰랐다.
+    # 기사가 아예 없어서 보낼 게 없는 경우는 기사 신선도 검사가 따로 잡으므로
+    # 여기서는 실패로 보지 않는다.
+    if targets != 0 and sent == 0:
+        log("보낼 기사가 있었는데 한 통도 보내지 못했습니다.")
+        summary(f"## ❌ 뉴스레터 발송 실패\n\n"
+                f"기사 {len(posts)}건을 보내려 했지만 발송 0건입니다.\n"
+                f"위 로그에서 원인을 확인하세요.\n")
+        return 1
     return 0
 
 

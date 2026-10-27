@@ -128,16 +128,27 @@ jobs:
             python scripts/validate_site.py --skip-freshness 2>&1 | tail -20 || true
           } >> "$GITHUB_STEP_SUMMARY"
 
+      - name: 검색엔진에 재수집 요청 (IndexNow)
+        # 구글은 색인 요청 API 를 일반 페이지에 열어주지 않는다(서치콘솔에서 수동).
+        # 네이버·빙은 IndexNow 를 받으므로 바뀐 URL 을 바로 밀어넣는다.
+        # 발행에 성공했을 때만. 실패해도 워크플로우는 통과시킨다.
+        if: success()
+        continue-on-error: true
+        run: python scripts/indexnow.py --changed 2
+
       - name: 뉴스레터 발송 (월요일만 · 지난 7일치)
         # 기사는 매일 나가지만 메일은 주 1회다. 매일 보내면 구독 해지가 늘고
         # Gmail 발송 한도(대략 500통/일)에도 부담이 된다.
         # mail_only=true 로 수동 실행하면 요일과 무관하게 보낸다.
         #
         # 커밋·푸시 뒤에 보낸다. 링크가 살아있는 상태로 메일이 나가야 한다.
-        # 발송 실패가 워크플로우를 죽이지 않도록 스크립트가 종료 코드 0 을 유지하고,
-        # 실패 이유는 Actions 요약 화면에 남긴다.
+        #
+        # 일부러 마지막 단계에 두고 continue-on-error 를 뺐다. 보낼 기사와 보낼
+        # 사람이 둘 다 있는데 한 통도 못 나가면 run 이 실패로 끝나 메일 알림이 온다.
+        # 예전에는 무조건 통과여서 2026-10-05·10-12 월요일 발송 누락을 아무도 몰랐다.
+        # 기사가 없어서 보낼 게 없는 경우는 실패가 아니다(기사 신선도 검사가 잡는다).
+        # 이 단계가 실패해도 기사는 이미 커밋·푸시됐고 IndexNow 도 이미 돌았다.
         if: success()
-        continue-on-error: true
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
@@ -150,11 +161,3 @@ jobs:
             exit 0
           fi
           python scripts/news_mailer.py --days 7
-
-      - name: 검색엔진에 재수집 요청 (IndexNow)
-        # 구글은 색인 요청 API 를 일반 페이지에 열어주지 않는다(서치콘솔에서 수동).
-        # 네이버·빙은 IndexNow 를 받으므로 바뀐 URL 을 바로 밀어넣는다.
-        # 발행에 성공했을 때만. 실패해도 워크플로우는 통과시킨다.
-        if: success()
-        continue-on-error: true
-        run: python scripts/indexnow.py --changed 2
