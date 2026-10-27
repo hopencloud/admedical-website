@@ -1,7 +1,32 @@
 {
-  "generated_at": "2026-10-26T09:24:08.603334+09:00",
-  "count": 39,
+  "generated_at": "2026-10-27T09:02:37.575515+09:00",
+  "count": 40,
   "posts": [
+    {
+      "slug": "2026-10-27-orthopedic-ad-review-common-phrases",
+      "title": "정형외과 광고 심의 통과 표현 분석",
+      "summary": "정형외과 광고 심의 통과 표현 분석, 마케팅 전략에 주의 필요.",
+      "date": "2026-10-27",
+      "published_at": "2026-10-27T09:00:52.347453+09:00",
+      "cover": "/assets/news/2026-10-27-orthopedic-ad-review-common-phrases-photo.jpg",
+      "thumb": "/assets/news/2026-10-27-orthopedic-ad-review-common-phrases-thumb.jpg",
+      "infographic_type": "checklist",
+      "tags": [
+        "의료광고",
+        "정형외과",
+        "마케팅",
+        "의료법",
+        "광고심의"
+      ],
+      "topic_key": "광고 분석 심의 정형외과 통과 표현",
+      "sources": [
+        {
+          "title": "admedical 자체 집계 — 지난주 (2026-10-19 ~ 2026-10-25) 심의 통과 시안 분석",
+          "source": "admedical 자체 데이터",
+          "link": "https://www.admedical.co.kr/top20"
+        }
+      ]
+    },
     {
       "slug": "2026-10-26-medical-ad-specialist-usage-trend",
       "title": "의료광고 심의에서 '전문의' 표현 증가",
