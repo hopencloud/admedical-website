@@ -1,7 +1,32 @@
 {
-  "generated_at": "2026-10-27T09:02:37.575515+09:00",
-  "count": 40,
+  "generated_at": "2026-10-28T08:59:40.639477+09:00",
+  "count": 41,
   "posts": [
+    {
+      "slug": "2026-10-28-medical-advertising-review-increase-impact",
+      "title": "의료광고 심의 통과 건수 증가, 의미는?",
+      "summary": "지난주 의료광고 심의 통과 390건, 지지난주 대비 66건 증가.",
+      "date": "2026-10-28",
+      "published_at": "2026-10-28T08:58:03.705176+09:00",
+      "cover": "/assets/news/2026-10-28-medical-advertising-review-increase-impact-photo.jpg",
+      "thumb": "/assets/news/2026-10-28-medical-advertising-review-increase-impact-thumb.jpg",
+      "infographic_type": "stat_trend",
+      "tags": [
+        "의료광고",
+        "심의 통과",
+        "병원 마케팅",
+        "광고 전략",
+        "비급여 광고"
+      ],
+      "topic_key": "건수 심의 의료광고 의미는 증가 통과",
+      "sources": [
+        {
+          "title": "admedical 자체 집계 — 지난주 (2026-10-19 ~ 2026-10-25) 심의 통과 시안 분석",
+          "source": "admedical 자체 데이터",
+          "link": "https://www.admedical.co.kr/top20"
+        }
+      ]
+    },
     {
       "slug": "2026-10-27-orthopedic-ad-review-common-phrases",
       "title": "정형외과 광고 심의 통과 표현 분석",
