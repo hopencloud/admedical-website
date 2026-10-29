@@ -38,8 +38,17 @@ INDEX_JSON = ROOT / "website" / "assets" / "data" / "news-index.json"
 BASE_URL = "https://www.admedical.co.kr"
 
 SMTP_HOST = os.getenv("SMTP_HOST", "smtp.gmail.com")
-SMTP_PORT = int(os.getenv("SMTP_PORT", "465"))
 SEND_INTERVAL_SEC = float(os.getenv("NEWSLETTER_INTERVAL", "0.4"))
+
+# Gmail 로 가는 길을 하나만 두지 않는다.
+# 2026-10-29, GitHub Actions 러너에서 465/SSL 접속이
+#   SMTPServerDisconnected: Connection unexpectedly closed
+# 으로 끊겼다. 자격증명은 정상이었다 — 로그인 거부(535)가 아니라 소켓이 닫혔다.
+# 러너가 Azure 대역이라 Gmail 쪽에서 끊는 것으로 보이고, 같은 계정으로
+# 587/STARTTLS 는 보통 살아있다. 그래서 두 경로를 번갈아 재시도한다.
+SMTP_ROUTES = [(465, "ssl"), (587, "starttls")]
+SMTP_ATTEMPTS = int(os.getenv("SMTP_ATTEMPTS", "3"))
+SMTP_TIMEOUT = float(os.getenv("SMTP_TIMEOUT", "60"))
 
 
 def log(msg: str) -> None:
@@ -179,6 +188,50 @@ def creds() -> tuple[str, str]:
     return user, password
 
 
+def connect_smtp(user: str, password: str):
+    """로그인까지 끝낸 SMTP 연결을 돌려준다. 끝까지 안 되면 마지막 예외를 올린다.
+
+    경로를 바꿔가며 재시도한다(465/SSL → 587/STARTTLS). 자격증명이 틀린 경우는
+    재시도해도 결과가 같으므로 즉시 올려보낸다.
+    `SMTP_PORT` 를 명시하면 그 경로만 쓴다 (문제 상황 재현·격리용).
+    """
+    context = ssl.create_default_context()
+
+    routes = SMTP_ROUTES
+    forced = os.getenv("SMTP_PORT")
+    if forced:
+        port = int(forced)
+        routes = ([r for r in SMTP_ROUTES if r[0] == port]
+                  or [(port, "ssl" if port == 465 else "starttls")])
+
+    last: Exception | None = None
+    for attempt in range(1, SMTP_ATTEMPTS + 1):
+        for port, mode in routes:
+            try:
+                if mode == "ssl":
+                    server = smtplib.SMTP_SSL(SMTP_HOST, port,
+                                              context=context, timeout=SMTP_TIMEOUT)
+                else:
+                    server = smtplib.SMTP(SMTP_HOST, port, timeout=SMTP_TIMEOUT)
+                    server.ehlo()
+                    server.starttls(context=context)
+                    server.ehlo()
+                server.login(user, password)
+                log(f"접속 성공: {SMTP_HOST}:{port} ({mode})")
+                return server
+            except smtplib.SMTPAuthenticationError:
+                raise
+            except Exception as exc:
+                last = exc
+                log(f"  {SMTP_HOST}:{port} ({mode}) 실패 — {type(exc).__name__}: {exc}")
+        if attempt < SMTP_ATTEMPTS:
+            wait = 5 * attempt
+            log(f"  {wait}초 후 재시도 ({attempt}/{SMTP_ATTEMPTS})")
+            time.sleep(wait)
+
+    raise last if last is not None else RuntimeError("SMTP 접속 실패")
+
+
 def send_all(posts: list[dict], date_str: str,
              dry_run: bool = False) -> tuple[int, int]:
     """(보낸 통수, 대상 수) 를 돌려준다.
@@ -221,10 +274,8 @@ def send_all(posts: list[dict], date_str: str,
     log(f"발신 계정: {user}")
 
     sent = 0
-    context = ssl.create_default_context()
     try:
-        server = smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT, context=context, timeout=30)
-        server.login(user, password)
+        server = connect_smtp(user, password)
     except smtplib.SMTPAuthenticationError as exc:
         log("SMTP 로그인 실패 — 앱 비밀번호를 확인하세요.")
         log(f"  서버 응답: {exc}")
@@ -240,7 +291,11 @@ def send_all(posts: list[dict], date_str: str,
     except Exception as exc:
         log(f"SMTP 접속 실패: {type(exc).__name__}: {exc}")
         summary(f"## ❌ 뉴스레터 발송 실패 — SMTP 접속 오류\n\n"
-                f"- 계정: `{user}`\n- 오류: `{type(exc).__name__}: {str(exc)[:300]}`\n")
+                f"- 계정: `{user}`\n- 오류: `{type(exc).__name__}: {str(exc)[:300]}`\n"
+                f"- 시도한 경로: {', '.join(f'{p}/{m}' for p, m in SMTP_ROUTES)} "
+                f"× {SMTP_ATTEMPTS}회\n\n"
+                "두 포트 모두 끊긴다면 Gmail 이 러너 IP 를 막는 것이다. "
+                "전용 발송 서비스로 옮기거나 맥북에서 발송해야 한다.\n")
         return 0, -1
 
     with server:

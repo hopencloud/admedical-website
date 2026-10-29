@@ -99,6 +99,11 @@
 - 발송: `scripts/news_mailer.py --days 7` — 커밋·푸시 **이후**에 실행 (링크가 살아있어야 함).
   기존 문의 메일과 같은 SMTP(Gmail) 재사용. GitHub Secrets 에 `SMTP_USER`/`SMTP_PASS` 필요.
 - Gmail SMTP 는 하루 발송량 제한(대략 500건)이 있다. 구독자가 늘면 전용 발송 서비스로 옮길 것.
+- **포트를 하나만 쓰지 않는다.** 2026-10-29 GitHub 러너에서 465/SSL 접속이
+  `SMTPServerDisconnected: Connection unexpectedly closed` 로 끊겼다 (자격증명은 정상).
+  러너가 Azure 대역이라 Gmail 쪽에서 끊는 것으로 보인다. `connect_smtp()` 가
+  465/SSL → 587/STARTTLS 를 번갈아 3회까지 재시도한다. 비밀번호 거부(535)는 재시도 안 한다.
+  두 포트 다 막히면 전용 발송 서비스(Resend 등)나 맥북 발송으로 옮길 것.
 - **발송이 0건이면 run 을 실패로 끝낸다.** 메일 단계를 워크플로의 맨 마지막에 두고
   `continue-on-error` 를 뺐다. `news_mailer.py` 는 (보낸 통수, 대상 수) 를 돌려주며
   보낼 기사와 보낼 사람이 둘 다 있는데 0통이면 종료 코드 1 이다.
