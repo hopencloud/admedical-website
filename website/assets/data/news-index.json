@@ -1,7 +1,30 @@
 {
-  "generated_at": "2026-10-28T08:59:40.639477+09:00",
-  "count": 41,
+  "generated_at": "2026-10-29T09:16:06.940893+09:00",
+  "count": 42,
   "posts": [
+    {
+      "slug": "2026-10-29-medical-ad-review-common-terms-analysis",
+      "title": "의료광고 심의: '리프팅' 등 자주 쓰인 표현 분석",
+      "summary": "의료광고 심의 통과 표현 '리프팅' 등 5개, 공통 특징 분석.",
+      "date": "2026-10-29",
+      "published_at": "2026-10-29T09:14:23.990270+09:00",
+      "cover": "/assets/news/2026-10-29-medical-ad-review-common-terms-analysis-photo.jpg",
+      "thumb": "/assets/news/2026-10-29-medical-ad-review-common-terms-analysis-thumb.jpg",
+      "infographic_type": "comparison",
+      "tags": [
+        "의료광고",
+        "마케팅",
+        "심의 통과"
+      ],
+      "topic_key": "리프팅 분석 심의 쓰인 의료광고 자주",
+      "sources": [
+        {
+          "title": "admedical 자체 집계 — 지난주 (2026-10-19 ~ 2026-10-25) 심의 통과 시안 분석",
+          "source": "admedical 자체 데이터",
+          "link": "https://www.admedical.co.kr/top20"
+        }
+      ]
+    },
     {
       "slug": "2026-10-28-medical-advertising-review-increase-impact",
       "title": "의료광고 심의 통과 건수 증가, 의미는?",
