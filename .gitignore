@@ -1,5 +1,9 @@
 # 비밀키 — 절대 GitHub에 올리지 않음
 .env
+# .env 사본·백업도 전부 제외. `.env` 한 줄만 있던 탓에 .env.bak / .env.backup-*
+# 이 untracked 로 노출돼 있었다 (git add -A 한 번이면 비밀번호가 올라간다).
+.env.*
+!.env.example
 
 # Python 캐시 / 가상환경
 __pycache__/
