@@ -1,11 +1,11 @@
 // 관리자 대시보드에서 새 작업(다운로드/인덱싱/전체 파이프라인) 등록.
 // 환경변수: ADMIN_PASSWORD, SUPABASE_URL, SUPABASE_SERVICE_KEY
 // 호출: POST /api/admin-job  (헤더: X-Admin-Password)
-// Body: { job_type: "collector" | "indexer" | "pipeline" }
+// Body: { job_type: "collector" | "indexer" | "pipeline" | "newsletter" }
 
 import { createClient } from "@supabase/supabase-js";
 
-const ALLOWED_JOB_TYPES = new Set(["collector", "indexer", "pipeline"]);
+const ALLOWED_JOB_TYPES = new Set(["collector", "indexer", "pipeline", "newsletter"]);
 
 export default async function handler(req, res) {
     if (req.method !== "POST") {
@@ -20,7 +20,7 @@ export default async function handler(req, res) {
 
     const { job_type } = req.body || {};
     if (!job_type || !ALLOWED_JOB_TYPES.has(job_type)) {
-        return res.status(400).json({ error: "job_type은 collector|indexer|pipeline 중 하나" });
+        return res.status(400).json({ error: "job_type은 collector|indexer|pipeline|newsletter 중 하나" });
     }
 
     const url = process.env.SUPABASE_URL;

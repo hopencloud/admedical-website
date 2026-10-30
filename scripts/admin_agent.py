@@ -9,6 +9,7 @@ status='pending' 인 작업을 발견하면 해당 스크립트를 subprocess �
     - collector → scripts/collector.py
     - indexer   → scripts/batch_vision_ocr.py + sync_to_supabase.py
     - pipeline  → scripts/daily_pipeline.sh
+    - newsletter → scripts/news_mailer.py --days 7 (지난 7일치 메일 발송)
 
 사용:
     python scripts/admin_agent.py            # foreground (테스트용)
@@ -64,6 +65,10 @@ JOB_COMMANDS = {
         "__indexer_chain__",
     ],
     "pipeline":  ["/bin/bash", str(ROOT / "scripts" / "daily_pipeline.sh")],
+    # 뉴스레터는 맥북에서만 보낼 수 있다. GitHub 러너에서는 Gmail 이
+    # 465/587 양쪽 연결을 끊는다 (2026-10-30). 가정용 회선에서만 나간다.
+    "newsletter": [str(VENV_PY), str(ROOT / "scripts" / "news_mailer.py"),
+                   "--days", "7"],
 }
 
 

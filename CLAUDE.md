@@ -94,18 +94,21 @@
 - 구독: `/api/subscribe` → Supabase `newsletter_subscribers` (이메일만 받음, 허니팟으로 봇 차단)
 - 해지: 메일 하단 `/api/unsubscribe?token=` 원클릭. `List-Unsubscribe` 헤더도 넣는다.
 - **기사는 매일, 메일은 주 1회(월요일) 지난 7일치를 묶어서.** 매일 보내면 구독 해지가
-  늘고 Gmail 발송 한도에도 부담이 된다. 워크플로가 요일을 보고 판단하며,
-  `mail_only=true` 로 수동 실행하면 요일과 무관하게 나간다.
-- 발송: `scripts/news_mailer.py --days 7` — 커밋·푸시 **이후**에 실행 (링크가 살아있어야 함).
-  기존 문의 메일과 같은 SMTP(Gmail) 재사용. GitHub Secrets 에 `SMTP_USER`/`SMTP_PASS` 필요.
+  늘고 Gmail 발송 한도에도 부담이 된다.
+- **메일은 맥북에서만 나간다 — GitHub Actions 에서는 못 보낸다 (2026-10-30 확정).**
+  러너(Azure 대역)에서 Gmail 465/SSL 과 587/STARTTLS 가 **둘 다** 끊긴다:
+      SMTPServerDisconnected: Connection unexpectedly closed
+  자격증명 문제가 아니다 — 로그인 거부(535)가 아니라 소켓이 닫힌다. `발신 계정: ***`
+  까지 찍히고 끊겼다. 9월까지 같은 코드로 8회 나갔으니 바뀐 것은 코드가 아니라
+  러너 IP 에 대한 Gmail 의 취급이다. **수집이 맥북에서만 되는 것과 같은 이유다.**
+  포트를 번갈아 재시도하는 `connect_smtp()` 를 넣어봤지만 두 경로 다 막혀 소용없었다.
+  → `daily_pipeline.sh` 끝에서 월요일에 `news_mailer.py --days 7` 을 돌린다.
+  → 수동 발송은 `admin_jobs` 의 `job_type=newsletter` (맥북 agent 가 실행).
+  → **`.env` 에 `SMTP_USER`/`SMTP_PASS` 가 있어야 한다** (GitHub Secrets 가 아니라 맥북).
+    Vercel 환경변수에 있는 값과 같은 것을 쓴다 (문의 폼이 그 값으로 보낸다).
 - Gmail SMTP 는 하루 발송량 제한(대략 500건)이 있다. 구독자가 늘면 전용 발송 서비스로 옮길 것.
-- **포트를 하나만 쓰지 않는다.** 2026-10-29 GitHub 러너에서 465/SSL 접속이
-  `SMTPServerDisconnected: Connection unexpectedly closed` 로 끊겼다 (자격증명은 정상).
-  러너가 Azure 대역이라 Gmail 쪽에서 끊는 것으로 보인다. `connect_smtp()` 가
-  465/SSL → 587/STARTTLS 를 번갈아 3회까지 재시도한다. 비밀번호 거부(535)는 재시도 안 한다.
-  두 포트 다 막히면 전용 발송 서비스(Resend 등)나 맥북 발송으로 옮길 것.
-- **발송이 0건이면 run 을 실패로 끝낸다.** 메일 단계를 워크플로의 맨 마지막에 두고
-  `continue-on-error` 를 뺐다. `news_mailer.py` 는 (보낸 통수, 대상 수) 를 돌려주며
+- **발송이 0건이면 종료 코드 1 로 끝낸다.**
+  `news_mailer.py` 는 (보낸 통수, 대상 수) 를 돌려주며
   보낼 기사와 보낼 사람이 둘 다 있는데 0통이면 종료 코드 1 이다.
   구독자 0명이거나 7일치 기사가 없는 건 고장이 아니라 종료 코드 0.
   예전엔 어떤 경우든 0 이어서 2026-10-05·10-12 월요일 발송 누락을 한 달간 몰랐다.

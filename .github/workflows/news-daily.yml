@@ -30,10 +30,6 @@ on:
         description: "이미 발행한 날이어도 실행 (true/false)"
         required: false
         default: "false"
-      mail_only:
-        description: "기사 생성 없이 뉴스레터 발송만 (true/false)"
-        required: false
-        default: "false"
 
 concurrency:
   group: news-daily
@@ -72,7 +68,6 @@ jobs:
                       "requests>=2.31.0" "Pillow>=10.0.0"
 
       - name: Run news pipeline
-        if: github.event.inputs.mail_only != 'true'
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
@@ -92,7 +87,6 @@ jobs:
           python scripts/news_pipeline.py $ARGS
 
       - name: 발행 전 검증
-        if: github.event.inputs.mail_only != 'true' 
         # 생성된 기사가 규칙을 깨면 커밋하지 않는다.
         # (alt 누락, 사이트맵 확장자, 통계 0건 표시, JSON-LD 깨짐 등)
         #
@@ -101,7 +95,6 @@ jobs:
         run: python scripts/validate_site.py --skip-freshness
 
       - name: Commit & push
-        if: github.event.inputs.mail_only != 'true'
         run: |
           git config user.name  "admedical-bot"
           git config user.email "bot@admedical.co.kr"
@@ -136,28 +129,13 @@ jobs:
         continue-on-error: true
         run: python scripts/indexnow.py --changed 2
 
-      - name: 뉴스레터 발송 (월요일만 · 지난 7일치)
-        # 기사는 매일 나가지만 메일은 주 1회다. 매일 보내면 구독 해지가 늘고
-        # Gmail 발송 한도(대략 500통/일)에도 부담이 된다.
-        # mail_only=true 로 수동 실행하면 요일과 무관하게 보낸다.
-        #
-        # 커밋·푸시 뒤에 보낸다. 링크가 살아있는 상태로 메일이 나가야 한다.
-        #
-        # 일부러 마지막 단계에 두고 continue-on-error 를 뺐다. 보낼 기사와 보낼
-        # 사람이 둘 다 있는데 한 통도 못 나가면 run 이 실패로 끝나 메일 알림이 온다.
-        # 예전에는 무조건 통과여서 2026-10-05·10-12 월요일 발송 누락을 아무도 몰랐다.
-        # 기사가 없어서 보낼 게 없는 경우는 실패가 아니다(기사 신선도 검사가 잡는다).
-        # 이 단계가 실패해도 기사는 이미 커밋·푸시됐고 IndexNow 도 이미 돌았다.
-        if: success()
-        env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
-          SMTP_USER: ${{ secrets.SMTP_USER }}
-          SMTP_PASS: ${{ secrets.SMTP_PASS }}
-        run: |
-          if [ "$(TZ=Asia/Seoul date +%u)" != "1" ] && \
-             [ "${{ github.event.inputs.mail_only }}" != "true" ]; then
-            echo "월요일이 아니라 뉴스레터는 보내지 않습니다 (기사만 발행)."
-            exit 0
-          fi
-          python scripts/news_mailer.py --days 7
+      # 뉴스레터 발송은 여기서 하지 않는다 (2026-10-30 에 맥북으로 옮겼다).
+      #
+      # 러너(Azure 대역)에서 Gmail 이 465/SSL 과 587/STARTTLS 양쪽 연결을 끊는다
+      #   SMTPServerDisconnected: Connection unexpectedly closed
+      # 자격증명은 정상이었다(로그인 거부 아님). 9월까지 같은 코드로 8회 나갔으니
+      # 바뀐 것은 코드가 아니라 러너 IP 에 대한 Gmail 의 취급이다.
+      # 수집이 맥북에서만 되는 것과 같은 이유다 — 가정용 회선만 통과한다.
+      #
+      # 지금은 `daily_pipeline.sh` 가 매주 월요일에 `news_mailer.py --days 7` 을 돌린다.
+      # 수동 발송은 /api/admin-job 의 job_type=newsletter (맥북 agent 가 실행).
