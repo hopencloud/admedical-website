@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Thu, 29 Oct 2026 09:16:06 +0900</lastBuildDate>
-        <pubDate>Thu, 29 Oct 2026 09:16:06 +0900</pubDate>
+        <lastBuildDate>Fri, 30 Oct 2026 09:03:17 +0900</lastBuildDate>
+        <pubDate>Fri, 30 Oct 2026 09:03:17 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,18 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>진료과별 의료광고 문구 차이: 정형외과·내과·피부과</title>
+            <link>https://www.admedical.co.kr/news/2026-10-30-medical-ad-phrases-orthopedics-internal-dermatology</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-10-30-medical-ad-phrases-orthopedics-internal-dermatology</guid>
+            <description>진료과별 의료광고 문구 차이를 분석해 마케팅 전략에 활용하세요.</description>
+            <author>admedical</author>
+            <pubDate>Fri, 30 Oct 2026 09:01:35 +0900</pubDate>
+            <category>의료광고</category>
+            <category>병원 마케팅</category>
+            <category>진료과별 광고</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-10-30-medical-ad-phrases-orthopedics-internal-dermatology-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>의료광고 심의: '리프팅' 등 자주 쓰인 표현 분석</title>
             <link>https://www.admedical.co.kr/news/2026-10-29-medical-ad-review-common-terms-analysis</link>
