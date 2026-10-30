@@ -1,0 +1,45 @@
+name: 뉴스레터 지금 보내기
+
+# 입력칸이 없다. Run workflow 를 누르면 지난 7일치 기사를 구독자에게 바로 보낸다.
+#
+# news-daily.yml 의 mail_only=true 와 같은 일을 하지만, 그쪽은 입력칸 3개 중
+# 세 번째에 true 를 타이핑해야 해서 빠뜨리기 쉽다. 실제로 그렇게 헛돌았다 —
+# 2026-10-30, 입력 없이 실행돼 "월요일 아님" 으로 발송을 건너뛰고 success 로 끝났고
+# 메일이 왜 안 오는지 다시 처음부터 찾아야 했다.
+#
+# 발송만 확인할 때는 이 워크플로를 쓴다. 기사는 만들지 않는다.
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: newsletter-send
+  cancel-in-progress: false
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        # 발송에 필요한 것만. 기사 생성·이미지 쪽 의존성은 쓰지 않는다.
+        run: pip install "supabase>=2.5.0" "python-dotenv>=1.0.0"
+
+      - name: 지난 7일치 발송
+        # 보낼 기사와 보낼 사람이 둘 다 있는데 0통이면 종료 코드 1 로 끝난다.
+        # continue-on-error 를 걸지 않는다 — 실패가 빨간 X 로 보여야 한다.
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+        run: python scripts/news_mailer.py --days 7
