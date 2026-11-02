@@ -5,6 +5,9 @@
 .env.*
 !.env.example
 
+# Node 의존성 — Vercel 이 알아서 설치한다
+node_modules/
+
 # Python 캐시 / 가상환경
 __pycache__/
 *.pyc

@@ -38,7 +38,7 @@ export default async function handler(req, res) {
         return res.status(405).json({ error: "POST only" });
     }
 
-    if (!publicLimit(req, res, "report")) return;
+    if (!(await publicLimit(req, res, "report"))) return;
 
     const body = req.body || {};
     const reviewNum = Number(body.review_num);

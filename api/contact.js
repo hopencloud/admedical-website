@@ -27,7 +27,7 @@ export default async function handler(req, res) {
         return res.status(405).json({ error: "POST only" });
     }
 
-    if (!publicLimit(req, res, "contact")) return;
+    if (!(await publicLimit(req, res, "contact"))) return;
 
     const { name, email, phone, message, website, loaded_at } = req.body || {};
 
