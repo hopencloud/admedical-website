@@ -106,19 +106,27 @@ run_step() {
     echo "--- [$name] $(date '+%H:%M:%S') ---"
 
     # macOS 에는 GNU timeout 이 없다. 직접 감시한다.
+    #
+    # 경과시간은 반드시 벽시계(date +%s)로 재야 한다. 예전에는 `sleep 5` 를
+    # 돌면서 waited 에 5 를 더했는데, 맥북이 절전(DarkWake)에 들어가면 그 사이
+    # 흐른 시간이 통째로 빠진다. 2026-10-31 런은 collector 가 벽시계로 28시간
+    # (제한 2시간), sync 가 10시간(제한 1시간) 돌았는데 감시가 한 번도 발동하지
+    # 않았다. 그래서 파이프라인이 이틀에 걸쳐 끝나고, launchd 는 앞 실행이
+    # 아직 돌고 있으면 새 실행을 띄우지 않으므로 11/01 자동 실행이 통째로 빠졌다.
+    local started elapsed
+    started=$(date +%s)
     "$@" &
     local pid=$!
-    local waited=0
     while kill -0 "$pid" 2>/dev/null; do
-        if [ "$waited" -ge "$limit" ]; then
-            echo "[$name] ⏱ ${limit}초 초과 — 강제 종료하고 다음 단계로 넘어갑니다"
+        elapsed=$(( $(date +%s) - started ))
+        if [ "$elapsed" -ge "$limit" ]; then
+            echo "[$name] ⏱ ${limit}초 초과 (실제 ${elapsed}초) — 강제 종료하고 다음 단계로 넘어갑니다"
             pkill -9 -P "$pid" 2>/dev/null
             kill -9 "$pid" 2>/dev/null
             wait "$pid" 2>/dev/null
             return 1
         fi
         sleep 5
-        waited=$((waited + 5))
     done
 
     if wait "$pid"; then

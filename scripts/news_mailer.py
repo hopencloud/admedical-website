@@ -64,6 +64,34 @@ def summary(text: str) -> None:
         f.write(text + "\n")
 
 
+# Supabase 조회 재시도. compute_statistics.py 가 이미 같은 이유로 갖고 있다.
+# 2026-11-02 월요일, 구독자 목록을 읽다가 httpx.ReadError: [Errno 54]
+# Connection reset by peer 로 죽어 그 주 메일이 안 나갔다. 끊김 한 번에
+# 주간 발송이 통째로 날아가면 안 된다.
+BACKOFF_READ = [2, 4, 8, 16]
+BACKOFF_CONNECT = [10, 20, 40, 60, 60, 60]
+
+
+def retry(fn, *, what: str = "질의"):
+    schedule = BACKOFF_READ
+    attempt = 0
+    while True:
+        try:
+            return fn()
+        except Exception as exc:
+            name = type(exc).__name__
+            # 첫 실패가 연결 실패(DNS 등)면 대기 일정을 통째로 늘린다.
+            if attempt == 0 and "Connect" in name:
+                schedule = BACKOFF_CONNECT
+            if attempt >= len(schedule):
+                raise
+            wait = schedule[attempt]
+            attempt += 1
+            log(f"  [재시도] {what} 실패 ({name}) — {wait}초 후 "
+                f"{attempt + 1}/{len(schedule) + 1}")
+            time.sleep(wait)
+
+
 def get_supabase():
     url, key = os.getenv("SUPABASE_URL"), os.getenv("SUPABASE_SERVICE_KEY")
     if not url or not key:
@@ -246,8 +274,10 @@ def send_all(posts: list[dict], date_str: str,
         log("Supabase 연결 정보가 없어 발송을 건너뜁니다.")
         return 0, -1
 
-    rows = client.table("newsletter_subscribers").select(
-        "email, token, send_count").eq("status", "active").execute().data or []
+    rows = retry(
+        lambda: client.table("newsletter_subscribers").select(
+            "email, token, send_count").eq("status", "active").execute().data,
+        what="구독자 목록 조회") or []
     if not rows:
         log("활성 구독자가 없습니다.")
         return 0, 0
@@ -362,6 +392,8 @@ def main() -> int:
     # 여기서는 실패로 보지 않는다.
     if targets != 0 and sent == 0:
         log("보낼 기사가 있었는데 한 통도 보내지 못했습니다.")
+        log("  원인은 위 로그를 보라 — SMTP 가 아닐 수도 있다 "
+            "(구독자 목록 조회 실패도 여기로 온다).")
         summary(f"## ❌ 뉴스레터 발송 실패\n\n"
                 f"기사 {len(posts)}건을 보내려 했지만 발송 0건입니다.\n"
                 f"위 로그에서 원인을 확인하세요.\n")
