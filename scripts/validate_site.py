@@ -218,11 +218,10 @@ def check_social_meta() -> None:
 def check_interactive_assets() -> None:
     """폼만 있고 동작 스크립트가 없으면 눌러도 아무 일도 안 일어난다.
 
-    실제로 /contact 에 구독 폼을 넣으면서 newsletter.js 를 빠뜨려
-    사용자가 구독 신청을 눌러도 등록되지 않는 상태로 배포됐다.
+    실제로 /contact 에 폼을 넣으면서 동작 스크립트를 빠뜨려
+    사용자가 눌러도 아무 일도 일어나지 않는 상태로 배포됐다.
     """
     pairs = [
-        ("newsletter-form", "/assets/js/newsletter.js", "뉴스레터 구독 폼"),
         ("ad-slot", "/assets/js/ads.js", "광고 슬롯"),
     ]
     for p in public_pages():
@@ -231,7 +230,7 @@ def check_interactive_assets() -> None:
             if marker in text and script not in text:
                 fail("스크립트 누락", f"{rel(p)} → {label}은 있는데 {script} 가 없음")
 
-    for name in ("newsletter.js", "ads.js", "site.js"):
+    for name in ("ads.js", "site.js"):
         if not (WEB / "assets" / "js" / name).exists():
             fail("스크립트 누락", f"assets/js/{name} 파일이 없음")
 

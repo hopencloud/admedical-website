@@ -162,7 +162,6 @@ FOOTER = f"""<footer class="bg-white border-t border-slate-200 mt-20">
 
 <script src="/assets/js/site.js?v={ASSET_VER}"></script>
 <script src="/assets/js/ads.js?v={ASSET_VER}" defer></script>
-<script src="/assets/js/newsletter.js?v={ASSET_VER}" defer></script>
 </body>
 </html>
 """
@@ -177,34 +176,6 @@ def _img_caption(alt: str, kind: str = "일러스트") -> str:
             f'{esc(alt)}<span class="text-slate-400"> · {note}</span></figcaption>')
 
 
-SUBSCRIBE_FORM = """
-    <section class="my-10 bg-brand-50 border border-brand-100 rounded-2xl p-6">
-        <h2 class="text-lg font-bold text-slate-900 mb-1.5">의료광고 인사이트 뉴스레터</h2>
-        <p class="text-sm text-slate-600 leading-relaxed mb-4">
-            병의원 마케터가 알아야 할 규제·정책 변화를 매주 월요일 아침 메일로 보내드립니다.
-            이메일 주소만 남기시면 됩니다. 언제든 메일 하단 링크로 수신을 해지하실 수 있습니다.
-        </p>
-        <form class="newsletter-form flex flex-col sm:flex-row gap-2" novalidate>
-            <label class="sr-only" for="nl-email-{uid}">이메일 주소</label>
-            <input id="nl-email-{uid}" type="email" name="email" required
-                   autocomplete="email" placeholder="name@example.com"
-                   class="flex-1 px-4 py-3 rounded-xl border border-slate-300 bg-white
-                          focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
-            <input type="text" name="website" tabindex="-1" autocomplete="off"
-                   class="hidden" aria-hidden="true">
-            <button type="submit"
-                    class="px-6 py-3 rounded-xl bg-brand-600 text-white font-semibold
-                           hover:bg-brand-700 transition disabled:bg-slate-300">
-                구독하기
-            </button>
-        </form>
-        <p class="newsletter-msg hidden mt-3 text-sm"></p>
-        <p class="text-xs text-slate-500 mt-3">
-            입력하신 이메일은 뉴스레터 발송 목적으로만 사용하며,
-            <a href="/privacy" class="text-brand-600 hover:underline">개인정보처리방침</a>에 따라 관리됩니다.
-        </p>
-    </section>
-"""
 
 AI_DISCLOSURE = """
     <aside class="mt-10 bg-slate-100 border border-slate-200 rounded-2xl px-5 py-4">
@@ -506,7 +477,6 @@ def render_post(article: dict, meta: dict, infographic_svg: str = "",
 {tag_html}
     </article>
 
-{SUBSCRIBE_FORM.replace("{uid}", "post")}
 {AI_DISCLOSURE}
 
     <aside class="mt-10 bg-white rounded-2xl border border-slate-200 p-6 shadow-soft">
@@ -592,7 +562,6 @@ def render_list(posts: list[dict]) -> str:
 {rows}
     </div>
 
-{SUBSCRIBE_FORM.replace("{uid}", "list")}
 </main>
 
 {FOOTER}"""

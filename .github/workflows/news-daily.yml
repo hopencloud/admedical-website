@@ -129,13 +129,3 @@ jobs:
         continue-on-error: true
         run: python scripts/indexnow.py --changed 2
 
-      # 뉴스레터 발송은 여기서 하지 않는다 (2026-10-30 에 맥북으로 옮겼다).
-      #
-      # 러너(Azure 대역)에서 Gmail 이 465/SSL 과 587/STARTTLS 양쪽 연결을 끊는다
-      #   SMTPServerDisconnected: Connection unexpectedly closed
-      # 자격증명은 정상이었다(로그인 거부 아님). 9월까지 같은 코드로 8회 나갔으니
-      # 바뀐 것은 코드가 아니라 러너 IP 에 대한 Gmail 의 취급이다.
-      # 수집이 맥북에서만 되는 것과 같은 이유다 — 가정용 회선만 통과한다.
-      #
-      # 지금은 `daily_pipeline.sh` 가 매주 월요일에 `news_mailer.py --days 7` 을 돌린다.
-      # 수동 발송은 /api/admin-job 의 job_type=newsletter (맥북 agent 가 실행).
