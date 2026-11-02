@@ -106,7 +106,19 @@
   → 수동 발송은 `admin_jobs` 의 `job_type=newsletter` (맥북 agent 가 실행).
   → **`.env` 에 `SMTP_USER`/`SMTP_PASS` 가 있어야 한다** (GitHub Secrets 가 아니라 맥북).
     Vercel 환경변수에 있는 값과 같은 것을 쓴다 (문의 폼이 그 값으로 보낸다).
+- **발신 주소는 SMTP 로그인 계정과 분리한다** (`MAIL_FROM`). 2026-11-02 까지는
+  `From` 이 항상 `SMTP_USER` 였고, Gmail 은 From 을 인증 계정으로 덮어쓰기 때문에
+  **관리자 개인 지메일이 구독자에게 그대로 노출됐다**. 표시 이름만 앞에 붙을 뿐이다.
+  10/30 에 발송을 맥북으로 옮길 때 `.env` 의 계정이 예전 GitHub Secret 과 달라서
+  드러났다 — 시크릿은 값을 다시 볼 수 없으므로 **옮길 때 발신 주소를 먼저 확인할 것.**
+  `MAIL_FROM` 이 비면 `SMTP_USER` 를 쓴다(예전 동작). `SMTP_USER` 가 주소 형태가
+  아니면서 `MAIL_FROM` 이 비어 있으면 발송하지 않고 실패로 끝낸다.
+  같은 변수를 `api/subscribe.js`(구독 환영 메일) 도 쓴다. 문의·제보 메일
+  (`api/contact.js`, `api/report.js`) 은 관리자 본인에게 가므로 그대로 둔다.
 - Gmail SMTP 는 하루 발송량 제한(대략 500건)이 있다. 구독자가 늘면 전용 발송 서비스로 옮길 것.
+  전용 서비스로 가면 `admedical.co.kr` 도메인 주소로 보낼 수 있고, SPF/DKIM 이
+  정렬돼 스팸 판정이 줄고, **GitHub Actions 에서도 다시 보낼 수 있다**(맥북 의존 해소).
+  `admedical.co.kr` 은 MX·SPF 레코드가 없고 DNS 는 카페24에 있다(2026-11-02 확인).
 - **Supabase 조회도 재시도한다** (`retry()`, compute_statistics.py 와 같은 방식).
   2026-11-02 월요일, 구독자 목록을 읽다 `httpx.ReadError: [Errno 54] Connection reset
   by peer` 로 죽어 그 주 발송이 0건이었다. 발송 실패 로그에 "SMTP 를 확인하라" 만

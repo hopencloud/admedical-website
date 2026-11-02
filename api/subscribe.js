@@ -98,13 +98,19 @@ async function sendWelcome(email, token) {
         `수신 해지: ${unsub}`,
     ].join("\n");
 
-    const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: { user, pass },
-    });
+    // 발신 주소는 로그인 계정과 분리한다. Gmail 은 둘이 같아야 하지만
+    // 전용 발송 서비스는 로그인 아이디가 주소가 아니다 (Resend 는 "resend").
+    // MAIL_FROM 이 없으면 예전처럼 SMTP_USER 를 쓴다.
+    const from = process.env.MAIL_FROM || user;
+    const host = process.env.SMTP_HOST;
+    const transporter = nodemailer.createTransport(
+        host
+            ? { host, port: 465, secure: true, auth: { user, pass } }
+            : { service: "gmail", auth: { user, pass } },
+    );
 
     await transporter.sendMail({
-        from: `"admedical 의료광고 인사이트" <${user}>`,
+        from: `"admedical 의료광고 인사이트" <${from}>`,
         to: email,
         subject: "[의료광고 인사이트] 뉴스레터 구독이 완료되었습니다",
         text,

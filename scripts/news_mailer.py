@@ -1,8 +1,13 @@
 """
 뉴스레터 발송 — 그날 발행한 기사를 구독자에게 메일로 보낸다.
 
-발송 경로는 기존 문의/제보 메일과 같은 SMTP(Gmail)를 재사용한다.
-환경변수: SMTP_USER, SMTP_PASS (GitHub Actions 시크릿)
+환경변수 (맥북 `.env`):
+    SMTP_HOST       기본 smtp.gmail.com
+    SMTP_USER       SMTP 로그인 계정 (Resend 는 리터럴 "resend")
+    SMTP_PASS       앱 비밀번호 또는 API 키
+    MAIL_FROM       받는 사람에게 보이는 발신 주소. 비우면 SMTP_USER.
+    MAIL_FROM_NAME  발신자 표시 이름
+    MAIL_REPLY_TO   (선택) 답장 주소
 
 주의:
     Gmail SMTP 는 하루 발송량 제한이 있다(계정 유형에 따라 대략 500건 안팎).
@@ -38,6 +43,16 @@ INDEX_JSON = ROOT / "website" / "assets" / "data" / "news-index.json"
 BASE_URL = "https://www.admedical.co.kr"
 
 SMTP_HOST = os.getenv("SMTP_HOST", "smtp.gmail.com")
+
+# 발신 주소를 SMTP 로그인 계정과 분리한다 (2026-11-02).
+# Gmail 로 보낼 때는 둘이 같아야 한다 — Gmail 이 From 을 인증 계정으로 덮어쓴다.
+# 그래서 9월까지 나간 메일의 발신 주소가 관리자 개인 지메일이었다.
+# 전용 발송 서비스(Resend 등)는 로그인 계정이 서비스 아이디("resend")이고
+# 발신 주소는 인증한 도메인 주소라서 둘을 따로 줘야 한다.
+# 비워두면 SMTP_USER 를 쓴다 — 예전과 같은 동작.
+MAIL_FROM = (os.getenv("MAIL_FROM") or "").strip()
+MAIL_FROM_NAME = os.getenv("MAIL_FROM_NAME", "admedical 의료광고 인사이트")
+MAIL_REPLY_TO = (os.getenv("MAIL_REPLY_TO") or "").strip()
 SEND_INTERVAL_SEC = float(os.getenv("NEWSLETTER_INTERVAL", "0.4"))
 
 # Gmail 로 가는 길을 하나만 두지 않는다.
@@ -301,7 +316,18 @@ def send_all(posts: list[dict], date_str: str,
                 f"- `SMTP_PASS` {'있음' if password else '**없음**'}\n\n"
                 "GitHub → Settings → Secrets and variables → Actions 에서 등록하세요.\n")
         return 0, -1
-    log(f"발신 계정: {user}")
+    sender = MAIL_FROM or user
+    if "@" not in sender:
+        # Resend 처럼 로그인 아이디가 주소가 아닌 서비스를 쓰는데
+        # MAIL_FROM 을 안 넣은 경우. 이대로 보내면 메일이 반송된다.
+        log(f"발신 주소가 메일 주소 형태가 아닙니다: {sender!r}")
+        log("  SMTP_USER 가 주소가 아닌 서비스라면 MAIL_FROM 을 반드시 지정해야 합니다.")
+        summary("## ❌ 뉴스레터 발송 실패 — 발신 주소 설정 누락\n\n"
+                f"- `SMTP_USER` = `{user}` (메일 주소가 아님)\n"
+                "- `MAIL_FROM` 이 비어 있습니다. `news@admedical.co.kr` 처럼 "
+                "인증된 도메인 주소를 지정하세요.\n")
+        return 0, -1
+    log(f"로그인 계정: {user} / 발신 주소: {sender}")
 
     sent = 0
     try:
@@ -332,8 +358,10 @@ def send_all(posts: list[dict], date_str: str,
         for row in rows:
             msg = MIMEMultipart("alternative")
             msg["Subject"] = Header(subject, "utf-8")
-            msg["From"] = formataddr((str(Header("admedical 의료광고 인사이트", "utf-8")), user))
+            msg["From"] = formataddr((str(Header(MAIL_FROM_NAME, "utf-8")), sender))
             msg["To"] = row["email"]
+            if MAIL_REPLY_TO:
+                msg["Reply-To"] = MAIL_REPLY_TO
             msg["List-Unsubscribe"] = f"<{BASE_URL}/api/unsubscribe?token={row['token']}>"
             msg["List-Unsubscribe-Post"] = "List-Unsubscribe=One-Click"
             msg.attach(MIMEText(build_text(posts, date_str, row["token"]), "plain", "utf-8"))
