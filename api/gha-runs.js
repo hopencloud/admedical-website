@@ -4,11 +4,11 @@
 const DEFAULT_REPO = "hopencloud/admedical-website";
 const WORKFLOW_FILE = "daily-pipeline.yml";
 
+import { requireAdmin } from "../lib/guard.js";
+
 export default async function handler(req, res) {
-    const adminPwd = req.headers["x-admin-password"];
-    if (!adminPwd || adminPwd !== process.env.ADMIN_PASSWORD) {
-        return res.status(401).json({ error: "비밀번호가 틀렸습니다." });
-    }
+    // 인증은 lib/guard.js 가 한다 — 타이밍 안전 비교 + 실패 지연 + IP 잠금.
+    if (!(await requireAdmin(req, res))) return;
 
     const token = process.env.GITHUB_TOKEN;
     if (!token) {

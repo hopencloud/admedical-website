@@ -4,6 +4,7 @@
 // Body: { review_num: int, ocr_text: string }
 
 import { createClient } from "@supabase/supabase-js";
+import { requireAdmin } from "../lib/guard.js";
 
 export default async function handler(req, res) {
     if (req.method !== "POST") {
@@ -11,10 +12,8 @@ export default async function handler(req, res) {
         return res.status(405).json({ error: "POST only" });
     }
 
-    const adminPwd = req.headers["x-admin-password"];
-    if (!adminPwd || adminPwd !== process.env.ADMIN_PASSWORD) {
-        return res.status(401).json({ error: "비밀번호가 틀렸습니다." });
-    }
+    // 인증은 lib/guard.js 가 한다 — 타이밍 안전 비교 + 실패 지연 + IP 잠금.
+    if (!(await requireAdmin(req, res))) return;
 
     const { review_num, ocr_text } = req.body || {};
     if (!review_num) {

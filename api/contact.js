@@ -4,8 +4,12 @@
 // 봇 방지:
 //   1. Honeypot — `website` 필드가 채워져 있으면 차단 (사람에게는 안 보이는 함정 필드).
 //   2. 작성 시간 — 페이지 로드 후 3초 이내 제출은 차단 (자동 봇은 즉시 제출하는 경향).
+//   3. 요청 횟수 — 같은 IP 가 10분에 5번까지 (2026-11-02 추가).
+//      앞의 두 장치는 폼을 거치는 봇만 걸러낸다. API 를 직접 때리면 통과하므로
+//      Gmail 발송 한도를 태우는 공격은 횟수 제한으로만 막힌다.
 
 import nodemailer from "nodemailer";
+import { publicLimit } from "../lib/guard.js";
 
 const MIN_FILL_TIME_MS = 3000;
 
@@ -22,6 +26,8 @@ export default async function handler(req, res) {
         res.setHeader("Allow", "POST");
         return res.status(405).json({ error: "POST only" });
     }
+
+    if (!publicLimit(req, res, "contact")) return;
 
     const { name, email, phone, message, website, loaded_at } = req.body || {};
 
