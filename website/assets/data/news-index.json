@@ -1,7 +1,32 @@
 {
-  "generated_at": "2026-11-02T08:48:56.393518+09:00",
-  "count": 46,
+  "generated_at": "2026-11-03T11:35:07.871965+09:00",
+  "count": 47,
   "posts": [
+    {
+      "slug": "2026-11-03-medical-ad-review-top-phrases-analysis",
+      "title": "의료광고 심의 통과 표현 분석: 리프팅 등 5개",
+      "summary": "의료광고 심의 통과 표현 분석: 효과 단정·최상급 피해가는 전략 살펴보기",
+      "date": "2026-11-03",
+      "published_at": "2026-11-03T11:33:26.099509+09:00",
+      "cover": "/assets/news/2026-11-03-medical-ad-review-top-phrases-analysis-photo.jpg",
+      "thumb": "/assets/news/2026-11-03-medical-ad-review-top-phrases-analysis-thumb.jpg",
+      "infographic_type": "checklist",
+      "tags": [
+        "의료광고",
+        "심의 통과",
+        "병원 마케팅",
+        "리프팅",
+        "전문의"
+      ],
+      "topic_key": "5개 리프팅 분석 심의 의료광고 통과",
+      "sources": [
+        {
+          "title": "admedical 자체 집계 — 지난주 (2026-10-19 ~ 2026-10-25) 심의 통과 시안 분석",
+          "source": "admedical 자체 데이터",
+          "link": "https://www.admedical.co.kr/top20"
+        }
+      ]
+    },
     {
       "slug": "2026-11-02-medical-ad-approval-increase",
       "title": "의료광고 심의 통과 증가, 병원 마케팅에 미칠 수 있는 영향",

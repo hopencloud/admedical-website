@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Mon, 02 Nov 2026 08:48:56 +0900</lastBuildDate>
-        <pubDate>Mon, 02 Nov 2026 08:48:56 +0900</pubDate>
+        <lastBuildDate>Tue, 03 Nov 2026 11:35:07 +0900</lastBuildDate>
+        <pubDate>Tue, 03 Nov 2026 11:35:07 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,20 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>의료광고 심의 통과 표현 분석: 리프팅 등 5개</title>
+            <link>https://www.admedical.co.kr/news/2026-11-03-medical-ad-review-top-phrases-analysis</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-11-03-medical-ad-review-top-phrases-analysis</guid>
+            <description>의료광고 심의 통과 표현 분석: 효과 단정·최상급 피해가는 전략 살펴보기</description>
+            <author>admedical</author>
+            <pubDate>Tue, 03 Nov 2026 11:33:26 +0900</pubDate>
+            <category>의료광고</category>
+            <category>심의 통과</category>
+            <category>병원 마케팅</category>
+            <category>리프팅</category>
+            <category>전문의</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-11-03-medical-ad-review-top-phrases-analysis-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>의료광고 심의 통과 증가, 병원 마케팅에 미칠 수 있는 영향</title>
             <link>https://www.admedical.co.kr/news/2026-11-02-medical-ad-approval-increase</link>
