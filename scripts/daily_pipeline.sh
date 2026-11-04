@@ -74,17 +74,58 @@ else
     GIT_BROKEN=0
 fi
 
+# 네트워크가 붙을 때까지 기다린다. 이미 붙어 있으면 즉시 돌아온다.
+#   wait_for_network [최대_대기_초] [로그_라벨]
+#
+# 시작할 때 한 번만 보는 것으로는 부족하다. 2026-11-03·04 런은 05:01 에 네트워크가
+# 붙어 있었는데 07:30 쯤 끊겼고, 그 뒤로 전부 무너졌다:
+#   · collector 가 요청 하나에 10분씩 걸려 2시간 제한에 걸려 죽음 (신규 0건)
+#   · TOP20 의 AI 정제 실패 → 빈도수 fallback
+#   · 진료과 집계·페이지·이미지 정리 전부 ConnectError
+#   · git push 가 'Could not resolve host: github.com' 으로 3번 즉시 실패
+# 결과: 사이트 통계가 사흘 멈췄다. 그래서 단계마다 확인한다.
+#
+# 경과시간은 벽시계로 잰다 — sleep 횟수로 세면 절전 시간이 빠진다(위 run_step 과 같은 이유).
+wait_for_network() {
+    local max="${1:-180}" label="${2:-네트워크}" started elapsed=0
+    started=$(date +%s)
+    while true; do
+        if curl -sS -o /dev/null -m 5 https://www.google.com/generate_204 2>/dev/null \
+           || ping -c1 -t2 supabase.co >/dev/null 2>&1; then
+            [ "$elapsed" -gt 0 ] && echo "[$label] 네트워크 연결됨 (${elapsed}초 기다림)"
+            return 0
+        fi
+        elapsed=$(( $(date +%s) - started ))
+        if [ "$elapsed" -ge "$max" ]; then
+            echo "[$label] ⚠ 네트워크가 ${elapsed}초째 안 붙음 — 그대로 진행합니다"
+            return 1
+        fi
+        sleep 10
+    done
+}
+
 echo ""
 echo "--- [네트워크 대기] $(date '+%H:%M:%S') ---"
-for i in $(seq 1 18); do
-    if ping -c1 -t2 supabase.co >/dev/null 2>&1 || \
-       curl -sS -o /dev/null -m 5 https://www.google.com/generate_204 2>/dev/null; then
-        echo "[네트워크] 연결됨 (${i}회차)"
-        break
+wait_for_network 180 "네트워크"
+
+# 어제 push 가 실패해 밀려 있으면 지금 올린다.
+#
+# 다음 런의 push 단계까지 기다리면 그때 또 네트워크가 죽을 수 있다. 실제로
+# 11-03 분 통계가 11-04 런에서도 못 올라가 사흘치가 한꺼번에 밀렸다.
+# 지금은 네트워크가 막 확인된 직후라 성공 확률이 가장 높은 시점이다.
+if [ "$GIT_BROKEN" = "0" ]; then
+    git fetch -q origin 2>/dev/null
+    AHEAD=$(git rev-list --count origin/main..HEAD 2>/dev/null || echo 0)
+    if [ "${AHEAD:-0}" -gt 0 ]; then
+        echo "[git] 밀려 있는 커밋 ${AHEAD}개 — 먼저 올립니다"
+        git pull --rebase --autostash origin main >/dev/null 2>&1
+        if git push origin main; then
+            echo "[git] 밀린 커밋 push 성공"
+        else
+            echo "[git] 밀린 커밋 push 실패 — 아래 통계 단계에서 다시 시도합니다"
+        fi
     fi
-    [ "$i" = "18" ] && echo "[네트워크] ⚠ 3분 기다려도 안 붙음 — 그대로 진행합니다"
-    sleep 10
-done
+fi
 
 # 단계별 제한 시간(초). 넘으면 죽이고 다음 단계로 간다.
 #
@@ -104,6 +145,9 @@ run_step() {
 
     echo ""
     echo "--- [$name] $(date '+%H:%M:%S') ---"
+
+    # 단계를 시작하기 전에 네트워크를 확인한다 (붙어 있으면 즉시 통과).
+    wait_for_network 300 "$name"
 
     # macOS 에는 GNU timeout 이 없다. 직접 감시한다.
     #
@@ -233,16 +277,25 @@ else
         # 있고, 그냥 push 하면 매번 rejected 된다. 실제로 8/11~8/19 아흐레 동안
         # 통계가 한 번도 사이트에 반영되지 않았다 (주간 발행일 때는 월요일만
         # 겹쳐서 눈에 안 띄었다).
+        # 재시도 간격을 실제로 벌린다.
+        #
+        # 예전에는 5초 간격 3번이었다. DNS 가 죽은 상황에서 15초 안에 돌아올
+        # 일은 없으니 사실상 재시도가 아니었다 (11-03·04 모두 3번 다 즉시 실패).
+        # 30초 → 8분까지 늘려가며 총 15분 기다리고, 매번 네트워크부터 확인한다.
         PUSHED=0
-        for attempt in 1 2 3; do
+        PUSH_BACKOFF=(30 60 120 240 480)
+        for attempt in 1 2 3 4 5 6; do
+            wait_for_network 120 "git push"
             git pull --rebase --autostash origin main >/dev/null 2>&1
             if git push origin main; then
                 echo "[git] push 성공 — Vercel 자동 배포 트리거됨"
                 PUSHED=1
                 break
             fi
-            echo "[git] push 재시도 ${attempt}/3"
-            sleep 5
+            WAIT_SEC="${PUSH_BACKOFF[$((attempt - 1))]:-}"
+            [ -z "$WAIT_SEC" ] && break
+            echo "[git] push 실패 — ${WAIT_SEC}초 후 재시도 (${attempt}/6)"
+            sleep "$WAIT_SEC"
         done
         if [ "$PUSHED" = "0" ]; then
             echo "[git] ❌ push 실패 — 통계가 사이트에 반영되지 않았습니다."
