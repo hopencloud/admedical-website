@@ -1,7 +1,30 @@
 {
-  "generated_at": "2026-11-03T11:35:07.871965+09:00",
-  "count": 47,
+  "generated_at": "2026-11-04T09:49:49.719408+09:00",
+  "count": 48,
   "posts": [
+    {
+      "slug": "2026-11-04-medical-tourism-strategy",
+      "title": "인천세종병원의 해외 환자 유치 사례",
+      "summary": "인천세종병원의 카자흐스탄 비만 환자 유치 사례를 통해 해외 환자 유치 전략을 분석합니다.",
+      "date": "2026-11-04",
+      "published_at": "2026-11-04T09:48:02.838596+09:00",
+      "cover": "/assets/news/2026-11-04-medical-tourism-strategy-photo.jpg",
+      "thumb": "/assets/news/2026-11-04-medical-tourism-strategy-thumb.jpg",
+      "infographic_type": "process",
+      "tags": [
+        "의료관광",
+        "병원 마케팅",
+        "해외 환자 유치"
+      ],
+      "topic_key": "사례 유치 인천세종병원의 해외 환자",
+      "sources": [
+        {
+          "title": "인천세종병원, 카자흐스탄서 비만 환자 진료…해외 환자 유치 박차",
+          "source": "의학신문",
+          "link": "https://www.bosa.co.kr/news/articleView.html?idxno=3015556"
+        }
+      ]
+    },
     {
       "slug": "2026-11-03-medical-ad-review-top-phrases-analysis",
       "title": "의료광고 심의 통과 표현 분석: 리프팅 등 5개",
