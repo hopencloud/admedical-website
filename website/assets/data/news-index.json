@@ -1,7 +1,30 @@
 {
-  "generated_at": "2026-11-04T09:49:49.719408+09:00",
-  "count": 48,
+  "generated_at": "2026-11-05T10:01:45.228893+09:00",
+  "count": 49,
   "posts": [
+    {
+      "slug": "2026-11-05-medical-ad-skin-department-approval",
+      "title": "의료광고 심의에서 '피부과' 표현 통과 증가",
+      "summary": "'피부과' 표현이 이번 주 의료광고 심의에서 더 자주 통과되었습니다.",
+      "date": "2026-11-05",
+      "published_at": "2026-11-05T10:00:05.401496+09:00",
+      "cover": "/assets/news/2026-11-05-medical-ad-skin-department-approval-photo.jpg",
+      "thumb": "/assets/news/2026-11-05-medical-ad-skin-department-approval-thumb.jpg",
+      "infographic_type": "comparison",
+      "tags": [
+        "의료광고",
+        "피부과",
+        "병원 마케팅"
+      ],
+      "topic_key": "심의에서 의료광고 증가 통과 표현 피부과",
+      "sources": [
+        {
+          "title": "admedical 자체 집계 — 지난주 (2026-10-19 ~ 2026-10-25) 심의 통과 시안 분석",
+          "source": "admedical 자체 데이터",
+          "link": "https://www.admedical.co.kr/top20"
+        }
+      ]
+    },
     {
       "slug": "2026-11-04-medical-tourism-strategy",
       "title": "인천세종병원의 해외 환자 유치 사례",

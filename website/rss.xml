@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Wed, 04 Nov 2026 09:49:49 +0900</lastBuildDate>
-        <pubDate>Wed, 04 Nov 2026 09:49:49 +0900</pubDate>
+        <lastBuildDate>Thu, 05 Nov 2026 10:01:45 +0900</lastBuildDate>
+        <pubDate>Thu, 05 Nov 2026 10:01:45 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,18 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>의료광고 심의에서 '피부과' 표현 통과 증가</title>
+            <link>https://www.admedical.co.kr/news/2026-11-05-medical-ad-skin-department-approval</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-11-05-medical-ad-skin-department-approval</guid>
+            <description>'피부과' 표현이 이번 주 의료광고 심의에서 더 자주 통과되었습니다.</description>
+            <author>admedical</author>
+            <pubDate>Thu, 05 Nov 2026 10:00:05 +0900</pubDate>
+            <category>의료광고</category>
+            <category>피부과</category>
+            <category>병원 마케팅</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-11-05-medical-ad-skin-department-approval-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>인천세종병원의 해외 환자 유치 사례</title>
             <link>https://www.admedical.co.kr/news/2026-11-04-medical-tourism-strategy</link>
