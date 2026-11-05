@@ -271,6 +271,18 @@ def publish_one(client, posts: list[dict], candidates: list, stats: dict,
             pool = [c for c in pool if c.link not in drop]
             continue
 
+        # is_our_topic 은 근거 중 **하나라도** 우리 주제면 통과시킨다. 그래서
+        # 해외환자 유치·특정 병원 소식이 근거에 섞여 있으면 기사가 그쪽으로 끌려간다.
+        # 이건 하나라도 걸리면 버린다 (2026-11-04 에 실제로 그렇게 나갔다).
+        reject = [t for t in src_titles + [picked["topic"]]
+                  if news_sources.is_offtopic(t) or news_sources.is_institution_story(t)]
+        if reject:
+            log(f"주제 밖이거나 특정 병원 소식입니다 — '{reject[0][:50]}'. "
+                f"다시 고릅니다 ({attempt + 1}/3)")
+            drop = {x.link for x in picked["sources"]}
+            pool = [c for c in pool if c.link not in drop]
+            continue
+
         dup = duplicate_of(picked["topic"], posts)
         if not dup:
             topic = picked

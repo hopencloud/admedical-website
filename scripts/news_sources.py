@@ -235,7 +235,60 @@ def is_our_topic(title: str, summary: str = "") -> bool:
     제목에 핵심어가 있어야 한다. 요약에만 스치듯 나오는 것은 인정하지 않는다.
     (요약까지 보면 "예산" 기사에도 '광고' 두 글자가 섞여 들어와 다 통과한다)
     """
+    if is_offtopic(title) or is_institution_story(title):
+        return False
     return any(kw in title for kw in MARKETING_CORE)
+
+
+# 사이트 주제 밖 — 해외환자 유치·의료관광 (2026-11-05)
+#
+# 2026-11-04 에 "인천세종병원의 해외 환자 유치 사례" 가 발행됐다. 특정 병원이
+# 카자흐스탄에서 진료했다는 보도자료 한 건이 근거였고, 심의와 아무 상관이 없는
+# 데다 의료진 실명까지 들어간 병원 홍보 글이 됐다.
+#
+# 구멍은 MARKETING_CORE 의 "환자 유치" 였다. 이 말은 의료법 제27조(환자
+# 유인·알선)를 노린 것인데, "해외 환자 유치" 라는 전혀 다른 산업 주제까지
+# 같이 통과시켰다. 국내 유인·알선은 광고 규제 주제이고, 해외환자 유치는
+# 의료관광 사업이다. 우리가 다룰 분야가 아니다.
+OFFTOPIC_PATTERNS = [
+    r"해외 ?환자", r"외국인 ?환자", r"의료관광", r"의료 ?한류", r"K-?의료",
+    r"해외 ?진출", r"현지 ?법인", r"수출",
+]
+
+# 규제·제재 기사. 기관명이 들어가는 게 당연하므로 아래 기관 소식 판정에서 살린다.
+# "의료광고"·"심의" 같은 범용어는 넣지 않는다 — 이 사이트 주제상 병원 홍보
+# 제목에도 그 단어가 들어가서 통째로 구제돼 버린다 (2026-08-30 과 같은 실수).
+REGULATION_ACTION = [
+    "행정처분", "과태료", "과징금", "업무정지", "영업정지", "자격정지",
+    "고발", "기소", "소송", "판결", "단속", "적발", "위반", "불법",
+    "개정", "고시", "입법", "가이드라인", "복지부", "보건복지부", "식약처", "공정위",
+]
+
+# 특정 의료기관 한 곳의 활동 소식 — 그 병원 홍보다. 우리가 쓸 기사가 아니다.
+# "인천세종병원, 카자흐스탄서..." 처럼 고유명사 + 병원/의료원 꼴을 잡는다.
+#   버린다: "○○세종병원, 현지 진료 박차"
+#   살린다: "○○대병원 의료광고 과태료 처분"  (REGULATION_ACTION 이 있음)
+#   살린다: "종합병원 광고 경쟁 심화"        (앞말이 일반명사)
+INSTITUTION_GENERIC = {
+    "종합", "대학", "국립", "사립", "공공", "상급", "요양", "전문", "지역",
+    "동물", "중소", "민간", "개인", "대형", "거점", "지방", "의료", "일반",
+}
+INSTITUTION_RE = re.compile(r"([가-힣A-Za-z]{2,12}?)(대학교?|대)?(병원|의료원|의료재단)")
+
+
+def is_offtopic(title: str) -> bool:
+    """사이트 주제 밖인가."""
+    return any(re.search(p, title) for p in OFFTOPIC_PATTERNS)
+
+
+def is_institution_story(title: str) -> bool:
+    """특정 의료기관 한 곳의 소식인가."""
+    if any(kw in title for kw in REGULATION_ACTION):
+        return False
+    return any(
+        m.group(1) not in INSTITUTION_GENERIC
+        for m in INSTITUTION_RE.finditer(title)
+    )
 
 
 def is_promo(item: NewsItem) -> bool:
@@ -254,6 +307,8 @@ def is_promo(item: NewsItem) -> bool:
 def is_relevant(item: NewsItem) -> bool:
     blob = f"{item.title} {item.summary}"
     if any(re.search(p, item.title) for p in NOISE_PATTERNS):
+        return False
+    if is_offtopic(item.title) or is_institution_story(item.title):
         return False
     if is_promo(item):
         return False

@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-05T10:01:45.228893+09:00",
-  "count": 49,
+  "generated_at": "2026-11-05T11:08:10.781078+09:00",
+  "count": 48,
   "posts": [
     {
       "slug": "2026-11-05-medical-ad-skin-department-approval",
@@ -22,29 +22,6 @@
           "title": "admedical 자체 집계 — 지난주 (2026-10-19 ~ 2026-10-25) 심의 통과 시안 분석",
           "source": "admedical 자체 데이터",
           "link": "https://www.admedical.co.kr/top20"
-        }
-      ]
-    },
-    {
-      "slug": "2026-11-04-medical-tourism-strategy",
-      "title": "인천세종병원의 해외 환자 유치 사례",
-      "summary": "인천세종병원의 카자흐스탄 비만 환자 유치 사례를 통해 해외 환자 유치 전략을 분석합니다.",
-      "date": "2026-11-04",
-      "published_at": "2026-11-04T09:48:02.838596+09:00",
-      "cover": "/assets/news/2026-11-04-medical-tourism-strategy-photo.jpg",
-      "thumb": "/assets/news/2026-11-04-medical-tourism-strategy-thumb.jpg",
-      "infographic_type": "process",
-      "tags": [
-        "의료관광",
-        "병원 마케팅",
-        "해외 환자 유치"
-      ],
-      "topic_key": "사례 유치 인천세종병원의 해외 환자",
-      "sources": [
-        {
-          "title": "인천세종병원, 카자흐스탄서 비만 환자 진료…해외 환자 유치 박차",
-          "source": "의학신문",
-          "link": "https://www.bosa.co.kr/news/articleView.html?idxno=3015556"
         }
       ]
     },

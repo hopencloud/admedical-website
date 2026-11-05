@@ -343,6 +343,21 @@ def check_news_index() -> None:
     if keys != sorted(keys, reverse=True):
         fail("뉴스 정렬", "최신 글이 맨 위가 아님 — news-index.json 정렬 확인 필요")
 
+    # 주제 이탈 — 해외환자 유치·의료관광, 특정 병원 한 곳의 소식 (2026-11-05)
+    # "인천세종병원의 해외 환자 유치 사례" 가 실제로 발행됐다. 심의와 무관한
+    # 병원 홍보 글이었고 의료진 실명까지 들어갔다.
+    try:
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import news_sources
+    except Exception:
+        return
+    for post in posts:
+        title = post["title"]
+        if news_sources.is_offtopic(title):
+            fail("뉴스 주제", f"{post['slug']} → 사이트 주제 밖(해외환자·의료관광): {title}")
+        elif news_sources.is_institution_story(title):
+            fail("뉴스 주제", f"{post['slug']} → 특정 병원 소식(홍보): {title}")
+
 
 SKIP_FRESHNESS = False
 

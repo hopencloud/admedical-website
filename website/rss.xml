@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Thu, 05 Nov 2026 10:01:45 +0900</lastBuildDate>
-        <pubDate>Thu, 05 Nov 2026 10:01:45 +0900</pubDate>
+        <lastBuildDate>Thu, 05 Nov 2026 11:08:10 +0900</lastBuildDate>
+        <pubDate>Thu, 05 Nov 2026 11:08:10 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -26,18 +26,6 @@
             <category>피부과</category>
             <category>병원 마케팅</category>
             <enclosure url="https://www.admedical.co.kr/assets/news/2026-11-05-medical-ad-skin-department-approval-photo.jpg" type="image/jpeg" length="0"/>
-        </item>
-        <item>
-            <title>인천세종병원의 해외 환자 유치 사례</title>
-            <link>https://www.admedical.co.kr/news/2026-11-04-medical-tourism-strategy</link>
-            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-11-04-medical-tourism-strategy</guid>
-            <description>인천세종병원의 카자흐스탄 비만 환자 유치 사례를 통해 해외 환자 유치 전략을 분석합니다.</description>
-            <author>admedical</author>
-            <pubDate>Wed, 04 Nov 2026 09:48:02 +0900</pubDate>
-            <category>의료관광</category>
-            <category>병원 마케팅</category>
-            <category>해외 환자 유치</category>
-            <enclosure url="https://www.admedical.co.kr/assets/news/2026-11-04-medical-tourism-strategy-photo.jpg" type="image/jpeg" length="0"/>
         </item>
         <item>
             <title>의료광고 심의 통과 표현 분석: 리프팅 등 5개</title>
