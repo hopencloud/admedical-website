@@ -1,7 +1,31 @@
 {
-  "generated_at": "2026-11-05T11:08:10.781078+09:00",
-  "count": 48,
+  "generated_at": "2026-11-06T10:05:29.978658+09:00",
+  "count": 49,
   "posts": [
+    {
+      "slug": "2026-11-06-orthopedic-ad-approval-phrases-analysis",
+      "title": "정형외과 광고 심의 통과 표현의 공통점",
+      "summary": "정형외과 광고에서 심의 통과 표현의 공통점을 분석하고 주의점을 제시합니다.",
+      "date": "2026-11-06",
+      "published_at": "2026-11-06T10:03:50.239610+09:00",
+      "cover": "/assets/news/2026-11-06-orthopedic-ad-approval-phrases-analysis-photo.jpg",
+      "thumb": "/assets/news/2026-11-06-orthopedic-ad-approval-phrases-analysis-thumb.jpg",
+      "infographic_type": "comparison",
+      "tags": [
+        "의료광고",
+        "정형외과",
+        "병원 마케팅",
+        "광고 심의"
+      ],
+      "topic_key": "공통점 광고 심의 정형외과 통과 표현의",
+      "sources": [
+        {
+          "title": "admedical 자체 집계 — 지난주 (2026-10-19 ~ 2026-10-25) 심의 통과 시안 분석",
+          "source": "admedical 자체 데이터",
+          "link": "https://www.admedical.co.kr/top20"
+        }
+      ]
+    },
     {
       "slug": "2026-11-05-medical-ad-skin-department-approval",
       "title": "의료광고 심의에서 '피부과' 표현 통과 증가",
