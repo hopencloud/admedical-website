@@ -1,14 +1,14 @@
 {
   "dept": "내과",
   "slug": "internal-medicine",
-  "ads_analyzed": 1067,
+  "ads_analyzed": 1072,
   "first_date": "2025-12-12",
-  "last_date": "2026-11-05",
-  "generated_at": "2026-11-06T05:10:27.241925+09:00",
+  "last_date": "2026-11-06",
+  "generated_at": "2026-11-07T05:07:50.689071+09:00",
   "expressions": [
     {
       "expression": "건강검진",
-      "count": 259,
+      "count": 262,
       "examples": [
         "260130-중-206972",
         "260130-중-206973",
@@ -17,7 +17,7 @@
     },
     {
       "expression": "내과진료",
-      "count": 228,
+      "count": 231,
       "examples": [
         "260130-중-206972",
         "260130-중-206973",
@@ -26,7 +26,7 @@
     },
     {
       "expression": "내시경",
-      "count": 188,
+      "count": 190,
       "examples": [
         "260129-중-206964",
         "260202-중-207092",
@@ -89,7 +89,7 @@
     },
     {
       "expression": "영상의학과",
-      "count": 103,
+      "count": 104,
       "examples": [
         "260211-중-207686",
         "260113-중-205884",

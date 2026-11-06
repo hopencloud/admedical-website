@@ -1,10 +1,10 @@
 {
   "dept": "비뇨의학과",
   "slug": "urology",
-  "ads_analyzed": 190,
+  "ads_analyzed": 191,
   "first_date": "2025-12-16",
-  "last_date": "2026-11-03",
-  "generated_at": "2026-11-06T05:10:29.134952+09:00",
+  "last_date": "2026-11-06",
+  "generated_at": "2026-11-07T05:07:52.303263+09:00",
   "expressions": [
     {
       "expression": "전문의",
@@ -53,7 +53,7 @@
     },
     {
       "expression": "남성수술",
-      "count": 28,
+      "count": 29,
       "examples": [
         "260202-중-207077",
         "260203-중-207158",
@@ -62,7 +62,7 @@
     },
     {
       "expression": "발기부전",
-      "count": 18,
+      "count": 19,
       "examples": [
         "260225-중-208327",
         "260323-중-209903",
