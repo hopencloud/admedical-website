@@ -1,7 +1,42 @@
 {
-  "generated_at": "2026-11-08T08:51:30.078987+09:00",
-  "count": 51,
+  "generated_at": "2026-11-09T08:56:28.939373+09:00",
+  "count": 52,
   "posts": [
+    {
+      "slug": "2026-11-09-non-covered-medical-fees-marketing-impact",
+      "title": "비급여 진료비 공개, 병원 마케팅에 미치는 영향",
+      "summary": "비급여 진료비 공개가 병원 마케팅 전략에 미치는 영향과 신뢰 구축 방안을 살펴본다.",
+      "date": "2026-11-09",
+      "published_at": "2026-11-09T08:54:55.179335+09:00",
+      "cover": "/assets/news/2026-11-09-non-covered-medical-fees-marketing-impact-photo.jpg",
+      "thumb": "/assets/news/2026-11-09-non-covered-medical-fees-marketing-impact-thumb.jpg",
+      "infographic_type": "comparison",
+      "tags": [
+        "비급여 진료비",
+        "병원 마케팅",
+        "소비자 신뢰",
+        "의료광고",
+        "비급여 관리법"
+      ],
+      "topic_key": "공개 마케팅에 미치는 병원 비급여 영향",
+      "sources": [
+        {
+          "title": "연고→겔제, 파스→습포제…일반약 제형 스위칭 길 열렸다",
+          "source": "히트뉴스",
+          "link": "https://www.hitnews.co.kr/news/articleView.html?idxno=80586"
+        },
+        {
+          "title": "의료계가 비급여 관리법을 반대하는 이유는?",
+          "source": "의학신문",
+          "link": "https://www.bosa.co.kr/news/articleView.html?idxno=3015886"
+        },
+        {
+          "title": "\"가격부터 내용 다 정부 통제인데 무슨 비급여…사실상 '강제 급여'\"",
+          "source": "청년의사",
+          "link": "http://www.docdocdoc.co.kr/news/articleView.html?idxno=3044353"
+        }
+      ]
+    },
     {
       "slug": "2026-11-08-medical-advertising-review-top-phrases",
       "title": "의료광고 심의 통과 표현, '리프팅' 외 4개 분석",

@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Sun, 08 Nov 2026 08:51:30 +0900</lastBuildDate>
-        <pubDate>Sun, 08 Nov 2026 08:51:30 +0900</pubDate>
+        <lastBuildDate>Mon, 09 Nov 2026 08:56:28 +0900</lastBuildDate>
+        <pubDate>Mon, 09 Nov 2026 08:56:28 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,20 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>비급여 진료비 공개, 병원 마케팅에 미치는 영향</title>
+            <link>https://www.admedical.co.kr/news/2026-11-09-non-covered-medical-fees-marketing-impact</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-11-09-non-covered-medical-fees-marketing-impact</guid>
+            <description>비급여 진료비 공개가 병원 마케팅 전략에 미치는 영향과 신뢰 구축 방안을 살펴본다.</description>
+            <author>admedical</author>
+            <pubDate>Mon, 09 Nov 2026 08:54:55 +0900</pubDate>
+            <category>비급여 진료비</category>
+            <category>병원 마케팅</category>
+            <category>소비자 신뢰</category>
+            <category>의료광고</category>
+            <category>비급여 관리법</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-11-09-non-covered-medical-fees-marketing-impact-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>의료광고 심의 통과 표현, '리프팅' 외 4개 분석</title>
             <link>https://www.admedical.co.kr/news/2026-11-08-medical-advertising-review-top-phrases</link>
