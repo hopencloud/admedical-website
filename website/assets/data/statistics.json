@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-09T06:01:27.114925+09:00",
+  "generated_at": "2026-11-09T18:53:29.799241+09:00",
   "yesterday": {
     "date": "2026-11-06",
     "count": 54,
@@ -8,12 +8,12 @@
   "this_week": {
     "start": "2026-11-09",
     "end": "2026-11-09",
-    "count": 0
+    "count": 91
   },
   "this_month": {
     "start": "2026-11-01",
     "end": "2026-11-09",
-    "count": 410
+    "count": 501
   },
   "last_week": {
     "start": "2026-11-02",
@@ -30,9 +30,9 @@
     "prev_count": 1567
   },
   "total": {
-    "count": 18871,
+    "count": 18962,
     "first_date": "2025-12-12",
-    "last_date": "2026-11-06"
+    "last_date": "2026-11-09"
   },
   "chart_30d": [
     {
@@ -173,7 +173,8 @@
     },
     {
       "date": "2026-11-09",
-      "count": 0
+      "count": 91,
+      "last_review_no": "261109-중-223450"
     }
   ]
 }
