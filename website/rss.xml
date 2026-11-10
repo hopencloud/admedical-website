@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Mon, 09 Nov 2026 08:56:28 +0900</lastBuildDate>
-        <pubDate>Mon, 09 Nov 2026 08:56:28 +0900</pubDate>
+        <lastBuildDate>Tue, 10 Nov 2026 11:53:58 +0900</lastBuildDate>
+        <pubDate>Tue, 10 Nov 2026 11:53:58 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,20 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>의료광고 심의 통과 표현, 효과 단정 피하는 법</title>
+            <link>https://www.admedical.co.kr/news/2026-11-10-medical-ad-approval-phrases</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-11-10-medical-ad-approval-phrases</guid>
+            <description>의료광고 심의 통과 표현 분석: 효과 단정 피하고 안전한 표현 사용.</description>
+            <author>admedical</author>
+            <pubDate>Tue, 10 Nov 2026 11:52:13 +0900</pubDate>
+            <category>의료광고</category>
+            <category>병원 마케팅</category>
+            <category>광고 심의</category>
+            <category>효과 단정</category>
+            <category>법령 준수</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-11-10-medical-ad-approval-phrases-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>비급여 진료비 공개, 병원 마케팅에 미치는 영향</title>
             <link>https://www.admedical.co.kr/news/2026-11-09-non-covered-medical-fees-marketing-impact</link>

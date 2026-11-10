@@ -1,7 +1,32 @@
 {
-  "generated_at": "2026-11-09T08:56:28.939373+09:00",
-  "count": 52,
+  "generated_at": "2026-11-10T11:53:58.975403+09:00",
+  "count": 53,
   "posts": [
+    {
+      "slug": "2026-11-10-medical-ad-approval-phrases",
+      "title": "의료광고 심의 통과 표현, 효과 단정 피하는 법",
+      "summary": "의료광고 심의 통과 표현 분석: 효과 단정 피하고 안전한 표현 사용.",
+      "date": "2026-11-10",
+      "published_at": "2026-11-10T11:52:13.850388+09:00",
+      "cover": "/assets/news/2026-11-10-medical-ad-approval-phrases-photo.jpg",
+      "thumb": "/assets/news/2026-11-10-medical-ad-approval-phrases-thumb.jpg",
+      "infographic_type": "checklist",
+      "tags": [
+        "의료광고",
+        "병원 마케팅",
+        "광고 심의",
+        "효과 단정",
+        "법령 준수"
+      ],
+      "topic_key": "단정 심의 의료광고 통과 표현 피하는",
+      "sources": [
+        {
+          "title": "admedical 자체 집계 — 지난주 (2026-11-02 ~ 2026-11-08) 심의 통과 시안 분석",
+          "source": "admedical 자체 데이터",
+          "link": "https://www.admedical.co.kr/top20"
+        }
+      ]
+    },
     {
       "slug": "2026-11-09-non-covered-medical-fees-marketing-impact",
       "title": "비급여 진료비 공개, 병원 마케팅에 미치는 영향",
