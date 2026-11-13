@@ -1,7 +1,32 @@
 {
-  "generated_at": "2026-11-12T11:00:55.438121+09:00",
-  "count": 55,
+  "generated_at": "2026-11-13T16:58:26.357494+09:00",
+  "count": 56,
   "posts": [
+    {
+      "slug": "2026-11-13-medical-ad-review-decrease-impact",
+      "title": "의료광고 심의 통과 건수 감소, 왜 줄었나",
+      "summary": "지난주 의료광고 심의 통과 건수 52건 감소, 광고 일정에 영향.",
+      "date": "2026-11-13",
+      "published_at": "2026-11-13T16:56:52.051708+09:00",
+      "cover": "/assets/news/2026-11-13-medical-ad-review-decrease-impact-photo.jpg",
+      "thumb": "/assets/news/2026-11-13-medical-ad-review-decrease-impact-thumb.jpg",
+      "infographic_type": "stat_trend",
+      "tags": [
+        "의료광고",
+        "병원마케팅",
+        "광고심의",
+        "비급여광고",
+        "의료법"
+      ],
+      "topic_key": "감소 건수 심의 의료광고 줄었나 통과",
+      "sources": [
+        {
+          "title": "admedical 자체 집계 — 지난주 (2026-11-02 ~ 2026-11-08) 심의 통과 시안 분석",
+          "source": "admedical 자체 데이터",
+          "link": "https://www.admedical.co.kr/top20"
+        }
+      ]
+    },
     {
       "slug": "2026-11-12-orthopedic-ad-approval-phrases",
       "title": "정형외과 광고 심의 통과 문구의 공통점과 주의점",
