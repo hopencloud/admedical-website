@@ -105,8 +105,28 @@ jobs:
             exit 0
           fi
           git commit -m "인사이트 자동 발행 ($(TZ=Asia/Seoul date '+%Y-%m-%d %a'))"
-          git pull --rebase origin main || true
-          git push origin HEAD:main
+
+          # push 를 재시도한다. 러너는 일회용이라 여기서 실패하면 기사가
+          # 그대로 사라진다 — 원고·이미지가 전부 러너 안에만 있기 때문이다.
+          #
+          # 2026-11-13 에 실제로 그렇게 날아갔다. 맥북 파이프라인이 10:24·10:34
+          # 에 통계를 push 하는 사이에 이 단계가 끼어 밀렸고(non-fast-forward),
+          # 재시도가 없어서 그날 기사가 통째로 없어졌다. news_runs 에는
+          # "신규 1편" 으로 기록돼 있어 실패한 줄도 몰랐다.
+          #
+          # 맥북 쪽(daily_pipeline.sh)에는 이미 같은 재시도가 들어 있다.
+          for attempt in 1 2 3 4 5 6; do
+            git pull --rebase origin main || git rebase --abort || true
+            if git push origin HEAD:main; then
+              echo "[git] push 성공 (${attempt}번째)"
+              exit 0
+            fi
+            WAIT=$(( attempt * 20 ))
+            echo "[git] push 실패 — ${WAIT}초 후 재시도 (${attempt}/6)"
+            sleep "$WAIT"
+          done
+          echo "::error::push 를 6번 재시도했지만 실패했습니다. 기사가 유실됩니다."
+          exit 1
 
       - name: 실패 원인 요약
         if: failure()
