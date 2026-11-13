@@ -1,10 +1,10 @@
 {
   "dept": "안과",
   "slug": "ophthalmology",
-  "ads_analyzed": 392,
+  "ads_analyzed": 393,
   "first_date": "2025-12-15",
-  "last_date": "2026-11-11",
-  "generated_at": "2026-11-13T08:06:59.825032+09:00",
+  "last_date": "2026-11-12",
+  "generated_at": "2026-11-13T10:33:57.278341+09:00",
   "expressions": [
     {
       "expression": "백내장",
@@ -44,7 +44,7 @@
     },
     {
       "expression": "녹내장",
-      "count": 73,
+      "count": 74,
       "examples": [
         "260130-중-207008",
         "260203-중-207233",
