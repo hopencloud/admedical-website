@@ -257,6 +257,32 @@ import 로 하면 Vercel 번들러가 `report`/`contact` 함수에 패키지를 
 물리적인 원인은 코드로 못 고친다 — 뚜껑을 열어두고 전원에 꽂아둘 것.
 `caffeinate -i` 는 유휴 절전만 막고 뚜껑을 닫으면 그대로 잠든다.
 
+## git 이 에러도 없이 매달린다 (2026-11-14, 파이프라인 8시간)
+`git push origin main` 이 **55분을 멈춰 있었다**. 에러도, 로그도 없다.
+소켓이 반쯤 끊긴 상태에서 git 이 영원히 기다린 것이다.
+
+이날은 `wait_for_network` 가 **통과했다** — google 은 응답했으니까.
+그런데 실제 전송은 전부 멈춰서 collector(2시간)·sync·이번주/이번달 TOP20·
+진료과 페이지가 **다섯 단계 연속 하드 타임아웃**에 걸렸다. "네트워크가 붙어
+있는데 전송만 안 되는" 상태는 연결 확인으로 잡히지 않는다.
+
+치명적인 부분은 **push 구간이 `run_step` 밖이라 하드 타임아웃이 없었다**는 것이다.
+launchd 는 앞 실행이 살아 있으면 다음 실행을 띄우지 않으므로, 그대로 두면
+다음날 05시 실행이 통째로 사라진다.
+
+고친 것:
+- **네트워크를 타는 git 은 `git_net` 으로만 부른다.**
+  `http.lowSpeedLimit=1000 http.lowSpeedTime=60` — 60초 동안 1KB/s 도 안 나오면
+  git 이 스스로 포기한다. pull·fetch·push 전부 이걸로 바꿨다.
+- **push 재시도 구간에 벽시계 상한 30분**(`PUSH_DEADLINE`). run_step 밖의
+  구간을 새로 만들 때는 반드시 자체 상한을 둘 것.
+
+**파이프라인이 매달렸는지 확인하는 법** — `ps -o pid,etime -p $(pgrep -f daily_pipeline.sh)`.
+경과시간이 몇 시간이면 매달린 것이다. 죽이는 법:
+    pkill -f daily_pipeline.sh; pkill -f "git push origin main"
+push 가 이미 올라갔는지는 `git rev-list --count origin/main..HEAD` 로 먼저 볼 것
+(0 이면 올라간 것이므로 죽여도 잃는 게 없다).
+
 ## 자동 검증 (회귀 방지)
 - `scripts/validate_site.py` 가 사이트 불변조건을 검사한다. **규칙을 바꾸면 검사도 같이 고칠 것.**
   - 로컬: `python scripts/validate_site.py` / 라이브: `--live-only`

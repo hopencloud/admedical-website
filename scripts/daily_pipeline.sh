@@ -36,6 +36,21 @@ echo "================================================================"
 echo "[$(date '+%Y-%m-%d %H:%M:%S')] 일일 파이프라인 시작"
 echo "================================================================"
 
+# 네트워크를 타는 git 은 반드시 이걸로 부른다 (git_net push / pull / fetch).
+#
+# 2026-11-14 에 `git push origin main` 이 **55분을 매달렸다**. 에러도 안 내고
+# 그냥 멈춘다 — 소켓이 반쯤 끊긴 상태라 git 이 영원히 기다린다.
+# push 구간은 run_step 밖이라 하드 타임아웃도 없어서 파이프라인이 8시간째
+# 안 끝났고, launchd 는 앞 실행이 살아 있으면 다음 실행을 띄우지 않으므로
+# 그대로 두면 **다음날 05시 실행이 통째로 사라진다**.
+#
+# lowSpeedLimit/Time = 60초 동안 1KB/s 도 안 나오면 git 이 스스로 포기한다.
+# 이게 "네트워크가 붙어 있는데 전송만 멈추는" 오늘의 실패 모드를 잡는다
+# (wait_for_network 는 통과한다 — google 은 응답했으니까).
+git_net() {
+    git -c http.lowSpeedLimit=1000 -c http.lowSpeedTime=60 "$@"
+}
+
 # 최신 코드를 먼저 당겨온다.
 #
 # 맥북의 체크아웃은 /admin 버튼으로만 돌아서 아무도 git pull 을 하지 않는다.
@@ -43,7 +58,7 @@ echo "================================================================"
 # 그대로 돌고 있어서 몇 번을 눌러도 화면이 안 바뀌었다. 원인 찾는 데 한참 걸렸다.
 # --autostash 라 로컬에 손댄 게 있어도 멈추지 않고, 실패해도 파이프라인은 계속 간다.
 echo "--- [git pull] $(date '+%H:%M:%S') ---"
-git pull --rebase --autostash origin main || echo "[git] pull 실패 — 현재 체크아웃으로 계속 진행"
+git_net pull --rebase --autostash origin main || echo "[git] pull 실패 — 현재 체크아웃으로 계속 진행"
 
 source "$ROOT/venv/bin/activate"
 
@@ -114,12 +129,12 @@ wait_for_network 180 "네트워크"
 # 11-03 분 통계가 11-04 런에서도 못 올라가 사흘치가 한꺼번에 밀렸다.
 # 지금은 네트워크가 막 확인된 직후라 성공 확률이 가장 높은 시점이다.
 if [ "$GIT_BROKEN" = "0" ]; then
-    git fetch -q origin 2>/dev/null
+    git_net fetch -q origin 2>/dev/null
     AHEAD=$(git rev-list --count origin/main..HEAD 2>/dev/null || echo 0)
     if [ "${AHEAD:-0}" -gt 0 ]; then
         echo "[git] 밀려 있는 커밋 ${AHEAD}개 — 먼저 올립니다"
-        git pull --rebase --autostash origin main >/dev/null 2>&1
-        if git push origin main; then
+        git_net pull --rebase --autostash origin main >/dev/null 2>&1
+        if git_net push origin main; then
             echo "[git] 밀린 커밋 push 성공"
         else
             echo "[git] 밀린 커밋 push 실패 — 아래 통계 단계에서 다시 시도합니다"
@@ -284,10 +299,16 @@ else
         # 30초 → 8분까지 늘려가며 총 15분 기다리고, 매번 네트워크부터 확인한다.
         PUSHED=0
         PUSH_BACKOFF=(30 60 120 240 480)
+        # 이 구간은 run_step 밖이라 하드 타임아웃이 없다. 벽시계로 직접 끊는다.
+        PUSH_DEADLINE=$(( $(date +%s) + 1800 ))
         for attempt in 1 2 3 4 5 6; do
+            if [ "$(date +%s)" -ge "$PUSH_DEADLINE" ]; then
+                echo "[git] push 구간이 30분을 넘었습니다 — 포기하고 파이프라인을 끝냅니다"
+                break
+            fi
             wait_for_network 120 "git push"
-            git pull --rebase --autostash origin main >/dev/null 2>&1
-            if git push origin main; then
+            git_net pull --rebase --autostash origin main >/dev/null 2>&1
+            if git_net push origin main; then
                 echo "[git] push 성공 — Vercel 자동 배포 트리거됨"
                 PUSHED=1
                 break
