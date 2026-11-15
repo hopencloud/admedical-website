@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Sat, 14 Nov 2026 10:00:36 +0900</lastBuildDate>
-        <pubDate>Sat, 14 Nov 2026 10:00:36 +0900</pubDate>
+        <lastBuildDate>Sun, 15 Nov 2026 09:07:12 +0900</lastBuildDate>
+        <pubDate>Sun, 15 Nov 2026 09:07:12 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,18 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>의료광고 심의, 진료과별 주요 문구 비교</title>
+            <link>https://www.admedical.co.kr/news/2026-11-15-medical-advertising-departmental-comparison</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-11-15-medical-advertising-departmental-comparison</guid>
+            <description>진료과별로 다른 의료광고 문구, 정형외과·내과·피부과의 차이점 분석</description>
+            <author>admedical</author>
+            <pubDate>Sun, 15 Nov 2026 09:05:43 +0900</pubDate>
+            <category>의료광고</category>
+            <category>병원마케팅</category>
+            <category>진료과별비교</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-11-15-medical-advertising-departmental-comparison-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>의료광고 심의 통과 표현의 특징과 전략</title>
             <link>https://www.admedical.co.kr/news/2026-11-14-medical-ad-approval-common-expressions</link>

@@ -1,7 +1,30 @@
 {
-  "generated_at": "2026-11-14T10:00:36.711215+09:00",
-  "count": 57,
+  "generated_at": "2026-11-15T09:07:12.490764+09:00",
+  "count": 58,
   "posts": [
+    {
+      "slug": "2026-11-15-medical-advertising-departmental-comparison",
+      "title": "의료광고 심의, 진료과별 주요 문구 비교",
+      "summary": "진료과별로 다른 의료광고 문구, 정형외과·내과·피부과의 차이점 분석",
+      "date": "2026-11-15",
+      "published_at": "2026-11-15T09:05:43.326912+09:00",
+      "cover": "/assets/news/2026-11-15-medical-advertising-departmental-comparison-photo.jpg",
+      "thumb": "/assets/news/2026-11-15-medical-advertising-departmental-comparison-thumb.jpg",
+      "infographic_type": "comparison",
+      "tags": [
+        "의료광고",
+        "병원마케팅",
+        "진료과별비교"
+      ],
+      "topic_key": "문구 비교 심의 의료광고 주요 진료과별",
+      "sources": [
+        {
+          "title": "admedical 자체 집계 — 지난주 (2026-11-02 ~ 2026-11-08) 심의 통과 시안 분석",
+          "source": "admedical 자체 데이터",
+          "link": "https://www.admedical.co.kr/top20"
+        }
+      ]
+    },
     {
       "slug": "2026-11-14-medical-ad-approval-common-expressions",
       "title": "의료광고 심의 통과 표현의 특징과 전략",
