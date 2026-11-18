@@ -1,7 +1,32 @@
 {
-  "generated_at": "2026-11-17T12:05:38.052050+09:00",
-  "count": 60,
+  "generated_at": "2026-11-18T11:34:26.449749+09:00",
+  "count": 61,
   "posts": [
+    {
+      "slug": "2026-11-18-medical-advertising-review-top-expressions",
+      "title": "의료광고 심의 통과 표현 분석: '스마일수술' 등",
+      "summary": "지난주 의료광고 심의에서 '스마일수술' 등 표현이 자주 통과되었습니다.",
+      "date": "2026-11-18",
+      "published_at": "2026-11-18T11:32:45.003227+09:00",
+      "cover": "/assets/news/2026-11-18-medical-advertising-review-top-expressions-photo.jpg",
+      "thumb": "/assets/news/2026-11-18-medical-advertising-review-top-expressions-thumb.jpg",
+      "infographic_type": "comparison",
+      "tags": [
+        "의료광고",
+        "심의 통과",
+        "스마일수술",
+        "병원 마케팅",
+        "광고 표현"
+      ],
+      "topic_key": "분석 스마일수술 심의 의료광고 통과 표현",
+      "sources": [
+        {
+          "title": "admedical 자체 집계 — 지난주 (2026-11-09 ~ 2026-11-15) 심의 통과 시안 분석",
+          "source": "admedical 자체 데이터",
+          "link": "https://www.admedical.co.kr/top20"
+        }
+      ]
+    },
     {
       "slug": "2026-11-17-medical-ad-review-decline-impact",
       "title": "의료광고 심의 통과 331건, 전주 대비 79건 감소",
