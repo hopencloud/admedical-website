@@ -1,10 +1,10 @@
 {
   "dept": "비뇨의학과",
   "slug": "urology",
-  "ads_analyzed": 199,
+  "ads_analyzed": 200,
   "first_date": "2025-12-16",
-  "last_date": "2026-11-16",
-  "generated_at": "2026-11-18T05:09:44.933431+09:00",
+  "last_date": "2026-11-18",
+  "generated_at": "2026-11-19T05:15:46.876104+09:00",
   "expressions": [
     {
       "expression": "전문의",
@@ -26,7 +26,7 @@
     },
     {
       "expression": "요로결석",
-      "count": 62,
+      "count": 63,
       "examples": [
         "260202-중-207077",
         "260122-중-206500",
@@ -35,7 +35,7 @@
     },
     {
       "expression": "전립선",
-      "count": 53,
+      "count": 54,
       "examples": [
         "260202-중-207077",
         "260122-중-206500",
