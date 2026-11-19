@@ -1,7 +1,30 @@
 {
-  "generated_at": "2026-11-18T11:34:26.449749+09:00",
-  "count": 61,
+  "generated_at": "2026-11-19T11:00:17.501835+09:00",
+  "count": 62,
   "posts": [
+    {
+      "slug": "2026-11-19-medical-advertising-department-comparison",
+      "title": "진료과별 의료광고 문구 비교: 정형외과, 내과, 피부과",
+      "summary": "진료과별로 다른 의료광고 문구를 비교해 마케팅 전략을 분석합니다.",
+      "date": "2026-11-19",
+      "published_at": "2026-11-19T10:58:37.052450+09:00",
+      "cover": "/assets/news/2026-11-19-medical-advertising-department-comparison-photo.jpg",
+      "thumb": "/assets/news/2026-11-19-medical-advertising-department-comparison-thumb.jpg",
+      "infographic_type": "comparison",
+      "tags": [
+        "의료광고",
+        "병원마케팅",
+        "진료과별광고"
+      ],
+      "topic_key": "내과 문구 비교 의료광고 정형외과 진료과별",
+      "sources": [
+        {
+          "title": "admedical 자체 집계 — 지난주 (2026-11-09 ~ 2026-11-15) 심의 통과 시안 분석",
+          "source": "admedical 자체 데이터",
+          "link": "https://www.admedical.co.kr/top20"
+        }
+      ]
+    },
     {
       "slug": "2026-11-18-medical-advertising-review-top-expressions",
       "title": "의료광고 심의 통과 표현 분석: '스마일수술' 등",
