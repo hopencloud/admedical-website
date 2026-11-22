@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Sat, 21 Nov 2026 10:42:14 +0900</lastBuildDate>
-        <pubDate>Sat, 21 Nov 2026 10:42:14 +0900</pubDate>
+        <lastBuildDate>Sun, 22 Nov 2026 09:37:24 +0900</lastBuildDate>
+        <pubDate>Sun, 22 Nov 2026 09:37:24 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,18 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>의료광고 심의 통과 감소, 이유는?</title>
+            <link>https://www.admedical.co.kr/news/2026-11-22-medical-ad-review-decline-analysis</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-11-22-medical-ad-review-decline-analysis</guid>
+            <description>의료광고 심의 통과 건수가 감소했습니다. 그 배경을 분석합니다.</description>
+            <author>admedical</author>
+            <pubDate>Sun, 22 Nov 2026 09:35:50 +0900</pubDate>
+            <category>의료광고</category>
+            <category>심의 통과</category>
+            <category>병원 마케팅</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-11-22-medical-ad-review-decline-analysis-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>정형외과 광고 심의 통과 문구의 공통점 분석</title>
             <link>https://www.admedical.co.kr/news/2026-11-21-orthopedic-ad-approval-phrases-analysis</link>

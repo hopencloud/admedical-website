@@ -1,7 +1,30 @@
 {
-  "generated_at": "2026-11-21T10:42:14.834814+09:00",
-  "count": 64,
+  "generated_at": "2026-11-22T09:37:24.421012+09:00",
+  "count": 65,
   "posts": [
+    {
+      "slug": "2026-11-22-medical-ad-review-decline-analysis",
+      "title": "의료광고 심의 통과 감소, 이유는?",
+      "summary": "의료광고 심의 통과 건수가 감소했습니다. 그 배경을 분석합니다.",
+      "date": "2026-11-22",
+      "published_at": "2026-11-22T09:35:50.596297+09:00",
+      "cover": "/assets/news/2026-11-22-medical-ad-review-decline-analysis-photo.jpg",
+      "thumb": "/assets/news/2026-11-22-medical-ad-review-decline-analysis-thumb.jpg",
+      "infographic_type": "stat_trend",
+      "tags": [
+        "의료광고",
+        "심의 통과",
+        "병원 마케팅"
+      ],
+      "topic_key": "감소 심의 의료광고 이유는 통과",
+      "sources": [
+        {
+          "title": "admedical 자체 집계 — 지난주 (2026-11-09 ~ 2026-11-15) 심의 통과 시안 분석",
+          "source": "admedical 자체 데이터",
+          "link": "https://www.admedical.co.kr/top20"
+        }
+      ]
+    },
     {
       "slug": "2026-11-21-orthopedic-ad-approval-phrases-analysis",
       "title": "정형외과 광고 심의 통과 문구의 공통점 분석",
