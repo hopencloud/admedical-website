@@ -1,7 +1,32 @@
 {
-  "generated_at": "2026-11-22T09:37:24.421012+09:00",
-  "count": 65,
+  "generated_at": "2026-11-25T12:42:34.134381+09:00",
+  "count": 66,
   "posts": [
+    {
+      "slug": "2026-11-25-medical-advertising-lifting-approval-increase",
+      "title": "의료광고 심의: '리프팅' 표현 통과 증가",
+      "summary": "최근 '리프팅' 표현이 의료광고 심의에서 더 자주 통과되고 있습니다.",
+      "date": "2026-11-25",
+      "published_at": "2026-11-25T12:41:00.746081+09:00",
+      "cover": "/assets/news/2026-11-25-medical-advertising-lifting-approval-increase-photo.jpg",
+      "thumb": "/assets/news/2026-11-25-medical-advertising-lifting-approval-increase-thumb.jpg",
+      "infographic_type": "checklist",
+      "tags": [
+        "의료광고",
+        "리프팅",
+        "심의 통과",
+        "병원 마케팅",
+        "피부과 광고"
+      ],
+      "topic_key": "리프팅 심의 의료광고 증가 통과 표현",
+      "sources": [
+        {
+          "title": "admedical 자체 집계 — 지난주 (2026-11-16 ~ 2026-11-22) 심의 통과 시안 분석",
+          "source": "admedical 자체 데이터",
+          "link": "https://www.admedical.co.kr/top20"
+        }
+      ]
+    },
     {
       "slug": "2026-11-22-medical-ad-review-decline-analysis",
       "title": "의료광고 심의 통과 감소, 이유는?",

@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Sun, 22 Nov 2026 09:37:24 +0900</lastBuildDate>
-        <pubDate>Sun, 22 Nov 2026 09:37:24 +0900</pubDate>
+        <lastBuildDate>Wed, 25 Nov 2026 12:42:34 +0900</lastBuildDate>
+        <pubDate>Wed, 25 Nov 2026 12:42:34 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,20 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>의료광고 심의: '리프팅' 표현 통과 증가</title>
+            <link>https://www.admedical.co.kr/news/2026-11-25-medical-advertising-lifting-approval-increase</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-11-25-medical-advertising-lifting-approval-increase</guid>
+            <description>최근 '리프팅' 표현이 의료광고 심의에서 더 자주 통과되고 있습니다.</description>
+            <author>admedical</author>
+            <pubDate>Wed, 25 Nov 2026 12:41:00 +0900</pubDate>
+            <category>의료광고</category>
+            <category>리프팅</category>
+            <category>심의 통과</category>
+            <category>병원 마케팅</category>
+            <category>피부과 광고</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-11-25-medical-advertising-lifting-approval-increase-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>의료광고 심의 통과 감소, 이유는?</title>
             <link>https://www.admedical.co.kr/news/2026-11-22-medical-ad-review-decline-analysis</link>
