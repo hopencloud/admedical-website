@@ -358,6 +358,60 @@ def check_news_index() -> None:
         elif news_sources.is_institution_story(title):
             fail("뉴스 주제", f"{post['slug']} → 특정 병원 소식(홍보): {title}")
 
+    check_data_story_angles()
+
+
+def check_data_story_angles() -> None:
+    """자체 집계 기사의 각도가 날짜마다 제대로 돌아가는지.
+
+    2026-11-24 에 '진료과 비교' 각도가 주제문-제목 유사도(0.28)에 걸려 버려지고,
+    대타로 고른 외부 뉴스가 반려돼 그날 0편이 됐다. 같은 메커니즘으로 2026-10-09~26
+    에 17일 내리 0편이 나간 적이 있다. 자체 집계는 제목이 아니라 **각도**로만
+    중복을 판정해야 하고, 그러려면 각도가 1) 고유 식별자를 갖고 2) 날마다 달라야 한다.
+    """
+    sys.path.insert(0, str(ROOT / "scripts"))
+    try:
+        import news_data_story
+    except Exception as e:
+        fail("자체 집계 각도", f"news_data_story 를 읽을 수 없음: {e}")
+        return
+
+    seen = []
+    real = news_data_story.datetime
+    for i in range(14):
+        day = datetime.now(KST).date() + timedelta(days=i)
+
+        class _Fixed:
+            @staticmethod
+            def now(tz=None):
+                return real(day.year, day.month, day.day, 9, 0,
+                            tzinfo=real.now(KST).tzinfo)
+
+        news_data_story.datetime = _Fixed
+        try:
+            topic = news_data_story.build_topic()
+        finally:
+            news_data_story.datetime = real
+
+        if not topic:
+            fail("자체 집계 각도", f"{day} 에 쓸 주제를 만들지 못합니다 "
+                                   f"(weekly_top20 10개 미만이거나 진료과 집계 없음)")
+            return
+        key = topic.get("angle_key")
+        if not key:
+            fail("자체 집계 각도", f"{day} 주제에 angle_key 가 없습니다 — "
+                                   f"각도로 중복을 판정할 수 없습니다")
+            return
+        seen.append(key)
+
+    for a, b in zip(seen, seen[1:]):
+        if a == b:
+            fail("자체 집계 각도",
+                 f"연이은 이틀이 같은 각도({a})입니다 — 날짜 회전이 깨졌습니다")
+            return
+    if len(set(seen)) < 2:
+        fail("자체 집계 각도", f"14일간 각도가 {len(set(seen))}종뿐입니다: {set(seen)}")
+
 
 SKIP_FRESHNESS = False
 
@@ -504,7 +558,10 @@ def check_live_news_freshness() -> None:
         fail("라이브 기사", f"최신 기사 날짜를 읽을 수 없음: {latest!r}")
         return
 
-    if age > 3:
+    # 기준을 3일에서 2일로 좁혔다. 하루 1편이 설계값이므로 이틀 공백은
+    # 연속 두 번 반려됐다는 뜻이다. 2026-11-23·24 가 둘 다 "발행 조건을 만족한
+    # 기사 없음" 으로 끝났는데 간격이 정확히 3일이어서 검사가 침묵했다.
+    if age > 2:
         fail("라이브 기사",
              f"신규 기사가 {age}일째 없습니다 (최신 {latest}). "
              f"워크플로가 success 로 끝나도 발행이 0편일 수 있습니다 — "

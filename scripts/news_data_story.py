@@ -132,6 +132,7 @@ def build_topic() -> dict | None:
             f"{weekly.get('label', '지난주')} 대비 이번 주 '{riser_expr}' 표현이 더 자주 통과됐다",
             f"'{riser_expr}' 가 어떤 맥락에서 쓰였는지, 비슷한 문구를 준비하는 마케터가 "
             f"무엇을 확인해야 하는지 짚는다.",
+            "riser",
         ))
 
     if dept5:
@@ -141,6 +142,7 @@ def build_topic() -> dict | None:
             f"통과 시안은 무엇을 강조하나",
             f"{d0['dept']} 통과 시안이 공통으로 내세우는 것과, 그것을 그대로 베껴 쓸 때의 "
             f"위험을 짚는다.",
+            "dept-focus",
         ))
 
     if last_week.get("count"):
@@ -150,12 +152,14 @@ def build_topic() -> dict | None:
             f"{weekly.get('label', '지난주')} 심의 통과 {last_week['count']}건 — "
             f"지지난주보다 {abs(d)}건 {move}",
             "통과 건수의 움직임이 심의 처리 속도와 광고 집행 일정에 어떤 뜻인지 짚는다.",
+            "weekly-count",
         ))
 
     if top5:
         angles.append((
             f"심의를 통과한 광고가 가장 많이 쓴 말 — '{lead_expr}' 외 {len(top5) - 1}개",
             "상위 표현들이 공통으로 피해 간 것(효과 단정·최상급)이 무엇인지 짚는다.",
+            "top-expressions",
         ))
 
     if len(dept5) >= 3:
@@ -163,6 +167,7 @@ def build_topic() -> dict | None:
         angles.append((
             f"진료과마다 다른 광고 문구 — {names} 비교",
             "같은 의료광고라도 진료과별로 무엇을 내세우는지 대비해 보여준다.",
+            "dept-compare",
         ))
 
     if not angles:
@@ -170,7 +175,7 @@ def build_topic() -> dict | None:
 
     # 날짜 기준으로 고른다. 어제와 다른 각도가 나오게 한다.
     idx = (datetime.now(KST).date().toordinal()) % len(angles)
-    topic, angle = angles[idx]
+    topic, angle, angle_key = angles[idx]
 
     src = NewsItem(
         title=f"admedical 자체 집계 — {weekly.get('label', '지난주')} 심의 통과 시안 분석",
@@ -188,4 +193,5 @@ def build_topic() -> dict | None:
         "sources": [src],
         "reason": "수집된 뉴스에 의료광고 주제가 없어 자체 집계로 대체",
         "is_data_story": True,
+        "angle_key": angle_key,
     }

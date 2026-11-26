@@ -224,6 +224,15 @@ def publish_one(client, posts: list[dict], candidates: list, stats: dict,
     """한 편 생성. 성공하면 새 post dict, 발행할 게 없으면 None."""
     published_titles = [p["title"] for p in posts]
     published_keys = {p.get("topic_key", "") for p in posts}
+    # 자체 집계 기사는 **각도**로 중복을 판정한다. 제목·주제문 유사도로 막으면
+    # 같은 데이터를 다루는 글이 구조적으로 전부 걸린다 (아래 build_topic 주석 참고).
+    #
+    # 창(DEDUP_WINDOW=10편)으로 보면 안 된다. 각도는 5종을 날짜로 돌리므로 같은
+    # 각도가 5일마다 돌아오는데, 그 5일 전 글이 10편 창 안에 늘 들어 있어서
+    # 매일 차단된다 — 막으려던 17일 0편 사고를 그대로 재현한다.
+    # 직전 자체 집계 기사 하나만 본다. 각도 목록이 1종으로 쪼그라든 날
+    # (데이터가 모자라 angles 가 하나만 만들어진 날)만 걸린다.
+    last_angle = next((p.get("angle_key") for p in posts if p.get("angle_key")), "")
 
     progress(client, "주제 선정", "수집된 기사에서 오늘 다룰 주제 고르는 중", done=index)
 
@@ -245,8 +254,12 @@ def publish_one(client, posts: list[dict], candidates: list, stats: dict,
     # 심의 통과 시안 16,000건 집계는 다른 곳에 없다. 이걸로 쓴 글만 이 사이트가
     # 원본이다. 외부 뉴스는 데이터에 새로 쓸 것이 없는 날의 대타로 내린다.
     topic = news_data_story.build_topic()
-    if topic and duplicate_of(topic["topic"], posts):
-        log("자체 집계 기사가 최근 발행분과 겹칩니다. 외부 뉴스로 넘어갑니다.")
+    # 주제문 유사도로 막지 않는다. 주제문에는 집계 숫자와 진료과명이 그대로 들어가서
+    # 발행된 제목과 구조적으로 닮는다. 2026-11-24 에 '진료과 비교' 각도가 11-19 기사
+    # 제목과 0.28 을 넘겨 버려졌고, 대타로 고른 외부 뉴스가 반려돼 그날 0편이 됐다.
+    # (같은 메커니즘으로 2026-10-09~26 에 17일 내리 0편이 나간 적이 있다.)
+    if topic and last_angle and topic.get("angle_key") == last_angle:
+        log(f"직전 자체 집계 기사와 같은 각도({last_angle})입니다. 외부 뉴스로 넘어갑니다.")
         topic = None
     if topic:
         log("자체 집계 데이터로 씁니다.")
@@ -365,12 +378,12 @@ def publish_one(client, posts: list[dict], candidates: list, stats: dict,
     # 유사도 0.28 을 그대로 적용했더니 매일 세 번 다 걸려서 17일 내리 0편이
     # 나갔다 (2026-10-09 ~ 10-26). 대신 **같은 각도를 이미 썼는지**로 막는다 —
     # 각도는 news_data_story 가 날짜 기준 5종으로 돌린다.
+    # 각도 중복은 주제 선정 단계(recent_angles)에서 이미 걸러 냈다.
+    # 예전에는 여기서 다시 검사했는데, 발행분에 저장된 topic_key 는 '최종 제목'
+    # 에서 뽑은 값인 반면 여기서는 '주제문' 에서 뽑아 비교했다. 두 문장이 달라
+    # 영원히 일치하지 않는 죽은 검사였고, article["topic_key"] 도 354줄 값에
+    # 덮여 색인에 들어가지 않았다. 각도 식별자(angle_key)로 일원화했다.
     if topic.get("is_data_story"):
-        key = news_writer.article_topic_key({"title": topic["topic"]})
-        if key and any(p.get("topic_key") == key for p in posts[:DEDUP_WINDOW]):
-            log("같은 각도의 자체 집계 기사를 최근에 냈습니다. 발행하지 않습니다.")
-            return None
-        article["topic_key"] = key
         dup = None
     else:
         dup = duplicate_of(article.get("title", ""), posts)
@@ -483,6 +496,7 @@ def publish_one(client, posts: list[dict], candidates: list, stats: dict,
         "infographic_type": (article.get("infographic") or {}).get("type", ""),
         "tags": article.get("tags", [])[:6],
         "topic_key": topic_key,
+        "angle_key": topic.get("angle_key", ""),
         "sources": [{"title": s["title"], "source": s["source"], "link": s["link"]}
                     for s in meta["sources"]],
     }
