@@ -1,14 +1,14 @@
 {
   "dept": "산부인과",
   "slug": "obstetrics",
-  "ads_analyzed": 260,
+  "ads_analyzed": 262,
   "first_date": "2025-12-17",
-  "last_date": "2026-11-26",
-  "generated_at": "2026-11-27T05:27:32.542779+09:00",
+  "last_date": "2026-11-27",
+  "generated_at": "2026-11-28T05:12:24.732609+09:00",
   "expressions": [
     {
       "expression": "전문의",
-      "count": 79,
+      "count": 80,
       "examples": [
         "260122-중-206438",
         "260206-중-207438",
@@ -17,7 +17,7 @@
     },
     {
       "expression": "산부인과 전문의",
-      "count": 75,
+      "count": 76,
       "examples": [
         "260122-중-206438",
         "260206-중-207438",
