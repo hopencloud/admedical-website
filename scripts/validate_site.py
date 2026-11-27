@@ -394,8 +394,12 @@ def check_data_story_angles() -> None:
             news_data_story.datetime = real
 
         if not topic:
-            fail("자체 집계 각도", f"{day} 에 쓸 주제를 만들지 못합니다 "
-                                   f"(weekly_top20 10개 미만이거나 진료과 집계 없음)")
+            # 실패로 다루지 않는다. 주제를 못 만드는 건 데이터가 모자란 상태일 뿐이고,
+            # 여기서 fail 하면 멀쩡한 기사의 배포까지 막는다 — 막으려던 '조용한 0편'
+            # 을 검사가 직접 만들어 내는 셈이다. 외부 뉴스로도 발행할 수 있다.
+            warn("자체 집계 각도", f"{day} 에 쓸 자체 집계 주제가 없습니다 "
+                                   f"(weekly_top20 10개 미만이거나 진료과 집계 없음) — "
+                                   f"그날은 외부 뉴스로 넘어갑니다")
             return
         key = topic.get("angle_key")
         if not key:
