@@ -106,7 +106,16 @@ AS $$ DELETE FROM rate_limits WHERE key = p_key $$;
 
 
 -- 공개 키로는 호출조차 못 하게 한다 (service_role 전용)
-REVOKE ALL ON FUNCTION rl_bump(TEXT, INT, INT, INT)  FROM anon, authenticated;
-REVOKE ALL ON FUNCTION rl_clear(TEXT)                FROM anon, authenticated;
+--
+-- anon·authenticated 에서만 빼면 구멍이 남는다 (2026-11-27 에 발견).
+-- PostgreSQL 은 함수를 만들 때 EXECUTE 를 **PUBLIC 에 자동으로 부여**한다.
+-- anon 과 authenticated 는 PUBLIC 에 속하므로, 두 역할에서 REVOKE 해도
+-- PUBLIC 경유 권한이 그대로 남아 공개 키로 함수를 호출할 수 있었다.
+-- PUBLIC 에서 빼고, 쓸 역할에만 명시적으로 준다.
+REVOKE ALL ON FUNCTION rl_bump(TEXT, INT, INT, INT)  FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON FUNCTION rl_clear(TEXT)                FROM PUBLIC, anon, authenticated;
+
+GRANT EXECUTE ON FUNCTION rl_bump(TEXT, INT, INT, INT) TO service_role;
+GRANT EXECUTE ON FUNCTION rl_clear(TEXT)               TO service_role;
 
 SELECT 'rate_limits + rl_bump + rl_clear 생성 완료' AS status;

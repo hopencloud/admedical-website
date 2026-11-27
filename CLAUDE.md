@@ -211,6 +211,16 @@ launchd 는 같은 작업이 돌고 있으면 다음 실행을 **띄우지 않�
   수정 링크를 만들었다 — 공격자가 Host 를 바꿔 보내면 관리자가 받는 메일에
   공격자 사이트 링크가 박힌다(피싱). `PUBLIC_SITE_URL` 또는 상수만 쓴다.
 
+**DB 카운터는 2026-11-27 에 켰다.** `rate_limits` + `rl_bump`/`rl_clear` 가
+실제로 올라가 있고, 확인한 결과 anon 키로는 함수 호출 401 · 테이블 조회 `[]`(RLS)
+· 쓰기/삭제 401 이다. 카운터도 정확하다(한도 2 에서 3번째 호출이 차단, retry_after 60).
+
+**함수 권한은 `FROM PUBLIC` 으로 빼야 한다.** PostgreSQL 은 함수를 만들 때
+EXECUTE 를 PUBLIC 에 자동으로 부여한다. anon·authenticated 는 PUBLIC 에 속하므로
+그 둘에서만 REVOKE 하면 PUBLIC 경유 권한이 남아 **공개 키로 함수가 호출된다.**
+원래 스키마 파일이 그랬다. `REVOKE ... FROM PUBLIC, anon, authenticated` 로 빼고
+`GRANT EXECUTE ... TO service_role` 로 쓸 역할에만 명시적으로 준다.
+
 **카운터를 어디에 세는가** — 되는 쪽을 자동으로 쓴다.
 - 1순위 **DB** (`rate_limits` + `rl_bump`/`rl_clear`,
   `scripts/supabase_ratelimit_schema.sql` 한 번 실행하면 켜진다).
