@@ -1,7 +1,59 @@
 {
-  "generated_at": "2026-11-26T12:02:11.081425+09:00",
-  "count": 67,
+  "generated_at": "2026-11-27T09:21:52.222056+09:00",
+  "count": 69,
   "posts": [
+    {
+      "slug": "2026-11-27-medical-advertising-violation-busan-clinic",
+      "title": "의료광고 심의 위반, 부산 성형외과 벌금형",
+      "summary": "부산 성형외과, 의료광고 심의 없이 블로그 광고로 벌금형 선고.",
+      "date": "2026-11-27",
+      "published_at": "2026-11-27T09:20:17.701689+09:00",
+      "cover": "/assets/news/2026-11-27-medical-advertising-violation-busan-clinic-photo.jpg",
+      "thumb": "/assets/news/2026-11-27-medical-advertising-violation-busan-clinic-thumb.jpg",
+      "infographic_type": "checklist",
+      "tags": [
+        "의료광고",
+        "병원 마케팅",
+        "법적 규제",
+        "의료법",
+        "광고 심의"
+      ],
+      "topic_key": "벌금형 부산 성형외과 심의 위반 의료광고",
+      "angle_key": "",
+      "sources": [
+        {
+          "title": "부산 성형외과 대표·직원, 블로그 광고로 벌금형 선고",
+          "source": "헬스조선",
+          "link": "https://health.chosun.com/list_life.html?menu=ct&more_menu=11N&more_smenu=&nowcode=0&pn=2&type="
+        }
+      ]
+    },
+    {
+      "slug": "2026-11-27-medical-ad-review-increase-impact",
+      "title": "의료광고 심의 통과 건수 증가, 광고 일정에 미치는 영향",
+      "summary": "지난주 의료광고 심의 통과 435건, 광고 일정에 중요한 변화.",
+      "date": "2026-11-27",
+      "published_at": "2026-11-27T09:18:06.122350+09:00",
+      "cover": "/assets/news/2026-11-27-medical-ad-review-increase-impact-photo.jpg",
+      "thumb": "/assets/news/2026-11-27-medical-ad-review-increase-impact-thumb.jpg",
+      "infographic_type": "stat_trend",
+      "tags": [
+        "의료광고",
+        "심의 통과",
+        "병원 마케팅",
+        "광고 전략",
+        "비급여 의료"
+      ],
+      "topic_key": "건수 광고 미치는 심의 영향 의료광고",
+      "angle_key": "weekly-count",
+      "sources": [
+        {
+          "title": "admedical 자체 집계 — 지난주 (2026-11-16 ~ 2026-11-22) 심의 통과 시안 분석",
+          "source": "admedical 자체 데이터",
+          "link": "https://www.admedical.co.kr/top20"
+        }
+      ]
+    },
     {
       "slug": "2026-11-26-orthopedic-advertising-approval-patterns",
       "title": "정형외과 광고 심의 통과 표현의 특징",

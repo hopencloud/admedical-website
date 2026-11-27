@@ -6,8 +6,8 @@
         <description>병의원 마케터를 위한 의료광고 규제·정책·시장 동향 브리핑. 대한의사협회 의료광고심의위원회 통과 시안 데이터와 함께 매일 업데이트됩니다.</description>
         <language>ko</language>
         <generator>admedical news pipeline</generator>
-        <lastBuildDate>Thu, 26 Nov 2026 12:02:11 +0900</lastBuildDate>
-        <pubDate>Thu, 26 Nov 2026 12:02:11 +0900</pubDate>
+        <lastBuildDate>Fri, 27 Nov 2026 09:21:52 +0900</lastBuildDate>
+        <pubDate>Fri, 27 Nov 2026 09:21:52 +0900</pubDate>
         <ttl>60</ttl>
         <atom:link href="https://www.admedical.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <image>
@@ -15,6 +15,34 @@
             <title>admedical 의료광고 인사이트</title>
             <link>https://www.admedical.co.kr/news</link>
         </image>
+        <item>
+            <title>의료광고 심의 위반, 부산 성형외과 벌금형</title>
+            <link>https://www.admedical.co.kr/news/2026-11-27-medical-advertising-violation-busan-clinic</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-11-27-medical-advertising-violation-busan-clinic</guid>
+            <description>부산 성형외과, 의료광고 심의 없이 블로그 광고로 벌금형 선고.</description>
+            <author>admedical</author>
+            <pubDate>Fri, 27 Nov 2026 09:20:17 +0900</pubDate>
+            <category>의료광고</category>
+            <category>병원 마케팅</category>
+            <category>법적 규제</category>
+            <category>의료법</category>
+            <category>광고 심의</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-11-27-medical-advertising-violation-busan-clinic-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
+        <item>
+            <title>의료광고 심의 통과 건수 증가, 광고 일정에 미치는 영향</title>
+            <link>https://www.admedical.co.kr/news/2026-11-27-medical-ad-review-increase-impact</link>
+            <guid isPermaLink="true">https://www.admedical.co.kr/news/2026-11-27-medical-ad-review-increase-impact</guid>
+            <description>지난주 의료광고 심의 통과 435건, 광고 일정에 중요한 변화.</description>
+            <author>admedical</author>
+            <pubDate>Fri, 27 Nov 2026 09:18:06 +0900</pubDate>
+            <category>의료광고</category>
+            <category>심의 통과</category>
+            <category>병원 마케팅</category>
+            <category>광고 전략</category>
+            <category>비급여 의료</category>
+            <enclosure url="https://www.admedical.co.kr/assets/news/2026-11-27-medical-ad-review-increase-impact-photo.jpg" type="image/jpeg" length="0"/>
+        </item>
         <item>
             <title>정형외과 광고 심의 통과 표현의 특징</title>
             <link>https://www.admedical.co.kr/news/2026-11-26-orthopedic-advertising-approval-patterns</link>
