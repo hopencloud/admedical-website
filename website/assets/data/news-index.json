@@ -1,7 +1,31 @@
 {
-  "generated_at": "2026-11-27T09:21:52.222056+09:00",
-  "count": 69,
+  "generated_at": "2026-11-28T11:55:30.014096+09:00",
+  "count": 70,
   "posts": [
+    {
+      "slug": "2026-11-28-medical-ad-approval-keywords",
+      "title": "의료광고 심의 통과 표현 분석: 리프팅 등 5가지",
+      "summary": "지난주 의료광고 심의에서 자주 통과된 표현과 그 이유를 분석합니다.",
+      "date": "2026-11-28",
+      "published_at": "2026-11-28T11:53:46.971542+09:00",
+      "cover": "/assets/news/2026-11-28-medical-ad-approval-keywords-photo.jpg",
+      "thumb": "/assets/news/2026-11-28-medical-ad-approval-keywords-thumb.jpg",
+      "infographic_type": "comparison",
+      "tags": [
+        "의료광고",
+        "심의 통과",
+        "병원 마케팅"
+      ],
+      "topic_key": "5가지 리프팅 분석 심의 의료광고 통과",
+      "angle_key": "top-expressions",
+      "sources": [
+        {
+          "title": "admedical 자체 집계 — 지난주 (2026-11-16 ~ 2026-11-22) 심의 통과 시안 분석",
+          "source": "admedical 자체 데이터",
+          "link": "https://www.admedical.co.kr/top20"
+        }
+      ]
+    },
     {
       "slug": "2026-11-27-medical-advertising-violation-busan-clinic",
       "title": "의료광고 심의 위반, 부산 성형외과 벌금형",
